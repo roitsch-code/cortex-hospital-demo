@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Sovereign Cortex — Command Center (guided flow)</title>
+<title>Sovereign Cortex — Command Center</title>
 <style>
 :root{
   --bg:#010204;
@@ -16,8 +16,12 @@
 html,body{height:100%;background:var(--bg);overflow:hidden;font-family:var(--font);color:var(--text)}
 #fit{position:fixed;inset:0;display:grid;place-items:center}
 #stage{position:relative;width:1440px;height:810px;transform-origin:center;
-  background:radial-gradient(120% 90% at 50% 34%,#04070b 0%,#010204 72%);overflow:hidden}
+  background:radial-gradient(120% 90% at 50% 40%,#04070b 0%,#010204 74%);overflow:hidden}
 canvas#cv{position:absolute;inset:0;width:1440px;height:810px;pointer-events:none;z-index:1}
+
+/* soft dome glow behind the core (replaces the old arc lines) */
+.dome{position:absolute;left:884px;top:300px;width:820px;height:520px;transform:translate(-50%,-50%);z-index:0;
+  background:radial-gradient(50% 50% at 50% 50%,rgba(47,214,192,.10),rgba(47,214,192,0) 70%);pointer-events:none}
 
 /* ---------- top chrome ---------- */
 .top{position:absolute;top:18px;left:32px;right:32px;z-index:8;display:flex;align-items:flex-start;justify-content:space-between}
@@ -38,19 +42,12 @@ canvas#cv{position:absolute;inset:0;width:1440px;height:810px;pointer-events:non
 .kebab{color:var(--muted);font-size:18px;letter-spacing:2px;cursor:pointer;padding:0 4px}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 
-.back{position:absolute;top:62px;left:34px;z-index:9;color:var(--muted);font-size:14px;font-weight:600;cursor:pointer;opacity:0;transition:.3s}
-.back:hover{color:var(--text)}
-.back.on{opacity:1}
-
-/* ---------- scenes ---------- */
-.scene{position:absolute;inset:0;z-index:2;opacity:0;transform:scale(1.05);pointer-events:none;transition:opacity .6s ease,transform .6s ease}
-.scene.active{opacity:1;transform:scale(1);pointer-events:auto}
-svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:2}
 
 /* ---------- agentic assistant header ---------- */
-.agentic{position:absolute;top:82px;left:50%;transform:translateX(-50%);z-index:6;text-align:center;cursor:pointer}
+.agentic{position:absolute;top:92px;left:50%;transform:translateX(-50%);z-index:6;text-align:center;cursor:pointer}
 .agentic .ah{font-size:13px;font-weight:800;letter-spacing:.24em;color:#cfeee7;display:flex;align-items:center;gap:10px;justify-content:center;
-  text-shadow:0 0 18px rgba(47,214,192,.5)}
+  text-shadow:0 0 22px rgba(47,214,192,.6)}
 .agentic .ah .o{width:15px;height:15px;border-radius:50%;border:2px solid var(--teal);position:relative}
 .agentic .ah .o::after{content:"";position:absolute;inset:2px;border-radius:50%;border:2px solid transparent;border-top-color:var(--teal-br);animation:spin 3s linear infinite}
 .agentic .ah .car{color:var(--muted);font-weight:600}
@@ -64,23 +61,24 @@ svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;ov
 .node.click:hover .num{text-shadow:0 0 26px var(--glow)}
 .num{font-weight:800;line-height:1;color:#fff}
 .cap{color:var(--muted);letter-spacing:.15em;font-size:11px;font-weight:700;text-transform:uppercase;margin-top:7px}
+.node .sub{font-size:10px;color:var(--muted);margin-top:3px}
 .node .hint{font-size:10px;color:var(--teal-br);opacity:0;margin-top:4px;letter-spacing:.08em;transition:.2s}
 .node.click:hover .hint{opacity:.9}
 
-/* small source label (flow) */
+/* left source rows */
 .src{position:absolute;transform:translateY(-50%);z-index:4;display:flex;align-items:center;justify-content:space-between;gap:10px;
-  width:168px;font-size:12.5px;font-weight:600;color:#d7dde2;cursor:pointer;padding:2px 0;transition:.18s}
+  width:172px;font-size:12.5px;font-weight:600;color:#d7dde2;cursor:pointer;padding:2px 0;transition:.18s}
 .src .lab{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .src small{color:var(--muted);font-weight:600;font-size:11px}
-.src .dot{width:9px;height:9px;border-radius:50%;background:#20262d;border:1.5px solid var(--dim);flex:0 0 auto}
+.src .dot{width:9px;height:9px;border-radius:50%;background:#20262d;border:1.5px solid var(--dim);flex:0 0 auto;transition:.18s}
 .src.tsys .lab{color:#f4b9d8}
 .src.tsys .dot{background:#3a0a22;border-color:var(--magenta);box-shadow:0 0 8px rgba(226,0,116,.6)}
 .src.alert .dot{background:var(--red);border-color:var(--red);box-shadow:0 0 8px var(--red)}
 .src:hover{color:#fff}
-.src.hot .dot{transform:scale(1.25)}
-.src.more{color:var(--muted);font-weight:700}
+.src.hot .dot{transform:scale(1.3)}
+.src.more{color:var(--muted);font-weight:700;cursor:default}
 
-/* ---------- right funnel ---------- */
+/* right funnel */
 .funnode{position:absolute;transform:translate(-50%,-50%);z-index:5;cursor:pointer;text-align:center}
 .funnode .disc2{width:52px;height:52px;border-radius:50%;margin:0 auto;display:grid;place-items:center;
   border:1.5px solid var(--teal);background:radial-gradient(circle at 50% 40%,rgba(47,214,192,.2),rgba(4,10,12,.7));
@@ -106,8 +104,11 @@ svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;ov
 .chev .cv.med i{color:var(--amber)} .chev .cv.low i{color:var(--blue)}
 .chev:hover .cv{filter:brightness(1.15)}
 
-/* ---------- bottom stat tiles ---------- */
-.tiles{position:absolute;left:32px;right:32px;bottom:24px;z-index:4;display:flex;gap:0;border-top:1px solid var(--hair);padding-top:16px}
+/* core click region */
+.corehit{position:absolute;transform:translate(-50%,-50%);z-index:3;border-radius:50%;cursor:pointer}
+
+/* bottom stat tiles */
+.tiles{position:absolute;left:32px;right:32px;bottom:24px;z-index:4;display:flex;border-top:1px solid var(--hair);padding-top:16px}
 .tile{flex:1;padding:0 26px;display:flex;flex-direction:column;justify-content:center;position:relative;cursor:pointer;transition:.18s}
 .tile+.tile{border-left:1px solid var(--hair)}
 .tile .k{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:9px}
@@ -115,14 +116,14 @@ svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;ov
 .tile .v{font-size:30px;font-weight:800;color:#fff;line-height:1;white-space:nowrap}
 .tile .v u{font-size:12px;color:var(--muted);font-weight:600;text-decoration:none;margin-left:4px}
 .tile:hover .v{text-shadow:0 0 20px var(--glow)}
-.tile svg.spark{width:120px;height:38px;flex:0 0 auto}
+.tile svg.spark{width:130px;height:40px;flex:0 0 auto}
 .invest{appearance:none;border:1px solid var(--teal-dim);background:rgba(47,214,192,.08);color:var(--teal-br);
   font-family:var(--font);font-weight:700;font-size:12px;padding:8px 14px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:7px;transition:.2s}
 .invest:hover{background:rgba(47,214,192,.16);box-shadow:0 0 18px var(--glow)}
 .invest .o{width:11px;height:11px;border-radius:50%;border:2px solid var(--teal);display:inline-block}
 
-/* ---------- detail popover ---------- */
-.pop{position:absolute;z-index:20;width:240px;background:rgba(9,13,17,.97);border:1px solid var(--teal-dim);
+/* detail popover */
+.pop{position:absolute;z-index:20;width:246px;background:rgba(9,13,17,.97);border:1px solid var(--teal-dim);
   border-radius:12px;padding:14px 15px;box-shadow:0 14px 44px rgba(0,0,0,.6),0 0 30px rgba(47,214,192,.12);
   opacity:0;transform:translateY(6px);pointer-events:none;transition:.2s}
 .pop.on{opacity:1;transform:translateY(0);pointer-events:auto}
@@ -132,99 +133,15 @@ svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;ov
 .pop .r:first-of-type{border-top:0}
 .pop .r span{color:var(--muted)} .pop .r b{color:#e7edf1;font-weight:700}
 .pop .r b.ok{color:var(--teal-br)} .pop .r b.warn{color:var(--amber)} .pop .r b.bad{color:var(--red)}
-.pop .foot{margin-top:10px;font-size:10.5px;color:var(--teal-br);opacity:.85;letter-spacing:.04em}
-
-/* swarm click region */
-.swarmhit{position:absolute;transform:translate(-50%,-50%);z-index:3;border-radius:50%;cursor:pointer}
-
-/* ---------- agents radial ---------- */
-.aTitle{position:absolute;top:96px;left:0;right:0;text-align:center;z-index:4}
-.aTitle h2{font-size:22px;font-weight:800;letter-spacing:.02em}
-.aTitle p{font-size:13px;color:var(--muted);margin-top:6px}
-.agent{position:absolute;transform:translate(-50%,-50%);z-index:5;text-align:center;cursor:default}
-.agent .c{width:66px;height:66px;border-radius:50%;margin:0 auto;display:grid;place-items:center;font-size:20px;
-  border:1.5px solid var(--teal-dim);background:radial-gradient(circle at 50% 40%,rgba(47,214,192,.14),rgba(4,10,12,.6));
-  box-shadow:0 0 18px rgba(47,214,192,.28)}
-.agent .n{font-size:12px;font-weight:700;margin-top:9px;max-width:130px}
-.agent .s{font-size:10px;color:var(--muted);margin-top:1px}
-.agent.core .c{width:92px;height:92px;border-color:var(--teal);box-shadow:0 0 34px var(--glow);font-size:24px}
-.agent.ext{cursor:pointer}
-.agent.ext .c{border-color:var(--amber);box-shadow:0 0 20px rgba(245,166,35,.4)}
-.agent.ext .n{color:#ffdf9e}
-.agent.ext:hover .c{box-shadow:0 0 34px rgba(245,166,35,.7)}
-
-/* ---------- isolation ---------- */
-.iso-title{position:absolute;top:96px;left:0;right:0;text-align:center;z-index:4}
-.iso-title h2{font-size:22px;font-weight:800}
-.livezone{position:absolute;left:150px;top:300px;z-index:4;text-align:center}
-.livezone .ring{width:150px;height:150px;border-radius:50%;border:1.5px solid var(--teal-dim);margin:0 auto;
-  display:grid;place-items:center;box-shadow:0 0 26px rgba(47,214,192,.25)}
-.livezone .ring b{font-size:34px}
-.livezone .t{margin-top:12px;font-size:13px;font-weight:700;color:var(--teal-br)}
-.livezone .s{font-size:11px;color:var(--muted);max-width:200px;margin:4px auto 0}
-
-.bubble{position:absolute;right:170px;top:250px;width:360px;height:300px;z-index:3;border-radius:48% 52% 55% 45%/50% 45% 55% 50%;
-  border:2px dashed var(--teal);background:radial-gradient(circle at 50% 45%,rgba(20,40,42,.55),rgba(4,10,12,.3));
-  box-shadow:inset 0 0 40px rgba(47,214,192,.15);display:grid;place-items:center;animation:breathe 5s ease-in-out infinite}
-@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.02)}}
-.bubble .lbl{position:absolute;top:-26px;left:0;right:0;text-align:center;font-size:12px;font-weight:700;color:var(--teal-br)}
-.bubble .sub{position:absolute;bottom:-30px;left:0;right:0;text-align:center;font-size:11px;color:var(--muted)}
-
-.badagent{position:absolute;z-index:6;transform:translate(-50%,-50%);text-align:center;left:300px;top:375px;
-  transition:left 1.1s cubic-bezier(.7,0,.3,1),top 1.1s cubic-bezier(.7,0,.3,1)}
-.badagent .c{width:70px;height:70px;border-radius:50%;margin:0 auto;display:grid;place-items:center;font-size:22px;
-  border:2px solid var(--amber);background:radial-gradient(circle at 50% 40%,rgba(245,166,35,.2),rgba(20,8,4,.7));
-  box-shadow:0 0 22px rgba(245,166,35,.5)}
-.badagent.isolated .c{border-color:var(--red);box-shadow:0 0 26px rgba(255,77,94,.6)}
-.badagent .n{font-size:12px;font-weight:700;margin-top:8px;color:#ffdf9e}
-
-/* alert toast */
-.toast{position:absolute;top:150px;left:50%;transform:translate(-50%,-16px);z-index:9;
-  background:rgba(30,8,10,.92);border:1px solid var(--red);border-radius:12px;padding:12px 18px;
-  display:flex;align-items:center;gap:12px;max-width:640px;opacity:0;transition:.45s;box-shadow:0 8px 30px rgba(0,0,0,.5)}
-.toast.on{opacity:1;transform:translate(-50%,0)}
-.toast .ic{width:24px;height:24px;border-radius:6px;background:var(--red);display:grid;place-items:center;color:#fff;font-weight:800;flex:0 0 auto}
-.toast .tx{font-size:13px;color:#ffd7db;line-height:1.35}
-.toast .tx b{color:#fff}
-
-.status{position:absolute;left:0;right:0;bottom:120px;text-align:center;z-index:6;font-size:13px;color:var(--teal-br);opacity:0;transition:.4s}
-.status.on{opacity:1}
-
-/* SOC call card */
-.soc{position:absolute;right:60px;bottom:96px;z-index:10;width:300px;background:rgba(9,12,16,.96);
-  border:1px solid var(--hair);border-radius:16px;padding:16px;box-shadow:0 12px 40px rgba(0,0,0,.6);
-  transform:translateY(20px);opacity:0;transition:.45s}
-.soc.on{transform:translateY(0);opacity:1}
-.soc .row{display:flex;align-items:center;gap:12px}
-.soc .av{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--magenta),#7a1450);
-  display:grid;place-items:center;font-weight:800;color:#fff;flex:0 0 auto}
-.soc.ring .av{animation:ring 1s ease-in-out infinite}
-@keyframes ring{0%,100%{box-shadow:0 0 0 0 rgba(226,0,116,.5)}50%{box-shadow:0 0 0 10px rgba(226,0,116,0)}}
-.soc .who b{font-size:14px}.soc .who span{display:block;font-size:11px;color:var(--muted)}
-.soc .msg{font-size:12px;color:#cfd6db;line-height:1.4;margin-top:12px;border-top:1px solid var(--hair);padding-top:10px;display:none}
-.soc.answered .msg{display:block}
-.soc .btns{display:flex;gap:8px;margin-top:12px}
-.soc button{flex:1;appearance:none;border:0;border-radius:8px;padding:9px;font-family:var(--font);font-weight:700;font-size:12px;cursor:pointer}
-.soc .accept{background:var(--teal);color:#02130f}
-.soc .end{background:#2a1013;color:#ff9aa4}
-
-.riskchip{position:absolute;right:60px;top:150px;z-index:7;background:#1a0c0f;border:1px solid var(--red);
-  color:#ff9aa4;font-size:11px;font-weight:800;padding:5px 10px;border-radius:6px;opacity:0;transition:.3s}
-.riskchip.on{opacity:1}
-
-/* controls */
-.ctrls{position:absolute;right:24px;bottom:22px;z-index:11;display:flex;gap:8px}
-.ctrls button{appearance:none;border:1px solid var(--teal);background:var(--teal);color:#02130f;
-  font-family:var(--font);font-weight:700;font-size:12px;padding:9px 15px;border-radius:9px;cursor:pointer}
-.ctrls button.ghost{background:transparent;color:var(--teal-br)}
+.pop .foot{margin-top:10px;font-size:10.5px;color:var(--teal-br);opacity:.85;letter-spacing:.04em;line-height:1.4}
 .reduced .logo::after,.reduced .agentic .ah .o::after{animation:none}
-.endnote{position:absolute;left:0;right:0;bottom:60px;text-align:center;z-index:6;font-size:12px;color:var(--dim);opacity:0;transition:.4s}
-.endnote.on{opacity:1}
 </style>
 </head>
 <body>
 <div id="fit"><div id="stage">
+  <div class="dome"></div>
   <canvas id="cv"></canvas>
+  <svg class="wire" id="wFlow" viewBox="0 0 1440 810"></svg>
 
   <div class="top">
     <div>
@@ -239,140 +156,79 @@ svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;ov
       <div class="kebab">⋮</div>
     </div>
   </div>
-  <div class="back" id="backBtn">‹ Back to Command Center</div>
 
-  <!-- ============ SCENE 1 : FLOW (XSIAM Command Center) ============ -->
-  <section class="scene active" id="flow">
-    <svg class="wire" id="wFlow" viewBox="0 0 1440 810"></svg>
+  <!-- Agentic assistant header -->
+  <div class="agentic" id="agentic">
+    <div class="ah"><span class="o"></span>CORTEX AGENTIC ASSISTANT <span class="car">▾</span></div>
+    <div class="hint">correlation engine · click for detail</div>
+  </div>
 
-    <!-- Agentic assistant header -->
-    <div class="agentic" id="agentic">
-      <div class="ah"><span class="o"></span>CORTEX AGENTIC ASSISTANT <span class="car">▾</span></div>
-      <div class="hint">open agent architecture →</div>
+  <!-- Left data sources (fan-in) -->
+  <div id="srcWrap"></div>
+
+  <!-- Issues -> core -> Cases spine -->
+  <div class="node click" id="nIssues" style="left:628px;top:418px">
+    <div class="num" style="font-size:46px"><span data-count="2456" data-comma>0</span></div>
+    <div class="cap">Issues</div><div class="hint">from ML analytics →</div>
+  </div>
+  <div class="corehit" id="coreHit" style="left:884px;top:418px;width:280px;height:280px"></div>
+  <div class="node click" id="nCases" style="left:1092px;top:418px">
+    <div class="num" style="font-size:40px"><span data-count="95">0</span></div>
+    <div class="cap">Cases</div><div class="hint">breakdown →</div>
+  </div>
+
+  <!-- Right funnel -->
+  <div class="funnode" id="fnAuto" style="left:1206px;top:312px">
+    <div class="fl above"><b><span data-count="78">0</span></b><span>Automated</span></div>
+    <div class="disc2"><svg viewBox="0 0 24 24" fill="none" stroke="#6ff3e0" stroke-width="1.6">
+      <circle cx="12" cy="5" r="2.4"/><circle cx="5" cy="17" r="2.4"/><circle cx="19" cy="17" r="2.4"/>
+      <path d="M12 7.4V13M12 13l-5.5 2M12 13l5.5 2"/></svg></div>
+  </div>
+  <div class="funnode" id="fnManual" style="left:1206px;top:524px">
+    <div class="disc2"><svg viewBox="0 0 24 24" fill="none" stroke="#8b959e" stroke-width="1.6">
+      <circle cx="12" cy="8" r="3.4"/><path d="M5.5 19a6.5 6.5 0 0 1 13 0"/></svg></div>
+    <div class="fl below"><b><span data-count="17">0</span></b><span>Manual</span></div>
+  </div>
+
+  <div class="outcome click" id="nResolved" style="left:1300px;top:300px">
+    <b><span data-count="84">0</span></b><span>Resolved Cases</span>
+  </div>
+  <div class="chev" id="chevOpen" style="left:1258px;top:474px">
+    <div class="cv crit"><i>▲▲</i>3</div>
+    <div class="cv high"><i>▲▲</i>3</div>
+    <div class="cv med"><i>▲</i>5</div>
+    <div class="cv low"><i>▲</i>0</div>
+  </div>
+  <div class="outcome click" id="nOpen" style="left:1330px;top:526px">
+    <b><span data-count="11">0</span></b><span>Open Cases</span>
+  </div>
+
+  <!-- Bottom stat tiles -->
+  <div class="tiles">
+    <div class="tile" data-detail="events">
+      <div class="k">Events Ingestion</div>
+      <div class="vrow"><div class="v"><span data-count="43">0</span><u>B/24H</u></div>
+        <svg class="spark" id="spk1" viewBox="0 0 130 40" preserveAspectRatio="none"></svg></div>
     </div>
-
-    <!-- Left data sources (fan-in) -->
-    <div id="srcWrap"></div>
-
-    <!-- Issues -> swarm -> Cases spine -->
-    <div class="node click" id="nIssues" style="left:628px;top:400px">
-      <div class="num" style="font-size:46px"><span data-count="2456" data-comma>0</span></div>
-      <div class="cap">Issues</div><div class="hint">correlating →</div>
+    <div class="tile" data-detail="data">
+      <div class="k">Data Ingestion</div>
+      <div class="vrow"><div class="v"><span data-count="65">0</span><u>TB/24H</u></div>
+        <svg class="spark" id="spk2" viewBox="0 0 130 40" preserveAspectRatio="none"></svg></div>
     </div>
-    <div class="swarmhit" id="swarmHit" style="left:880px;top:400px;width:250px;height:250px"></div>
-    <div class="node click" id="nCases" style="left:1092px;top:400px">
-      <div class="num" style="font-size:40px"><span data-count="95">0</span></div>
-      <div class="cap">Cases</div><div class="hint">breakdown →</div>
+    <div class="tile" data-detail="open">
+      <div class="k">Total Open Cases</div>
+      <div class="vrow"><div class="v"><span data-count="11">0</span></div>
+        <button class="invest" id="investBtn"><span class="o"></span>Investigate</button></div>
     </div>
-
-    <!-- Right funnel -->
-    <div class="funnode" id="fnAuto" style="left:1206px;top:302px">
-      <div class="fl above"><b><span data-count="78">0</span></b><span>Automated</span></div>
-      <div class="disc2"><svg viewBox="0 0 24 24" fill="none" stroke="#6ff3e0" stroke-width="1.6">
-        <circle cx="12" cy="5" r="2.4"/><circle cx="5" cy="17" r="2.4"/><circle cx="19" cy="17" r="2.4"/>
-        <path d="M12 7.4V13M12 13l-5.5 2M12 13l5.5 2"/></svg></div>
+    <div class="tile" data-detail="prevented">
+      <div class="k">Prevented Events</div>
+      <div class="vrow"><div class="v"><span data-count="286.1" data-decimals="1" data-suffix="K">0</span></div>
+        <svg class="spark" id="spk3" viewBox="0 0 130 40" preserveAspectRatio="none"></svg></div>
     </div>
-    <div class="funnode" id="fnManual" style="left:1206px;top:520px">
-      <div class="disc2"><svg viewBox="0 0 24 24" fill="none" stroke="#8b959e" stroke-width="1.6">
-        <circle cx="12" cy="8" r="3.4"/><path d="M5.5 19a6.5 6.5 0 0 1 13 0"/></svg></div>
-      <div class="fl below"><b><span data-count="17">0</span></b><span>Manual</span></div>
-    </div>
-
-    <div class="outcome click" id="nResolved" style="left:1300px;top:290px">
-      <b><span data-count="84">0</span></b><span>Resolved Cases</span>
-    </div>
-    <div class="chev" id="chevOpen" style="left:1258px;top:470px">
-      <div class="cv crit"><i>▲▲</i>3</div>
-      <div class="cv high"><i>▲▲</i>3</div>
-      <div class="cv med"><i>▲</i>5</div>
-      <div class="cv low"><i>▲</i>0</div>
-    </div>
-    <div class="outcome click" id="nOpen" style="left:1330px;top:522px">
-      <b><span data-count="11">0</span></b><span>Open Cases</span>
-    </div>
-
-    <!-- Bottom stat tiles -->
-    <div class="tiles">
-      <div class="tile" data-detail="events">
-        <div class="k">Events Ingestion</div>
-        <div class="vrow"><div class="v"><span data-count="43">0</span><u>B/24H</u></div>
-          <svg class="spark" id="spk1" viewBox="0 0 120 38" preserveAspectRatio="none"></svg></div>
-      </div>
-      <div class="tile" data-detail="data">
-        <div class="k">Data Ingestion</div>
-        <div class="vrow"><div class="v"><span data-count="65">0</span><u>TB/24H</u></div>
-          <svg class="spark" id="spk2" viewBox="0 0 120 38" preserveAspectRatio="none"></svg></div>
-      </div>
-      <div class="tile" id="tileOpen">
-        <div class="k">Total Open Cases</div>
-        <div class="vrow"><div class="v"><span data-count="11">0</span></div>
-          <button class="invest" id="investBtn"><span class="o"></span>Investigate</button></div>
-      </div>
-      <div class="tile" data-detail="prevented">
-        <div class="k">Prevented Events</div>
-        <div class="vrow"><div class="v"><span data-count="286.1" data-decimals="1" data-suffix="K">0</span></div>
-          <svg class="spark" id="spk3" viewBox="0 0 120 38" preserveAspectRatio="none"></svg></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ SCENE 2 : AGENTS (reduced radial) ============ -->
-  <section class="scene" id="agents">
-    <svg class="wire" id="wAgents" viewBox="0 0 1440 810"></svg>
-    <div class="aTitle"><h2>Agent Architecture — Medication Logistics</h2>
-      <p>A small system of cooperating agents, coordinated by one orchestrator. Reduced to essentials.</p></div>
-
-    <div class="agent core" style="left:720px;top:430px"><div class="c">◎</div><div class="n">Orchestrator</div><div class="s">coordinates &amp; arbitrates</div></div>
-    <div class="agent"      style="left:720px;top:250px"><div class="c">⇄</div><div class="n">AGV Routing Agent</div></div>
-    <div class="agent"      style="left:918px;top:335px"><div class="c">▦</div><div class="n">Stock / Replenishment</div></div>
-    <div class="agent ext"  id="agSupplier" style="left:918px;top:525px"><div class="c">⚑</div><div class="n">Supplier Logistics Agent</div><div class="s">external · anomaly? →</div></div>
-    <div class="agent"      style="left:720px;top:610px"><div class="c">◈</div><div class="n">Permission &amp; Identity</div></div>
-    <div class="agent"      style="left:522px;top:525px"><div class="c">◔</div><div class="n">Behavior / Anomaly</div></div>
-    <div class="agent"      style="left:522px;top:335px"><div class="c">◇</div><div class="n">Context · Hospital KG</div></div>
-  </section>
-
-  <!-- ============ SCENE 3 : ISOLATION ============ -->
-  <section class="scene" id="iso">
-    <svg class="wire" id="wIso" viewBox="0 0 1440 810"></svg>
-    <div class="iso-title"><h2>Isolation &amp; Response</h2></div>
-    <div class="riskchip" id="riskChip">RISK: HIGH · medication supply</div>
-
-    <div class="livezone">
-      <div class="ring"><b>38</b></div>
-      <div class="t">Live hospital network</div>
-      <div class="s">medication AGVs keep running — fallback delivery continues</div>
-    </div>
-
-    <div class="bubble">
-      <div class="lbl" id="bubbleLbl">Secure Simulation</div>
-      <div class="sub">synthetic hospital · no real patient / medication / location data</div>
-    </div>
-
-    <div class="badagent" id="badAgent"><div class="c">⚑</div><div class="n">Supplier Agent</div></div>
-
-    <div class="toast" id="toast">
-      <div class="ic">!</div>
-      <div class="tx"><b>Unusual agent behavior detected.</b> Supplier agent requesting restricted location and medication data.</div>
-    </div>
-
-    <div class="status" id="isoStatus">Agent isolated from live systems · redirected to secure simulation · fallback delivery continues.</div>
-
-    <div class="soc" id="soc">
-      <div class="row"><div class="av">SOC</div><div class="who"><b>Telekom SOC</b><span id="socState">Incoming call…</span></div></div>
-      <div class="msg" id="socMsg">“This agent may be misconfigured, compromised, or acting beyond its authorized scope. It keeps requesting patient medication schedules and room-level AGV positions. I recommend we revoke access.”</div>
-      <div class="btns"><button class="accept" id="socAccept">Accept call</button><button class="end" id="socEnd">Dismiss</button></div>
-    </div>
-
-    <div class="endnote" id="endNote">— end of part 1 —</div>
-  </section>
+  </div>
 
   <!-- detail popover -->
   <div class="pop" id="pop"></div>
-
-  <div class="ctrls">
-    <button class="ghost" id="resetBtn" style="display:none">Reset</button>
-    <button id="playBtn" style="display:none">▶ Run isolation</button>
-  </div>
 
 </div></div>
 
@@ -385,10 +241,14 @@ const $=s=>document.querySelector(s);
 const $$=s=>[...document.querySelectorAll(s)];
 const svgEl=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
 function band(a,b,k=.55){const dx=(b.x-a.x)*k;return `M ${a.x} ${a.y} C ${a.x+dx} ${a.y}, ${b.x-dx} ${b.y}, ${b.x} ${b.y}`;}
+function cubic(p0,p1,p2,p3,t){const u=1-t;
+  return {x:u*u*u*p0.x+3*u*u*t*p1.x+3*u*t*t*p2.x+t*t*t*p3.x,
+          y:u*u*u*p0.y+3*u*u*t*p1.y+3*u*t*t*p2.y+t*t*t*p3.y};}
+function bezPt(a,b,k,t){const dx=(b.x-a.x)*k;return cubic(a,{x:a.x+dx,y:a.y},{x:b.x-dx,y:b.y},b,t);}
 
-/* ---------------- fake-but-consistent data model ---------------- */
+/* ---------------- fake-but-consistent data ---------------- */
 const DATA={
-  sources:[ // 11 named + a "+68 more"; mix of generic XSIAM connectors + Telekom sovereign
+  sources:[
     {n:'Endpoints',       s:'19.2K', rate:'6.1 B/24H', res:'Germany Data Boundary'},
     {n:'NGFW',            s:'',      rate:'11.4 B/24H',res:'EU / on-prem'},
     {n:'T Cloud Public',  s:'',      rate:'4.7 B/24H', res:'Open Telekom Cloud · DE', t:1},
@@ -401,11 +261,11 @@ const DATA={
     {n:'T-Systems Sovereign Cloud', lab:'T-Systems Sovereign', s:'', rate:'3.4 B/24H', res:'powered by Google Cloud · DE', t:1},
     {n:'Magenta Security · SOC', lab:'Magenta Security', s:'', rate:'0.6 B/24H', res:'Cyber Defense Center Bonn', t:1},
     {more:'+68 Data Sources'}
-  ],
-  issues:2456, cases:95, automated:78, manual:17, resolved:84, open:11,
-  sev:{crit:3, high:3, med:5, low:0},
-  eventsPerDay:'43', dataPerDay:'65', prevented:'286.1K'
+  ]
 };
+const SRC_X=302, SRC_Y0=236, SRC_STEP=33.2, WAIST={x:556,y:418}, CORE={x:884,y:418,R:132}, CASES={x:1092,y:418};
+const AUTO={x:1206,y:312}, MAN={x:1206,y:524};
+const srcPts=[]; // ribbon origin per source row
 
 /* ---- glow + gradient defs, ribbons ---- */
 function defs(svg){const d=svgEl('defs',{});d.innerHTML=`
@@ -414,15 +274,12 @@ function defs(svg){const d=svgEl('defs',{});d.innerHTML=`
   <linearGradient id="tmag" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5a0b34"/><stop offset="1" stop-color="#2fd6c0"/></linearGradient>`;svg.appendChild(d);}
 function ribbon(svg,a,b,w,col='url(#teal)',k=.55,flow=true){
   svg.appendChild(svgEl('path',{d:band(a,b,k),fill:'none',stroke:col,'stroke-width':w,'stroke-linecap':'round',opacity:.7,filter:'url(#g)'}));
-  if(flow){const f=svgEl('path',{d:band(a,b,k),fill:'none',stroke:'#a8fff0','stroke-width':1.6,'stroke-dasharray':'2 90','stroke-linecap':'round',class:'fl'});
-    svg.appendChild(f);}
+  if(flow){svg.appendChild(svgEl('path',{d:band(a,b,k),fill:'none',stroke:'#a8fff0','stroke-width':1.5,'stroke-dasharray':'2 90','stroke-linecap':'round',class:'fl'}));}
 }
 function ring(svg,cx,cy,r,n,op=.5){for(let i=0;i<n;i++){const a=i/n*6.283,r2=r+(i%6===0?7:3);
   svg.appendChild(svgEl('line',{x1:cx+Math.cos(a)*r,y1:cy+Math.sin(a)*r,x2:cx+Math.cos(a)*r2,y2:cy+Math.sin(a)*r2,stroke:`rgba(47,214,192,${op*.35})`,'stroke-width':1}));}}
 
 /* ---- build left source rows ---- */
-const SRC_X=302, SRC_Y0=232, SRC_STEP=33.2, WAIST={x:556,y:400}, SWARM={x:880,y:400}, CASES={x:1092,y:400};
-const srcRibbons=[];
 (function(){const wrap=$('#srcWrap');
   DATA.sources.forEach((s,i)=>{const y=SRC_Y0+i*SRC_STEP;const el=document.createElement('div');
     if(s.more){el.className='src more';el.style.cssText=`left:145px;top:${y}px`;
@@ -431,112 +288,104 @@ const srcRibbons=[];
       el.dataset.idx=i;
       el.innerHTML=`<span class="lab">${s.lab||s.n}${s.s?` <small>· ${s.s}</small>`:''}</span><span class="dot"></span>`;}
     wrap.appendChild(el);
+    srcPts.push({x:SRC_X,y});
   });
 })();
 
-/* flow ribbons: fan-in -> issues waist -> swarm -> cases -> funnel */
+/* ---- SVG wires ---- */
+const srcRibbons=[];
 (function(){const s=$('#wFlow');defs(s);
-  // agentic dome arc
-  s.appendChild(svgEl('path',{d:'M 560 168 Q 880 118 1200 168',fill:'none',stroke:'url(#teal)','stroke-width':2,opacity:.5,filter:'url(#g)'}));
-  s.appendChild(svgEl('path',{d:'M 610 176 Q 880 132 1150 176',fill:'none',stroke:'rgba(47,214,192,.25)','stroke-width':1}));
-  // source fan-in (grey base + teal flow line each)
-  DATA.sources.forEach((src,i)=>{const y=SRC_Y0+i*SRC_STEP;const a={x:SRC_X,y};
-    const tel=!!src.t;
-    srcRibbons.push(...(function(){
-      const base=svgEl('path',{d:band(a,WAIST,.62),fill:'none',stroke:'rgba(150,168,178,.14)','stroke-width':6,'stroke-linecap':'round',opacity:.7,filter:'url(#g)'});
-      const line=svgEl('path',{d:band(a,WAIST,.62),fill:'none',stroke:tel?'url(#tmag)':'url(#teal)','stroke-width':1.4,'stroke-linecap':'round',opacity:.55});
-      const flo =svgEl('path',{d:band(a,WAIST,.62),fill:'none',stroke:'#a8fff0','stroke-width':1.4,'stroke-dasharray':'2 90','stroke-linecap':'round',class:'fl'});
-      s.appendChild(base);s.appendChild(line);s.appendChild(flo);
-      return [{base,line,flo}];
-    })());
+  // source fan-in ribbons (grey base + colored line + flowing dash) -> all flow L->R into the waist
+  DATA.sources.forEach((src,i)=>{const a=srcPts[i];const tel=!!src.t;
+    const base=svgEl('path',{d:band(a,WAIST,.62),fill:'none',stroke:'rgba(150,168,178,.14)','stroke-width':6,'stroke-linecap':'round',opacity:.7,filter:'url(#g)'});
+    const line=svgEl('path',{d:band(a,WAIST,.62),fill:'none',stroke:tel?'url(#tmag)':'url(#teal)','stroke-width':1.4,'stroke-linecap':'round',opacity:.5});
+    const flo =svgEl('path',{d:band(a,WAIST,.62),fill:'none',stroke:'#a8fff0','stroke-width':1.4,'stroke-dasharray':'2 72','stroke-linecap':'round',class:'fl'});
+    s.appendChild(base);s.appendChild(line);s.appendChild(flo);
+    srcRibbons.push({base,line,flo});
   });
-  // waist -> swarm -> cases spine
-  ring(s,SWARM.x,SWARM.y,120,120,.5);
-  ring(s,SWARM.x,SWARM.y,150,80,.3);
-  ribbon(s,{x:WAIST.x+8,y:WAIST.y},{x:SWARM.x-118,y:SWARM.y},3);
-  ribbon(s,{x:SWARM.x+118,y:SWARM.y},{x:CASES.x-40,y:CASES.y},3);
-  // cases -> automated / manual nodes
-  const auto={x:1206,y:302}, man={x:1206,y:520};
-  ribbon(s,{x:CASES.x+40,y:CASES.y},{x:auto.x-26,y:auto.y},9,'url(#teal)',.55);
-  ribbon(s,{x:CASES.x+40,y:CASES.y},{x:man.x-26,y:man.y},5,'rgba(150,168,178,.4)',.55,false);
-  // automated -> resolved (thick teal)
-  ribbon(s,{x:auto.x+26,y:auto.y},{x:1292,y:296},14,'url(#teal)',.5);
-  // manual -> open (thin, fans to chevrons)
-  [486,512,538,564].forEach(cy=>s.appendChild(svgEl('path',{d:band({x:man.x+26,y:man.y},{x:1256,y:cy},.5),fill:'none',stroke:'rgba(150,168,178,.3)','stroke-width':1.4})));
+  // radar bezel around the core
+  ring(s,CORE.x,CORE.y,CORE.R+16,132,.55);
+  ring(s,CORE.x,CORE.y,CORE.R+40,90,.28);
+  // spine: waist -> core -> cases (flowing)
+  ribbon(s,{x:WAIST.x+8,y:WAIST.y},{x:CORE.x-CORE.R,y:CORE.y},3);
+  ribbon(s,{x:CORE.x+CORE.R,y:CORE.y},{x:CASES.x-40,y:CASES.y},3);
+  // cases -> automated / manual
+  ribbon(s,{x:CASES.x+40,y:CASES.y},{x:AUTO.x-26,y:AUTO.y},9,'url(#teal)',.55);
+  ribbon(s,{x:CASES.x+40,y:CASES.y},{x:MAN.x-26,y:MAN.y},5,'rgba(150,168,178,.4)',.55,false);
+  // automated -> resolved (thick flowing teal)
+  ribbon(s,{x:AUTO.x+26,y:AUTO.y},{x:1292,y:302},14,'url(#teal)',.5);
+  // manual -> open (thin fan to chevrons)
+  [490,516,542,568].forEach(cy=>s.appendChild(svgEl('path',{d:band({x:MAN.x+26,y:MAN.y},{x:1256,y:cy},.5),fill:'none',stroke:'rgba(150,168,178,.3)','stroke-width':1.4})));
 })();
 
-/* agents radial spokes */
-(function(){const s=$('#wAgents');defs(s);const c={x:720,y:430};
-  const orbit=[[720,250],[918,335],[918,525],[720,610],[522,525],[522,335]];
-  ring(s,c.x,c.y,205,150,.35);
-  orbit.forEach(([x,y],i)=>{const ext=i===2;
-    s.appendChild(svgEl('line',{x1:c.x,y1:c.y,x2:x,y2:y,stroke:ext?'rgba(245,166,35,.45)':'rgba(47,214,192,.35)','stroke-width':ext?2:1.4,filter:'url(#g)'}));
-  });
-})();
-
-/* isolation wires: live ring -> (severed) supplier agent */
-function drawIso(cut){const s=$('#wIso');s.innerHTML='';defs(s);
-  const live={x:225,y:375};
-  if(!cut){ribbon(s,live,{x:300,y:375},6);}
-  else{
-    s.appendChild(svgEl('path',{d:band(live,{x:300,y:375},.55),fill:'none',stroke:'rgba(255,77,94,.35)','stroke-width':3,'stroke-dasharray':'4 8'}));
-  }
-}
-drawIso(false);
-
-/* ---------- sparklines (deterministic) ---------- */
-function spark(id,vals,col){const el=$('#'+id);if(!el)return;el.innerHTML='';
-  const w=120,h=38,mn=Math.min(...vals),mx=Math.max(...vals),pad=4;
+/* ---------- smooth sparklines ---------- */
+function smoothD(pts){let d=`M ${pts[0][0].toFixed(1)} ${pts[0][1].toFixed(1)}`;
+  for(let i=0;i<pts.length-1;i++){const p0=pts[i-1]||pts[i],p1=pts[i],p2=pts[i+1],p3=pts[i+2]||p2;
+    const c1x=p1[0]+(p2[0]-p0[0])/6,c1y=p1[1]+(p2[1]-p0[1])/6,c2x=p2[0]-(p3[0]-p1[0])/6,c2y=p2[1]-(p3[1]-p1[1])/6;
+    d+=` C ${c1x.toFixed(1)} ${c1y.toFixed(1)}, ${c2x.toFixed(1)} ${c2y.toFixed(1)}, ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}`;}
+  return d;}
+function spark(id,vals,col){const el=$('#'+id);if(!el)return;
+  const w=130,h=40,mn=Math.min(...vals),mx=Math.max(...vals),pad=5;
   const pts=vals.map((v,i)=>[pad+i/(vals.length-1)*(w-2*pad), h-pad-(mx===mn?.5:(v-mn)/(mx-mn))*(h-2*pad)]);
-  const dLine='M '+pts.map(p=>p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' L ');
-  const dArea=dLine+` L ${w-pad} ${h} L ${pad} ${h} Z`;
-  const gid=id+'grad';
+  const dLine=smoothD(pts),gid=id+'grad',last=pts[pts.length-1];
   el.innerHTML=`<defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="${col}" stop-opacity=".28"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient></defs>
-    <path d="${dArea}" fill="url(#${gid})"/><path d="${dLine}" fill="none" stroke="${col}" stroke-width="1.6"/>
-    <circle cx="${pts[pts.length-1][0].toFixed(1)}" cy="${pts[pts.length-1][1].toFixed(1)}" r="2.4" fill="${col}"/>`;
+    <stop offset="0" stop-color="${col}" stop-opacity=".30"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient></defs>
+    <path d="${dLine} L ${w-pad} ${h} L ${pad} ${h} Z" fill="url(#${gid})"/>
+    <path d="${dLine}" fill="none" stroke="${col}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="${last[0].toFixed(1)}" cy="${last[1].toFixed(1)}" r="2.6" fill="${col}"/>`;
 }
 function drawSparks(){
-  spark('spk1',[28,33,30,38,34,41,37,43,40,47,43],'#6ff3e0');
-  spark('spk2',[52,58,55,63,60,57,66,61,68,64,65],'#6ff3e0');
-  spark('spk3',[210,232,225,248,240,262,255,268,274,281,286],'#2fd6c0');
+  spark('spk1',[30,31,33,32,35,34,37,38,37,40,43],'#6ff3e0');       // events, steady rise
+  spark('spk2',[61,63,60,64,62,66,63,65,64,66,65],'#6ff3e0');       // data, gentle wobble
+  spark('spk3',[248,252,258,255,264,268,272,276,279,283,286],'#2fd6c0'); // prevented, rising
 }
 
-/* ---------- particle canvas ---------- */
+/* ---------- particle canvas: structured core + L->R flow ---------- */
 const DPR=Math.min(devicePixelRatio||1,2);const cv=$('#cv');const ctx=cv.getContext('2d');
 cv.width=1440*DPR;cv.height=810*DPR;ctx.scale(DPR,DPR);
-const PAL=['#2fd6c0','#2fd6c0','#2fd6c0','#6ff3e0','#f5a623','#ff4d5e','#4aa3ff'];
-const swarm=[];for(let i=0;i<230;i++){const rad=14+Math.random()*104,ang=Math.random()*6.283;
-  swarm.push({ang,rad,sp:(Math.random()*.0006+.0002)*(Math.random()<.5?-1:1),ph:Math.random()*6.283,col:PAL[i%PAL.length],sz:Math.random()<.15?2.2:1.4});}
-const streak=[];for(let i=0;i<7;i++)streak.push({x:SWARM.x+60,y:SWARM.y+(Math.random()*40-20),sp:1.5+Math.random()*1.3});
-const live=[];for(let i=0;i<26;i++)live.push({x:120+Math.random()*160,y:355+Math.random()*40,sp:.6+Math.random()*1.2});
-const caged=[];for(let i=0;i<24;i++){const a=Math.random()*6.283,r=Math.random()*90;caged.push({a,r,sp:(Math.random()*.01+.004),ph:Math.random()*6.283});}
-let scene='flow',isolated=false;
+
+// structured concentric core: dots quantized to ring bands, denser toward centre
+const BANDS=[16,34,52,70,88,106,124];const COUNTS=[7,13,19,26,33,40,48];
+const core=[];BANDS.forEach((r,bi)=>{const n=COUNTS[bi];for(let i=0;i<n;i++){
+  const a=i/n*6.283+(bi%2?.12:0);const accent=Math.random()<.12;
+  core.push({r,a,sp:(bi%2?1:-1)*(0.00016+0.00006*(BANDS.length-bi)),ph:Math.random()*6.283,
+    col:accent?['#ff4d5e','#f5a623','#4aa3ff'][i%3]:(Math.random()<.25?'#6ff3e0':'#2fd6c0'),
+    sz:accent?2.1:(Math.random()<.2?1.9:1.3)});}});
+
+// L->R throughput streaks passing through the core toward Cases
+const streak=[];for(let i=0;i<9;i++)streak.push({x:WAIST.x+40+Math.random()*300,y:CORE.y+(Math.random()*70-35),sp:1.6+Math.random()*1.6,len:22+Math.random()*22});
+
+// packets riding the source ribbons into the waist (data being pulled in)
+const packets=[];srcPts.forEach((a,i)=>{if(DATA.sources[i].more)return;for(let j=0;j<2;j++)packets.push({i,t:(j*0.5)+Math.random()*0.4,sp:0.0035+Math.random()*0.0025});});
+// packets riding cases -> automated -> resolved
+const outPk=[];for(let j=0;j<4;j++)outPk.push({t:j*0.25,sp:0.004+Math.random()*0.002});
 
 function frame(t){ctx.clearRect(0,0,1440,810);
-  if(scene==='flow'){
-    const cx=SWARM.x,cy=SWARM.y;
-    for(const p of swarm){if(!REDUCED)p.ang+=p.sp;const w=Math.sin(t*.0011+p.ph)*4;
-      const x=cx+Math.cos(p.ang)*(p.rad+w),y=cy+Math.sin(p.ang)*(p.rad+w);
-      ctx.globalAlpha=.35+.45*(0.5+0.5*Math.sin(t*.002+p.ph));ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(x,y,p.sz,0,6.283);ctx.fill();}
-    for(const s of streak){if(!REDUCED)s.x+=s.sp;if(s.x>CASES.x-40){s.x=cx+30;s.y=cy+(Math.random()*60-30);}
-      const g=ctx.createLinearGradient(s.x-26,0,s.x,0);g.addColorStop(0,'rgba(111,243,224,0)');g.addColorStop(1,'rgba(111,243,224,.9)');
-      ctx.strokeStyle=g;ctx.lineWidth=1.6;ctx.globalAlpha=1;ctx.beginPath();ctx.moveTo(s.x-26,s.y);ctx.lineTo(s.x,s.y);ctx.stroke();}
-  }else if(scene==='agents'){
-    for(let i=0;i<70;i++){const a=(t*.00006+i*.09)%6.283,r=210+Math.sin(t*.001+i)*6;
-      ctx.globalAlpha=.15+.1*Math.sin(t*.002+i);ctx.fillStyle='#2fd6c0';ctx.beginPath();ctx.arc(720+Math.cos(a)*r,430+Math.sin(a)*r,1.1,0,6.283);ctx.fill();}
-  }else if(scene==='iso'){
-    for(const p of live){if(!REDUCED)p.x+=p.sp;if(p.x>300){p.x=120;p.y=355+Math.random()*40;}
-      ctx.globalAlpha=.5+.4*Math.sin(t*.003+p.x);ctx.fillStyle='#2fd6c0';ctx.beginPath();ctx.arc(p.x,p.y,1.4,0,6.283);ctx.fill();}
-    if(isolated){
-      for(const p of caged){if(!REDUCED)p.a+=p.sp;const x=630+Math.cos(p.a)*p.r,y=400+Math.sin(p.a)*p.r*.85;
-        ctx.globalAlpha=.4+.3*Math.sin(t*.004+p.ph);ctx.fillStyle=Math.random()<.3?'#ff4d5e':'#f5a623';ctx.beginPath();ctx.arc(x,y,1.5,0,6.283);ctx.fill();}}
-  }
+  // sonar pulse
+  if(!REDUCED){const period=3600,ph=(t%period)/period,rr=ph*(CORE.R+30),al=(1-ph)*0.22;
+    ctx.strokeStyle=`rgba(47,214,192,${al})`;ctx.lineWidth=1.4;ctx.beginPath();ctx.arc(CORE.x,CORE.y,rr,0,6.283);ctx.stroke();}
+  // core dots
+  for(const p of core){if(!REDUCED)p.a+=p.sp;const br=p.r+Math.sin(t*.0011+p.ph)*2.2;
+    const x=CORE.x+Math.cos(p.a)*br,y=CORE.y+Math.sin(p.a)*br;
+    ctx.globalAlpha=.4+.5*(0.5+0.5*Math.sin(t*.0022+p.ph));ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(x,y,p.sz,0,6.283);ctx.fill();}
+  ctx.globalAlpha=1;
+  // throughput streaks (L->R through the core)
+  for(const s of streak){if(!REDUCED)s.x+=s.sp;if(s.x>CASES.x-46){s.x=WAIST.x+40;s.y=CORE.y+(Math.random()*70-35);}
+    const g=ctx.createLinearGradient(s.x-s.len,0,s.x,0);g.addColorStop(0,'rgba(111,243,224,0)');g.addColorStop(1,'rgba(111,243,224,.85)');
+    ctx.strokeStyle=g;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(s.x-s.len,s.y);ctx.lineTo(s.x,s.y);ctx.stroke();}
+  // source packets into waist
+  for(const p of packets){if(!REDUCED)p.t+=p.sp;if(p.t>1)p.t-=1;const pt=bezPt(srcPts[p.i],WAIST,.62,p.t);
+    const fade=Math.sin(p.t*Math.PI);ctx.globalAlpha=.85*fade;ctx.fillStyle='#a8fff0';ctx.beginPath();ctx.arc(pt.x,pt.y,1.7,0,6.283);ctx.fill();}
+  // out packets: cases -> automated -> resolved
+  for(const p of outPk){if(!REDUCED)p.t+=p.sp;if(p.t>1)p.t-=1;let pt;
+    if(p.t<.5){pt=bezPt({x:CASES.x+40,y:CASES.y},{x:AUTO.x-26,y:AUTO.y},.55,p.t/.5);}
+    else{pt=bezPt({x:AUTO.x+26,y:AUTO.y},{x:1292,y:302},.5,(p.t-.5)/.5);}
+    ctx.globalAlpha=.9;ctx.fillStyle='#a8fff0';ctx.beginPath();ctx.arc(pt.x,pt.y,1.8,0,6.283);ctx.fill();}
   ctx.globalAlpha=1;requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
 
-/* flow-line dash animation */
+/* flow-line dash animation (L->R) */
 if(!REDUCED){const st=document.createElement('style');st.textContent='@keyframes flow{to{stroke-dashoffset:-1000}}.fl{animation:flow 6s linear infinite}';document.head.appendChild(st);}
 
 /* ---------- count-up ---------- */
@@ -547,89 +396,94 @@ function countUp(root){root.querySelectorAll('[data-count]').forEach(el=>{
   if(REDUCED){el.textContent=fmt(target);return;}
   const t0=performance.now();(function s(n){const p=Math.min(1,(n-t0)/1100),e=1-Math.pow(1-p,3);el.textContent=fmt(target*e);if(p<1)requestAnimationFrame(s);else el.textContent=fmt(target);})(t0);
 });}
-countUp($('#flow'));drawSparks();
+countUp(document);drawSparks();
 
 /* ---------- detail popover ---------- */
 const pop=$('#pop');let popOpen=false;
 function detailHTML(key){
-  if(key==='events') return `<h4><span class="d"></span>Events Ingestion</h4>
-    <div class="r"><span>Rate</span><b>43 B / 24H</b></div>
-    <div class="r"><span>Peak</span><b>2.1 M / sec</b></div>
-    <div class="r"><span>Sources</span><b>84 connectors</b></div>
-    <div class="r"><span>Residency</span><b class="ok">Germany DB</b></div>
-    <div class="foot">Normalized to the Cortex data model</div>`;
-  if(key==='data') return `<h4><span class="d"></span>Data Ingestion</h4>
-    <div class="r"><span>Volume</span><b>65 TB / 24H</b></div>
-    <div class="r"><span>Hot store</span><b>1.9 PB</b></div>
-    <div class="r"><span>Retention</span><b>365 days</b></div>
-    <div class="r"><span>Hosting</span><b class="ok">Sovereign Cloud</b></div>`;
-  if(key==='prevented') return `<h4><span class="d"></span>Prevented Events</h4>
-    <div class="r"><span>Blocked (24H)</span><b>286.1 K</b></div>
-    <div class="r"><span>By NGFW</span><b>241.0 K</b></div>
-    <div class="r"><span>By XDR agent</span><b>45.1 K</b></div>
-    <div class="foot">Inline prevention across the sovereign estate</div>`;
-  if(key==='cases') return `<h4><span class="d"></span>95 Cases</h4>
+  const D={
+  engine:`<h4><span class="d"></span>Correlation Engine</h4>
+    <div class="r"><span>Analytics models</span><b>2,600+ ML</b></div>
+    <div class="r"><span>Detections</span><b>13,300+</b></div>
+    <div class="r"><span>MITRE ATT&CK</span><b class="ok">100% coverage</b></div>
+    <div class="r"><span>Noise reduced</span><b class="ok">≈ 99%</b></div>
+    <div class="foot">Stitches 2,456 issues into 95 prioritized cases with root-cause</div>`,
+  issues:`<h4><span class="d"></span>2,456 Issues</h4>
+    <div class="r"><span>Window</span><b>Last 24H</b></div>
+    <div class="r"><span>Raised by</span><b>2,600+ ML models</b></div>
+    <div class="r"><span>Critical / High</span><b class="warn">312</b></div>
+    <div class="r"><span>Deduplicated</span><b class="ok">96%</b></div>
+    <div class="foot">Normalized to the Cortex data model before correlation</div>`,
+  cases:`<h4><span class="d"></span>95 Cases</h4>
     <div class="r"><span>From</span><b>2,456 issues</b></div>
     <div class="r"><span>Automated</span><b class="ok">78</b></div>
     <div class="r"><span>Manual</span><b class="warn">17</b></div>
     <div class="r"><span>Resolved</span><b class="ok">84</b></div>
     <div class="r"><span>Open</span><b class="warn">11</b></div>
-    <div class="foot">Correlated & deduplicated by the agentic assistant</div>`;
-  if(key==='resolved') return `<h4><span class="d"></span>84 Resolved Cases</h4>
+    <div class="foot">Each case carries the full attack story + root cause</div>`,
+  automated:`<h4><span class="d"></span>78 Automated</h4>
+    <div class="r"><span>Handled by</span><b>Agentic AI</b></div>
+    <div class="r"><span>Playbooks run</span><b>142</b></div>
+    <div class="r"><span>Manual work</span><b class="ok">−75%</b></div>
+    <div class="foot">Agents gather → analyze → plan → act under governance</div>`,
+  manual:`<h4><span class="d"></span>17 Manual</h4>
+    <div class="r"><span>Routed to</span><b>SOC analyst</b></div>
+    <div class="r"><span>Avg. handle</span><b>18m</b></div>
+    <div class="r"><span>Escalated</span><b class="warn">3</b></div>
+    <div class="foot">Assigned when confidence or policy needs a human</div>`,
+  resolved:`<h4><span class="d"></span>84 Resolved Cases</h4>
     <div class="r"><span>Auto-remediated</span><b class="ok">78</b></div>
     <div class="r"><span>Analyst-closed</span><b>6</b></div>
-    <div class="r"><span>Mean time</span><b>4m 12s</b></div>
-    <div class="foot">Closed by Cortex playbooks / SOAR</div>`;
-  return '';
+    <div class="r"><span>MTTR</span><b class="ok">−98%</b></div>
+    <div class="foot">Closed by Cortex playbooks / SOAR</div>`,
+  open:`<h4><span class="d"></span>11 Open Cases</h4>
+    <div class="r"><span>Critical</span><b class="bad">3</b></div>
+    <div class="r"><span>High</span><b class="bad">3</b></div>
+    <div class="r"><span>Medium</span><b class="warn">5</b></div>
+    <div class="r"><span>Low</span><b>0</b></div>
+    <div class="foot">Live queue — sorted by business risk</div>`,
+  events:`<h4><span class="d"></span>Events Ingestion</h4>
+    <div class="r"><span>Rate</span><b>43 B / 24H</b></div>
+    <div class="r"><span>Peak</span><b>2.1 M / sec</b></div>
+    <div class="r"><span>Sources</span><b>84 connectors</b></div>
+    <div class="r"><span>Residency</span><b class="ok">Germany DB</b></div>`,
+  data:`<h4><span class="d"></span>Data Ingestion</h4>
+    <div class="r"><span>Volume</span><b>65 TB / 24H</b></div>
+    <div class="r"><span>Hot store</span><b>1.9 PB</b></div>
+    <div class="r"><span>Retention</span><b>365 days</b></div>
+    <div class="r"><span>Hosting</span><b class="ok">Sovereign Cloud</b></div>`,
+  prevented:`<h4><span class="d"></span>Prevented Events</h4>
+    <div class="r"><span>Blocked (24H)</span><b>286.1 K</b></div>
+    <div class="r"><span>By NGFW</span><b>241.0 K</b></div>
+    <div class="r"><span>By XDR agent</span><b>45.1 K</b></div>
+    <div class="foot">Inline prevention across the sovereign estate</div>`};
+  return D[key]||'';
 }
-function openDetail(px,py,html){
-  if(!html)return;pop.innerHTML=html;
-  let left=px+18;if(left+240>1416)left=px-240-18;left=Math.max(24,left);
-  let top=Math.max(60,Math.min(py-30,590));
-  pop.style.left=left+'px';pop.style.top=top+'px';pop.classList.add('on');popOpen=true;
-}
+function openDetail(px,py,html){if(!html)return;pop.innerHTML=html;
+  let left=px+18;if(left+246>1416)left=px-246-18;left=Math.max(24,left);
+  let top=Math.max(60,Math.min(py-30,560));
+  pop.style.left=left+'px';pop.style.top=top+'px';pop.classList.add('on');popOpen=true;}
 function closeDetail(){pop.classList.remove('on');popOpen=false;}
 document.addEventListener('click',e=>{if(popOpen&&!pop.contains(e.target)&&!e.target.closest('[data-pop]'))closeDetail();},true);
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDetail();});
-function anchor(el){ // element center in design coords (accounts for stage scale)
-  const r=el.getBoundingClientRect(),sr=stage.getBoundingClientRect(),sc=sr.width/1440;
-  return {x:(r.left+r.width/2-sr.left)/sc, y:(r.top+r.height/2-sr.top)/sc};
-}
+function anchor(el){const r=el.getBoundingClientRect(),sr=stage.getBoundingClientRect(),sc=sr.width/1440;
+  return {x:(r.left+r.width/2-sr.left)/sc, y:(r.top+r.height/2-sr.top)/sc};}
+function wire(el,key){if(!el)return;el.setAttribute('data-pop','');el.style.cursor='pointer';
+  el.onclick=e=>{e.stopPropagation();const a=anchor(el);openDetail(a.x,a.y,detailHTML(key));};}
 
-/* ---------- scene navigation ---------- */
-const scenes={flow:$('#flow'),agents:$('#agents'),iso:$('#iso')};
-function show(name){
-  Object.values(scenes).forEach(s=>s.classList.remove('active'));
-  scenes[name].classList.add('active');scene=name;closeDetail();
-  $('#backBtn').classList.toggle('on',name!=='flow');
-  $('#playBtn').style.display = name==='iso' ? '' : 'none';
-  $('#resetBtn').style.display = name==='iso' ? '' : 'none';
-  if(name==='agents')countUp($('#agents'));
-  if(name==='iso'){resetIso();}
-}
-let isoSeen=false;
-function enterIso(){show('iso');if(!isoSeen){isoSeen=true;setTimeout(runIso,700);}}
-function enterAgents(){show('agents');}
+/* ---- wire everything to popovers (no scene navigation) ---- */
+wire($('#agentic'),'engine');wire($('#coreHit'),'engine');
+wire($('#nIssues'),'issues');wire($('#nCases'),'cases');
+wire($('#fnAuto'),'automated');wire($('#fnManual'),'manual');
+wire($('#nResolved'),'resolved');wire($('#nOpen'),'open');wire($('#chevOpen'),'open');
+$$('.tile[data-detail]').forEach(t=>wire(t,t.dataset.detail));
+$('#investBtn').onclick=e=>{e.stopPropagation();const a=anchor($('#investBtn'));openDetail(a.x,a.y,detailHTML('open'));};
 
-/* wire flow interactions */
-$('#agentic').onclick=enterAgents;
-$('#nIssues').onclick=enterAgents;
-$('#swarmHit').onclick=enterAgents;
-$('#nCases').onclick=e=>{e.stopPropagation();const a=anchor($('#nCases'));openDetail(a.x,a.y,detailHTML('cases'));};
-$('#nResolved').onclick=e=>{e.stopPropagation();const a=anchor($('#nResolved'));openDetail(a.x,a.y,detailHTML('resolved'));};
-$('#fnAuto').onclick=e=>{e.stopPropagation();const a=anchor($('#fnAuto'));openDetail(a.x,a.y,detailHTML('resolved'));};
-$('#fnManual').onclick=enterIso;
-$('#nOpen').onclick=enterIso;
-$('#chevOpen').onclick=enterIso;
-$('#investBtn').onclick=e=>{e.stopPropagation();enterIso();};
-$('#tileOpen').onclick=enterIso;
-$$('.tile[data-detail]').forEach(t=>{t.setAttribute('data-pop','');t.onclick=e=>{e.stopPropagation();const a=anchor(t);openDetail(a.x,a.y,detailHTML(t.dataset.detail));};});
 // source rows: popover + ribbon highlight
-$$('#srcWrap .src').forEach(row=>{
-  const idx=row.dataset.idx;if(idx==null)return;const src=DATA.sources[idx];
+$$('#srcWrap .src').forEach(row=>{const idx=row.dataset.idx;if(idx==null)return;const src=DATA.sources[idx];
   row.setAttribute('data-pop','');
   row.onmouseenter=()=>{row.classList.add('hot');const rb=srcRibbons[idx];if(rb){rb.line.setAttribute('stroke-width',2.6);rb.line.setAttribute('opacity',1);rb.base.setAttribute('opacity',1);}};
-  row.onmouseleave=()=>{row.classList.remove('hot');const rb=srcRibbons[idx];if(rb){rb.line.setAttribute('stroke-width',1.4);rb.line.setAttribute('opacity',.55);rb.base.setAttribute('opacity',.7);}};
+  row.onmouseleave=()=>{row.classList.remove('hot');const rb=srcRibbons[idx];if(rb){rb.line.setAttribute('stroke-width',1.4);rb.line.setAttribute('opacity',.5);rb.base.setAttribute('opacity',.7);}};
   row.onclick=e=>{e.stopPropagation();const a=anchor(row);openDetail(a.x,a.y,
     `<h4><span class="d"></span>${src.n}</h4>
      <div class="r"><span>Status</span><b class="ok">● connected</b></div>
@@ -638,36 +492,6 @@ $$('#srcWrap .src').forEach(row=>{
      <div class="r"><span>Residency</span><b class="ok">${src.res}</b></div>
      ${src.alert?`<div class="r"><span>Health</span><b class="bad">policy review</b></div>`:''}`);};
 });
-
-$('#agSupplier').onclick=enterIso;
-$('#backBtn').onclick=()=>show('flow');
-
-/* ---------- isolation sequence ---------- */
-const badAgent=$('#badAgent'),toast=$('#toast'),isoStatus=$('#isoStatus'),soc=$('#soc'),riskChip=$('#riskChip'),endNote=$('#endNote');
-let seqTimers=[];
-function resetIso(){
-  seqTimers.forEach(clearTimeout);seqTimers=[];
-  isolated=false;drawIso(false);
-  badAgent.classList.remove('isolated');badAgent.style.left='300px';badAgent.style.top='375px';
-  toast.classList.remove('on');isoStatus.classList.remove('on');
-  soc.classList.remove('on','ring','answered');$('#socState').textContent='Incoming call…';
-  riskChip.classList.remove('on');endNote.classList.remove('on');
-}
-function runIso(){
-  resetIso();
-  const T=(f,ms)=>seqTimers.push(setTimeout(f,ms));
-  T(()=>{toast.classList.add('on');riskChip.classList.add('on');},400);
-  T(()=>{
-    isolated=true;drawIso(true);
-    badAgent.classList.add('isolated');badAgent.style.left='630px';badAgent.style.top='400px';
-  },1900);
-  T(()=>{isoStatus.classList.add('on');},3100);
-  T(()=>{soc.classList.add('on','ring');},4200);
-}
-$('#playBtn').onclick=runIso;
-$('#resetBtn').onclick=resetIso;
-$('#socAccept').onclick=()=>{soc.classList.remove('ring');soc.classList.add('answered');$('#socState').textContent='Connected · analyst';endNote.classList.add('on');};
-$('#socEnd').onclick=()=>{soc.classList.remove('on','ring');};
 
 /* ---------- fit ---------- */
 function fit(){const s=Math.min(innerWidth/1440,innerHeight/810);stage.style.transform=`scale(${s})`;}
