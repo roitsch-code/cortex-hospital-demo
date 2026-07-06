@@ -1,0 +1,10 @@
+{
+  "name": "cortex-hospital-demo",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Cortex-style guided security demo — hospital medication logistics (DT/T-Systems)",
+  "scripts": {
+    "start": "npx --yes serve .",
+    "dev": "npx --yes serve ."
+  }
+}

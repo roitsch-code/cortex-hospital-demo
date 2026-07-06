@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sovereign Cortex — Connected Hospital (guided flow)</title>
+<style>
+:root{
+  --bg:#010204;
+  --teal:#2fd6c0; --teal-br:#6ff3e0; --teal-dim:#186158; --glow:rgba(47,214,192,.55);
+  --amber:#f5a623; --red:#ff4d5e; --magenta:#E20074;
+  --text:#eef3f5; --muted:#8b959e; --dim:#4b545c; --hair:rgba(255,255,255,.07);
+  --font:"Inter","Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);overflow:hidden;font-family:var(--font);color:var(--text)}
+#fit{position:fixed;inset:0;display:grid;place-items:center}
+#stage{position:relative;width:1440px;height:810px;transform-origin:center;
+  background:radial-gradient(120% 90% at 50% 38%,#04070b 0%,#010204 72%);overflow:hidden}
+canvas#cv{position:absolute;inset:0;width:1440px;height:810px;pointer-events:none;z-index:1}
+
+/* ---------- top chrome ---------- */
+.top{position:absolute;top:20px;left:32px;right:32px;z-index:8;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:.2px}
+.logo{width:20px;height:20px;border:2px solid var(--teal);border-radius:50%;position:relative}
+.logo::after{content:"";position:absolute;inset:3px;border-radius:50%;border:2px solid transparent;border-top-color:var(--teal-br);animation:spin 4s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.brand small{color:var(--muted);font-weight:600;font-size:12px;margin-left:4px}
+.brand small b{color:var(--magenta)}
+.live{color:var(--muted);font-size:12px;border:1px solid var(--hair);border-radius:999px;padding:6px 14px;display:flex;align-items:center;gap:8px}
+.live .d{width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px var(--teal);animation:blink 1.6s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+.back{position:absolute;top:60px;left:34px;z-index:9;color:var(--muted);font-size:14px;font-weight:600;cursor:pointer;opacity:0;transition:.3s}
+.back:hover{color:var(--text)}
+.back.on{opacity:1}
+
+/* ---------- scenes ---------- */
+.scene{position:absolute;inset:0;z-index:2;opacity:0;transform:scale(1.05);pointer-events:none;transition:opacity .6s ease,transform .6s ease}
+.scene.active{opacity:1;transform:scale(1);pointer-events:auto}
+svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+
+/* generic glowing node */
+.node{position:absolute;transform:translate(-50%,-50%);z-index:4;text-align:center}
+.num{font-weight:800;line-height:1;color:#fff}
+.cap{color:var(--muted);letter-spacing:.15em;font-size:11px;font-weight:700;text-transform:uppercase;margin-top:6px}
+
+/* clickable focus node */
+.hub{position:absolute;transform:translate(-50%,-50%);z-index:5;cursor:pointer;text-align:center;
+  transition:transform .25s}
+.hub .disc{width:118px;height:118px;border-radius:50%;margin:0 auto;display:grid;place-items:center;
+  border:1.5px solid var(--teal);background:radial-gradient(circle at 50% 40%,rgba(47,214,192,.18),rgba(4,10,12,.6));
+  box-shadow:0 0 30px var(--glow),inset 0 0 22px rgba(47,214,192,.2)}
+.hub .disc b{font-size:26px;font-weight:800}
+.hub .disc span{font-size:10px;color:var(--muted);display:block;margin-top:2px}
+.hub .lbl{margin-top:12px;font-size:13px;font-weight:700}
+.hub .hint{margin-top:4px;font-size:11px;color:var(--teal-br);opacity:.85}
+.hub:hover{transform:translate(-50%,-50%) scale(1.05)}
+.hub:hover .disc{box-shadow:0 0 46px var(--glow),inset 0 0 26px rgba(47,214,192,.3)}
+.hub.warn .disc{border-color:var(--amber);box-shadow:0 0 30px rgba(245,166,35,.5)}
+.hub.warn .hint{color:var(--amber)}
+
+/* small source label (flow) */
+.src{position:absolute;transform:translateY(-50%);z-index:4;display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;color:#d7dde2}
+.src .dot{width:9px;height:9px;border-radius:50%;background:#20262d;border:1.5px solid var(--dim)}
+.src.ext .dot{background:var(--amber);border-color:var(--amber);box-shadow:0 0 8px var(--amber)}
+.src small{color:var(--muted);font-weight:600}
+
+/* flow bottom stats */
+.stats{position:absolute;left:34px;bottom:26px;z-index:4;display:flex;gap:34px}
+.stat b{font-size:26px;font-weight:800}.stat span{display:block;font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:4px}
+
+/* ---------- agents radial ---------- */
+.aTitle{position:absolute;top:96px;left:0;right:0;text-align:center;z-index:4}
+.aTitle h2{font-size:22px;font-weight:800;letter-spacing:.02em}
+.aTitle p{font-size:13px;color:var(--muted);margin-top:6px}
+.agent{position:absolute;transform:translate(-50%,-50%);z-index:5;text-align:center;cursor:default}
+.agent .c{width:66px;height:66px;border-radius:50%;margin:0 auto;display:grid;place-items:center;font-size:20px;
+  border:1.5px solid var(--teal-dim);background:radial-gradient(circle at 50% 40%,rgba(47,214,192,.14),rgba(4,10,12,.6));
+  box-shadow:0 0 18px rgba(47,214,192,.28)}
+.agent .n{font-size:12px;font-weight:700;margin-top:9px;max-width:130px}
+.agent .s{font-size:10px;color:var(--muted);margin-top:1px}
+.agent.core .c{width:92px;height:92px;border-color:var(--teal);box-shadow:0 0 34px var(--glow);font-size:24px}
+.agent.ext{cursor:pointer}
+.agent.ext .c{border-color:var(--amber);box-shadow:0 0 20px rgba(245,166,35,.4)}
+.agent.ext .n{color:#ffdf9e}
+.agent.ext:hover .c{box-shadow:0 0 34px rgba(245,166,35,.7)}
+
+/* ---------- isolation ---------- */
+.iso-title{position:absolute;top:96px;left:0;right:0;text-align:center;z-index:4}
+.iso-title h2{font-size:22px;font-weight:800}
+.livezone{position:absolute;left:150px;top:300px;z-index:4;text-align:center}
+.livezone .ring{width:150px;height:150px;border-radius:50%;border:1.5px solid var(--teal-dim);margin:0 auto;
+  display:grid;place-items:center;box-shadow:0 0 26px rgba(47,214,192,.25)}
+.livezone .ring b{font-size:34px}
+.livezone .t{margin-top:12px;font-size:13px;font-weight:700;color:var(--teal-br)}
+.livezone .s{font-size:11px;color:var(--muted);max-width:200px;margin:4px auto 0}
+
+.bubble{position:absolute;right:170px;top:250px;width:360px;height:300px;z-index:3;border-radius:48% 52% 55% 45%/50% 45% 55% 50%;
+  border:2px dashed var(--teal);background:radial-gradient(circle at 50% 45%,rgba(20,40,42,.55),rgba(4,10,12,.3));
+  box-shadow:inset 0 0 40px rgba(47,214,192,.15);display:grid;place-items:center;animation:breathe 5s ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.02)}}
+.bubble .lbl{position:absolute;top:-26px;left:0;right:0;text-align:center;font-size:12px;font-weight:700;color:var(--teal-br)}
+.bubble .sub{position:absolute;bottom:-30px;left:0;right:0;text-align:center;font-size:11px;color:var(--muted)}
+
+.badagent{position:absolute;z-index:6;transform:translate(-50%,-50%);text-align:center;left:300px;top:375px;
+  transition:left 1.1s cubic-bezier(.7,0,.3,1),top 1.1s cubic-bezier(.7,0,.3,1)}
+.badagent .c{width:70px;height:70px;border-radius:50%;margin:0 auto;display:grid;place-items:center;font-size:22px;
+  border:2px solid var(--amber);background:radial-gradient(circle at 50% 40%,rgba(245,166,35,.2),rgba(20,8,4,.7));
+  box-shadow:0 0 22px rgba(245,166,35,.5)}
+.badagent.isolated .c{border-color:var(--red);box-shadow:0 0 26px rgba(255,77,94,.6)}
+.badagent .n{font-size:12px;font-weight:700;margin-top:8px;color:#ffdf9e}
+
+/* alert toast */
+.toast{position:absolute;top:150px;left:50%;transform:translate(-50%,-16px);z-index:9;
+  background:rgba(30,8,10,.92);border:1px solid var(--red);border-radius:12px;padding:12px 18px;
+  display:flex;align-items:center;gap:12px;max-width:640px;opacity:0;transition:.45s;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.toast .ic{width:24px;height:24px;border-radius:6px;background:var(--red);display:grid;place-items:center;color:#fff;font-weight:800;flex:0 0 auto}
+.toast .tx{font-size:13px;color:#ffd7db;line-height:1.35}
+.toast .tx b{color:#fff}
+
+.status{position:absolute;left:0;right:0;bottom:120px;text-align:center;z-index:6;font-size:13px;color:var(--teal-br);opacity:0;transition:.4s}
+.status.on{opacity:1}
+
+/* SOC call card */
+.soc{position:absolute;right:60px;bottom:96px;z-index:10;width:300px;background:rgba(9,12,16,.96);
+  border:1px solid var(--hair);border-radius:16px;padding:16px;box-shadow:0 12px 40px rgba(0,0,0,.6);
+  transform:translateY(20px);opacity:0;transition:.45s}
+.soc.on{transform:translateY(0);opacity:1}
+.soc .row{display:flex;align-items:center;gap:12px}
+.soc .av{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--magenta),#7a1450);
+  display:grid;place-items:center;font-weight:800;color:#fff;flex:0 0 auto}
+.soc.ring .av{animation:ring 1s ease-in-out infinite}
+@keyframes ring{0%,100%{box-shadow:0 0 0 0 rgba(226,0,116,.5)}50%{box-shadow:0 0 0 10px rgba(226,0,116,0)}}
+.soc .who b{font-size:14px}.soc .who span{display:block;font-size:11px;color:var(--muted)}
+.soc .msg{font-size:12px;color:#cfd6db;line-height:1.4;margin-top:12px;border-top:1px solid var(--hair);padding-top:10px;display:none}
+.soc.answered .msg{display:block}
+.soc .btns{display:flex;gap:8px;margin-top:12px}
+.soc button{flex:1;appearance:none;border:0;border-radius:8px;padding:9px;font-family:var(--font);font-weight:700;font-size:12px;cursor:pointer}
+.soc .accept{background:var(--teal);color:#02130f}
+.soc .end{background:#2a1013;color:#ff9aa4}
+
+.riskchip{position:absolute;right:60px;top:150px;z-index:7;background:#1a0c0f;border:1px solid var(--red);
+  color:#ff9aa4;font-size:11px;font-weight:800;padding:5px 10px;border-radius:6px;opacity:0;transition:.3s}
+.riskchip.on{opacity:1}
+
+/* controls */
+.ctrls{position:absolute;right:24px;bottom:22px;z-index:11;display:flex;gap:8px}
+.ctrls button{appearance:none;border:1px solid var(--teal);background:var(--teal);color:#02130f;
+  font-family:var(--font);font-weight:700;font-size:12px;padding:9px 15px;border-radius:9px;cursor:pointer}
+.ctrls button.ghost{background:transparent;color:var(--teal-br)}
+.reduced .logo::after{animation:none}
+.endnote{position:absolute;left:0;right:0;bottom:60px;text-align:center;z-index:6;font-size:12px;color:var(--dim);opacity:0;transition:.4s}
+.endnote.on{opacity:1}
+</style>
+</head>
+<body>
+<div id="fit"><div id="stage">
+  <canvas id="cv"></canvas>
+
+  <div class="top">
+    <div class="brand"><span class="logo"></span>Sovereign Cortex <small>· Connected Hospital · <b>T</b> Security</small></div>
+    <div class="live"><span class="d"></span><span id="liveLbl">Medication logistics · Live</span></div>
+  </div>
+  <div class="back" id="backBtn">‹ Back to flow</div>
+
+  <!-- ============ SCENE 1 : FLOW ============ -->
+  <section class="scene active" id="flow">
+    <svg class="wire" id="wFlow" viewBox="0 0 1440 810"></svg>
+
+    <div class="src"      style="left:150px;top:250px"><span class="dot"></span><span>AGV Fleet Telemetry</span></div>
+    <div class="src"      style="left:150px;top:305px"><span class="dot"></span><span>Pharmacy System</span></div>
+    <div class="src"      style="left:150px;top:360px"><span class="dot"></span><span>Ward / Room Systems</span></div>
+    <div class="src ext"  style="left:150px;top:415px"><span class="dot"></span><span>Supplier Logistics Agent <small>· external</small></span></div>
+    <div class="src"      style="left:150px;top:470px"><span class="dot"></span><span>Access Logs / IAM</span></div>
+    <div class="src"      style="left:150px;top:525px"><span class="dot"></span><span>Clinical / EHR <small>· restricted</small></span></div>
+
+    <div class="node" style="left:545px;top:400px"><div class="num" style="font-size:48px"><span data-count="12480" data-comma>0</span></div><div class="cap">Events / min</div></div>
+    <div class="node" style="left:865px;top:400px"><div class="num" style="font-size:44px"><span data-count="24">0</span></div><div class="cap">Signals</div></div>
+
+    <div class="hub" id="hubAgents" style="left:1120px;top:305px">
+      <div class="disc"><div><b>6</b><span>agents</span></div></div>
+      <div class="lbl">Agent System</div>
+      <div class="hint">Explore architecture →</div>
+    </div>
+    <div class="hub" id="hubIso" style="left:1120px;top:560px">
+      <div class="disc"><div><b>0</b><span>incidents</span></div></div>
+      <div class="lbl">Response &amp; Isolation</div>
+      <div class="hint">Enter isolation →</div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b><span data-count="38">0</span></b><span>AGVs active</span></div>
+      <div class="stat"><b><span data-count="612">0</span></b><span>deliveries today</span></div>
+      <div class="stat"><b style="color:var(--teal-br)">OK</b><span>medication supply</span></div>
+    </div>
+  </section>
+
+  <!-- ============ SCENE 2 : AGENTS (reduced radial) ============ -->
+  <section class="scene" id="agents">
+    <svg class="wire" id="wAgents" viewBox="0 0 1440 810"></svg>
+    <div class="aTitle"><h2>Agent Architecture — Medication Logistics</h2>
+      <p>A small system of cooperating agents, coordinated by one orchestrator. Reduced to essentials.</p></div>
+
+    <div class="agent core" style="left:720px;top:430px"><div class="c">◎</div><div class="n">Orchestrator</div><div class="s">coordinates &amp; arbitrates</div></div>
+    <div class="agent"      style="left:720px;top:250px"><div class="c">⇄</div><div class="n">AGV Routing Agent</div></div>
+    <div class="agent"      style="left:918px;top:335px"><div class="c">▦</div><div class="n">Stock / Replenishment</div></div>
+    <div class="agent ext"  id="agSupplier" style="left:918px;top:525px"><div class="c">⚑</div><div class="n">Supplier Logistics Agent</div><div class="s">external · anomaly? →</div></div>
+    <div class="agent"      style="left:720px;top:610px"><div class="c">◈</div><div class="n">Permission &amp; Identity</div></div>
+    <div class="agent"      style="left:522px;top:525px"><div class="c">◔</div><div class="n">Behavior / Anomaly</div></div>
+    <div class="agent"      style="left:522px;top:335px"><div class="c">◇</div><div class="n">Context · Hospital KG</div></div>
+  </section>
+
+  <!-- ============ SCENE 3 : ISOLATION ============ -->
+  <section class="scene" id="iso">
+    <svg class="wire" id="wIso" viewBox="0 0 1440 810"></svg>
+    <div class="iso-title"><h2>Isolation &amp; Response</h2></div>
+    <div class="riskchip" id="riskChip">RISK: HIGH · medication supply</div>
+
+    <div class="livezone">
+      <div class="ring"><b>38</b></div>
+      <div class="t">Live hospital network</div>
+      <div class="s">medication AGVs keep running — fallback delivery continues</div>
+    </div>
+
+    <div class="bubble">
+      <div class="lbl" id="bubbleLbl">Secure Simulation</div>
+      <div class="sub">synthetic hospital · no real patient / medication / location data</div>
+    </div>
+
+    <div class="badagent" id="badAgent"><div class="c">⚑</div><div class="n">Supplier Agent</div></div>
+
+    <div class="toast" id="toast">
+      <div class="ic">!</div>
+      <div class="tx"><b>Unusual agent behavior detected.</b> Supplier agent requesting restricted location and medication data.</div>
+    </div>
+
+    <div class="status" id="isoStatus">Agent isolated from live systems · redirected to secure simulation · fallback delivery continues.</div>
+
+    <div class="soc" id="soc">
+      <div class="row"><div class="av">SOC</div><div class="who"><b>Telekom SOC</b><span id="socState">Incoming call…</span></div></div>
+      <div class="msg" id="socMsg">“This agent may be misconfigured, compromised, or acting beyond its authorized scope. It keeps requesting patient medication schedules and room-level AGV positions. I recommend we revoke access.”</div>
+      <div class="btns"><button class="accept" id="socAccept">Accept call</button><button class="end" id="socEnd">Dismiss</button></div>
+    </div>
+
+    <div class="endnote" id="endNote">— end of part 1 —</div>
+  </section>
+
+  <div class="ctrls">
+    <button class="ghost" id="resetBtn" style="display:none">Reset</button>
+    <button id="playBtn" style="display:none">▶ Run isolation</button>
+  </div>
+
+</div></div>
+
+<script>
+const stage=document.getElementById('stage');
+const REDUCED=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(REDUCED)document.body.classList.add('reduced');
+const NS='http://www.w3.org/2000/svg';
+const $=s=>document.querySelector(s);
+const svgEl=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+function band(a,b,k=.55){const dx=(b.x-a.x)*k;return `M ${a.x} ${a.y} C ${a.x+dx} ${a.y}, ${b.x-dx} ${b.y}, ${b.x} ${b.y}`;}
+
+/* ---- glow + gradient defs, ribbons ---- */
+function defs(svg){const d=svgEl('defs',{});d.innerHTML=`
+  <filter id="g" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <linearGradient id="teal" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#186158"/><stop offset="1" stop-color="#2fd6c0"/></linearGradient>`;svg.appendChild(d);}
+function ribbon(svg,a,b,w,col='url(#teal)',k=.55){
+  svg.appendChild(svgEl('path',{d:band(a,b,k),fill:'none',stroke:col,'stroke-width':w,'stroke-linecap':'round',opacity:.7,filter:'url(#g)'}));
+  const f=svgEl('path',{d:band(a,b,k),fill:'none',stroke:'#a8fff0','stroke-width':1.6,'stroke-dasharray':'2 90','stroke-linecap':'round',class:'fl'});
+  svg.appendChild(f);
+}
+function ring(svg,cx,cy,r,n,op=.5){for(let i=0;i<n;i++){const a=i/n*6.283,r2=r+(i%6===0?7:3);
+  svg.appendChild(svgEl('line',{x1:cx+Math.cos(a)*r,y1:cy+Math.sin(a)*r,x2:cx+Math.cos(a)*r2,y2:cy+Math.sin(a)*r2,stroke:`rgba(47,214,192,${op*.35})`,'stroke-width':1}));}}
+
+/* flow ribbons */
+(function(){const s=$('#wFlow');defs(s);
+  const srcs=[250,305,360,415,470,525].map(y=>({x:300,y}));
+  const disc={x:700,y:400};
+  srcs.forEach(p=>ribbon(s,p,{x:disc.x-90,y:disc.y},7,'rgba(150,168,178,.16)',.6));
+  srcs.forEach(p=>ribbon(s,p,{x:disc.x-90,y:disc.y},1.5,'url(#teal)',.6));
+  ring(s,disc.x,disc.y,150,110);
+  ribbon(s,{x:disc.x+90,y:disc.y},{x:1060,y:315},16);
+  ribbon(s,{x:disc.x+90,y:disc.y},{x:1060,y:560},9);
+})();
+
+/* agents radial spokes */
+(function(){const s=$('#wAgents');defs(s);const c={x:720,y:430};
+  const orbit=[[720,250],[918,335],[918,525],[720,610],[522,525],[522,335]];
+  ring(s,c.x,c.y,205,150,.35);
+  orbit.forEach(([x,y],i)=>{const ext=i===2;
+    s.appendChild(svgEl('line',{x1:c.x,y1:c.y,x2:x,y2:y,stroke:ext?'rgba(245,166,35,.45)':'rgba(47,214,192,.35)','stroke-width':ext?2:1.4,filter:'url(#g)'}));
+  });
+})();
+
+/* isolation wires: live ring -> (severed) supplier agent */
+function drawIso(cut){const s=$('#wIso');s.innerHTML='';defs(s);
+  const live={x:225,y:375};
+  if(!cut){ribbon(s,live,{x:300,y:375},6);}
+  else{ // faded, cut connection
+    s.appendChild(svgEl('path',{d:band(live,{x:300,y:375},.55),fill:'none',stroke:'rgba(255,77,94,.35)','stroke-width':3,'stroke-dasharray':'4 8'}));
+    s.appendChild(svgEl('text',{x:262,y:360,fill:'#ff9aa4','font-size':16,'text-anchor':'middle'}));
+  }
+}
+drawIso(false);
+
+/* ---------- particle canvas ---------- */
+const DPR=Math.min(devicePixelRatio||1,2);const cv=$('#cv');const ctx=cv.getContext('2d');
+cv.width=1440*DPR;cv.height=810*DPR;ctx.scale(DPR,DPR);
+const PAL=['#2fd6c0','#2fd6c0','#2fd6c0','#6ff3e0','#f5a623','#ff4d5e'];
+const swarm=[];for(let i=0;i<210;i++){const rad=14+Math.random()*104,ang=Math.random()*6.283;
+  swarm.push({ang,rad,sp:(Math.random()*.0006+.0002)*(Math.random()<.5?-1:1),ph:Math.random()*6.283,col:PAL[i%PAL.length],sz:Math.random()<.15?2.2:1.4});}
+const streak=[];for(let i=0;i<8;i++)streak.push({x:700,y:400+(Math.random()*40-20),sp:1.5+Math.random()*1.3});
+const live=[];for(let i=0;i<26;i++)live.push({x:120+Math.random()*160,y:355+Math.random()*40,sp:.6+Math.random()*1.2});
+const caged=[];for(let i=0;i<24;i++){const a=Math.random()*6.283,r=Math.random()*90;caged.push({a,r,sp:(Math.random()*.01+.004),ph:Math.random()*6.283});}
+let scene='flow',isolated=false;
+
+function frame(t){ctx.clearRect(0,0,1440,810);
+  if(scene==='flow'){
+    const cx=700,cy=400;
+    for(const p of swarm){if(!REDUCED)p.ang+=p.sp;const w=Math.sin(t*.0011+p.ph)*4;
+      const x=cx+Math.cos(p.ang)*(p.rad+w),y=cy+Math.sin(p.ang)*(p.rad+w);
+      ctx.globalAlpha=.35+.45*(0.5+0.5*Math.sin(t*.002+p.ph));ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(x,y,p.sz,0,6.283);ctx.fill();}
+    for(const s of streak){if(!REDUCED)s.x+=s.sp;if(s.x>960){s.x=cx+40;s.y=cy+(Math.random()*60-30);}
+      const g=ctx.createLinearGradient(s.x-26,0,s.x,0);g.addColorStop(0,'rgba(111,243,224,0)');g.addColorStop(1,'rgba(111,243,224,.9)');
+      ctx.strokeStyle=g;ctx.lineWidth=1.6;ctx.globalAlpha=1;ctx.beginPath();ctx.moveTo(s.x-26,s.y);ctx.lineTo(s.x,s.y);ctx.stroke();}
+  }else if(scene==='agents'){
+    for(let i=0;i<70;i++){const a=(t*.00006+i*.09)%6.283,r=210+Math.sin(t*.001+i)*6;
+      ctx.globalAlpha=.15+.1*Math.sin(t*.002+i);ctx.fillStyle='#2fd6c0';ctx.beginPath();ctx.arc(720+Math.cos(a)*r,430+Math.sin(a)*r,1.1,0,6.283);ctx.fill();}
+  }else if(scene==='iso'){
+    for(const p of live){if(!REDUCED)p.x+=p.sp;if(p.x>300){p.x=120;p.y=355+Math.random()*40;}
+      ctx.globalAlpha=.5+.4*Math.sin(t*.003+p.x);ctx.fillStyle='#2fd6c0';ctx.beginPath();ctx.arc(p.x,p.y,1.4,0,6.283);ctx.fill();}
+    if(isolated){const bx=350,by=400; // caged particles inside bubble
+      for(const p of caged){if(!REDUCED)p.a+=p.sp;const x=630+Math.cos(p.a)*p.r,y=400+Math.sin(p.a)*p.r*.85;
+        ctx.globalAlpha=.4+.3*Math.sin(t*.004+p.ph);ctx.fillStyle=Math.random()<.3?'#ff4d5e':'#f5a623';ctx.beginPath();ctx.arc(x,y,1.5,0,6.283);ctx.fill();}}
+  }
+  ctx.globalAlpha=1;requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+
+/* flow-line dash animation */
+if(!REDUCED){const st=document.createElement('style');st.textContent='@keyframes flow{to{stroke-dashoffset:-1000}}.fl{animation:flow 6s linear infinite}';document.head.appendChild(st);}
+
+/* ---------- count-up ---------- */
+function countUp(root){root.querySelectorAll('[data-count]').forEach(el=>{
+  const target=parseFloat(el.dataset.count),comma=el.hasAttribute('data-comma');
+  const fmt=v=>comma?Math.round(v).toLocaleString('en-US'):Math.round(v).toString();
+  if(REDUCED){el.textContent=fmt(target);return;}
+  const t0=performance.now();(function s(n){const p=Math.min(1,(n-t0)/1100),e=1-Math.pow(1-p,3);el.textContent=fmt(target*e);if(p<1)requestAnimationFrame(s);else el.textContent=fmt(target);})(t0);
+});}
+countUp($('#flow'));
+
+/* ---------- scene navigation ---------- */
+const scenes={flow:$('#flow'),agents:$('#agents'),iso:$('#iso')};
+function show(name){
+  Object.values(scenes).forEach(s=>s.classList.remove('active'));
+  scenes[name].classList.add('active');scene=name;
+  $('#backBtn').classList.toggle('on',name!=='flow');
+  $('#liveLbl').textContent = name==='iso' ? 'Incident · isolation active' : (name==='agents'?'Agent architecture':'Medication logistics · Live');
+  $('#playBtn').style.display = name==='iso' ? '' : 'none';
+  $('#resetBtn').style.display = name==='iso' ? '' : 'none';
+  if(name==='agents')countUp($('#agents'));
+  if(name==='iso'){resetIso();}
+}
+$('#hubAgents').onclick=()=>show('agents');
+$('#hubIso').onclick=()=>show('iso');
+$('#agSupplier').onclick=()=>show('iso');
+$('#backBtn').onclick=()=>show('flow');
+
+/* ---------- isolation sequence ---------- */
+const badAgent=$('#badAgent'),toast=$('#toast'),isoStatus=$('#isoStatus'),soc=$('#soc'),riskChip=$('#riskChip'),endNote=$('#endNote');
+let seqTimers=[];
+function resetIso(){
+  seqTimers.forEach(clearTimeout);seqTimers=[];
+  isolated=false;drawIso(false);
+  badAgent.classList.remove('isolated');badAgent.style.left='300px';badAgent.style.top='375px';
+  toast.classList.remove('on');isoStatus.classList.remove('on');
+  soc.classList.remove('on','ring','answered');$('#socState').textContent='Incoming call…';
+  riskChip.classList.remove('on');endNote.classList.remove('on');
+}
+function runIso(){
+  resetIso();
+  const T=(f,ms)=>seqTimers.push(setTimeout(f,ms));
+  T(()=>{toast.classList.add('on');riskChip.classList.add('on');},400);
+  T(()=>{ // isolate: move agent into bubble, sever link
+    isolated=true;drawIso(true);
+    badAgent.classList.add('isolated');badAgent.style.left='630px';badAgent.style.top='400px';
+  },1900);
+  T(()=>{isoStatus.classList.add('on');},3100);
+  T(()=>{soc.classList.add('on','ring');},4200);
+}
+$('#playBtn').onclick=runIso;
+$('#resetBtn').onclick=resetIso;
+$('#socAccept').onclick=()=>{soc.classList.remove('ring');soc.classList.add('answered');$('#socState').textContent='Connected · analyst';endNote.classList.add('on');};
+$('#socEnd').onclick=()=>{soc.classList.remove('on','ring');};
+
+/* auto-run the isolation beats when first entering the scene */
+let isoSeen=false;
+$('#hubIso').addEventListener('click',()=>{if(!isoSeen){isoSeen=true;setTimeout(runIso,700);}});
+$('#agSupplier').addEventListener('click',()=>{if(!isoSeen){isoSeen=true;setTimeout(runIso,700);}});
+
+/* ---------- fit ---------- */
+function fit(){const s=Math.min(innerWidth/1440,innerHeight/810);stage.style.transform=`scale(${s})`;}
+addEventListener('resize',fit);fit();
+</script>
+</body>
+</html>

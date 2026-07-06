@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Security Command Center — Demo</title>
+<style>
+  /* ============================================================
+     DESIGN TOKENS  — tune the whole look from here
+     ============================================================ */
+  :root{
+    --bg:#010204;
+    --stageW:1440px;
+    --stageH:810px;
+
+    --teal:#2fd6c0;
+    --teal-bright:#6ff3e0;
+    --teal-dim:#186158;
+    --teal-glow:rgba(47,214,192,.55);
+
+    --red:#ef4444;
+    --red-deep:#5c0f19;
+    --red-mid:#8f1522;
+    --amber:#f5a623;
+    --blue:#3b82f6;
+
+    --text:#eef3f5;
+    --muted:#8b959e;
+    --muted-dim:#465059;
+    --hair:rgba(255,255,255,.07);
+
+    --font: "Inter","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:var(--bg);overflow:hidden;font-family:var(--font);color:var(--text)}
+
+  /* fit the fixed 16:9 stage into any laptop window */
+  #fit{position:fixed;inset:0;display:grid;place-items:center;background:var(--bg)}
+  #stage{
+    position:relative;width:var(--stageW);height:var(--stageH);
+    transform-origin:center center;background:radial-gradient(120% 90% at 50% 40%,#04070b 0%,#010204 70%);
+    overflow:hidden;
+  }
+
+  /* faint radial tick marks bleeding in from the screen edges */
+  .edge-ticks{position:absolute;top:50%;width:340px;height:900px;transform:translateY(-50%);
+    opacity:.5;pointer-events:none}
+  .edge-ticks.left{left:-140px}
+  .edge-ticks.right{right:-140px;transform:translateY(-50%) scaleX(-1)}
+
+  /* ---------- view switching ---------- */
+  .view{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .5s ease}
+  .view.active{opacity:1;pointer-events:auto}
+
+  canvas{position:absolute;inset:0;width:var(--stageW);height:var(--stageH);pointer-events:none}
+  svg.bands{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+
+  /* ---------- top chrome ---------- */
+  .topbar{position:absolute;top:22px;left:34px;right:34px;display:flex;align-items:center;justify-content:space-between;z-index:6}
+  .brand{display:flex;align-items:center;gap:12px}
+  .logo{width:22px;height:22px;border:2px solid var(--teal);border-radius:50%;position:relative}
+  .logo::after{content:"";position:absolute;inset:4px;border-radius:50%;border:2px solid transparent;border-top-color:var(--teal-bright);animation:spin 4s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* segmented view toggle doubles as the title dropdown */
+  .switch{display:inline-flex;align-items:center;gap:2px;background:rgba(255,255,255,.04);
+    border:1px solid var(--hair);border-radius:999px;padding:4px;backdrop-filter:blur(4px)}
+  .switch button{appearance:none;border:0;background:transparent;color:var(--muted);
+    font-family:var(--font);font-size:14px;font-weight:600;letter-spacing:.2px;
+    padding:7px 16px;border-radius:999px;cursor:pointer;transition:.25s}
+  .switch button.on{background:var(--teal);color:#01130f;box-shadow:0 0 18px var(--teal-glow)}
+  .switch button:not(.on):hover{color:var(--text)}
+
+  .timeflag{color:var(--muted);font-size:13px;font-weight:500;border:1px solid var(--hair);
+    border-radius:999px;padding:8px 16px}
+
+  .greet{position:absolute;top:96px;left:38px;font-style:italic;font-weight:300;font-size:40px;color:#e9eef1;z-index:5}
+  .backlink{position:absolute;top:96px;left:38px;color:var(--muted);font-size:20px;font-weight:400;z-index:5}
+  .prioritle{position:absolute;top:78px;left:0;right:0;text-align:center;font-size:40px;font-weight:800;
+    letter-spacing:.42em;color:#f3f6f8;z-index:5;padding-left:.42em}
+
+  /* ---------- generic label atoms ---------- */
+  .node{position:absolute;transform:translate(-50%,-50%);z-index:4;text-align:center}
+  .num{font-weight:800;line-height:1;color:#fff}
+  .cap{color:var(--muted);letter-spacing:.16em;font-size:11px;font-weight:700;text-transform:uppercase;margin-top:6px}
+  .delta{font-size:12px;font-weight:700;margin-left:6px;vertical-align:middle}
+  .delta.up{color:#ff7a7a}.delta.down{color:#63e6d0}
+
+  /* left data-source list (SOC) */
+  .sources{position:absolute;left:44px;top:150px;z-index:4}
+  .src{display:flex;align-items:center;gap:10px;height:26px;color:var(--text);font-size:14px;font-weight:600;justify-content:flex-end;width:170px}
+  .src .dot{width:9px;height:9px;border-radius:50%;background:#20262d;border:1.5px solid var(--muted-dim);flex:0 0 auto;position:relative}
+  .src.hot .dot{background:var(--red);border-color:var(--red);box-shadow:0 0 10px var(--red)}
+  .src .txt{white-space:nowrap;color:#d7dde2}
+  .src small{color:var(--muted);font-weight:600}
+  .datasrc-cap{position:absolute;left:44px;top:150px;width:170px;text-align:right}
+
+  /* severity badges */
+  .sev{display:inline-flex;align-items:center;gap:5px;margin-right:8px;font-size:13px;font-weight:700}
+  .chip{width:20px;height:20px;border-radius:5px;display:grid;place-items:center;font-size:11px;color:#fff;font-weight:800}
+  .chip.C{background:#c0202f}.chip.H{background:#e0463c}.chip.M{background:var(--amber);color:#241500}.chip.L{background:var(--blue)}
+
+  /* bottom metric tiles (SOC) */
+  .tiles{position:absolute;left:44px;right:44px;bottom:26px;display:flex;gap:0;z-index:4}
+  .tile{flex:1;padding:0 26px;border-left:1px solid var(--hair)}
+  .tile:first-child{border-left:0;padding-left:0}
+  .tile h4{font-size:14px;font-weight:600;color:#cfd6db;margin-bottom:14px}
+  .tile .big{font-size:34px;font-weight:800}
+  .tile .unit{font-size:12px;color:var(--muted);font-weight:600;margin-left:6px}
+  .spark{width:100%;height:40px;margin-top:8px;overflow:hidden}
+  .spark svg{display:block;width:200%;height:100%;animation:drift 9s linear infinite}
+  @keyframes drift{to{transform:translateX(-50%)}}
+
+  /* exposure: left icon rail */
+  .rail{position:absolute;left:14px;top:120px;bottom:60px;width:34px;display:flex;flex-direction:column;
+    align-items:center;gap:22px;z-index:5;color:var(--muted-dim)}
+  .rail i{width:20px;height:20px;border-radius:5px;display:block;opacity:.6}
+  .rail i:nth-child(2){background:var(--teal);opacity:.9;box-shadow:0 0 10px var(--teal-glow)}
+  .rail i:not(:nth-child(2)){border:1.5px solid var(--muted-dim)}
+
+  /* exposure: funnel stage numbers */
+  .stagenum{position:absolute;z-index:4;transform:translate(-50%,-50%);text-align:left}
+  .stagenum .num{font-size:44px}
+  .stagenum .cap{margin-top:8px}
+
+  /* exposure: filtered-out branch labels */
+  .branch{position:absolute;z-index:4;display:flex;align-items:center;gap:16px;transform:translateY(-50%)}
+  .branch b{font-size:22px;font-weight:800;color:#e7ebee;min-width:64px;text-align:right}
+  .branch span{font-size:15px;color:#aeb6bd;font-weight:500;line-height:1.2;max-width:180px}
+
+  /* exposure: CASES pill */
+  .cases{position:absolute;z-index:5;transform:translate(-50%,-50%);border:1.5px solid var(--red);
+    border-radius:12px;padding:14px 22px;background:rgba(20,4,7,.72);box-shadow:0 0 26px rgba(239,68,68,.35)}
+  .cases .num{font-size:40px}.cases .cap{margin-top:4px}
+
+  /* exposure: processing toast */
+  .toast{position:absolute;z-index:5;transform:translate(-50%,-50%);border:1px solid rgba(63,214,150,.5);
+    border-radius:12px;padding:14px 18px;background:rgba(6,26,18,.85);min-width:300px}
+  .toast .hd{display:flex;align-items:center;gap:8px;color:#63e6b0;font-size:12px;font-weight:800;letter-spacing:.14em}
+  .toast .bd{display:flex;align-items:center;gap:8px;color:#cfe9dd;font-size:14px;margin-top:10px}
+  .toast .tick{width:18px;height:18px;border-radius:50%;border:1.5px solid #3fd696;display:grid;place-items:center;color:#3fd696;font-size:11px}
+  .sparkle{color:#7df5c0;animation:tw 1.6s ease-in-out infinite}
+  @keyframes tw{0%,100%{opacity:.4;transform:scale(.9)}50%{opacity:1;transform:scale(1.15)}}
+
+  /* exposure: right status cards */
+  .cards{position:absolute;right:34px;top:120px;width:300px;display:flex;flex-direction:column;gap:14px;z-index:4}
+  .card{border:1px solid var(--hair);border-radius:12px;padding:16px 18px;background:rgba(255,255,255,.02)}
+  .card.alert{border-color:rgba(224,60,60,.5);background:rgba(60,10,14,.35)}
+  .card .top{display:flex;align-items:baseline;gap:8px}
+  .card .n{font-size:30px;font-weight:800}
+  .card .lbl{font-size:12px;letter-spacing:.14em;font-weight:700;color:var(--muted);text-transform:uppercase;margin-top:8px;line-height:1.35}
+
+  .reduced .logo::after,.reduced .spark svg,.reduced .sparkle{animation:none}
+</style>
+</head>
+<body>
+<div id="fit">
+  <div id="stage">
+
+    <!-- shared edge atmosphere -->
+    <svg class="edge-ticks left"  viewBox="0 0 340 900" id="ticksL"></svg>
+    <svg class="edge-ticks right" viewBox="0 0 340 900" id="ticksR"></svg>
+
+    <!-- top chrome (shared) -->
+    <div class="topbar">
+      <div class="brand">
+        <span class="logo"></span>
+        <div class="switch">
+          <button id="btnSoc" class="on">XSIAM Command Center</button>
+          <button id="btnExp">Exposure Management</button>
+        </div>
+      </div>
+      <div class="timeflag" id="timeflag">Last 24H&nbsp;&nbsp;⌄</div>
+    </div>
+
+    <!-- ===================== VIEW 1 : SOC ===================== -->
+    <section class="view active" id="viewSoc">
+      <canvas id="cvSoc"></canvas>
+      <svg class="bands" id="bandsSoc" viewBox="0 0 1440 810"></svg>
+
+      <div class="greet">Good Morning, Greg</div>
+
+      <div class="datasrc-cap"></div>
+      <div class="sources" id="srcList"></div>
+
+      <!-- center funnel numbers -->
+      <div class="node" style="left:560px;top:410px">
+        <div class="num" style="font-size:56px"><span data-count="2453" data-comma>0</span></div>
+        <div class="cap">Alerts</div>
+      </div>
+      <div class="node" style="left:1005px;top:410px">
+        <div class="num" style="font-size:56px"><span data-count="95">0</span></div>
+        <div class="cap">Incidents</div>
+      </div>
+
+      <!-- right outcome nodes -->
+      <div class="node" style="left:1150px;top:250px">
+        <div class="num" style="font-size:40px"><span data-count="78">0</span></div>
+        <div class="cap">Automated</div>
+      </div>
+      <div class="node" style="left:1150px;top:640px">
+        <div class="num" style="font-size:40px"><span data-count="17">0</span></div>
+        <div class="cap">Manual</div>
+      </div>
+      <div class="node" style="left:1340px;top:300px">
+        <div class="num" style="font-size:44px"><span data-count="84">0</span></div>
+        <div class="cap">Resolved<br>Incidents</div>
+      </div>
+      <div class="node" style="left:1340px;top:560px;text-align:left">
+        <div style="display:flex;align-items:center;gap:16px">
+          <div>
+            <div class="num" style="font-size:44px"><span data-count="11">0</span></div>
+            <div class="cap">Open<br>Incidents</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;margin-top:-6px">
+            <span class="sev"><span class="chip C">C</span>3</span>
+            <span class="sev"><span class="chip H">H</span>2</span>
+            <span class="sev"><span class="chip M">M</span>5</span>
+            <span class="sev"><span class="chip L">L</span>1</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- bottom metric tiles -->
+      <div class="tiles">
+        <div class="tile">
+          <h4>Events Ingestion</h4>
+          <div class="big"><span data-count="43">0</span><span class="unit">B/24H</span></div>
+          <div class="spark" data-spark="a"></div>
+        </div>
+        <div class="tile">
+          <h4>Data Ingestion</h4>
+          <div class="big"><span data-count="65">0</span><span class="unit">TB/24H</span></div>
+          <div class="spark" data-spark="b"></div>
+        </div>
+        <div class="tile">
+          <h4>Total Open Incidents</h4>
+          <div class="big"><span data-count="11">0</span></div>
+          <div style="margin-top:16px">
+            <span class="sev"><span class="chip C">C</span>3</span>
+            <span class="sev"><span class="chip H">H</span>2</span>
+            <span class="sev"><span class="chip M">M</span>5</span>
+            <span class="sev"><span class="chip L">L</span>1</span>
+          </div>
+        </div>
+        <div class="tile">
+          <h4>&nbsp;</h4>
+          <div class="big"><span data-count="286.1" data-dec="1">0</span><span class="unit">K</span></div>
+          <div class="cap" style="margin-top:14px">Prevented Events</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== VIEW 2 : EXPOSURE ===================== -->
+    <section class="view" id="viewExp">
+      <canvas id="cvExp"></canvas>
+      <svg class="bands" id="bandsExp" viewBox="0 0 1440 810"></svg>
+
+      <div class="rail"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="backlink">‹ Back to overview</div>
+      <div class="prioritle">PRIORITIZATION</div>
+
+      <!-- funnel stage numbers -->
+      <div class="stagenum" style="left:238px;top:250px">
+        <div class="num"><span data-count="1.2" data-dec="1">0</span>M<span class="delta down">↓3.8%</span></div>
+        <div class="cap">Vulnerabilities</div>
+      </div>
+      <div class="stagenum" style="left:520px;top:250px">
+        <div class="num"><span data-count="865">0</span>K<span class="delta down">↓2.5%</span></div>
+        <div class="cap">Unique Vulnerabilities</div>
+      </div>
+      <div class="stagenum" style="left:790px;top:250px">
+        <div class="num"><span data-count="17">0</span>K<span class="delta down">↓1%</span></div>
+        <div class="cap">Open Issues</div>
+      </div>
+
+      <!-- filtered-out branches -->
+      <div class="branch" style="left:560px;top:378px"><b>42K</b><span>Not Internet Exposed</span></div>
+      <div class="branch" style="left:560px;top:430px"><b>54K</b><span>Low Business Impact</span></div>
+      <div class="branch" style="left:560px;top:500px"><b>242K</b><span>Unlikely to be Exploited in the Wild</span></div>
+      <div class="branch" style="left:560px;top:600px"><b>483K</b><span>Low and Medium CVSS Base Score</span></div>
+      <div class="branch" style="left:560px;top:688px"><b>27K</b><span>Deprioritized by Policy</span></div>
+      <div class="branch" style="left:340px;top:762px"><b>412K</b><span>Duplicative Findings</span></div>
+
+      <!-- processing toast -->
+      <div class="toast" style="left:895px;top:452px">
+        <div class="hd"><span class="sparkle">✦</span> VULNERABILITY PROCESSING…</div>
+        <div class="bd"><span class="tick">✓</span> Correlating with vulnerability intelligence</div>
+      </div>
+
+      <!-- cases pill -->
+      <div class="cases" style="left:1010px;top:318px">
+        <div class="num"><span data-count="479">0</span><span class="delta down" style="font-size:13px">↓1%</span></div>
+        <div class="cap">Cases</div>
+      </div>
+
+      <!-- right status cards -->
+      <div class="cards">
+        <div class="card alert"><div class="top"><span class="n"><span data-count="13">0</span></span><span class="delta up">↑2.5%</span></div><div class="lbl">Require Attention</div></div>
+        <div class="card"><div class="top"><span class="n"><span data-count="200">0</span></span><span class="delta up">↑4%</span></div><div class="lbl">In Progress</div></div>
+        <div class="card"><div class="top"><span class="n"><span data-count="50">0</span></span><span class="delta down">↓13%</span></div><div class="lbl">Mitigated Using Compensating Controls</div></div>
+        <div class="card"><div class="top"><span class="n"><span data-count="87">0</span></span><span class="delta up">↑12%</span></div><div class="lbl">Resolved</div></div>
+        <div class="card"><div class="top"><span class="n"><span data-count="129">0</span></span><span class="delta up">↑5.3%</span></div><div class="lbl">Accepted Risk</div></div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+/* =================================================================
+   0.  helpers
+   ================================================================= */
+const $  = (s,r=document)=>r.querySelector(s);
+const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
+const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(REDUCED) document.body.classList.add('reduced');
+const NS='http://www.w3.org/2000/svg';
+function svg(tag,attrs){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);return e;}
+
+/* smooth cubic bezier "band" between two points, bulging horizontally */
+function band(a,b,k=0.55){
+  const dx=(b.x-a.x)*k;
+  return `M ${a.x} ${a.y} C ${a.x+dx} ${a.y}, ${b.x-dx} ${b.y}, ${b.x} ${b.y}`;
+}
+
+/* =================================================================
+   1.  edge tick decoration
+   ================================================================= */
+function drawTicks(el){
+  const cx=170, cy=450;
+  for(let i=0;i<70;i++){
+    const ang=(-70+i*2)*Math.PI/180;
+    const r1=300, r2=300+ (i%5===0?16:8);
+    el.appendChild(svg('line',{
+      x1:cx+Math.cos(ang)*r1, y1:cy+Math.sin(ang)*r1,
+      x2:cx+Math.cos(ang)*r2, y2:cy+Math.sin(ang)*r2,
+      stroke:'rgba(120,140,150,.35)', 'stroke-width':1
+    }));
+  }
+}
+drawTicks($('#ticksL')); drawTicks($('#ticksR'));
+
+/* =================================================================
+   2.  SOC — data-source list + bands
+   ================================================================= */
+const SOURCES = [
+  {t:'Endpoints', s:'41.7K', hot:false, big:true},
+  {t:'NGFW'},
+  {t:'Amazon Web Services'},
+  {t:'Google Cloud'},
+  {t:'Azure'},
+  {t:'Office 365', hot:true},
+  {t:'Proofpoint'},
+  {t:'Prisma Cloud'},
+  {t:'Apache'},
+  {t:'Okta'},
+  {t:'+68', s:'Data Sources'}
+];
+const srcList=$('#srcList');
+const SRC_TOP=150, SRC_STEP=27, SRC_X=214;   // geometry of the left column (tune here)
+const srcPts=[];
+SOURCES.forEach((o,i)=>{
+  const row=document.createElement('div');
+  row.className='src'+(o.hot?' hot':'');
+  row.innerHTML=`<span class="txt">${o.big?`<b style="font-size:16px">${o.s}</b> `:''}${o.t}${o.s&&!o.big?` <small>${o.s}</small>`:''}</span><span class="dot"></span>`;
+  srcList.appendChild(row);
+  srcPts.push({x:SRC_X+30, y:SRC_TOP+8+i*SRC_STEP, hot:!!o.hot});
+});
+
+/* key points of the SOC flow (all tunable) */
+const SOC = {
+  throat:{x:600,y:410},
+  disc:{x:770,y:410,r:120},
+  incid:{x:960,y:410},
+  auto:{x:1150,y:280},
+  manual:{x:1150,y:600},
+  resolved:{x:1330,y:330},
+  open:{x:1330,y:560}
+};
+
+function buildSocBands(){
+  const g=$('#bandsSoc'); g.innerHTML='';
+  // defs: glow + gradients
+  const defs=svg('defs',{});
+  defs.innerHTML=`
+    <filter id="glowS" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="gTeal" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#1c6b63"/><stop offset="1" stop-color="#2fd6c0"/>
+    </linearGradient>`;
+  g.appendChild(defs);
+
+  // left: each source -> throat  (grey ribbons)
+  srcPts.forEach(p=>{
+    const base=svg('path',{d:band(p,SOC.throat,.6),fill:'none',
+      stroke: p.hot?'rgba(239,68,68,.45)':'rgba(150,168,178,.18)','stroke-width':p.hot?3:9,'stroke-linecap':'round'});
+    g.appendChild(base);
+    // bright travelling pulse
+    const flow=svg('path',{d:band(p,SOC.throat,.6),fill:'none',
+      stroke:p.hot?'rgba(255,120,120,.9)':'rgba(210,225,232,.55)','stroke-width':2,
+      'stroke-dasharray':'2 130','stroke-linecap':'round','class':'flowline'});
+    g.appendChild(flow);
+  });
+
+  // right outcome ribbons (teal)
+  const ribbons=[
+    [SOC.incid,SOC.auto,14],[SOC.incid,SOC.manual,10],
+    [SOC.auto,SOC.resolved,26],[SOC.auto,SOC.open,4],
+    [SOC.manual,SOC.open,10],[SOC.manual,SOC.resolved,4]
+  ];
+  ribbons.forEach(([a,b,w])=>{
+    g.appendChild(svg('path',{d:band(a,b,.5),fill:'none',stroke:'url(#gTeal)',
+      'stroke-width':w,'stroke-linecap':'round',opacity:.75,filter:'url(#glowS)'}));
+    const flow=svg('path',{d:band(a,b,.5),fill:'none',stroke:'#a8fff0','stroke-width':2,
+      'stroke-dasharray':'2 90','stroke-linecap':'round','class':'flowline'});
+    g.appendChild(flow);
+  });
+
+  // dashed tick ring around the disc
+  ring(g,SOC.disc.x,SOC.disc.y,150,120);
+  ring(g,SOC.disc.x,SOC.disc.y,168,120,.4);
+}
+function ring(g,cx,cy,r,n,op=.7){
+  for(let i=0;i<n;i++){
+    const a=i/n*Math.PI*2, r2=r+(i%6===0?7:3);
+    g.appendChild(svg('line',{x1:cx+Math.cos(a)*r,y1:cy+Math.sin(a)*r,
+      x2:cx+Math.cos(a)*r2,y2:cy+Math.sin(a)*r2,stroke:`rgba(47,214,192,${op*.35})`,'stroke-width':1}));
+  }
+}
+
+/* =================================================================
+   3.  EXPOSURE — funnel bands
+   ================================================================= */
+const EXP={
+  block:{x0:150,x1:520,yTop:300,yBot:640},   // red source block
+  throat:{x:520,y:340},
+  cases:{x:1010,y:318},
+  proc:{x:895,y:452}
+};
+function buildExpBands(){
+  const g=$('#bandsExp'); g.innerHTML='';
+  const defs=svg('defs',{});
+  defs.innerHTML=`
+    <linearGradient id="gRed" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7a1420" stop-opacity=".85"/><stop offset="1" stop-color="#3a0a11" stop-opacity=".2"/>
+    </linearGradient>
+    <linearGradient id="gRedCore" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#c0202f"/><stop offset="1" stop-color="#ef4444"/>
+    </linearGradient>
+    <filter id="glowE" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>`;
+  g.appendChild(defs);
+
+  // many grey source ribbons entering from far left into the block
+  for(let i=0;i<9;i++){
+    const y=200+i*46;
+    g.appendChild(svg('path',{d:band({x:-20,y},{x:EXP.block.x0,y:EXP.block.yTop+i*36},.6),
+      fill:'none',stroke:'rgba(150,168,178,.16)','stroke-width':6,'stroke-linecap':'round'}));
+  }
+  // the red source block
+  g.appendChild(svg('rect',{x:EXP.block.x0,y:EXP.block.yTop,width:EXP.block.x1-EXP.block.x0,
+    height:EXP.block.yBot-EXP.block.yTop,fill:'url(#gRed)'}));
+
+  // filtered-out branches peeling down/right (dark red)
+  const branches=[
+    {x:540,y:378,w:6},{x:540,y:430,w:8},{x:540,y:500,w:16},
+    {x:540,y:600,w:26},{x:540,y:688,w:5},{x:330,y:762,w:22}
+  ];
+  branches.forEach(b=>{
+    g.appendChild(svg('path',{d:band({x:EXP.block.x1,y:EXP.throat.y},{x:b.x,y:b.y},.5),
+      fill:'none',stroke:'rgba(120,20,30,.6)','stroke-width':b.w,'stroke-linecap':'round'}));
+  });
+
+  // the surviving core: block -> processing -> cases (bright red)
+  g.appendChild(svg('path',{d:band({x:EXP.block.x1,y:EXP.throat.y},{x:EXP.cases.x,y:EXP.cases.y},.4),
+    fill:'none',stroke:'url(#gRedCore)','stroke-width':6,filter:'url(#glowE)','stroke-linecap':'round'}));
+  const flow=svg('path',{d:band({x:EXP.block.x1,y:EXP.throat.y},{x:EXP.cases.x,y:EXP.cases.y},.4),
+    fill:'none',stroke:'#ffd0d0','stroke-width':2,'stroke-dasharray':'2 70','class':'flowline'});
+  g.appendChild(flow);
+
+  // processing node marker
+  g.appendChild(svg('circle',{cx:EXP.proc.x,cy:EXP.proc.y-2,r:14,fill:'none',stroke:'#3fd696','stroke-width':2,filter:'url(#glowE)'}));
+
+  // cases -> right status cards (thin teal/grey connectors)
+  const cardYs=[176,320,470,616,762];
+  cardYs.forEach((y,i)=>{
+    const col = i===0 ? 'rgba(224,60,60,.55)' : 'rgba(47,214,192,.4)';
+    g.appendChild(svg('path',{d:band({x:EXP.cases.x+60,y:EXP.cases.y},{x:1100,y},.55),
+      fill:'none',stroke:col,'stroke-width':i===0?4:2,'stroke-linecap':'round'}));
+  });
+
+  // outer prioritization arc rings
+  ringArc(g,760,470,470,-40,220);
+  ringArc(g,760,470,452,-40,220,.5);
+}
+function ringArc(g,cx,cy,r,a0,a1,op=.8){
+  const n=180;
+  for(let i=0;i<n;i++){
+    const t=a0+(a1-a0)*i/n, a=t*Math.PI/180, r2=r+(i%6===0?7:3);
+    g.appendChild(svg('line',{x1:cx+Math.cos(a)*r,y1:cy+Math.sin(a)*r,
+      x2:cx+Math.cos(a)*r2,y2:cy+Math.sin(a)*r2,stroke:`rgba(150,160,168,${op*.18})`,'stroke-width':1}));
+  }
+}
+
+/* travelling-pulse animation for every .flowline (skip if reduced motion) */
+if(!REDUCED){
+  const style=document.createElement('style');
+  style.textContent='@keyframes flowmove{to{stroke-dashoffset:-1000}}.flowline{animation:flowmove 6s linear infinite}';
+  document.head.appendChild(style);
+}
+
+buildSocBands();
+buildExpBands();
+
+/* =================================================================
+   4.  PARTICLE SYSTEMS  (canvas)
+   ================================================================= */
+const DPR=Math.min(window.devicePixelRatio||1,2);
+function setupCanvas(cv){cv.width=1440*DPR;cv.height=810*DPR;const c=cv.getContext('2d');c.scale(DPR,DPR);return c;}
+const cS=setupCanvas($('#cvSoc'));
+const cE=setupCanvas($('#cvExp'));
+
+// ---- SOC swarm ----
+const PAL=['#2fd6c0','#2fd6c0','#2fd6c0','#5cf0dc','#f5a623','#ef4444'];
+const swarm=[];
+for(let i=0;i<230;i++){
+  const rad=14+Math.random()*104, ang=Math.random()*Math.PI*2;
+  swarm.push({ang,rad,base:rad,sp:(Math.random()*.0006+.0002)*(Math.random()<.5?-1:1),
+    ph:Math.random()*6.28,col:PAL[i%PAL.length],sz:Math.random()<.15?2.2:1.4});
+}
+const streaks=[];
+for(let i=0;i<9;i++)streaks.push({x:SOC.disc.x,y:SOC.disc.y+(Math.random()*40-20),
+  sp:1.6+Math.random()*1.4,off:Math.random()});
+
+function drawSoc(t){
+  const {x:cx,y:cy}=SOC.disc;
+  for(const p of swarm){
+    if(!REDUCED)p.ang+=p.sp;
+    const wob=Math.sin(t*.0011+p.ph)*4;
+    const x=cx+Math.cos(p.ang)*(p.base+wob), y=cy+Math.sin(p.ang)*(p.base+wob);
+    cS.globalAlpha=.35+.5*(0.5+0.5*Math.sin(t*.002+p.ph));
+    cS.fillStyle=p.col;cS.beginPath();cS.arc(x,y,p.sz,0,6.28);cS.fill();
+  }
+  // streaks pulled toward incidents
+  for(const s of streaks){
+    if(!REDUCED)s.x+=s.sp;
+    if(s.x>SOC.incid.x){s.x=cx+40;s.y=cy+(Math.random()*60-30);}
+    const grad=cS.createLinearGradient(s.x-26,0,s.x,0);
+    grad.addColorStop(0,'rgba(92,240,220,0)');grad.addColorStop(1,'rgba(92,240,220,.9)');
+    cS.strokeStyle=grad;cS.lineWidth=1.6;cS.globalAlpha=1;
+    cS.beginPath();cS.moveTo(s.x-26,s.y);cS.lineTo(s.x,s.y);cS.stroke();
+  }
+  cS.globalAlpha=1;
+}
+
+// ---- EXPOSURE corridor particles ----
+const corridor=[];
+for(let i=0;i<40;i++)corridor.push({x:EXP.block.x1+Math.random()*(EXP.cases.x-EXP.block.x1),
+  y:EXP.throat.y+(Math.random()*24-12),sp:.8+Math.random()*1.6,
+  col:Math.random()<.25?'#f5a623':'#ff6b6b',sz:Math.random()<.2?2:1.3});
+function drawExp(t){
+  for(const p of corridor){
+    if(!REDUCED)p.x+=p.sp;
+    if(p.x>EXP.cases.x){p.x=EXP.block.x1;p.y=EXP.throat.y+(Math.random()*24-12);}
+    const yy=p.y + Math.sin((p.x)*.01+t*.001)*6;
+    cE.globalAlpha=.5+.4*Math.sin(t*.003+p.x);
+    cE.fillStyle=p.col;cE.beginPath();cE.arc(p.x,yy,p.sz,0,6.28);cE.fill();
+  }
+  cE.globalAlpha=1;
+}
+
+/* =================================================================
+   5.  animation loop + view state
+   ================================================================= */
+let active='soc';
+function loop(t){
+  if(active==='soc'){cS.clearRect(0,0,1440,810);drawSoc(t);}
+  else{cE.clearRect(0,0,1440,810);drawExp(t);}
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+
+/* =================================================================
+   6.  count-up (re-runs whenever a view becomes active)
+   ================================================================= */
+function countUp(root){
+  $$('[data-count]',root).forEach(el=>{
+    const target=parseFloat(el.dataset.count);
+    const dec=parseInt(el.dataset.dec||'0',10);
+    const comma=el.hasAttribute('data-comma');
+    const fmt=v=>{let s=v.toFixed(dec);if(comma)s=Number(v.toFixed(0)).toLocaleString('en-US');return s;};
+    if(REDUCED){el.textContent=fmt(target);return;}
+    const dur=1100, t0=performance.now();
+    (function step(now){
+      const p=Math.min(1,(now-t0)/dur), e=1-Math.pow(1-p,3);
+      el.textContent=fmt(target*e);
+      if(p<1)requestAnimationFrame(step);else el.textContent=fmt(target);
+    })(t0);
+  });
+}
+
+/* =================================================================
+   7.  sparklines
+   ================================================================= */
+function makeSpark(el,seed){
+  const w=600,h=40,pts=[];
+  for(let i=0;i<=60;i++){
+    const x=i/60*w;
+    const y=h/2 + Math.sin(i*.5+seed)*7 + Math.sin(i*.17+seed*2)*5;
+    pts.push(`${x.toFixed(1)},${(y).toFixed(1)}`);
+  }
+  el.innerHTML=`<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+    <polyline points="${pts.join(' ')}" fill="none" stroke="#3aa0d8" stroke-width="2"/></svg>`;
+}
+makeSpark($('[data-spark="a"]'),0.6);
+makeSpark($('[data-spark="b"]'),2.1);
+
+/* =================================================================
+   8.  view toggle
+   ================================================================= */
+const btnSoc=$('#btnSoc'), btnExp=$('#btnExp');
+function show(view){
+  active=view;
+  const soc=view==='soc';
+  $('#viewSoc').classList.toggle('active',soc);
+  $('#viewExp').classList.toggle('active',!soc);
+  btnSoc.classList.toggle('on',soc); btnExp.classList.toggle('on',!soc);
+  $('#timeflag').innerHTML = soc ? 'Last 24H&nbsp;&nbsp;⌄' : 'All Data Over Last 30 days';
+  countUp(soc?$('#viewSoc'):$('#viewExp'));
+}
+btnSoc.onclick=()=>show('soc');
+btnExp.onclick=()=>show('exp');
+
+/* =================================================================
+   9.  fit stage to window
+   ================================================================= */
+function fit(){
+  const s=Math.min(window.innerWidth/1440, window.innerHeight/810);
+  $('#stage').style.transform=`scale(${s})`;
+}
+window.addEventListener('resize',fit); fit();
+
+/* initial count-up */
+countUp($('#viewSoc'));
+</script>
+</body>
+</html>
