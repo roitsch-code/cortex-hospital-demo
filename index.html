@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Sovereign Cortex — Command Center</title>
+<title>Cyber Security Command Center — powered by T Security</title>
 <style>
 :root{
   --bg:#010204;
@@ -16,25 +16,21 @@
 html,body{height:100%;background:var(--bg);overflow:hidden;font-family:var(--font);color:var(--text)}
 #fit{position:fixed;inset:0;display:grid;place-items:center}
 #stage{position:relative;width:1440px;height:810px;transform-origin:center;
-  background:radial-gradient(120% 90% at 50% 40%,#04070b 0%,#010204 74%);overflow:hidden}
+  background:radial-gradient(120% 90% at 50% 46%,#04070b 0%,#010204 74%);overflow:hidden}
 canvas#cv{position:absolute;inset:0;width:1440px;height:810px;pointer-events:none;z-index:1}
-
-/* soft dome glow behind the core (replaces the old arc lines) */
-.dome{position:absolute;left:812px;top:300px;width:820px;height:520px;transform:translate(-50%,-50%);z-index:0;
-  background:radial-gradient(50% 50% at 50% 50%,rgba(47,214,192,.10),rgba(47,214,192,0) 70%);pointer-events:none}
+.dome{position:absolute;left:720px;top:392px;width:760px;height:560px;transform:translate(-50%,-50%);z-index:0;
+  background:radial-gradient(50% 50% at 50% 50%,rgba(47,214,192,.09),rgba(47,214,192,0) 70%);pointer-events:none}
 
 /* ---------- top chrome ---------- */
-.top{position:absolute;top:18px;left:32px;right:32px;z-index:8;display:flex;align-items:flex-start;justify-content:space-between}
-.crumbs{font-size:12px;color:var(--dim);font-weight:600;margin-bottom:5px}
-.crumbs b{color:var(--muted)}
-.brand{display:flex;align-items:center;gap:11px}
-.logo{width:20px;height:20px;border:2px solid var(--teal);border-radius:50%;position:relative;flex:0 0 auto}
-.logo::after{content:"";position:absolute;inset:3px;border-radius:50%;border:2px solid transparent;border-top-color:var(--teal-br);animation:spin 4s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.title{font-weight:700;letter-spacing:.2px;font-size:19px;display:flex;align-items:center;gap:8px}
-.title .car{color:var(--muted);font-size:12px}
-.title small{color:var(--muted);font-weight:600;font-size:12px;margin-left:6px;border-left:1px solid var(--hair);padding-left:10px}
-.title small b{color:var(--magenta)}
+.top{position:absolute;top:20px;left:34px;right:34px;z-index:8;display:flex;align-items:flex-start;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:16px}
+.tlogo{height:26px;width:auto;display:block}
+.tlogo path{fill:#fff}
+.vdiv{width:1px;height:30px;background:var(--hair)}
+.titles .title{font-weight:700;letter-spacing:.2px;font-size:19px;display:flex;align-items:center;gap:8px}
+.titles .title .car{color:var(--muted);font-size:12px}
+.titles .tag{font-size:11.5px;color:var(--muted);margin-top:3px;letter-spacing:.02em}
+.titles .tag b{color:var(--magenta);font-weight:700}
 .tright{display:flex;align-items:center;gap:10px}
 .tsel{color:var(--muted);font-size:12px;border:1px solid var(--hair);border-radius:999px;padding:7px 14px;display:flex;align-items:center;gap:8px;cursor:pointer;transition:.2s}
 .tsel:hover{border-color:var(--teal-dim);color:var(--text)}
@@ -44,16 +40,6 @@ canvas#cv{position:absolute;inset:0;width:1440px;height:810px;pointer-events:non
 
 svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:2}
 
-/* ---------- agentic assistant header ---------- */
-.agentic{position:absolute;top:92px;left:50%;transform:translateX(-50%);z-index:6;text-align:center;cursor:pointer}
-.agentic .ah{font-size:13px;font-weight:800;letter-spacing:.24em;color:#cfeee7;display:flex;align-items:center;gap:10px;justify-content:center;
-  text-shadow:0 0 22px rgba(47,214,192,.6)}
-.agentic .ah .o{width:15px;height:15px;border-radius:50%;border:2px solid var(--teal);position:relative}
-.agentic .ah .o::after{content:"";position:absolute;inset:2px;border-radius:50%;border:2px solid transparent;border-top-color:var(--teal-br);animation:spin 3s linear infinite}
-.agentic .ah .car{color:var(--muted);font-weight:600}
-.agentic .hint{font-size:10px;color:var(--teal-br);opacity:0;margin-top:5px;letter-spacing:.1em;transition:.25s}
-.agentic:hover .hint{opacity:.9}
-
 /* generic glowing node */
 .node{position:absolute;transform:translate(-50%,-50%);z-index:4;text-align:center}
 .node.click{cursor:pointer;transition:transform .2s}
@@ -61,22 +47,26 @@ svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;ov
 .node.click:hover .num{text-shadow:0 0 26px var(--glow)}
 .num{font-weight:800;line-height:1;color:#fff}
 .cap{color:var(--muted);letter-spacing:.15em;font-size:11px;font-weight:700;text-transform:uppercase;margin-top:7px}
-.node .sub{font-size:10px;color:var(--muted);margin-top:3px}
 .node .hint{font-size:10px;color:var(--teal-br);opacity:0;margin-top:4px;letter-spacing:.08em;transition:.2s}
 .node.click:hover .hint{opacity:.9}
 
 /* left source rows */
-.src{position:absolute;transform:translateY(-50%);z-index:4;display:flex;align-items:center;justify-content:space-between;gap:10px;
-  width:172px;font-size:12.5px;font-weight:600;color:#d7dde2;cursor:pointer;padding:2px 0;transition:.18s}
-.src .lab{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.src{position:absolute;transform:translateY(-50%);z-index:4;display:flex;align-items:center;gap:9px;
+  width:196px;font-size:12.5px;font-weight:600;color:#d7dde2;cursor:pointer;padding:2px 0;transition:.18s}
+.src .sicon{width:16px;height:16px;flex:0 0 auto;color:var(--muted)}
+.src .lab{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
 .src small{color:var(--muted);font-weight:600;font-size:11px}
 .src .dot{width:9px;height:9px;border-radius:50%;background:#20262d;border:1.5px solid var(--dim);flex:0 0 auto;transition:.18s}
+.src.ep{color:#fff}
+.src.ep .sicon{color:var(--teal-br)}
+.src.ep .dot{background:#0c3b34;border-color:var(--teal);box-shadow:0 0 9px var(--glow)}
 .src.tsys .lab{color:#f4b9d8}
+.src.tsys .sicon{color:var(--magenta)}
 .src.tsys .dot{background:#3a0a22;border-color:var(--magenta);box-shadow:0 0 8px rgba(226,0,116,.6)}
-.src.alert .dot{background:var(--red);border-color:var(--red);box-shadow:0 0 8px var(--red)}
 .src:hover{color:#fff}
 .src.hot .dot{transform:scale(1.3)}
 .src.more{color:var(--muted);font-weight:700;cursor:default}
+.src.more .sicon{color:var(--dim)}
 
 /* right funnel */
 .funnode{position:absolute;transform:translate(-50%,-50%);z-index:5;cursor:pointer;text-align:center}
@@ -90,6 +80,8 @@ svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;ov
 .funnode .fl span{font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-left:7px}
 .funnode .fl.above{bottom:44px}
 .funnode .fl.below{top:44px}
+.soctag{position:absolute;z-index:5;font-size:10px;font-weight:700;color:#f4b9d8;letter-spacing:.04em;
+  border:1px solid rgba(226,0,116,.5);border-radius:6px;padding:3px 8px;background:rgba(226,0,116,.08);white-space:nowrap}
 
 .outcome{position:absolute;transform:translateY(-50%);z-index:5;text-align:left}
 .outcome b{font-size:30px;font-weight:800;color:#fff;line-height:1}
@@ -104,11 +96,10 @@ svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;ov
 .chev .cv.med i{color:var(--amber)} .chev .cv.low i{color:var(--blue)}
 .chev:hover .cv{filter:brightness(1.15)}
 
-/* core click region */
 .corehit{position:absolute;transform:translate(-50%,-50%);z-index:3;border-radius:50%;cursor:pointer}
 
 /* bottom stat tiles */
-.tiles{position:absolute;left:32px;right:32px;bottom:24px;z-index:4;display:flex;border-top:1px solid var(--hair);padding-top:16px}
+.tiles{position:absolute;left:34px;right:34px;bottom:24px;z-index:4;display:flex;border-top:1px solid var(--hair);padding-top:16px}
 .tile{flex:1;padding:0 26px;display:flex;flex-direction:column;justify-content:center;position:relative;cursor:pointer;transition:.18s}
 .tile+.tile{border-left:1px solid var(--hair)}
 .tile .k{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:9px}
@@ -123,7 +114,7 @@ svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;ov
 .invest .o{width:11px;height:11px;border-radius:50%;border:2px solid var(--teal);display:inline-block}
 
 /* detail popover */
-.pop{position:absolute;z-index:20;width:246px;background:rgba(9,13,17,.97);border:1px solid var(--teal-dim);
+.pop{position:absolute;z-index:20;width:248px;background:rgba(9,13,17,.97);border:1px solid var(--teal-dim);
   border-radius:12px;padding:14px 15px;box-shadow:0 14px 44px rgba(0,0,0,.6),0 0 30px rgba(47,214,192,.12);
   opacity:0;transform:translateY(6px);pointer-events:none;transition:.2s}
 .pop.on{opacity:1;transform:translateY(0);pointer-events:auto}
@@ -134,7 +125,7 @@ svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;ov
 .pop .r span{color:var(--muted)} .pop .r b{color:#e7edf1;font-weight:700}
 .pop .r b.ok{color:var(--teal-br)} .pop .r b.warn{color:var(--amber)} .pop .r b.bad{color:var(--red)}
 .pop .foot{margin-top:10px;font-size:10.5px;color:var(--teal-br);opacity:.85;letter-spacing:.04em;line-height:1.4}
-.reduced .logo::after,.reduced .agentic .ah .o::after{animation:none}
+.reduced .tsel .d{animation:none}
 </style>
 </head>
 <body>
@@ -144,11 +135,15 @@ svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;ov
   <svg class="wire" id="wFlow" viewBox="0 0 1440 810"></svg>
 
   <div class="top">
-    <div>
-      <div class="crumbs">Dashboards &amp; Reports <b>›</b> Dashboard</div>
-      <div class="brand"><span class="logo"></span>
-        <div class="title">Cortex XSIAM <span class="car">·</span> Command Center <span class="car">▾</span>
-          <small>Sovereign · <b>T</b> Security</small></div>
+    <div class="brand">
+      <svg class="tlogo" viewBox="0 0 1478.52 304.81" aria-label="T Security">
+        <g><path d="M336.72,185.25h44.46c3.62,18.44,15.81,25.69,32.28,25.69,18.77,0,28.32-10.54,28.32-24.7s-9.22-21.41-26.35-26.02l-25.36-7.25c-34.91-9.55-49.07-34.91-49.07-61.92,0-41.83,31.29-68.83,72.13-68.83,44.46,0,68.5,26.02,72.79,66.53h-43.47c-2.63-16.47-12.19-24.7-29.31-24.7-15.15,0-26.68,9.22-26.68,24.04s10.21,20.42,22.4,23.71l25.36,6.92c32.93,8.56,53.03,32.93,53.03,64.88,0,44.13-32.61,69.16-73.77,69.16-45.45,0-72.79-24.04-76.74-67.52Z"/><path d="M650.51,178.34h-99.46c2.31,29.97,14.49,38.53,30.63,38.53,12.84,0,21.41-4.94,25.36-14.82h42.82c-6.26,31.29-33.26,50.72-68.17,50.72-42.49,0-71.14-30.63-71.14-84.64s27.67-84.64,72.13-84.64c41.5,0,68.5,31.62,68.5,80.03,0,5.6,0,11.2-.66,14.82ZM552.37,147.71h58.62c-2.96-21.41-14.16-28.32-28.32-28.32-15.48,0-26.35,6.92-30.3,28.32Z"/><path d="M674.39,168.13c0-51.38,26.35-84.64,71.47-84.64,39.85,0,63.23,25.03,67.52,59.94h-42.81c-2.96-13.5-10.54-21.08-24.7-21.08-19.1,0-28.32,16.14-28.32,45.78s9.22,45.78,28.32,45.78c14.16,0,21.74-7.58,24.37-21.08h43.14c-4.28,34.91-27.67,59.94-67.52,59.94-45.12,0-71.47-33.59-71.47-84.64Z"/><path d="M839.88,193.82v-105.06h42.49v99.79c0,15.48,5.6,25.36,20.75,25.36,16.14,0,27.01-12.84,27.01-32.28v-92.88h42.49v158.74h-39.85v-19.43h-1.98c-8.23,15.48-23.38,24.7-42.49,24.7-32.28,0-48.41-20.09-48.41-58.95Z"/><path d="M1099.26,87.77v38.86c-4.28-.66-8.23-.66-11.53-.66-25.69,0-36.23,9.55-36.23,30.96v90.57h-42.49V88.76h39.85v19.43h1.98c7.57-14.16,20.42-22.07,37.22-22.07,3.62,0,7.58.33,11.2,1.65Z"/><path d="M1126,65.37V27.5h42.49v37.87h-42.49ZM1126,247.5V88.76h42.49v158.74h-42.49Z"/><path d="M1221.34,200.73v-75.75h-27.01v-36.23h27.01v-25.69l34.58-31.95h7.9v57.64h40.51v36.23h-40.51v70.48c0,11.86,6.92,18.11,19.1,18.11,6.26,0,12.51-.99,18.11-2.31v33.26c-8.89,3.95-18.44,5.6-30.3,5.6-29.31,0-49.4-17.13-49.4-49.4Z"/><path d="M1433.07,88.76h45.45l-61.92,175.87c-8.56,24.04-25.03,40.18-52.04,40.18-8.23,0-17.46-.99-25.69-4.28v-33.92c4.94,1.32,11.2,1.98,17.46,1.98,10.54,0,16.8-3.95,21.74-17.46l3.62-9.55-57.31-152.82h45.45l30.96,96.17h1.98l30.3-96.17Z"/></g>
+        <g><path d="M55,181.5H0v-55h55v55ZM0,0v93.5h16.5v-2.75c0-44,24.75-71.5,71.5-71.5h2.75v198c0,27.5-11,38.5-38.5,38.5h-8.25v19.25h143v-19.25h-8.25c-27.5,0-38.5-11-38.5-38.5V19.25s2.75,0,2.75,0c46.75,0,71.5,27.5,71.5,71.5v2.75h16.5V0H0ZM176,181.5h55v-55h-55v55Z"/></g>
+      </svg>
+      <span class="vdiv"></span>
+      <div class="titles">
+        <div class="title">Cyber Security Command Center <span class="car">▾</span></div>
+        <div class="tag">AI-driven Security Operations · powered by <b>T</b> Security</div>
       </div>
     </div>
     <div class="tright">
@@ -157,49 +152,44 @@ svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;ov
     </div>
   </div>
 
-  <!-- Agentic assistant header -->
-  <div class="agentic" id="agentic">
-    <div class="ah"><span class="o"></span>CORTEX AGENTIC ASSISTANT <span class="car">▾</span></div>
-    <div class="hint">correlation engine · click for detail</div>
-  </div>
-
   <!-- Left data sources (fan-in) -->
   <div id="srcWrap"></div>
 
   <!-- Issues -> core -> Cases spine -->
-  <div class="node click" id="nIssues" style="left:585px;top:365px">
-    <div class="num" style="font-size:46px"><span data-count="2456" data-comma>0</span></div>
-    <div class="cap">Issues</div><div class="hint">from ML analytics →</div>
+  <div class="node click" id="nIssues" style="left:505px;top:392px">
+    <div class="num" style="font-size:44px"><span data-count="2681" data-comma>0</span></div>
+    <div class="cap">Issues</div><div class="hint">correlating →</div>
   </div>
-  <div class="corehit" id="coreHit" style="left:812px;top:365px;width:250px;height:250px"></div>
-  <div class="node click" id="nCases" style="left:1010px;top:365px">
-    <div class="num" style="font-size:40px"><span data-count="95">0</span></div>
+  <div class="corehit" id="coreHit" style="left:720px;top:392px;width:250px;height:250px"></div>
+  <div class="node click" id="nCases" style="left:930px;top:392px">
+    <div class="num" style="font-size:40px"><span data-count="125">0</span></div>
     <div class="cap">Cases</div><div class="hint">breakdown →</div>
   </div>
 
   <!-- Right funnel -->
-  <div class="funnode" id="fnAuto" style="left:1128px;top:302px">
-    <div class="fl above"><b><span data-count="78">0</span></b><span>Automated</span></div>
+  <div class="funnode" id="fnAuto" style="left:1080px;top:300px">
+    <div class="fl above"><b><span data-count="103">0</span></b><span>Automated</span></div>
     <div class="disc2"><svg viewBox="0 0 24 24" fill="none" stroke="#6ff3e0" stroke-width="1.6">
       <circle cx="12" cy="5" r="2.4"/><circle cx="5" cy="17" r="2.4"/><circle cx="19" cy="17" r="2.4"/>
       <path d="M12 7.4V13M12 13l-5.5 2M12 13l5.5 2"/></svg></div>
   </div>
-  <div class="funnode" id="fnManual" style="left:1128px;top:500px">
+  <div class="funnode" id="fnManual" style="left:1080px;top:488px">
     <div class="disc2"><svg viewBox="0 0 24 24" fill="none" stroke="#8b959e" stroke-width="1.6">
       <circle cx="12" cy="8" r="3.4"/><path d="M5.5 19a6.5 6.5 0 0 1 13 0"/></svg></div>
-    <div class="fl below"><b><span data-count="17">0</span></b><span>Manual</span></div>
+    <div class="fl below"><b><span data-count="22">0</span></b><span>Manual</span></div>
   </div>
+  <div class="soctag" id="socTag" style="left:1024px;top:556px">assisted · <b>T</b> Magenta Security SOC</div>
 
-  <div class="outcome click" id="nResolved" style="left:1300px;top:294px">
-    <b><span data-count="84">0</span></b><span>Resolved Cases</span>
+  <div class="outcome click" id="nResolved" style="left:1232px;top:292px">
+    <b><span data-count="114">0</span></b><span>Resolved Cases</span>
   </div>
-  <div class="chev" id="chevOpen" style="left:1250px;top:450px">
+  <div class="chev" id="chevOpen" style="left:1196px;top:446px">
     <div class="cv crit"><i>▲▲</i>3</div>
     <div class="cv high"><i>▲▲</i>3</div>
     <div class="cv med"><i>▲</i>5</div>
     <div class="cv low"><i>▲</i>0</div>
   </div>
-  <div class="outcome click" id="nOpen" style="left:1330px;top:504px">
+  <div class="outcome click" id="nOpen" style="left:1276px;top:498px">
     <b><span data-count="11">0</span></b><span>Open Cases</span>
   </div>
 
@@ -217,17 +207,16 @@ svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;ov
     </div>
     <div class="tile" data-detail="open">
       <div class="k">Total Open Cases</div>
-      <div class="vrow"><div class="v"><span data-count="11">0</span></div>
+      <div class="vrow"><div class="v"><span data-count="32">0</span></div>
         <button class="invest" id="investBtn"><span class="o"></span>Investigate</button></div>
     </div>
     <div class="tile" data-detail="prevented">
       <div class="k">Prevented Events</div>
-      <div class="vrow"><div class="v"><span data-count="286.1" data-decimals="1" data-suffix="K">0</span></div>
+      <div class="vrow"><div class="v"><span data-count="286">0</span><u>K</u></div>
         <svg class="spark" id="spk3" viewBox="0 0 130 40" preserveAspectRatio="none"></svg></div>
     </div>
   </div>
 
-  <!-- detail popover -->
   <div class="pop" id="pop"></div>
 
 </div></div>
@@ -246,79 +235,96 @@ function cubic(p0,p1,p2,p3,t){const u=1-t;
           y:u*u*u*p0.y+3*u*u*t*p1.y+3*u*t*t*p2.y+t*t*t*p3.y};}
 function bezPt(a,b,k,t){const dx=(b.x-a.x)*k;return cubic(a,{x:a.x+dx,y:a.y},{x:b.x-dx,y:b.y},b,t);}
 
-/* ---------------- fake-but-consistent data ---------------- */
+/* ---------- icons ---------- */
+const ICONS={
+  endpoint:'<rect x="2" y="3" width="12" height="8" rx="1"/><path d="M6 14h4M8 11v3"/>',
+  identity:'<circle cx="8" cy="6" r="2.4"/><path d="M3.6 13a4.4 4.4 0 0 1 8.8 0"/>',
+  email:'<rect x="2" y="4" width="12" height="9" rx="1"/><path d="M2.5 5l5.5 4 5.5-4"/>',
+  network:'<path d="M1.5 11c2-5 3.2-5 5 0s3 5 5 0 1.5-2 3-2"/>',
+  firewall:'<rect x="2" y="3.5" width="12" height="9" rx="1"/><path d="M2 6.7h12M2 9.6h12M6 3.5v3.2M10 6.7v2.9M6 9.6V12.5"/>',
+  cloud:'<path d="M4.6 12h6a3 3 0 0 0 .3-6 4 4 0 0 0-7.6 1A2.6 2.6 0 0 0 4.6 12z"/>',
+  chip:'<rect x="4" y="4" width="8" height="8" rx="1"/><path d="M6 1.6v2.4M10 1.6v2.4M6 12v2.4M10 12v2.4M1.6 6h2.4M1.6 10h2.4M12 6h2.4M12 10h2.4"/>',
+  tmark:'<rect x="2.4" y="2.4" width="11.2" height="11.2" rx="2"/><path d="M4.8 5.4h6.4M8 5.4V11" stroke-width="1.5"/>',
+  more:'<circle cx="4" cy="8" r="1.1"/><circle cx="8" cy="8" r="1.1"/><circle cx="12" cy="8" r="1.1"/>'
+};
+function iconSVG(k){return `<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">${ICONS[k]||''}</svg>`;}
+
+/* ---------------- data ---------------- */
 const DATA={
   sources:[
-    {n:'Endpoints',       s:'19.2K', rate:'6.1 B/24H', res:'Germany Data Boundary'},
-    {n:'NGFW',            s:'',      rate:'11.4 B/24H',res:'EU / on-prem'},
-    {n:'T Cloud Public',  s:'',      rate:'4.7 B/24H', res:'Open Telekom Cloud · DE', t:1},
-    {n:'T AI Industrial Cloud', s:'',rate:'2.3 B/24H', res:'Sovereign compute (Telekom + NVIDIA)', t:1},
-    {n:'AWS',             s:'',      rate:'5.9 B/24H', res:'eu-central-1'},
-    {n:'Azure',           s:'',      rate:'3.2 B/24H', res:'Germany West Central'},
-    {n:'Office 365',      s:'',      rate:'1.8 B/24H', res:'EU tenant', alert:1},
-    {n:'Okta / IAM',      s:'',      rate:'0.9 B/24H', res:'Germany Data Boundary'},
-    {n:'Prisma Cloud',    s:'',      rate:'2.6 B/24H', res:'Multi-cloud posture'},
-    {n:'T-Systems Sovereign Cloud', lab:'T-Systems Sovereign', s:'', rate:'3.4 B/24H', res:'powered by Google Cloud · DE', t:1},
-    {n:'Magenta Security · SOC', lab:'Magenta Security', s:'', rate:'0.6 B/24H', res:'Cyber Defense Center Bonn', t:1},
-    {more:'+68 Data Sources'}
+    {n:'Endpoints', s:'19.2K', icon:'endpoint', w:9, ep:1, rate:'56.3 TB/24H', res:'Germany Data Boundary'},
+    {n:'Identities', icon:'identity', w:2, rate:'13.0 K/24H', res:'Germany Data Boundary'},
+    {n:'Email', icon:'email', w:4, rate:'157 K scanned', res:'EU tenant'},
+    {n:'Network Data', icon:'network', w:5, rate:'2.2 GB/24H', res:'EU / on-prem'},
+    {n:'NGFW', icon:'firewall', w:6, rate:'11.4 B/24H', res:'EU / on-prem'},
+    {n:'T Cloud Public', icon:'tmark', w:5, t:1, rate:'4.7 B/24H', res:'Open Telekom Cloud · DE'},
+    {n:'T AI Industrial Cloud', lab:'T AI Industrial Cloud', icon:'chip', w:3, t:1, rate:'2.3 B/24H', res:'Telekom + NVIDIA · DE'},
+    {n:'AWS', icon:'cloud', w:6, rate:'5.9 B/24H', res:'eu-central-1'},
+    {n:'Azure', icon:'cloud', w:4, rate:'3.2 B/24H', res:'Germany West Central'},
+    {n:'Google Cloud', icon:'cloud', w:4, rate:'2.6 B/24H', res:'europe-west3'},
+    {more:'+68 Data Sources', icon:'more', w:3}
   ]
 };
-const SRC_X=292, SRC_Y0=205, SRC_STEP=30.4, WAIST={x:520,y:365}, CORE={x:812,y:365,R:118}, CASES={x:1010,y:365};
-const AUTO={x:1128,y:302}, MAN={x:1128,y:500};
-const srcPts=[]; // ribbon origin per source row
+const CENTER={x:720,y:392,R:132}, WAIST={x:470,y:392}, CASES={x:930,y:392};
+const AUTO={x:1080,y:300}, MAN={x:1080,y:488};
+const EP_Y=210, SRC_Y0=272, SRC_STEP=31, SRC_X=262;
+const srcPts=[]; // ribbon mouth per source (aligned to DATA.sources)
 
-/* ---- glow + gradient defs, ribbons ---- */
+/* ---- defs + ribbon helpers ---- */
 function defs(svg){const d=svgEl('defs',{});d.innerHTML=`
   <filter id="g" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-  <linearGradient id="teal" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#186158"/><stop offset="1" stop-color="#2fd6c0"/></linearGradient>
-  <linearGradient id="tmag" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5a0b34"/><stop offset="1" stop-color="#2fd6c0"/></linearGradient>`;svg.appendChild(d);}
-function ribbon(svg,a,b,w,col='url(#teal)',k=.55,flow=true){
+  <linearGradient id="teal" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1a5a52"/><stop offset="1" stop-color="#2fd6c0"/></linearGradient>
+  <linearGradient id="tmag" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5a0b34"/><stop offset="1" stop-color="#2fd6c0"/></linearGradient>
+  <linearGradient id="ep" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#186158"/><stop offset="1" stop-color="#6ff3e0"/></linearGradient>`;svg.appendChild(d);}
+function ribbon(svg,a,b,w,col='url(#teal)',k=.55,flow=false){
   svg.appendChild(svgEl('path',{d:band(a,b,k),fill:'none',stroke:col,'stroke-width':w,'stroke-linecap':'round',opacity:.7,filter:'url(#g)'}));
   if(flow){svg.appendChild(svgEl('path',{d:band(a,b,k),fill:'none',stroke:'#a8fff0','stroke-width':1.5,'stroke-dasharray':'2 90','stroke-linecap':'round',class:'fl'}));}
 }
 function ring(svg,cx,cy,r,n,op=.5){for(let i=0;i<n;i++){const a=i/n*6.283,r2=r+(i%6===0?7:3);
   svg.appendChild(svgEl('line',{x1:cx+Math.cos(a)*r,y1:cy+Math.sin(a)*r,x2:cx+Math.cos(a)*r2,y2:cy+Math.sin(a)*r2,stroke:`rgba(47,214,192,${op*.35})`,'stroke-width':1}));}}
 
-/* ---- build left source rows ---- */
+/* ---- build source rows ---- */
 (function(){const wrap=$('#srcWrap');
-  DATA.sources.forEach((s,i)=>{const y=SRC_Y0+i*SRC_STEP;const el=document.createElement('div');
-    if(s.more){el.className='src more';el.style.cssText=`left:145px;top:${y}px`;
-      el.innerHTML=`<span class="lab">${s.more}</span><span class="dot"></span>`;}
-    else{el.className='src'+(s.t?' tsys':'')+(s.alert?' alert':'');el.style.cssText=`left:145px;top:${y}px`;
-      el.dataset.idx=i;
-      el.innerHTML=`<span class="lab">${s.lab||s.n}${s.s?` <small>· ${s.s}</small>`:''}</span><span class="dot"></span>`;}
+  DATA.sources.forEach((s,i)=>{const y=(i===0)?EP_Y:SRC_Y0+(i-1)*SRC_STEP;const el=document.createElement('div');
+    if(s.more){el.className='src more';el.style.cssText=`left:66px;top:${y}px`;
+      el.innerHTML=`${iconSVG(s.icon)}<span class="lab">${s.more}</span><span class="dot"></span>`;}
+    else{el.className='src'+(s.ep?' ep':'')+(s.t?' tsys':'');el.style.cssText=`left:66px;top:${y}px`;el.dataset.idx=i;
+      el.innerHTML=`${iconSVG(s.icon)}<span class="lab">${s.lab||s.n}${s.s?` <small>· ${s.s}</small>`:''}</span><span class="dot"></span>`;}
     wrap.appendChild(el);
     srcPts.push({x:SRC_X,y});
   });
 })();
 
-/* ---- SVG wires ---- */
+/* ---- SVG wires: pipes (varied thickness) -> waist -> neck -> circle; funnel ---- */
 const srcRibbons=[];
 (function(){const s=$('#wFlow');defs(s);
-  // source fan-in ribbons (grey base + colored line + flowing dash) -> all flow L->R into the waist
-  DATA.sources.forEach((src,i)=>{const a=srcPts[i];const tel=!!src.t;
-    const base=svgEl('path',{d:band(a,WAIST,.62),fill:'none',stroke:'rgba(150,168,178,.14)','stroke-width':6,'stroke-linecap':'round',opacity:.7,filter:'url(#g)'});
-    const line=svgEl('path',{d:band(a,WAIST,.62),fill:'none',stroke:tel?'url(#tmag)':'url(#teal)','stroke-width':1.4,'stroke-linecap':'round',opacity:.5});
-    const flo =svgEl('path',{d:band(a,WAIST,.62),fill:'none',stroke:'#a8fff0','stroke-width':1.4,'stroke-dasharray':'2 72','stroke-linecap':'round',class:'fl'});
-    s.appendChild(base);s.appendChild(line);s.appendChild(flo);
-    srcRibbons.push({base,line,flo});
+  DATA.sources.forEach((src,i)=>{const a=srcPts[i];
+    const greyW=2+src.w*0.95, lineW=0.7+src.w*0.16;
+    const col=src.ep?'url(#ep)':(src.t?'url(#tmag)':'url(#teal)');
+    const base=svgEl('path',{d:band(a,WAIST,.6),fill:'none',stroke:src.ep?'rgba(47,214,192,.16)':'rgba(150,168,178,.13)','stroke-width':greyW,'stroke-linecap':'round',opacity:.7,filter:'url(#g)'});
+    const line=svgEl('path',{d:band(a,WAIST,.6),fill:'none',stroke:col,'stroke-width':lineW,'stroke-linecap':'round',opacity:src.ep?.7:.45});
+    s.appendChild(base);s.appendChild(line);
+    srcRibbons.push({base,line,greyW,lineW});
   });
-  // radar bezel around the core
-  ring(s,CORE.x,CORE.y,CORE.R+16,132,.55);
-  ring(s,CORE.x,CORE.y,CORE.R+40,90,.28);
-  // spine: waist -> core -> cases (flowing)
-  ribbon(s,{x:WAIST.x+8,y:WAIST.y},{x:CORE.x-CORE.R,y:CORE.y},3);
-  ribbon(s,{x:CORE.x+CORE.R,y:CORE.y},{x:CASES.x-40,y:CASES.y},3);
+  // neck: waist -> circle left rim
+  ribbon(s,{x:WAIST.x,y:WAIST.y},{x:CENTER.x-CENTER.R,y:CENTER.y},7,'url(#teal)',.5);
+  // radar bezel + faint guide circles
+  ring(s,CENTER.x,CENTER.y,CENTER.R+18,150,.55);
+  ring(s,CENTER.x,CENTER.y,CENTER.R+44,96,.26);
+  s.appendChild(svgEl('circle',{cx:CENTER.x,cy:CENTER.y,r:CENTER.R,fill:'none',stroke:'rgba(47,214,192,.16)','stroke-width':1}));
+  s.appendChild(svgEl('circle',{cx:CENTER.x,cy:CENTER.y,r:CENTER.R*0.62,fill:'none',stroke:'rgba(47,214,192,.10)','stroke-width':1}));
+  // circle right rim -> cases
+  ribbon(s,{x:CENTER.x+CENTER.R,y:CENTER.y},{x:CASES.x-40,y:CASES.y},3,'url(#teal)',.55);
   // cases -> automated / manual
-  ribbon(s,{x:CASES.x+40,y:CASES.y},{x:AUTO.x-26,y:AUTO.y},9,'url(#teal)',.55);
-  ribbon(s,{x:CASES.x+40,y:CASES.y},{x:MAN.x-26,y:MAN.y},5,'rgba(150,168,178,.4)',.55,false);
-  // automated -> resolved (thick flowing teal)
-  ribbon(s,{x:AUTO.x+26,y:AUTO.y},{x:1288,y:296},14,'url(#teal)',.5);
-  // manual -> open (thin fan to chevrons)
-  [462,488,514,540].forEach(cy=>s.appendChild(svgEl('path',{d:band({x:MAN.x+26,y:MAN.y},{x:1244,y:cy},.5),fill:'none',stroke:'rgba(150,168,178,.3)','stroke-width':1.4})));
+  ribbon(s,{x:CASES.x+42,y:CASES.y},{x:AUTO.x-26,y:AUTO.y},9,'url(#teal)',.55);
+  ribbon(s,{x:CASES.x+42,y:CASES.y},{x:MAN.x-26,y:MAN.y},5,'rgba(150,168,178,.4)',.55);
+  // automated -> resolved (thick)
+  ribbon(s,{x:AUTO.x+26,y:AUTO.y},{x:1220,y:294},14,'url(#teal)',.5);
+  // manual -> open fan to chevrons
+  [458,484,510,536].forEach(cy=>s.appendChild(svgEl('path',{d:band({x:MAN.x+26,y:MAN.y},{x:1190,y:cy},.5),fill:'none',stroke:'rgba(150,168,178,.3)','stroke-width':1.4})));
 })();
 
-/* ---------- smooth sparklines ---------- */
+/* ---------- smooth sparklines (varied shapes) ---------- */
 function smoothD(pts){let d=`M ${pts[0][0].toFixed(1)} ${pts[0][1].toFixed(1)}`;
   for(let i=0;i<pts.length-1;i++){const p0=pts[i-1]||pts[i],p1=pts[i],p2=pts[i+1],p3=pts[i+2]||p2;
     const c1x=p1[0]+(p2[0]-p0[0])/6,c1y=p1[1]+(p2[1]-p0[1])/6,c2x=p2[0]-(p3[0]-p1[0])/6,c2y=p2[1]-(p3[1]-p1[1])/6;
@@ -329,67 +335,78 @@ function spark(id,vals,col){const el=$('#'+id);if(!el)return;
   const pts=vals.map((v,i)=>[pad+i/(vals.length-1)*(w-2*pad), h-pad-(mx===mn?.5:(v-mn)/(mx-mn))*(h-2*pad)]);
   const dLine=smoothD(pts),gid=id+'grad',last=pts[pts.length-1];
   el.innerHTML=`<defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="${col}" stop-opacity=".30"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient></defs>
+    <stop offset="0" stop-color="${col}" stop-opacity=".28"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient></defs>
     <path d="${dLine} L ${w-pad} ${h} L ${pad} ${h} Z" fill="url(#${gid})"/>
     <path d="${dLine}" fill="none" stroke="${col}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
     <circle cx="${last[0].toFixed(1)}" cy="${last[1].toFixed(1)}" r="2.6" fill="${col}"/>`;
 }
 function drawSparks(){
-  spark('spk1',[30,31,33,32,35,34,37,38,37,40,43],'#6ff3e0');       // events, steady rise
-  spark('spk2',[61,63,60,64,62,66,63,65,64,66,65],'#6ff3e0');       // data, gentle wobble
-  spark('spk3',[248,252,258,255,264,268,272,276,279,283,286],'#2fd6c0'); // prevented, rising
+  spark('spk1',[26,30,27,33,29,35,31,34,32,36,34],'#6ff3e0');            // events: wavy, mild net rise
+  spark('spk2',[66,64,67,63,62,64,60,61,59,60,58],'#8fa0aa');            // data: flat, drifting DOWN
+  spark('spk3',[240,246,252,258,263,268,272,277,281,284,286],'#2fd6c0'); // prevented: rising
 }
 
-/* ---------- particle canvas: structured core + L->R flow ---------- */
+/* ---------- particle canvas: in -> organize -> out ---------- */
 const DPR=Math.min(devicePixelRatio||1,2);const cv=$('#cv');const ctx=cv.getContext('2d');
 cv.width=1440*DPR;cv.height=810*DPR;ctx.scale(DPR,DPR);
+const MESS=['#2fd6c0','#6ff3e0','#f5a623','#ff4d5e','#4aa3ff','#e8c14a'];
 
-// structured core: a tight concentric radial grid (rings x spokes), rotates as one body
-const SPOKES=44, RINGS=[13,25,38,51,64,77,90,102,113,123];
-const core=[];RINGS.forEach((r,ri)=>{for(let si=0;si<SPOKES;si++){
-  if(Math.random()<.08)continue; // a few gaps so it isn't a rigid mesh
-  const a=si/SPOKES*6.283;const accent=(r<74 && Math.random()<.14);
-  core.push({r:r+(Math.random()*2.4-1.2), a, ph:Math.random()*6.283,
-    col:accent?['#ff4d5e','#f5a623','#4aa3ff'][si%3]:(Math.random()<.22?'#6ff3e0':'#2fd6c0'),
-    sz:accent?2.0:1.2});}});
-let coreRot=0;
+// persistent organized grid: rings x dots, alternating rotation, slow
+const RINGS=[24,42,60,78,96,112,126];
+const RDIR=RINGS.map((_,i)=>i%2?1:-1);
+const RSPD=RINGS.map((_,i)=>0.0009+0.0004*((i*7)%3));
+const ringOff=RINGS.map(()=>0);
+const grid=[];
+RINGS.forEach((r,ri)=>{const n=Math.max(6,Math.round(r*0.72));
+  for(let i=0;i<n;i++){ if(Math.random()<0.06) continue;
+    grid.push({ri, r:r+(Math.random()*2.2-1.1), a:i/n*6.283, ph:Math.random()*6.283,
+      accent:(r<74 && Math.random()<0.16)});}});
 
-// L->R throughput streaks passing through the core toward Cases
-const streak=[];for(let i=0;i<9;i++)streak.push({x:WAIST.x+40+Math.random()*300,y:CORE.y+(Math.random()*70-35),sp:1.6+Math.random()*1.6,len:22+Math.random()*22});
-
-// packets riding the source ribbons into the waist (data being pulled in)
-const packets=[];srcPts.forEach((a,i)=>{if(DATA.sources[i].more)return;for(let j=0;j<2;j++)packets.push({i,t:(j*0.5)+Math.random()*0.4,sp:0.0035+Math.random()*0.0025});});
-// packets riding cases -> automated -> resolved
-const outPk=[];for(let j=0;j<4;j++)outPk.push({t:j*0.25,sp:0.004+Math.random()*0.002});
+// weighted source picker (by volume w), excluding "+more"
+const wIdx=[];DATA.sources.forEach((s,i)=>{if(s.more)return;for(let k=0;k<s.w;k++)wIdx.push(i);});
+function slotPoint(){const rr=88+Math.random()*38, aa=Math.PI*(0.55+Math.random()*0.9); // left half
+  return {x:CENTER.x+Math.cos(aa)*rr, y:CENTER.y+Math.sin(aa)*rr};}
+function newInflow(p){const si=wIdx[(Math.random()*wIdx.length)|0];const sl=slotPoint();
+  p.si=si;p.mouth=srcPts[si];p.tx=sl.x;p.ty=sl.y;p.t=0;p.sp=0.0022+Math.random()*0.0016;p.col=MESS[(Math.random()*MESS.length)|0];return p;}
+const inflow=[];for(let k=0;k<64;k++){const p=newInflow({});p.t=Math.random();inflow.push(p);}
+const flashes=[];
+function rimRight(){const aa=(Math.random()*0.9-0.45);return {x:CENTER.x+Math.cos(aa)*CENTER.R,y:CENTER.y+Math.sin(aa)*CENTER.R};}
+function newOut(p){p.start=rimRight();p.t=0;p.sp=0.0018+Math.random()*0.0012;return p;}
+const outflow=[];for(let k=0;k<5;k++){const p=newOut({});p.t=Math.random();outflow.push(p);}
+const CASESPT={x:970,y:392};
 
 function frame(t){ctx.clearRect(0,0,1440,810);
   // sonar pulse
-  if(!REDUCED){const period=3600,ph=(t%period)/period,rr=ph*(CORE.R+30),al=(1-ph)*0.22;
-    ctx.strokeStyle=`rgba(47,214,192,${al})`;ctx.lineWidth=1.4;ctx.beginPath();ctx.arc(CORE.x,CORE.y,rr,0,6.283);ctx.stroke();}
-  // core dots — whole grid rotates slowly, dots twinkle
-  if(!REDUCED)coreRot+=0.00016;
-  for(const p of core){const a=p.a+coreRot;
-    const x=CORE.x+Math.cos(a)*p.r,y=CORE.y+Math.sin(a)*p.r;
-    ctx.globalAlpha=.32+.5*(0.5+0.5*Math.sin(t*.0021+p.ph));ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(x,y,p.sz,0,6.283);ctx.fill();}
+  if(!REDUCED){const period=4200,ph=(t%period)/period,rr=ph*(CENTER.R+26),al=(1-ph)*0.18;
+    ctx.strokeStyle=`rgba(47,214,192,${al})`;ctx.lineWidth=1.4;ctx.beginPath();ctx.arc(CENTER.x,CENTER.y,rr,0,6.283);ctx.stroke();}
+  // organized grid rings (alternating rotation)
+  for(let ri=0;ri<RINGS.length;ri++){ if(!REDUCED) ringOff[ri]+=RDIR[ri]*RSPD[ri]; }
+  for(const d of grid){const a=d.a+ringOff[d.ri];
+    const x=CENTER.x+Math.cos(a)*d.r,y=CENTER.y+Math.sin(a)*d.r;
+    const col=d.accent?['#ff4d5e','#f5a623','#4aa3ff'][(d.ri)%3]:(d.r<50?'#6ff3e0':'#2fd6c0');
+    ctx.globalAlpha=.30+.5*(0.5+0.5*Math.sin(t*.0019+d.ph));ctx.fillStyle=col;
+    ctx.beginPath();ctx.arc(x,y,d.accent?1.9:1.2,0,6.283);ctx.fill();}
   ctx.globalAlpha=1;
-  // throughput streaks (L->R through the core)
-  for(const s of streak){if(!REDUCED)s.x+=s.sp;if(s.x>CASES.x-46){s.x=WAIST.x+40;s.y=CORE.y+(Math.random()*70-35);}
-    const g=ctx.createLinearGradient(s.x-s.len,0,s.x,0);g.addColorStop(0,'rgba(111,243,224,0)');g.addColorStop(1,'rgba(111,243,224,.85)');
-    ctx.strokeStyle=g;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(s.x-s.len,s.y);ctx.lineTo(s.x,s.y);ctx.stroke();}
-  // source packets into waist
-  for(const p of packets){if(!REDUCED)p.t+=p.sp;if(p.t>1)p.t-=1;const pt=bezPt(srcPts[p.i],WAIST,.62,p.t);
-    const fade=Math.sin(p.t*Math.PI);ctx.globalAlpha=.85*fade;ctx.fillStyle='#a8fff0';ctx.beginPath();ctx.arc(pt.x,pt.y,1.7,0,6.283);ctx.fill();}
-  // out packets: cases -> automated -> resolved
-  for(const p of outPk){if(!REDUCED)p.t+=p.sp;if(p.t>1)p.t-=1;let pt;
-    if(p.t<.5){pt=bezPt({x:CASES.x+40,y:CASES.y},{x:AUTO.x-26,y:AUTO.y},.55,p.t/.5);}
-    else{pt=bezPt({x:AUTO.x+26,y:AUTO.y},{x:1288,y:296},.5,(p.t-.5)/.5);}
-    ctx.globalAlpha=.9;ctx.fillStyle='#a8fff0';ctx.beginPath();ctx.arc(pt.x,pt.y,1.8,0,6.283);ctx.fill();}
+  // inflow: messy dots ride pipes -> waist -> organize into rings
+  for(const p of inflow){ if(!REDUCED)p.t+=p.sp;
+    if(p.t>=1){ flashes.push({x:p.tx,y:p.ty,life:0}); newInflow(p); continue; }
+    let pt,col,al,sz;
+    if(p.t<0.5){ pt=bezPt(p.mouth,WAIST,.6,p.t/0.5); col=p.col; al=.85; sz=1.7; }
+    else { const u=(p.t-0.5)/0.5; pt=bezPt(WAIST,{x:p.tx,y:p.ty},.5,u); col='#6ff3e0'; al=.9*(1-u*0.35); sz=1.7-u*0.4; }
+    ctx.globalAlpha=al;ctx.fillStyle=col;ctx.beginPath();ctx.arc(pt.x,pt.y,sz,0,6.283);ctx.fill();}
+  // absorption flashes
+  for(let i=flashes.length-1;i>=0;i--){const f=flashes[i];f.life+= (REDUCED?99:1);
+    const u=f.life/26;if(u>=1){flashes.splice(i,1);continue;}
+    ctx.globalAlpha=(1-u)*0.5;ctx.strokeStyle='#a8fff0';ctx.lineWidth=1.2;
+    ctx.beginPath();ctx.arc(f.x,f.y,2+u*7,0,6.283);ctx.stroke();}
+  // outflow: a few dots leave right -> cases -> automated
+  for(const p of outflow){ if(!REDUCED)p.t+=p.sp;
+    if(p.t>=1){ newOut(p); continue; }
+    let pt; if(p.t<0.45){ pt=bezPt(p.start,CASESPT,.5,p.t/0.45);} else { pt=bezPt(CASESPT,AUTO,.5,(p.t-0.45)/0.55);}
+    ctx.globalAlpha=.9;ctx.fillStyle='#a8fff0';ctx.beginPath();ctx.arc(pt.x,pt.y,1.9,0,6.283);ctx.fill();}
   ctx.globalAlpha=1;requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
-
-/* flow-line dash animation (L->R) */
-if(!REDUCED){const st=document.createElement('style');st.textContent='@keyframes flow{to{stroke-dashoffset:-1000}}.fl{animation:flow 6s linear infinite}';document.head.appendChild(st);}
 
 /* ---------- count-up ---------- */
 function countUp(root){root.querySelectorAll('[data-count]').forEach(el=>{
@@ -405,40 +422,40 @@ countUp(document);drawSparks();
 const pop=$('#pop');let popOpen=false;
 function detailHTML(key){
   const D={
-  engine:`<h4><span class="d"></span>Correlation Engine</h4>
+  engine:`<h4><span class="d"></span>AI Correlation Engine</h4>
     <div class="r"><span>Analytics models</span><b>2,600+ ML</b></div>
     <div class="r"><span>Detections</span><b>13,300+</b></div>
     <div class="r"><span>MITRE ATT&CK</span><b class="ok">100% coverage</b></div>
     <div class="r"><span>Noise reduced</span><b class="ok">≈ 99%</b></div>
-    <div class="foot">Stitches 2,456 issues into 95 prioritized cases with root-cause</div>`,
-  issues:`<h4><span class="d"></span>2,456 Issues</h4>
+    <div class="foot">Groups 2,681 issues into 125 prioritized cases with root-cause</div>`,
+  issues:`<h4><span class="d"></span>2,681 Issues</h4>
     <div class="r"><span>Window</span><b>Last 24H</b></div>
     <div class="r"><span>Raised by</span><b>2,600+ ML models</b></div>
-    <div class="r"><span>Critical / High</span><b class="warn">312</b></div>
+    <div class="r"><span>Critical / High</span><b class="warn">318</b></div>
     <div class="r"><span>Deduplicated</span><b class="ok">96%</b></div>
-    <div class="foot">Normalized to the Cortex data model before correlation</div>`,
-  cases:`<h4><span class="d"></span>95 Cases</h4>
-    <div class="r"><span>From</span><b>2,456 issues</b></div>
-    <div class="r"><span>Automated</span><b class="ok">78</b></div>
-    <div class="r"><span>Manual</span><b class="warn">17</b></div>
-    <div class="r"><span>Resolved</span><b class="ok">84</b></div>
+    <div class="foot">Normalized to a common data model before correlation</div>`,
+  cases:`<h4><span class="d"></span>125 Cases</h4>
+    <div class="r"><span>From</span><b>2,681 issues</b></div>
+    <div class="r"><span>Automated</span><b class="ok">103</b></div>
+    <div class="r"><span>Manual</span><b class="warn">22</b></div>
+    <div class="r"><span>Resolved</span><b class="ok">114</b></div>
     <div class="r"><span>Open</span><b class="warn">11</b></div>
     <div class="foot">Each case carries the full attack story + root cause</div>`,
-  automated:`<h4><span class="d"></span>78 Automated</h4>
-    <div class="r"><span>Handled by</span><b>Agentic AI</b></div>
-    <div class="r"><span>Playbooks run</span><b>142</b></div>
+  automated:`<h4><span class="d"></span>103 Automated</h4>
+    <div class="r"><span>Handled by</span><b>AI + playbooks</b></div>
+    <div class="r"><span>Playbooks run</span><b>168</b></div>
     <div class="r"><span>Manual work</span><b class="ok">−75%</b></div>
-    <div class="foot">Agents gather → analyze → plan → act under governance</div>`,
-  manual:`<h4><span class="d"></span>17 Manual</h4>
-    <div class="r"><span>Routed to</span><b>SOC analyst</b></div>
+    <div class="foot">1,300+ built-in playbooks resolve most issues</div>`,
+  manual:`<h4><span class="d"></span>22 Manual</h4>
+    <div class="r"><span>Routed to</span><b>T Security SOC</b></div>
     <div class="r"><span>Avg. handle</span><b>18m</b></div>
     <div class="r"><span>Escalated</span><b class="warn">3</b></div>
-    <div class="foot">Assigned when confidence or policy needs a human</div>`,
-  resolved:`<h4><span class="d"></span>84 Resolved Cases</h4>
-    <div class="r"><span>Auto-remediated</span><b class="ok">78</b></div>
-    <div class="r"><span>Analyst-closed</span><b>6</b></div>
+    <div class="foot">Analysts assisted by Magenta Security · Bonn CDC</div>`,
+  resolved:`<h4><span class="d"></span>114 Resolved Cases</h4>
+    <div class="r"><span>Auto-remediated</span><b class="ok">103</b></div>
+    <div class="r"><span>Analyst-closed</span><b>11</b></div>
     <div class="r"><span>MTTR</span><b class="ok">−98%</b></div>
-    <div class="foot">Closed by Cortex playbooks / SOAR</div>`,
+    <div class="foot">Closed by automated playbooks / SOAR</div>`,
   open:`<h4><span class="d"></span>11 Open Cases</h4>
     <div class="r"><span>Critical</span><b class="bad">3</b></div>
     <div class="r"><span>High</span><b class="bad">3</b></div>
@@ -448,23 +465,23 @@ function detailHTML(key){
   events:`<h4><span class="d"></span>Events Ingestion</h4>
     <div class="r"><span>Rate</span><b>43 B / 24H</b></div>
     <div class="r"><span>Peak</span><b>2.1 M / sec</b></div>
-    <div class="r"><span>Sources</span><b>84 connectors</b></div>
+    <div class="r"><span>Sources</span><b>78 connectors</b></div>
     <div class="r"><span>Residency</span><b class="ok">Germany DB</b></div>`,
   data:`<h4><span class="d"></span>Data Ingestion</h4>
     <div class="r"><span>Volume</span><b>65 TB / 24H</b></div>
+    <div class="r"><span>Trend (24H)</span><b>−4%</b></div>
     <div class="r"><span>Hot store</span><b>1.9 PB</b></div>
-    <div class="r"><span>Retention</span><b>365 days</b></div>
     <div class="r"><span>Hosting</span><b class="ok">Sovereign Cloud</b></div>`,
   prevented:`<h4><span class="d"></span>Prevented Events</h4>
-    <div class="r"><span>Blocked (24H)</span><b>286.1 K</b></div>
-    <div class="r"><span>By NGFW</span><b>241.0 K</b></div>
-    <div class="r"><span>By XDR agent</span><b>45.1 K</b></div>
+    <div class="r"><span>Blocked (24H)</span><b>286 K</b></div>
+    <div class="r"><span>By NGFW</span><b>241 K</b></div>
+    <div class="r"><span>By endpoint agent</span><b>45 K</b></div>
     <div class="foot">Inline prevention across the sovereign estate</div>`};
   return D[key]||'';
 }
 function openDetail(px,py,html){if(!html)return;pop.innerHTML=html;
-  let left=px+18;if(left+246>1416)left=px-246-18;left=Math.max(24,left);
-  let top=Math.max(60,Math.min(py-30,560));
+  let left=px+18;if(left+248>1414)left=px-248-18;left=Math.max(24,left);
+  let top=Math.max(64,Math.min(py-30,560));
   pop.style.left=left+'px';pop.style.top=top+'px';pop.classList.add('on');popOpen=true;}
 function closeDetail(){pop.classList.remove('on');popOpen=false;}
 document.addEventListener('click',e=>{if(popOpen&&!pop.contains(e.target)&&!e.target.closest('[data-pop]'))closeDetail();},true);
@@ -474,26 +491,22 @@ function anchor(el){const r=el.getBoundingClientRect(),sr=stage.getBoundingClien
 function wire(el,key){if(!el)return;el.setAttribute('data-pop','');el.style.cursor='pointer';
   el.onclick=e=>{e.stopPropagation();const a=anchor(el);openDetail(a.x,a.y,detailHTML(key));};}
 
-/* ---- wire everything to popovers (no scene navigation) ---- */
-wire($('#agentic'),'engine');wire($('#coreHit'),'engine');
-wire($('#nIssues'),'issues');wire($('#nCases'),'cases');
+wire($('#coreHit'),'engine');wire($('#nIssues'),'issues');wire($('#nCases'),'cases');
 wire($('#fnAuto'),'automated');wire($('#fnManual'),'manual');
 wire($('#nResolved'),'resolved');wire($('#nOpen'),'open');wire($('#chevOpen'),'open');
 $$('.tile[data-detail]').forEach(t=>wire(t,t.dataset.detail));
 $('#investBtn').onclick=e=>{e.stopPropagation();const a=anchor($('#investBtn'));openDetail(a.x,a.y,detailHTML('open'));};
 
-// source rows: popover + ribbon highlight
 $$('#srcWrap .src').forEach(row=>{const idx=row.dataset.idx;if(idx==null)return;const src=DATA.sources[idx];
   row.setAttribute('data-pop','');
-  row.onmouseenter=()=>{row.classList.add('hot');const rb=srcRibbons[idx];if(rb){rb.line.setAttribute('stroke-width',2.6);rb.line.setAttribute('opacity',1);rb.base.setAttribute('opacity',1);}};
-  row.onmouseleave=()=>{row.classList.remove('hot');const rb=srcRibbons[idx];if(rb){rb.line.setAttribute('stroke-width',1.4);rb.line.setAttribute('opacity',.5);rb.base.setAttribute('opacity',.7);}};
+  row.onmouseenter=()=>{row.classList.add('hot');const rb=srcRibbons[idx];if(rb){rb.line.setAttribute('stroke-width',rb.lineW+1.6);rb.line.setAttribute('opacity',1);rb.base.setAttribute('opacity',1);}};
+  row.onmouseleave=()=>{row.classList.remove('hot');const rb=srcRibbons[idx];if(rb){rb.line.setAttribute('stroke-width',rb.lineW);rb.line.setAttribute('opacity',src.ep?.7:.45);rb.base.setAttribute('opacity',.7);}};
   row.onclick=e=>{e.stopPropagation();const a=anchor(row);openDetail(a.x,a.y,
     `<h4><span class="d"></span>${src.n}</h4>
      <div class="r"><span>Status</span><b class="ok">● connected</b></div>
      <div class="r"><span>Ingest</span><b>${src.rate}</b></div>
      ${src.s?`<div class="r"><span>Assets</span><b>${src.s}</b></div>`:''}
-     <div class="r"><span>Residency</span><b class="ok">${src.res}</b></div>
-     ${src.alert?`<div class="r"><span>Health</span><b class="bad">policy review</b></div>`:''}`);};
+     <div class="r"><span>Residency</span><b class="ok">${src.res}</b></div>`);};
 });
 
 /* ---------- fit ---------- */
