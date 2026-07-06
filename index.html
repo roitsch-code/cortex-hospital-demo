@@ -20,7 +20,7 @@ html,body{height:100%;background:var(--bg);overflow:hidden;font-family:var(--fon
 canvas#cv{position:absolute;inset:0;width:1440px;height:810px;pointer-events:none;z-index:1}
 
 /* soft dome glow behind the core (replaces the old arc lines) */
-.dome{position:absolute;left:884px;top:300px;width:820px;height:520px;transform:translate(-50%,-50%);z-index:0;
+.dome{position:absolute;left:812px;top:300px;width:820px;height:520px;transform:translate(-50%,-50%);z-index:0;
   background:radial-gradient(50% 50% at 50% 50%,rgba(47,214,192,.10),rgba(47,214,192,0) 70%);pointer-events:none}
 
 /* ---------- top chrome ---------- */
@@ -167,39 +167,39 @@ svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;ov
   <div id="srcWrap"></div>
 
   <!-- Issues -> core -> Cases spine -->
-  <div class="node click" id="nIssues" style="left:628px;top:418px">
+  <div class="node click" id="nIssues" style="left:585px;top:365px">
     <div class="num" style="font-size:46px"><span data-count="2456" data-comma>0</span></div>
     <div class="cap">Issues</div><div class="hint">from ML analytics →</div>
   </div>
-  <div class="corehit" id="coreHit" style="left:884px;top:418px;width:280px;height:280px"></div>
-  <div class="node click" id="nCases" style="left:1092px;top:418px">
+  <div class="corehit" id="coreHit" style="left:812px;top:365px;width:250px;height:250px"></div>
+  <div class="node click" id="nCases" style="left:1010px;top:365px">
     <div class="num" style="font-size:40px"><span data-count="95">0</span></div>
     <div class="cap">Cases</div><div class="hint">breakdown →</div>
   </div>
 
   <!-- Right funnel -->
-  <div class="funnode" id="fnAuto" style="left:1206px;top:312px">
+  <div class="funnode" id="fnAuto" style="left:1128px;top:302px">
     <div class="fl above"><b><span data-count="78">0</span></b><span>Automated</span></div>
     <div class="disc2"><svg viewBox="0 0 24 24" fill="none" stroke="#6ff3e0" stroke-width="1.6">
       <circle cx="12" cy="5" r="2.4"/><circle cx="5" cy="17" r="2.4"/><circle cx="19" cy="17" r="2.4"/>
       <path d="M12 7.4V13M12 13l-5.5 2M12 13l5.5 2"/></svg></div>
   </div>
-  <div class="funnode" id="fnManual" style="left:1206px;top:524px">
+  <div class="funnode" id="fnManual" style="left:1128px;top:500px">
     <div class="disc2"><svg viewBox="0 0 24 24" fill="none" stroke="#8b959e" stroke-width="1.6">
       <circle cx="12" cy="8" r="3.4"/><path d="M5.5 19a6.5 6.5 0 0 1 13 0"/></svg></div>
     <div class="fl below"><b><span data-count="17">0</span></b><span>Manual</span></div>
   </div>
 
-  <div class="outcome click" id="nResolved" style="left:1300px;top:300px">
+  <div class="outcome click" id="nResolved" style="left:1300px;top:294px">
     <b><span data-count="84">0</span></b><span>Resolved Cases</span>
   </div>
-  <div class="chev" id="chevOpen" style="left:1258px;top:474px">
+  <div class="chev" id="chevOpen" style="left:1250px;top:450px">
     <div class="cv crit"><i>▲▲</i>3</div>
     <div class="cv high"><i>▲▲</i>3</div>
     <div class="cv med"><i>▲</i>5</div>
     <div class="cv low"><i>▲</i>0</div>
   </div>
-  <div class="outcome click" id="nOpen" style="left:1330px;top:526px">
+  <div class="outcome click" id="nOpen" style="left:1330px;top:504px">
     <b><span data-count="11">0</span></b><span>Open Cases</span>
   </div>
 
@@ -263,8 +263,8 @@ const DATA={
     {more:'+68 Data Sources'}
   ]
 };
-const SRC_X=302, SRC_Y0=236, SRC_STEP=33.2, WAIST={x:556,y:418}, CORE={x:884,y:418,R:132}, CASES={x:1092,y:418};
-const AUTO={x:1206,y:312}, MAN={x:1206,y:524};
+const SRC_X=292, SRC_Y0=205, SRC_STEP=30.4, WAIST={x:520,y:365}, CORE={x:812,y:365,R:118}, CASES={x:1010,y:365};
+const AUTO={x:1128,y:302}, MAN={x:1128,y:500};
 const srcPts=[]; // ribbon origin per source row
 
 /* ---- glow + gradient defs, ribbons ---- */
@@ -313,9 +313,9 @@ const srcRibbons=[];
   ribbon(s,{x:CASES.x+40,y:CASES.y},{x:AUTO.x-26,y:AUTO.y},9,'url(#teal)',.55);
   ribbon(s,{x:CASES.x+40,y:CASES.y},{x:MAN.x-26,y:MAN.y},5,'rgba(150,168,178,.4)',.55,false);
   // automated -> resolved (thick flowing teal)
-  ribbon(s,{x:AUTO.x+26,y:AUTO.y},{x:1292,y:302},14,'url(#teal)',.5);
+  ribbon(s,{x:AUTO.x+26,y:AUTO.y},{x:1288,y:296},14,'url(#teal)',.5);
   // manual -> open (thin fan to chevrons)
-  [490,516,542,568].forEach(cy=>s.appendChild(svgEl('path',{d:band({x:MAN.x+26,y:MAN.y},{x:1256,y:cy},.5),fill:'none',stroke:'rgba(150,168,178,.3)','stroke-width':1.4})));
+  [462,488,514,540].forEach(cy=>s.appendChild(svgEl('path',{d:band({x:MAN.x+26,y:MAN.y},{x:1244,y:cy},.5),fill:'none',stroke:'rgba(150,168,178,.3)','stroke-width':1.4})));
 })();
 
 /* ---------- smooth sparklines ---------- */
@@ -344,13 +344,15 @@ function drawSparks(){
 const DPR=Math.min(devicePixelRatio||1,2);const cv=$('#cv');const ctx=cv.getContext('2d');
 cv.width=1440*DPR;cv.height=810*DPR;ctx.scale(DPR,DPR);
 
-// structured concentric core: dots quantized to ring bands, denser toward centre
-const BANDS=[16,34,52,70,88,106,124];const COUNTS=[7,13,19,26,33,40,48];
-const core=[];BANDS.forEach((r,bi)=>{const n=COUNTS[bi];for(let i=0;i<n;i++){
-  const a=i/n*6.283+(bi%2?.12:0);const accent=Math.random()<.12;
-  core.push({r,a,sp:(bi%2?1:-1)*(0.00016+0.00006*(BANDS.length-bi)),ph:Math.random()*6.283,
-    col:accent?['#ff4d5e','#f5a623','#4aa3ff'][i%3]:(Math.random()<.25?'#6ff3e0':'#2fd6c0'),
-    sz:accent?2.1:(Math.random()<.2?1.9:1.3)});}});
+// structured core: a tight concentric radial grid (rings x spokes), rotates as one body
+const SPOKES=44, RINGS=[13,25,38,51,64,77,90,102,113,123];
+const core=[];RINGS.forEach((r,ri)=>{for(let si=0;si<SPOKES;si++){
+  if(Math.random()<.08)continue; // a few gaps so it isn't a rigid mesh
+  const a=si/SPOKES*6.283;const accent=(r<74 && Math.random()<.14);
+  core.push({r:r+(Math.random()*2.4-1.2), a, ph:Math.random()*6.283,
+    col:accent?['#ff4d5e','#f5a623','#4aa3ff'][si%3]:(Math.random()<.22?'#6ff3e0':'#2fd6c0'),
+    sz:accent?2.0:1.2});}});
+let coreRot=0;
 
 // L->R throughput streaks passing through the core toward Cases
 const streak=[];for(let i=0;i<9;i++)streak.push({x:WAIST.x+40+Math.random()*300,y:CORE.y+(Math.random()*70-35),sp:1.6+Math.random()*1.6,len:22+Math.random()*22});
@@ -364,10 +366,11 @@ function frame(t){ctx.clearRect(0,0,1440,810);
   // sonar pulse
   if(!REDUCED){const period=3600,ph=(t%period)/period,rr=ph*(CORE.R+30),al=(1-ph)*0.22;
     ctx.strokeStyle=`rgba(47,214,192,${al})`;ctx.lineWidth=1.4;ctx.beginPath();ctx.arc(CORE.x,CORE.y,rr,0,6.283);ctx.stroke();}
-  // core dots
-  for(const p of core){if(!REDUCED)p.a+=p.sp;const br=p.r+Math.sin(t*.0011+p.ph)*2.2;
-    const x=CORE.x+Math.cos(p.a)*br,y=CORE.y+Math.sin(p.a)*br;
-    ctx.globalAlpha=.4+.5*(0.5+0.5*Math.sin(t*.0022+p.ph));ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(x,y,p.sz,0,6.283);ctx.fill();}
+  // core dots — whole grid rotates slowly, dots twinkle
+  if(!REDUCED)coreRot+=0.00016;
+  for(const p of core){const a=p.a+coreRot;
+    const x=CORE.x+Math.cos(a)*p.r,y=CORE.y+Math.sin(a)*p.r;
+    ctx.globalAlpha=.32+.5*(0.5+0.5*Math.sin(t*.0021+p.ph));ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(x,y,p.sz,0,6.283);ctx.fill();}
   ctx.globalAlpha=1;
   // throughput streaks (L->R through the core)
   for(const s of streak){if(!REDUCED)s.x+=s.sp;if(s.x>CASES.x-46){s.x=WAIST.x+40;s.y=CORE.y+(Math.random()*70-35);}
@@ -379,7 +382,7 @@ function frame(t){ctx.clearRect(0,0,1440,810);
   // out packets: cases -> automated -> resolved
   for(const p of outPk){if(!REDUCED)p.t+=p.sp;if(p.t>1)p.t-=1;let pt;
     if(p.t<.5){pt=bezPt({x:CASES.x+40,y:CASES.y},{x:AUTO.x-26,y:AUTO.y},.55,p.t/.5);}
-    else{pt=bezPt({x:AUTO.x+26,y:AUTO.y},{x:1292,y:302},.5,(p.t-.5)/.5);}
+    else{pt=bezPt({x:AUTO.x+26,y:AUTO.y},{x:1288,y:296},.5,(p.t-.5)/.5);}
     ctx.globalAlpha=.9;ctx.fillStyle='#a8fff0';ctx.beginPath();ctx.arc(pt.x,pt.y,1.8,0,6.283);ctx.fill();}
   ctx.globalAlpha=1;requestAnimationFrame(frame);
 }
