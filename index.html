@@ -175,6 +175,35 @@ svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;ov
 .prio .note .r{display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid var(--hair);margin-top:6px}
 .prio .note .r span{color:var(--muted)} .prio .note .r b{color:#fff}
 .reduced .tseg button .d{animation:none}
+
+/* back button (flow view) */
+.backbtn{position:absolute;top:72px;left:38px;z-index:12;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;display:none;align-items:center;gap:6px}
+.backbtn:hover{color:var(--text)}
+body.view-flow .backbtn{display:flex}
+/* assets view */
+#assetsView.hidden{display:none}
+.astats{position:absolute;left:58px;top:250px;z-index:5;display:flex;flex-direction:column;gap:30px}
+.ast b{font-size:34px;font-weight:800;color:#fff;display:flex;align-items:baseline;line-height:1}
+.ast b em{font-style:normal;font-size:14px;color:var(--muted);margin-left:3px}
+.ast span{display:block;font-size:12px;color:var(--muted);margin-top:6px;position:relative;padding-left:16px}
+.ast span::before{content:"";position:absolute;left:0;top:4px;width:8px;height:8px;border-radius:50%;background:var(--dim)}
+.ast span.rd::before{background:var(--red);box-shadow:0 0 8px var(--red)}
+.ast span.rd2::before{background:#ff7a52}
+.ast span.am::before{background:var(--amber);box-shadow:0 0 8px var(--amber)}
+.ast.big b{font-size:40px}
+.acenter{position:absolute;left:940px;top:432px;transform:translate(-50%,-50%);z-index:6;text-align:center;pointer-events:none}
+.acenter .anum{font-size:64px;font-weight:800;color:#fff;line-height:1;text-shadow:0 0 34px rgba(245,166,35,.45)}
+.acenter .acap{font-size:15px;color:#e7edf1;margin-top:6px;font-weight:600}
+.acenter .asub{font-size:12px;color:var(--muted);margin-top:8px}
+.acenter .ashow{margin-top:14px;pointer-events:auto;appearance:none;border:1px solid var(--teal-dim);background:rgba(47,214,192,.08);color:var(--teal-br);font-family:var(--font);font-weight:700;font-size:12px;padding:9px 18px;border-radius:8px;cursor:pointer;transition:.2s}
+.acenter .ashow:hover{background:rgba(47,214,192,.18);box-shadow:0 0 18px var(--glow)}
+.prov{position:absolute;transform:translate(-50%,-50%);z-index:5;text-align:center;cursor:pointer;transition:.18s}
+.prov .sicon{width:18px;height:18px;color:var(--muted);margin:0 auto 5px;display:block}
+.prov b{font-size:15px;font-weight:800;color:#fff}
+.prov b em{font-style:normal;font-size:11px;color:var(--amber);font-weight:700;margin-left:5px}
+.prov span{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+.prov:hover b{text-shadow:0 0 16px var(--glow)}
+.region{position:absolute;transform:translate(-50%,-50%);z-index:4;font-size:10px;letter-spacing:.12em;color:var(--dim);text-transform:uppercase;pointer-events:none}
 </style>
 </head>
 <body>
@@ -204,6 +233,9 @@ svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;ov
     </div>
   </div>
 
+  <div class="backbtn" id="backBtn">‹ Command Center</div>
+
+  <section id="flowView">
   <div class="srchead" id="srcHead" style="top:238px">Sources</div>
   <div id="srcWrap"></div>
 
@@ -297,6 +329,44 @@ svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;ov
       <div class="vrow"><div class="v"><span data-count="21">0</span><u>Days</u></div>
         <div class="sev"><i><span class="q" style="background:var(--red)"></span><b>21</b></i><i><span class="q" style="background:#ff7a52"></span><b>21</b></i><i><span class="q" style="background:var(--amber)"></span><b>34</b></i><i><span class="q" style="background:var(--blue)"></span><b>35</b></i></div></div></div>
   </div>
+  </section><!--/flowView-->
+
+  <!-- ============ ASSETS ENTRY VIEW ============ -->
+  <section id="assetsView" class="hidden">
+    <svg class="wire" id="wAssets" viewBox="0 0 1440 810"></svg>
+    <div class="astats">
+      <div class="ast big"><b>51.7<em>K</em></b><span>All Assets</span></div>
+      <div class="ast"><b>67</b><span class="rd">At Risk &amp; Active Threats</span></div>
+      <div class="ast"><b>167</b><span class="rd2">With Active Threats</span></div>
+      <div class="ast"><b>3,956</b><span class="am">At Risk</span></div>
+    </div>
+    <div class="acenter">
+      <div class="anum"><span data-count="3956" data-comma>0</span></div>
+      <div class="acap">Assets at Risk</div>
+      <div class="asub">369 Open Issues · 95 Open Cases</div>
+      <button class="ashow" id="assetShow">Show Issues ›</button>
+    </div>
+    <div class="prov" id="pvGithub" style="left:940px;top:104px" data-detail="pv_git">
+      <svg class="sicon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 0 0-2.2 13.6c.35.07.48-.15.48-.34v-1.3c-1.95.42-2.36-.83-2.36-.83-.32-.8-.78-1.02-.78-1.02-.64-.44.05-.43.05-.43.7.05 1.07.72 1.07.72.63 1.07 1.64.76 2.04.58.06-.45.24-.76.44-.94-1.56-.18-3.2-.78-3.2-3.46 0-.76.28-1.39.72-1.88-.07-.18-.31-.9.07-1.88 0 0 .59-.19 1.93.72a6.7 6.7 0 0 1 3.52 0c1.34-.91 1.93-.72 1.93-.72.38.98.14 1.7.07 1.88.45.49.72 1.12.72 1.88 0 2.69-1.64 3.28-3.2 3.45.25.22.48.65.48 1.31v1.95c0 .19.13.41.49.34A7 7 0 0 0 8 1z"/></svg>
+      <b>1,650</b><span>GitHub · Assets</span>
+    </div>
+    <div class="prov" id="pvAws" style="left:1300px;top:300px" data-detail="pv_aws">
+      <svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4.6 12h6a3 3 0 0 0 .3-6 4 4 0 0 0-7.6 1A2.6 2.6 0 0 0 4.6 12z"/></svg>
+      <b>188 <em>47 acct</em></b><span>AWS · Assets</span>
+    </div>
+    <div class="prov" id="pvAzure" style="left:1300px;top:556px" data-detail="pv_az">
+      <svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M6 2L2 13h3l1-3 3 3h4L6 2z"/></svg>
+      <b>99 <em>34 sub</em></b><span>Azure · Assets</span>
+    </div>
+    <div class="prov" id="pvGcp" style="left:612px;top:632px" data-detail="pv_gcp">
+      <svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4.6 12h6a3 3 0 0 0 .3-6 4 4 0 0 0-7.6 1A2.6 2.6 0 0 0 4.6 12z"/></svg>
+      <b>1,879 <em>51 proj</em></b><span>GCP · Assets</span>
+    </div>
+    <div class="prov" id="pvDc" style="left:940px;top:768px" data-detail="pv_dc">
+      <svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="2" width="10" height="12"/><path d="M6 5h4M6 8h4M6 11h4"/></svg>
+      <b>56</b><span>On-prem · Assets</span>
+    </div>
+  </section>
 
   <div class="pop" id="pop"></div>
 
@@ -495,6 +565,7 @@ function rebuildParticles(){wIdx=[];MODES[MODE].sources.forEach((s,i)=>{if(s.mor
   inflow.forEach(p=>{newInflow(p);p.t=Math.random();});}
 
 function frame(t){ctx.clearRect(0,0,1440,810);
+  if(VIEW==='assets'){drawAssets(t);requestAnimationFrame(frame);return;}
   if(!REDUCED){const period=4200,ph=(t%period)/period,rr=ph*(CENTER.R+26),al=(1-ph)*0.18;
     ctx.strokeStyle=`rgba(47,214,192,${al})`;ctx.lineWidth=1.4;ctx.beginPath();ctx.arc(CENTER.x,CENTER.y,rr,0,6.283);ctx.stroke();}
   for(let ri=0;ri<RINGS.length;ri++){ if(!REDUCED) ringOff[ri]+=RDIR[ri]*RSPD[ri]; }
@@ -563,7 +634,12 @@ function detailHTML(key){
   p_risk:`<h4><span class="d"></span>Accepted Risk · 129</h4><div class="r"><span>Trend</span><b>↑5.3%</b></div><div class="r"><span>Sign-off</span><b>risk owner</b></div><div class="foot">Documented exception with review date</div>`,
   vassets:`<h4><span class="d"></span>Vulnerable Assets</h4><div class="r"><span>Count</span><b>432 K</b></div><div class="r"><span>Trend</span><b class="bad">↑15%</b></div><div class="r"><span>Internet-exposed</span><b class="warn">38 K</b></div>`,
   activecases:`<h4><span class="d"></span>Active Cases · 263</h4><div class="r"><span>Critical</span><b class="bad">101</b></div><div class="r"><span>High</span><b class="bad">132</b></div><div class="r"><span>Medium</span><b class="warn">29</b></div><div class="r"><span>Low</span><b>1</b></div>`,
-  mttr:`<h4><span class="d"></span>Mean Time To Resolve</h4><div class="r"><span>Overall</span><b>21 days</b></div><div class="r"><span>Critical</span><b class="ok">21 d</b></div><div class="r"><span>Medium</span><b>34 d</b></div><div class="r"><span>Low</span><b>35 d</b></div>`};
+  mttr:`<h4><span class="d"></span>Mean Time To Resolve</h4><div class="r"><span>Overall</span><b>21 days</b></div><div class="r"><span>Critical</span><b class="ok">21 d</b></div><div class="r"><span>Medium</span><b>34 d</b></div><div class="r"><span>Low</span><b>35 d</b></div>`,
+  pv_git:`<h4><span class="d"></span>GitHub</h4><div class="r"><span>Assets</span><b>1,650</b></div><div class="r"><span>At risk</span><b class="warn">37</b></div><div class="r"><span>Repos scanned</span><b>2.1 K</b></div>`,
+  pv_aws:`<h4><span class="d"></span>AWS</h4><div class="r"><span>Accounts</span><b>47</b></div><div class="r"><span>Assets</span><b>188</b></div><div class="r"><span>At risk</span><b class="bad">22</b></div><div class="r"><span>Region</span><b class="ok">eu-central-1</b></div>`,
+  pv_az:`<h4><span class="d"></span>Azure</h4><div class="r"><span>Subscriptions</span><b>34</b></div><div class="r"><span>Assets</span><b>99</b></div><div class="r"><span>At risk</span><b class="warn">14</b></div>`,
+  pv_gcp:`<h4><span class="d"></span>Google Cloud</h4><div class="r"><span>Projects</span><b>51</b></div><div class="r"><span>Assets</span><b>1,879</b></div><div class="r"><span>At risk</span><b class="bad">41</b></div><div class="r"><span>Region</span><b class="ok">europe-west3</b></div>`,
+  pv_dc:`<h4><span class="d"></span>On-prem Data Center</h4><div class="r"><span>Assets</span><b>56</b></div><div class="r"><span>At risk</span><b class="warn">9</b></div><div class="r"><span>Residency</span><b class="ok">Germany</b></div>`};
   return D[key]||'';
 }
 function openDetail(px,py,html){if(!html)return;pop.innerHTML=html;
@@ -642,8 +718,59 @@ function renderMode(m){MODE=m;const cfg=MODES[m];
 }
 $$('#tseg button').forEach(b=>b.onclick=()=>{if(b.dataset.mode!==MODE){closePrio();renderMode(b.dataset.mode);}});
 
+/* ---------- assets radar view ---------- */
+const AC={x:940,y:432,R:330};
+const assets=[];
+(function(){for(let r=72;r<=AC.R;r+=13){const n=Math.max(8,Math.round(r*0.5));
+  for(let i=0;i<n;i++){const a=i/n*6.283;
+    let col='rgba(120,150,150,.5)',al=.5,sz=1.3;
+    const risk=(a>-1.35 && a<-0.15 && r<205 && Math.random()<0.5);
+    if(risk){col='#f5a623';al=.92;sz=1.7;}
+    else if(Math.random()<0.028){col='#ff4d5e';al=.8;sz=1.6;}
+    assets.push({a:a+(Math.random()*.02-.01),r:r+(Math.random()*3-1.5),col,al,ph:Math.random()*6.283,sz});
+  }}})();
+let assetRot=0;
+function drawAssets(t){
+  const g=ctx.createRadialGradient(AC.x,AC.y,8,AC.x,AC.y,200);
+  g.addColorStop(0,'rgba(245,180,90,.5)');g.addColorStop(.5,'rgba(240,150,60,.13)');g.addColorStop(1,'rgba(240,150,60,0)');
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(AC.x,AC.y,200,0,6.283);ctx.fill();
+  ctx.fillStyle='rgba(47,214,192,.05)';ctx.beginPath();ctx.moveTo(AC.x,AC.y);ctx.arc(AC.x,AC.y,AC.R,-0.55,0.55);ctx.closePath();ctx.fill();
+  if(!REDUCED)assetRot+=0.00008;
+  for(const d of assets){const a=d.a+assetRot;const x=AC.x+Math.cos(a)*d.r,y=AC.y+Math.sin(a)*d.r;
+    ctx.globalAlpha=d.al*(.6+.4*Math.sin(t*.0018+d.ph));ctx.fillStyle=d.col;ctx.beginPath();ctx.arc(x,y,d.sz,0,6.283);ctx.fill();}
+  ctx.globalAlpha=1;
+}
+(function(){const s=$('#wAssets');defs(s);
+  ring(s,AC.x,AC.y,AC.R+14,190,.5);
+  s.appendChild(svgEl('circle',{cx:AC.x,cy:AC.y,r:AC.R,fill:'none',stroke:'rgba(47,214,192,.12)','stroke-width':1}));
+  s.appendChild(svgEl('circle',{cx:AC.x,cy:AC.y,r:AC.R*0.66,fill:'none',stroke:'rgba(47,214,192,.08)','stroke-width':1}));
+  s.appendChild(svgEl('circle',{cx:AC.x,cy:AC.y,r:AC.R*0.33,fill:'none',stroke:'rgba(47,214,192,.06)','stroke-width':1}));
+  const regs=[['us-east',-0.35],['us-west',0.5],['central',1.2],['ap-southeast',2.0],['europe-w',2.7],['europe-n',-2.55],['asia',-1.75]];
+  regs.forEach(([lab,ang])=>{const rr=AC.R-4;const x=AC.x+Math.cos(ang)*rr,y=AC.y+Math.sin(ang)*rr;
+    const el=document.createElement('div');el.className='region';el.style.cssText=`left:${x}px;top:${y}px`;el.textContent=lab;$('#assetsView').appendChild(el);});
+})();
+$$('#assetsView .prov').forEach(p=>wire(p,p.dataset.detail));
+
+/* ---------- view system ---------- */
+let VIEW='assets';
+function showView(v){VIEW=v;
+  document.body.classList.toggle('view-flow',v==='flow');
+  $('#flowView').classList.toggle('hidden',v!=='flow');
+  $('#assetsView').classList.toggle('hidden',v!=='assets');
+  $('#wFlow').style.display=(v==='flow')?'':'none';
+  const dm=$('.dome');if(dm)dm.style.display=(v==='flow')?'':'none';
+  $('#tseg').style.display=(v==='flow')?'':'none';
+  closeDetail();closePrio();
+  if(v==='assets'){countUp($('#assetsView'));}
+  else{countUp($('#nLeft'));countUp($('#nRight'));if(MODES[MODE].center)countUp($('#nCenter'));
+    countUp(MODE==='d30'?$('#right30'):$('#right24'));countUp(MODE==='d30'?$('#tiles30'):$('#tiles24'));}
+}
+$('#assetShow').onclick=()=>showView('flow');
+$('#backBtn').onclick=()=>showView('assets');
+
 /* init */
 renderMode('h24');
+showView('assets');
 
 /* fit */
 function fit(){const s=Math.min(innerWidth/1440,innerHeight/810);stage.style.transform=`scale(${s})`;}
