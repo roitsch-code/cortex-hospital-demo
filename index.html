@@ -221,6 +221,8 @@ body.view-flow .backbtn{display:flex}
 #imedone .imo-logo sup{font-size:10px;font-weight:700;margin-left:1px}
 #imedone .imo-sub{font-size:12.5px;color:#e7edf1;font-weight:600;margin-top:9px}
 #imedone .imo-stat{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4}
+.viewby{position:absolute;left:566px;top:150px;z-index:7;font-size:12px;color:var(--muted);border:1px solid var(--hair);border-radius:999px;padding:6px 14px}
+.viewby b{color:var(--text);font-weight:700}.viewby span{color:var(--dim)}
 /* left buckets */
 .astats{position:absolute;left:56px;top:244px;z-index:7;display:flex;flex-direction:column;gap:7px;width:280px}
 .abucket{padding:12px 14px;border-radius:12px;border:1px solid transparent;cursor:pointer;transition:.18s;position:relative}
@@ -396,9 +398,10 @@ body.view-flow .backbtn{display:flex}
   <section id="assetsView" class="hidden">
     <div id="imedone">
       <div class="imo-logo">iMedOne<sup>®</sup></div>
-      <div class="imo-sub">Hospital Information System</div>
-      <div class="imo-stat">Core HIS · 40+ connected subsystems · 8,900 clinical users</div>
+      <div class="imo-sub">Hospital Information System (HIS)</div>
+      <div class="imo-stat">One core clinical system · hosted on Open Telekom Cloud · used across all sites</div>
     </div>
+    <div class="viewby" id="viewby">Connected estate · <b>by site</b> <span>▾</span></div>
     <div id="radarWrap">
       <svg class="wire" id="wAssets" viewBox="0 0 1440 810"></svg>
       <div class="acenter" id="acenter">
@@ -778,17 +781,17 @@ const A_BUCKETS=[
 ];
 // locations (assets sum = 35,600; risk sum = 5,840; threat = 84; both = 29)
 const A_LOC=[
-  {key:'campus',  name:'Campus',                     mark:'campus',  assets:30200, unit:'Buildings',    unitN:6,       ang:-1.5708, cats:[['Medical Devices (IoMT)',17800],['Clinical Endpoints',8600],['Imaging / PACS',1180],['Laboratory (LIS)',940],['Servers & VMs',1010],['Network & OT',670]], status:{both:25,threat:71,risk:5275}},
-  {key:'mvz',     name:'Outpatient Clinics',         mark:'mvz',     assets:2100,  unit:'Sites',        unitN:8,       ang:-0.62,   cats:[['Workstations',980],['Medical Devices',720],['Network',240],['Servers',160]], status:{both:1,threat:4,risk:310}},
-  {key:'cloud',   name:'Open Telekom Cloud',         mark:'cloud',   assets:1760,  unit:'',             unitN:'eu-de', ang:0.6,     cats:[['Virtual Machines',620],['Object Storage',430],['Databases',320],['Patient Portal',190],['Backup Vaults',200]], status:{both:0,threat:1,risk:22}},
-  {key:'telemed', name:'Telemedicine & Home',        mark:'telemed', assets:640,   unit:'Programs',     unitN:9,       ang:1.5708,  cats:[['Home Monitors',320],['Video Endpoints',140],['Wearables',120],['Gateways',60]], status:{both:2,threat:5,risk:180}},
-  {key:'labs',    name:'External / Reference Labs',  mark:'labs',    assets:520,   unit:'Partners',     unitN:5,       ang:2.5,     cats:[['Analyzer Interfaces',210],['Data Feeds',160],['Gateways',90],['Identities',60]], status:{both:1,threat:2,risk:44}},
-  {key:'research',name:'Research Partners (Global)', mark:'research',assets:380,   unit:'Institutions', unitN:14,      ang:-2.85,   cats:[['Partner Gateways',90],['Shared Datasets',140],['Federated Nodes',60],['External Researchers',90]], status:{both:0,threat:1,risk:9}}
+  {key:'campus',  name:'Main Campus',           tag:'Hospital', mark:'campus',  assets:30200, unit:'Buildings',  unitN:6,       ang:-1.5708, cats:[['Medical Devices (IoMT)',17800],['Clinical Endpoints',8600],['Imaging / PACS',1180],['Laboratory (LIS)',940],['Servers & VMs',1010],['Network & OT',670]], status:{both:25,threat:71,risk:5275}},
+  {key:'mvz',     name:'Outpatient Centers',    tag:'Clinics',  mark:'mvz',     assets:2100,  unit:'Locations',  unitN:12,      ang:-0.62,   cats:[['Workstations',980],['Medical Devices',720],['Network',240],['Servers',160]], status:{both:1,threat:4,risk:310}},
+  {key:'cloud',   name:'Open Telekom Cloud',    tag:'Cloud',    mark:'cloud',   assets:1760,  unit:'Region',     unitN:'eu-de', ang:0.6,     cats:[['Virtual Machines',620],['Object Storage',430],['Databases',320],['Patient Portal',190],['Backup Vaults',200]], status:{both:0,threat:1,risk:22}},
+  {key:'telemed', name:'Telemedicine & Home',   tag:'Remote',   mark:'telemed', assets:640,   unit:'Programs',   unitN:9,       ang:1.5708,  cats:[['Home Monitors',320],['Video Endpoints',140],['Wearables',120],['Gateways',60]], status:{both:2,threat:5,risk:180}},
+  {key:'labs',    name:'Reference Labs',        tag:'External', mark:'labs',    assets:520,   unit:'Partners',   unitN:5,       ang:2.5,     cats:[['Analyzer Interfaces',210],['Data Feeds',160],['Gateways',90],['Identities',60]], status:{both:1,threat:2,risk:44}},
+  {key:'research',name:'Research Institute',    tag:'Research', mark:'research',assets:380,   unit:'Partners',   unitN:14,      ang:-2.85,   cats:[['Partner Gateways',90],['Shared Datasets',140],['Federated Nodes',60],['External Researchers',90]], status:{both:0,threat:1,risk:9}}
 ];
 const PMARK={
   campus:'<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M2 14h12M3.6 14V6.2L8 3.2l4.4 3V14"/><path d="M8 8v2.6M6.7 9.3h2.6" stroke-width="1.5"/></svg>',
   mvz:'<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><rect x="3" y="4" width="10" height="10" rx="1"/><path d="M8 6.3v3.4M6.3 8h3.4" stroke-width="1.5"/></svg>',
-  cloud:'<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.4" y="2.4" width="11.2" height="11.2" rx="2"/><path d="M4.8 5.6h6.4M8 5.6V11"/></svg>',
+  cloud:'<svg class="sicon" viewBox="0 0 231 237" fill="currentColor"><path d="M55,181.5H0v-55h55v55ZM0,0v93.5h16.5v-2.75c0-44,24.75-71.5,71.5-71.5h2.75v198c0,27.5-11,38.5-38.5,38.5h-8.25v19.25h143v-19.25h-8.25c-27.5,0-38.5-11-38.5-38.5V19.25s2.75,0,2.75,0c46.75,0,71.5,27.5,71.5,71.5v2.75h16.5V0H0ZM176,181.5h55v-55h-55v55Z"/></svg>',
   telemed:'<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><rect x="2" y="3.5" width="12" height="8" rx="1"/><path d="M6.6 6.1l3.3 1.9-3.3 1.9z" fill="currentColor" stroke="none"/><path d="M5.5 13.6h5"/></svg>',
   labs:'<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M6.5 2v3.8L3.6 11.6A1.4 1.4 0 0 0 4.9 13.7h6.2a1.4 1.4 0 0 0 1.3-2.1L9.5 5.8V2M6 2h4M5.4 9.4h5.2"/></svg>',
   research:'<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="8" cy="8" r="6"/><path d="M2 8h12M8 2c2.4 2 2.4 10 0 12M8 2c-2.4 2-2.4 10 0 12"/></svg>'
@@ -832,15 +835,14 @@ function buildAssetsUI(){
   const s=$('#wAssets');s.innerHTML='';defs(s);
   ring(s,ACX0,AC.y,AC.R+14,190,.5);
   [AC.R,AC.R*0.66,AC.R*0.33].forEach((rr,i)=>s.appendChild(svgEl('circle',{cx:ACX0,cy:AC.y,r:rr,fill:'none',stroke:`rgba(47,214,192,${(.12-i*.03).toFixed(2)})`,'stroke-width':1})));
-  const rw=$('#regionWrap');rw.innerHTML='';
-  [['Wards',-0.5],['ICU',0.2],['OR',0.8],['Emergency',1.4],['Radiology',2.1],['Central Lab',2.75],['Pharmacy',-2.75],['Oncology',-2.05],['Research',-1.35]].forEach(([lab,ang])=>{
-    const rr=AC.R-8,x=ACX0+Math.cos(ang)*rr,y=AC.y+Math.sin(ang)*rr;
-    const el=document.createElement('div');el.className='region';el.style.cssText=`left:${x.toFixed(0)}px;top:${y.toFixed(0)}px`;el.textContent=lab;rw.appendChild(el);});
+  $('#regionWrap').innerHTML=''; // no department labels — the radar is organised by SITE, not department
+  // faint connectors tying each site to the estate ring
+  A_LOC.forEach(p=>{const o={x:ACX0+Math.cos(p.ang)*(AC.R+42),y:AC.y+Math.sin(p.ang)*(AC.R+42)},i={x:ACX0+Math.cos(p.ang)*(AC.R+14),y:AC.y+Math.sin(p.ang)*(AC.R+14)};
+    s.appendChild(svgEl('line',{x1:o.x.toFixed(1),y1:o.y.toFixed(1),x2:i.x.toFixed(1),y2:i.y.toFixed(1),stroke:'rgba(130,150,160,.22)','stroke-width':1}));});
   const pw=$('#provWrap');pw.innerHTML='';
   A_LOC.forEach(p=>{const pos=ppos(p.ang);const el=document.createElement('div');
     el.className='prov pk-'+p.mark;el.style.cssText=`left:${pos.x.toFixed(0)}px;top:${pos.y.toFixed(0)}px`;
-    const unit=(p.unitN!==''&&p.unitN!=null)?` <em>${p.unitN}${p.unit?' '+p.unit:''}</em>`:'';
-    el.innerHTML=`${PMARK[p.mark]}<b>${fmt(p.assets)}${unit}</b><span>${p.name}</span>`;
+    el.innerHTML=`${PMARK[p.mark]}<b>${fmt(p.assets)} <em>${p.tag}</em></b><span>${p.name}</span>`;
     el.onclick=e=>{e.stopPropagation();selectLocation(p.key);};pw.appendChild(el);});
   const bw=$('#astats');bw.innerHTML='';
   A_BUCKETS.forEach(bk=>{const el=document.createElement('div');el.className='abucket '+bk.cls;el.dataset.key=bk.key;
