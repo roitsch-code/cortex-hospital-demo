@@ -30,6 +30,11 @@ Navigation is a small state machine: `showView('assets' | 'flow')`.
    **Cases** → right-hand outcome funnel. A **24H ⇄ 30D** toggle (top-right) swaps the
    whole flow. The 30D center opens a **Prioritization** overlay. Everything is
    clickable → detail popovers (`detailHTML(key)`).
+   In **24H**, the three spine anchors open full reduced drill-down overlays instead of
+   popovers: **Issues → Data Inventory** (grouped sources + volumes/sparklines →
+   Issues/Prevented), **correlation core → Dynamic View** (radial automation donut +
+   orbital source marks + live feed), **Cases → Cases Overview** (lifecycle funnel +
+   handling bars + MITRE ATT&CK by tactic). All share the `.dv` overlay pattern.
 
 ## HARD design constraints (do not violate)
 - **Keep the Cortex aesthetic**: near-black background, teal (`#2fd6c0`) glow, flowing
@@ -50,8 +55,15 @@ The user was emphatic: **"dont invent shit."** Do NOT invent product names.
 Real names used here (keep them):
 - **iMedOne®** — real Telekom Hospital Information System (HIS).
 - **T Cloud Public** — hosting for iMedOne + a cloud site/source.
-- **T Security** — the Deutsche Telekom security brand (header).
-- **Magenta Security · Cyber Defense Center (CDC) Bonn** — the SOC that assists.
+- **T Security** — the DT security arm branded in *Sovereign Cortex with T Security*
+  (PANW + DT, announced 2026-06-09; provides the SOC + IAM). Header brand **and** the
+  assisting SOC on the flow.
+- **Cyber Defense Center (CDC) Bonn** — DT's real integrated Cyber Defense & Security
+  Operations Center in Bonn (largest in Europe). This is the SOC that assists.
+- **Magenta Security** — DT's *customer MDR product line* (MDR Start/Pro); a different
+  brand layer, **not** used in this sovereign framing. Kept off-screen.
+  > Naming was researched (telekom.com / t-systems.com / PANW press). On-screen SOC tag:
+  > **"assisted by T Security · Cyber Defense Center Bonn"** — verified correct here.
 Generic on screen (no hospital name): the campus is just **"Main Campus"** — no
 "Venusberg"/UKB/Bonn hospital naming anywhere in the UI.
 > Before any public showing, re-verify product status (telekom.com / paloaltonetworks.com).
@@ -76,7 +88,7 @@ to 35,600 (Campus 30,200 · Outpatient 2,100 · T Cloud 1,760 · Telemedicine 64
 buckets (risk 5,840 / threat 84 / both 29). Data Ingestion = **9 TB/24H**.
 **Flow 24H**: **2,412** Issues → **96** Cases (**78** Automated / **18** Manual →
 **85** Resolved / **11** Open). Tiles: 2.4 B/24H · 9 TB/24H · 11 Open · 54 K prevented.
-Open breakdown 3/3/5/0. SOC tag: "assisted · Magenta Security · CDC Bonn".
+Open breakdown 3/3/5/0. SOC tag: "assisted by T Security · Cyber Defense Center Bonn".
 **Flow 30D**: **148K** → **34K** unique → **312** Cases (Active **168** = 9 Require
 Attention + 121 In Progress + 38 Mitigated; Resolved **144** = 61 Resolved + 83 Accepted
 Risk). Tiles: Vulnerable Assets **5,840** (ties to assets At Risk) · Active Cases 168
@@ -108,6 +120,16 @@ Risk). Tiles: Vulnerable Assets **5,840** (ties to assets At Risk) · Active Cas
 - **Assets**: `A_BUCKETS` (buckets), `A_LOC` (sites: cats + status), `PMARK` (site
   marks), `buildAssetsUI` / `selectBucket` / `selectLocation` / `drawAssets` (radar +
   magenta sweep). Radar center `AC={x:800,y:440,R:264}`, `ACX0=800`.
+- **24H detail overlays** (`.dv` pattern, opened by overriding the spine clicks):
+  `buildInventory`/`openInventory` (Data Inventory, `INV`), `buildDynamic`/`openDynamic`
+  (Dynamic View, `DYN_MARKS`/`DYN_FEED`), `buildCases`/`openCases` (Cases Overview,
+  handling bars + MITRE list). Wired at the end of the script; each has a `‹ Flow` back
+  button and Esc-closes. NB: scope label rules as `.dvnode>span` / `.co-node>span` so the
+  count-up number spans keep the big font.
+- **Vendor logos**: `LOGO` = 4 inlined webp data-URIs (Microsoft 365, Azure, Google
+  Cloud, GitHub), tinted mono via `filter:brightness(0) invert(.72)`. Used ONLY in the
+  Data Inventory + Dynamic View as subordinate third-party sources — **never** in the
+  main flow, and **never** above/replacing T Cloud Public. Sources live in `docs/*.webp`.
 - Navigation: `showView(name)`; mode switch: `renderMode(m)`.
 
 ## Run
@@ -125,11 +147,13 @@ Risk). Tiles: Vulnerable Assets **5,840** (ties to assets At Risk) · Active Cas
 3. Check numbers reconcile (see the number model) and no invented product names crept in.
 
 ## Git
-- Branch: `claude/cortex-xsiam-research-drgysn`. Push with `-u origin <branch>` and
-  retry with backoff on network errors. Do **not** open a PR unless asked.
+- Active branch: `claude/issues-cases-flow-refine-hlxipr` (based on the earlier
+  `claude/cortex-xsiam-research-drgysn` line, now ahead of it). Push with
+  `-u origin <branch>` and retry with backoff on network errors. Do **not** open a PR
+  unless asked.
 - Commit-message footer:
   `Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>` and
-  `Claude-Session: https://claude.ai/code/session_01XrAEhDXzShvHJUqrAaoYZE`.
+  `Claude-Session: <the current claude.ai/code session URL>`.
 - Never put a model identifier in commits, PRs, code, or any pushed artifact.
 
 ## What's next / open ideas (not built)
