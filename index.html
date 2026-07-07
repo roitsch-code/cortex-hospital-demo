@@ -24,8 +24,9 @@ canvas#cv{position:absolute;inset:0;width:1440px;height:810px;pointer-events:non
 /* ---------- top chrome ---------- */
 .top{position:absolute;top:20px;left:34px;right:34px;z-index:12;display:flex;align-items:flex-start;justify-content:space-between}
 .brand{display:flex;align-items:center;gap:16px}
-.tlogo-sm{height:13px;width:auto;vertical-align:-1px;margin-left:3px}
+.tlogo-sm{height:12px;width:auto;vertical-align:middle;margin-left:4px}
 .tlogo-sm path{fill:#c8d0d6}
+.titles .tag{display:inline-flex;align-items:center}
 .titles .title{font-weight:700;letter-spacing:.2px;font-size:19px;display:flex;align-items:center;gap:8px}
 .titles .title .car{color:var(--muted);font-size:12px}
 .titles .tag{font-size:11.5px;color:var(--muted);margin-top:3px;letter-spacing:.02em}
@@ -190,9 +191,9 @@ body.view-flow .backbtn{display:flex}
 .ast span.rd2::before{background:#ff7a52}
 .ast span.am::before{background:var(--amber);box-shadow:0 0 8px var(--amber)}
 .ast.big b{font-size:40px}
-.acenter{position:absolute;left:720px;top:448px;transform:translate(-50%,-50%);z-index:6;text-align:center;pointer-events:none}
-.prov.pk-github .sicon{color:#e7edf1} .prov.pk-aws .sicon{color:#ff9d2e} .prov.pk-azure .sicon{color:#4aa3ff}
-.prov.pk-gcp .sicon{color:#8ab4f8} .prov.pk-t .sicon{color:var(--magenta)} .prov.pk-dc .sicon{color:#8b959e}
+.acenter{position:absolute;left:800px;top:436px;transform:translate(-50%,-50%);z-index:6;text-align:center;pointer-events:none}
+.prov.pk-campus .sicon{color:#6ff3e0} .prov.pk-mvz .sicon{color:#8ab4f8} .prov.pk-cloud .sicon{color:var(--magenta)}
+.prov.pk-telemed .sicon{color:#6ff3e0} .prov.pk-labs .sicon{color:#f5a623} .prov.pk-research .sicon{color:#8ab4f8}
 .acenter .anum{font-size:64px;font-weight:800;color:#fff;line-height:1;text-shadow:0 0 34px rgba(245,166,35,.45)}
 .acenter .acap{font-size:15px;color:#e7edf1;margin-top:6px;font-weight:600}
 .acenter .asub{font-size:12px;color:var(--muted);margin-top:8px}
@@ -214,8 +215,14 @@ body.view-flow .backbtn{display:flex}
 #radarWrap{position:absolute;inset:0;transition:transform .45s cubic-bezier(.6,0,.3,1)}
 #acenter,#provWrap,#regionWrap{transition:opacity .3s}
 #radarWrap.detail #acenter,#radarWrap.detail #provWrap,#radarWrap.detail #regionWrap{opacity:0;pointer-events:none}
+/* iMedOne anchor (HIS) */
+#imedone{position:absolute;left:56px;top:128px;z-index:7;width:280px}
+#imedone .imo-logo{display:inline-block;background:var(--magenta);color:#fff;font-weight:800;font-size:21px;letter-spacing:.2px;padding:5px 11px 6px;border-radius:8px}
+#imedone .imo-logo sup{font-size:10px;font-weight:700;margin-left:1px}
+#imedone .imo-sub{font-size:12.5px;color:#e7edf1;font-weight:600;margin-top:9px}
+#imedone .imo-stat{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4}
 /* left buckets */
-.astats{position:absolute;left:56px;top:196px;z-index:7;display:flex;flex-direction:column;gap:8px;width:270px}
+.astats{position:absolute;left:56px;top:244px;z-index:7;display:flex;flex-direction:column;gap:7px;width:280px}
 .abucket{padding:12px 14px;border-radius:12px;border:1px solid transparent;cursor:pointer;transition:.18s;position:relative}
 .abucket:hover{background:rgba(255,255,255,.03)}
 .abucket.on{background:rgba(255,255,255,.045);border-color:var(--hair)}
@@ -387,6 +394,11 @@ body.view-flow .backbtn{display:flex}
 
   <!-- ============ ASSETS ENTRY VIEW ============ -->
   <section id="assetsView" class="hidden">
+    <div id="imedone">
+      <div class="imo-logo">iMedOne<sup>®</sup></div>
+      <div class="imo-sub">Hospital Information System</div>
+      <div class="imo-stat">Core HIS · 40+ connected subsystems · 8,900 clinical users</div>
+    </div>
     <div id="radarWrap">
       <svg class="wire" id="wAssets" viewBox="0 0 1440 810"></svg>
       <div class="acenter" id="acenter">
@@ -399,7 +411,6 @@ body.view-flow .backbtn{display:flex}
       <div id="regionWrap"></div>
     </div>
     <div class="astats" id="astats"></div>
-    <svg class="alegend" id="alegend" viewBox="0 0 236 96"></svg>
     <div class="aingest"><div class="k">Data Ingestion</div><div class="vv"><b>65</b> <u>TB/24H</u></div></div>
     <div class="provdetail" id="provDetail"></div>
   </section>
@@ -462,8 +473,8 @@ const SRC24=[
   {n:'Email', icon:'email', w:4, rate:'157 K scanned', res:'EU tenant'},
   {n:'Network Data', icon:'network', w:5, rate:'2.2 GB/24H', res:'EU / on-prem'},
   {n:'NGFW', icon:'firewall', w:6, rate:'11.4 B/24H', res:'EU / on-prem'},
-  {n:'T Cloud Public', icon:'tmark', w:5, t:1, rate:'4.7 B/24H', res:'Open Telekom Cloud · DE'},
-  {n:'T AI Industrial Cloud', icon:'chip', w:3, t:1, rate:'2.3 B/24H', res:'Telekom + NVIDIA · DE'},
+  {n:'Open Telekom Cloud', icon:'tmark', w:5, t:1, rate:'4.7 B/24H', res:'Open Telekom Cloud · DE'},
+  {n:'Industrial AI Cloud', icon:'chip', w:3, t:1, rate:'2.3 B/24H', res:'Telekom + NVIDIA · DE'},
   {n:'AWS', icon:'cloud', w:6, rate:'5.9 B/24H', res:'eu-central-1'},
   {n:'Azure', icon:'cloud', w:4, rate:'3.2 B/24H', res:'Germany West Central'},
   {n:'Google Cloud', icon:'cloud', w:4, rate:'2.6 B/24H', res:'europe-west3'},
@@ -755,32 +766,32 @@ function renderMode(m){MODE=m;const cfg=MODES[m];
 $$('#tseg button').forEach(b=>b.onclick=()=>{if(b.dataset.mode!==MODE){closePrio();renderMode(b.dataset.mode);}});
 
 /* ---------- assets Command Center ---------- */
-const AC={x:720,y:436,R:284};
+const AC={x:800,y:436,R:284};
+const ACX0=800;
 const fmt=n=>n.toLocaleString('en-US');
 // buckets (nested subsets)
 const A_BUCKETS=[
-  {key:'all',   disp:'50.8<em>K</em>', n:50800, comma:1, cls:'all big', cap:'Total Assets',                    sub:'31.3K Cloud · 19.5K Enterprise', label:'All Assets',      glow:[245,170,80]},
-  {key:'risk',  disp:'3,956',          n:3956,  comma:1, cls:'risk',    cap:'Assets at Risk',                   sub:'369 Open Issues · 95 Open Cases', label:'At Risk',        glow:[245,166,35]},
-  {key:'threat',disp:'167',            n:167,            cls:'threat',  cap:'Assets with Active Threats',       sub:'140 Open Issues · 28 Open Cases', label:'Active Threats', glow:[255,77,94]},
-  {key:'both',  disp:'67',             n:67,             cls:'both',    cap:'Critical · At Risk + Active Threats', sub:'61 Open Issues · 14 Open Cases', label:'At Risk + Threats', glow:[226,0,116]}
+  {key:'all',   disp:'35.6<em>K</em>', n:35600, comma:1, cls:'all big', cap:'Total Assets',                        sub:'24.9K Medical / Clinical · 10.7K IT & Cloud', label:'All Assets',      glow:[245,170,80]},
+  {key:'risk',  disp:'5,840',          n:5840,  comma:1, cls:'risk',    cap:'Assets at Risk',                       sub:'412 Open Issues · 88 Open Cases', label:'At Risk',        glow:[245,166,35]},
+  {key:'threat',disp:'84',             n:84,             cls:'threat',  cap:'Assets with Active Threats',           sub:'96 Open Issues · 19 Open Cases', label:'Active Threats', glow:[255,77,94]},
+  {key:'both',  disp:'29',             n:29,             cls:'both',    cap:'Critical · At Risk + Active Threats',   sub:'41 Open Issues · 8 Open Cases', label:'At Risk + Threats', glow:[226,0,116]}
 ];
-// providers (assets sum = 50,800; cloud six = 31,300; risk sum = 3,956; threat = 167; both = 67)
-const A_PROV=[
-  {key:'github',name:'GitHub',            mark:'github',assets:5200, unit:'Orgs',         unitN:6, ang:-1.5708, cats:[['Repositories',3100],['Actions Runners',820],['Packages',640],['Apps',380],['Webhooks',260]], status:{both:2,threat:9,risk:37}},
-  {key:'aws',   name:'AWS',               mark:'aws',   assets:8900, unit:'Accounts',     unitN:24,ang:-0.62,  cats:[['EC2 Instance',3200],['S3 Bucket',2100],['VPC',1400],['IAM Role',980],['Lambda',760],['RDS',460]], status:{both:22,threat:41,risk:520}},
-  {key:'azure', name:'Azure',             mark:'azure', assets:4600, unit:'Subscriptions',unitN:16,ang:0.6,    cats:[['Virtual Machine',1600],['Blob Storage',1050],['VNet',720],['App Service',560],['Key Vault',380],['AKS',290]], status:{both:14,threat:26,risk:300}},
-  {key:'gcp',   name:'Google Cloud',      mark:'gcp',   assets:6760, unit:'Projects',     unitN:41,ang:2.5,    cats:[['VM Instance',2400],['Cloud Storage',1500],['VPC Network',1100],['GKE',780],['Cloud SQL',540],['Artifact Registry',440]], status:{both:18,threat:34,risk:420}},
-  {key:'tcloud',name:'T Cloud Public',    mark:'t',     assets:3120, unit:'Tenants',      unitN:12,ang:2.95,   sov:1, cats:[['Virtual Machine',980],['Object Storage',640],['Virtual Network',470],['Container Registry',360],['Managed Database',300],['Kubernetes',210],['+2 More',160]], status:{both:0,threat:1,risk:38}},
-  {key:'tsov',  name:'T-Systems Sovereign',mark:'t',    assets:2720, unit:'Tenants',      unitN:9, ang:-2.85,  sov:1, cats:[['Confidential VM',760],['Encrypted Storage',560],['Private Network',420],['HSM Vault',300],['Managed DB',260],['+2 More',420]], status:{both:0,threat:0,risk:19}},
-  {key:'onprem',name:'On-prem · Enterprise',mark:'dc',  assets:19500,unit:'Sites',        unitN:7, ang:1.5708, cats:[['Endpoints',12800],['Servers',3400],['Network Devices',1900],['OT / IoT',900],['Printers',500]], status:{both:11,threat:56,risk:2622}}
+// locations (assets sum = 35,600; risk sum = 5,840; threat = 84; both = 29)
+const A_LOC=[
+  {key:'campus',  name:'Campus',                     mark:'campus',  assets:30200, unit:'Buildings',    unitN:6,       ang:-1.5708, cats:[['Medical Devices (IoMT)',17800],['Clinical Endpoints',8600],['Imaging / PACS',1180],['Laboratory (LIS)',940],['Servers & VMs',1010],['Network & OT',670]], status:{both:25,threat:71,risk:5275}},
+  {key:'mvz',     name:'Outpatient Clinics',         mark:'mvz',     assets:2100,  unit:'Sites',        unitN:8,       ang:-0.62,   cats:[['Workstations',980],['Medical Devices',720],['Network',240],['Servers',160]], status:{both:1,threat:4,risk:310}},
+  {key:'cloud',   name:'Open Telekom Cloud',         mark:'cloud',   assets:1760,  unit:'',             unitN:'eu-de', ang:0.6,     cats:[['Virtual Machines',620],['Object Storage',430],['Databases',320],['Patient Portal',190],['Backup Vaults',200]], status:{both:0,threat:1,risk:22}},
+  {key:'telemed', name:'Telemedicine & Home',        mark:'telemed', assets:640,   unit:'Programs',     unitN:9,       ang:1.5708,  cats:[['Home Monitors',320],['Video Endpoints',140],['Wearables',120],['Gateways',60]], status:{both:2,threat:5,risk:180}},
+  {key:'labs',    name:'External / Reference Labs',  mark:'labs',    assets:520,   unit:'Partners',     unitN:5,       ang:2.5,     cats:[['Analyzer Interfaces',210],['Data Feeds',160],['Gateways',90],['Identities',60]], status:{both:1,threat:2,risk:44}},
+  {key:'research',name:'Research Partners (Global)', mark:'research',assets:380,   unit:'Institutions', unitN:14,      ang:-2.85,   cats:[['Partner Gateways',90],['Shared Datasets',140],['Federated Nodes',60],['External Researchers',90]], status:{both:0,threat:1,risk:9}}
 ];
 const PMARK={
-  github:'<svg class="sicon" viewBox="0 0 16 16" fill="currentColor"><circle cx="4.4" cy="4" r="1.7"/><circle cx="4.4" cy="12" r="1.7"/><circle cx="11.6" cy="6.2" r="1.7"/><rect x="3.7" y="4" width="1.4" height="8" rx=".7"/><path d="M5.1 5.5c3 .35 5.1.9 5.7 1.4l-.9 1.2C9 7.7 7.3 7.3 5.1 7.1z"/></svg>',
-  aws:'<svg class="sicon" viewBox="0 0 16 16" fill="currentColor"><path d="M2.6 6h1.7l.9 2.6L6 6h1.4l.8 2.6L9.1 6h1.7l-1.6 4.4H7.9l-.9-2.7-.9 2.7H4.7z"/><path d="M2.8 12.2c3.5 2 6.9 2 10.4 0l-.4-.95c-3.2 1.75-6.3 1.75-9.7 0z"/></svg>',
-  azure:'<svg class="sicon" viewBox="0 0 16 16" fill="currentColor"><path d="M6.9 3.2L3.1 12.4h2.7l4.7-.85-2.5 1.35H13L8.3 3.2z"/></svg>',
-  gcp:'<svg class="sicon" viewBox="0 0 16 16" fill="currentColor"><circle cx="5" cy="5" r="1.7"/><circle cx="11" cy="5" r="1.7"/><circle cx="5" cy="11" r="1.7"/><circle cx="11" cy="11" r="1.7"/></svg>',
-  t:'<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.4" y="2.4" width="11.2" height="11.2" rx="2"/><path d="M4.8 5.6h6.4M8 5.6V11"/></svg>',
-  dc:'<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><rect x="3" y="2.5" width="10" height="11" rx="1"/><path d="M6 5.2h4M6 8h4M6 10.8h4"/></svg>'
+  campus:'<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M2 14h12M3.6 14V6.2L8 3.2l4.4 3V14"/><path d="M8 8v2.6M6.7 9.3h2.6" stroke-width="1.5"/></svg>',
+  mvz:'<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><rect x="3" y="4" width="10" height="10" rx="1"/><path d="M8 6.3v3.4M6.3 8h3.4" stroke-width="1.5"/></svg>',
+  cloud:'<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.4" y="2.4" width="11.2" height="11.2" rx="2"/><path d="M4.8 5.6h6.4M8 5.6V11"/></svg>',
+  telemed:'<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><rect x="2" y="3.5" width="12" height="8" rx="1"/><path d="M6.6 6.1l3.3 1.9-3.3 1.9z" fill="currentColor" stroke="none"/><path d="M5.5 13.6h5"/></svg>',
+  labs:'<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M6.5 2v3.8L3.6 11.6A1.4 1.4 0 0 0 4.9 13.7h6.2a1.4 1.4 0 0 0 1.3-2.1L9.5 5.8V2M6 2h4M5.4 9.4h5.2"/></svg>',
+  research:'<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="8" cy="8" r="6"/><path d="M2 8h12M8 2c2.4 2 2.4 10 0 12M8 2c-2.4 2-2.4 10 0 12"/></svg>'
 };
 const CAT_COLORS=['#2fd6c0','#6ff3e0','#4aa3ff','#f5a623','#E20074','#ff7a52','#8b959e','#9b8cff'];
 
@@ -796,7 +807,7 @@ const assets=[];
   }}})();
 let sweepAng=0, radarShift=0, radarTarget=0, glowRGB=[245,170,80];
 function drawAssets(t){
-  radarShift+=(radarTarget-radarShift)*0.14; AC.x=720+radarShift;
+  radarShift+=(radarTarget-radarShift)*0.14; AC.x=ACX0+radarShift;
   const rw=$('#radarWrap'); if(rw) rw.style.transform=`translateX(${radarShift.toFixed(1)}px)`;
   const gr=glowRGB;
   const g=ctx.createRadialGradient(AC.x,AC.y,8,AC.x,AC.y,190);
@@ -816,32 +827,24 @@ function drawAssets(t){
     ctx.beginPath();ctx.arc(x,y,d.sz+scan*0.9,0,6.283);ctx.fill();}
   ctx.globalAlpha=1;
 }
-function ppos(ang){return {x:720+Math.cos(ang)*(AC.R+58), y:AC.y+Math.sin(ang)*(AC.R+58)};}
+function ppos(ang){return {x:ACX0+Math.cos(ang)*(AC.R+58), y:AC.y+Math.sin(ang)*(AC.R+58)};}
 function buildAssetsUI(){
   const s=$('#wAssets');s.innerHTML='';defs(s);
-  ring(s,720,AC.y,AC.R+14,190,.5);
-  [AC.R,AC.R*0.66,AC.R*0.33].forEach((rr,i)=>s.appendChild(svgEl('circle',{cx:720,cy:AC.y,r:rr,fill:'none',stroke:`rgba(47,214,192,${(.12-i*.03).toFixed(2)})`,'stroke-width':1})));
+  ring(s,ACX0,AC.y,AC.R+14,190,.5);
+  [AC.R,AC.R*0.66,AC.R*0.33].forEach((rr,i)=>s.appendChild(svgEl('circle',{cx:ACX0,cy:AC.y,r:rr,fill:'none',stroke:`rgba(47,214,192,${(.12-i*.03).toFixed(2)})`,'stroke-width':1})));
   const rw=$('#regionWrap');rw.innerHTML='';
-  [['us-east',-0.5],['us-west',0.35],['central',1.05],['ap-southeast',1.9],['europe-w',2.75],['europe-n',-2.75],['asia',-1.95]].forEach(([lab,ang])=>{
-    const rr=AC.R-8,x=720+Math.cos(ang)*rr,y=AC.y+Math.sin(ang)*rr;
-    const el=document.createElement('div');el.className='region';el.style.cssText=`left:${x}px;top:${y}px`;el.textContent=lab;rw.appendChild(el);});
+  [['Wards',-0.5],['ICU',0.2],['OR',0.8],['Emergency',1.4],['Radiology',2.1],['Central Lab',2.75],['Pharmacy',-2.75],['Oncology',-2.05],['Research',-1.35]].forEach(([lab,ang])=>{
+    const rr=AC.R-8,x=ACX0+Math.cos(ang)*rr,y=AC.y+Math.sin(ang)*rr;
+    const el=document.createElement('div');el.className='region';el.style.cssText=`left:${x.toFixed(0)}px;top:${y.toFixed(0)}px`;el.textContent=lab;rw.appendChild(el);});
   const pw=$('#provWrap');pw.innerHTML='';
-  A_PROV.forEach(p=>{const pos=ppos(p.ang);const el=document.createElement('div');
+  A_LOC.forEach(p=>{const pos=ppos(p.ang);const el=document.createElement('div');
     el.className='prov pk-'+p.mark;el.style.cssText=`left:${pos.x.toFixed(0)}px;top:${pos.y.toFixed(0)}px`;
-    const unit=p.unitN?` <em>${p.unitN} ${p.unit}</em>`:'';
+    const unit=(p.unitN!==''&&p.unitN!=null)?` <em>${p.unitN}${p.unit?' '+p.unit:''}</em>`:'';
     el.innerHTML=`${PMARK[p.mark]}<b>${fmt(p.assets)}${unit}</b><span>${p.name}</span>`;
-    el.onclick=e=>{e.stopPropagation();selectProvider(p.key);};pw.appendChild(el);});
+    el.onclick=e=>{e.stopPropagation();selectLocation(p.key);};pw.appendChild(el);});
   const bw=$('#astats');bw.innerHTML='';
   A_BUCKETS.forEach(bk=>{const el=document.createElement('div');el.className='abucket '+bk.cls;el.dataset.key=bk.key;
     el.innerHTML=`<b>${bk.disp}</b><span class="lab">${bk.label}</span>`;el.onclick=()=>selectBucket(bk.key);bw.appendChild(el);});
-  $('#alegend').innerHTML=`
-    <circle cx="88" cy="40" r="33" fill="rgba(245,166,35,.10)" stroke="rgba(245,166,35,.7)"/>
-    <circle cx="140" cy="40" r="33" fill="rgba(255,77,94,.10)" stroke="rgba(255,77,94,.7)"/>
-    <text x="64" y="44" fill="#f5a623" font-size="10" text-anchor="middle" font-weight="700">At Risk</text>
-    <text x="166" y="44" fill="#ff8a8a" font-size="10" text-anchor="middle" font-weight="700">Threats</text>
-    <text x="114" y="38" fill="#f4b9d8" font-size="12" text-anchor="middle" font-weight="800">67</text>
-    <text x="114" y="50" fill="#8b959e" font-size="8" text-anchor="middle">both</text>
-    <text x="114" y="90" fill="#5a636b" font-size="9" text-anchor="middle">overlap = highest priority</text>`;
 }
 function animNum(el,target,comma){const t0=performance.now();
   const f=v=>comma?Math.round(v).toLocaleString('en-US'):Math.round(v).toString();
@@ -857,7 +860,7 @@ function donutSVG(cats,total){const cx=65,cy=65,r=46,sw=15;let acc=0;
   const paths=cats.map((c,i)=>{const f0=acc/total,f1=(acc+c[1])/total;acc+=c[1];return `<path d="${arc(f0*6.28,f1*6.28-0.03)}" fill="none" stroke="${CAT_COLORS[i%CAT_COLORS.length]}" stroke-width="${sw}"/>`;}).join('');
   return `<svg class="donut" viewBox="0 0 130 130">${paths}</svg>`;
 }
-function selectProvider(key){const p=A_PROV.find(x=>x.key===key);if(!p)return;
+function selectLocation(key){const p=A_LOC.find(x=>x.key===key);if(!p)return;
   radarTarget=-300;$('#radarWrap').classList.add('detail');
   const catlist=p.cats.map((c,i)=>`<div class="ci"><span class="sw" style="background:${CAT_COLORS[i%CAT_COLORS.length]}"></span><b>${fmt(c[1])}</b><span>${c[0]}</span></div>`).join('');
   const unitRow=p.unitN?`<div class="h u"><b>${PMARK[p.mark]}${p.unitN}</b><span>${p.unit}</span></div>`:'';
