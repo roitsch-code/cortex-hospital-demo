@@ -59,7 +59,7 @@ svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;ov
 
 /* left source rows */
 .src{position:absolute;transform:translateY(-50%);z-index:4;display:flex;align-items:center;gap:9px;
-  width:196px;font-size:12.5px;font-weight:600;color:#d7dde2;cursor:pointer;padding:2px 0;transition:.18s}
+  width:216px;font-size:12.5px;font-weight:600;color:#d7dde2;cursor:pointer;padding:2px 0;transition:.18s}
 .src .sicon{width:16px;height:16px;flex:0 0 auto;color:var(--muted)}
 .src .lab{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
 .src small{color:var(--muted);font-weight:600;font-size:11px}
@@ -321,7 +321,7 @@ body.view-flow .backbtn{display:flex}
   <!-- right funnel (24H) -->
   <div id="right24">
     <div class="funnode" id="fnAuto" style="left:1080px;top:300px">
-      <div class="fl above"><b><span data-count="103">0</span></b><span>Automated</span></div>
+      <div class="fl above"><b><span data-count="78">0</span></b><span>Automated</span></div>
       <div class="disc2"><svg viewBox="0 0 24 24" fill="none" stroke="#6ff3e0" stroke-width="1.6">
         <circle cx="12" cy="5" r="2.4"/><circle cx="5" cy="17" r="2.4"/><circle cx="19" cy="17" r="2.4"/>
         <path d="M12 7.4V13M12 13l-5.5 2M12 13l5.5 2"/></svg></div>
@@ -329,11 +329,11 @@ body.view-flow .backbtn{display:flex}
     <div class="funnode" id="fnManual" style="left:1080px;top:488px">
       <div class="disc2"><svg viewBox="0 0 24 24" fill="none" stroke="#8b959e" stroke-width="1.6">
         <circle cx="12" cy="8" r="3.4"/><path d="M5.5 19a6.5 6.5 0 0 1 13 0"/></svg></div>
-      <div class="fl below"><b><span data-count="22">0</span></b><span>Manual</span></div>
+      <div class="fl below"><b><span data-count="18">0</span></b><span>Manual</span></div>
     </div>
-    <div class="soctag" id="socTag" style="left:1024px;top:556px">assisted · <b>T</b> Magenta Security SOC</div>
+    <div class="soctag" id="socTag" style="left:1024px;top:556px">assisted · <b>Magenta</b> Security · CDC Bonn</div>
     <div class="outcome click" id="nResolved" style="left:1232px;top:292px">
-      <b><span data-count="114">0</span></b><span>Resolved Cases</span>
+      <b><span data-count="85">0</span></b><span>Resolved Cases</span>
     </div>
     <div class="chev" id="chevOpen" style="left:1196px;top:446px">
       <div class="cv crit"><i>▲▲</i>3</div><div class="cv high"><i>▲▲</i>3</div>
@@ -347,7 +347,7 @@ body.view-flow .backbtn{display:flex}
   <!-- right status cards (30D) -->
   <div id="right30" class="hidden">
     <div class="funnode red" id="fnActive" style="left:1120px;top:288px">
-      <div class="fl above"><b><span data-count="263">0</span></b><span>Active Cases</span></div>
+      <div class="fl above"><b><span data-count="168">0</span></b><span>Active Cases</span></div>
       <div class="disc2"><svg viewBox="0 0 24 24" fill="none" stroke="#ff9aa4" stroke-width="1.6">
         <path d="M12 3c1 4-2 5-2 8a4 4 0 0 0 8 0c0-2-1-3-1-5 3 2 4 5 4 8a9 9 0 1 1-15-6c2-2 3-4 4-5z"/></svg></div>
     </div>
@@ -355,41 +355,41 @@ body.view-flow .backbtn{display:flex}
       <div class="disc2"><svg viewBox="0 0 24 24" fill="none" stroke="#6ff3e0" stroke-width="1.6">
         <circle cx="12" cy="5" r="2.4"/><circle cx="5" cy="17" r="2.4"/><circle cx="19" cy="17" r="2.4"/>
         <path d="M12 7.4V13M12 13l-5.5 2M12 13l5.5 2"/></svg></div>
-      <div class="fl below"><b><span data-count="216">0</span></b><span>Resolved Cases</span></div>
+      <div class="fl below"><b><span data-count="144">0</span></b><span>Resolved Cases</span></div>
     </div>
-    <div class="pcard rd" style="left:1258px;top:172px" data-detail="p_attn"><b><span data-count="13">0</span> <em class="up">↑2.5%</em></b><span>Require Attention</span></div>
-    <div class="pcard" style="left:1258px;top:262px" data-detail="p_prog"><b><span data-count="200">0</span> <em class="up">↑4%</em></b><span>In Progress</span></div>
-    <div class="pcard" style="left:1258px;top:352px" data-detail="p_mit"><b><span data-count="50">0</span> <em class="dn">↓13%</em></b><span>Mitigated · Compensating Controls</span></div>
-    <div class="pcard tl" style="left:1258px;top:470px" data-detail="p_res"><b><span data-count="87">0</span> <em class="up">↑12%</em></b><span>Resolved</span></div>
-    <div class="pcard tl" style="left:1258px;top:560px" data-detail="p_risk"><b><span data-count="129">0</span> <em class="up">↑5.3%</em></b><span>Accepted Risk</span></div>
+    <div class="pcard rd" style="left:1258px;top:172px" data-detail="p_attn"><b><span data-count="9">0</span> <em class="up">↑2.5%</em></b><span>Require Attention</span></div>
+    <div class="pcard" style="left:1258px;top:262px" data-detail="p_prog"><b><span data-count="121">0</span> <em class="up">↑4%</em></b><span>In Progress</span></div>
+    <div class="pcard" style="left:1258px;top:352px" data-detail="p_mit"><b><span data-count="38">0</span> <em class="dn">↓13%</em></b><span>Mitigated · Compensating Controls</span></div>
+    <div class="pcard tl" style="left:1258px;top:470px" data-detail="p_res"><b><span data-count="61">0</span> <em class="up">↑12%</em></b><span>Resolved</span></div>
+    <div class="pcard tl" style="left:1258px;top:560px" data-detail="p_risk"><b><span data-count="83">0</span> <em class="up">↑5.3%</em></b><span>Accepted Risk</span></div>
   </div>
 
   <!-- bottom stat tiles (24H) -->
   <div class="tiles" id="tiles24">
     <div class="tile" data-detail="events"><div class="k">Events Ingestion</div>
-      <div class="vrow"><div class="v"><span data-count="43">0</span><u>B/24H</u></div>
+      <div class="vrow"><div class="v"><span data-count="2.4" data-decimals="1">0</span><u>B/24H</u></div>
         <svg class="spark" id="spk1" viewBox="0 0 130 40" preserveAspectRatio="none"></svg></div></div>
     <div class="tile" data-detail="data"><div class="k">Data Ingestion</div>
-      <div class="vrow"><div class="v"><span data-count="65">0</span><u>TB/24H</u></div>
+      <div class="vrow"><div class="v"><span data-count="9">0</span><u>TB/24H</u></div>
         <svg class="spark" id="spk2" viewBox="0 0 130 40" preserveAspectRatio="none"></svg></div></div>
     <div class="tile" data-detail="open"><div class="k">Total Open Cases</div>
-      <div class="vrow"><div class="v"><span data-count="32">0</span></div>
+      <div class="vrow"><div class="v"><span data-count="11">0</span></div>
         <button class="invest" id="investBtn"><span class="o"></span>Investigate</button></div></div>
     <div class="tile" data-detail="prevented"><div class="k">Prevented Events</div>
-      <div class="vrow"><div class="v"><span data-count="286">0</span><u>K</u></div>
+      <div class="vrow"><div class="v"><span data-count="54">0</span><u>K</u></div>
         <svg class="spark" id="spk3" viewBox="0 0 130 40" preserveAspectRatio="none"></svg></div></div>
   </div>
 
   <!-- bottom stat tiles (30D) -->
   <div class="tiles hidden" id="tiles30">
     <div class="tile" data-detail="vassets"><div class="k">Vulnerable Assets</div>
-      <div class="vrow"><div class="v"><span data-count="432">0</span><u>K</u> <em>↑15%</em></div>
+      <div class="vrow"><div class="v"><span data-count="5840" data-comma>0</span> <em>↑15%</em></div>
         <svg class="spark" id="spk4" viewBox="0 0 130 40" preserveAspectRatio="none"></svg></div></div>
     <div class="tile" data-detail="activecases"><div class="k">Active Cases</div>
-      <div class="vrow"><div class="v"><span data-count="263">0</span></div>
-        <div class="sev"><i><span class="q" style="background:var(--red)"></span><b>101</b></i><i><span class="q" style="background:#ff7a52"></span><b>132</b></i><i><span class="q" style="background:var(--amber)"></span><b>29</b></i><i><span class="q" style="background:var(--blue)"></span><b>1</b></i></div></div></div>
+      <div class="vrow"><div class="v"><span data-count="168">0</span></div>
+        <div class="sev"><i><span class="q" style="background:var(--red)"></span><b>44</b></i><i><span class="q" style="background:#ff7a52"></span><b>71</b></i><i><span class="q" style="background:var(--amber)"></span><b>48</b></i><i><span class="q" style="background:var(--blue)"></span><b>5</b></i></div></div></div>
     <div class="tile" data-detail="mttr"><div class="k">Mean Time To Resolve</div>
-      <div class="vrow"><div class="v"><span data-count="21">0</span><u>Days</u></div>
+      <div class="vrow"><div class="v"><span data-count="26">0</span><u>Days</u></div>
         <div class="sev"><i><span class="q" style="background:var(--red)"></span><b>21</b></i><i><span class="q" style="background:#ff7a52"></span><b>21</b></i><i><span class="q" style="background:var(--amber)"></span><b>34</b></i><i><span class="q" style="background:var(--blue)"></span><b>35</b></i></div></div></div>
   </div>
   </section><!--/flowView-->
@@ -425,17 +425,17 @@ body.view-flow .backbtn{display:flex}
     <div class="back" id="prioBack">‹ Back to overview</div>
     <h2>PRIORITIZATION</h2>
     <div class="stages">
-      <div class="stg"><b>1.2M <em>↓3.8%</em></b><span>Vulnerabilities</span></div>
-      <div class="stg"><b>865K <em>↓2.5%</em></b><span>Unique Vulnerabilities</span></div>
-      <div class="stg"><b>17K <em>↓1%</em></b><span>Open Issues</span></div>
-      <div class="stg cases"><b>479 <em>↓1%</em></b><span>Cases</span></div>
+      <div class="stg"><b>148K <em>↓3.8%</em></b><span>Vulnerabilities</span></div>
+      <div class="stg"><b>34K <em>↓2.5%</em></b><span>Unique Vulnerabilities</span></div>
+      <div class="stg"><b>4.8K <em>↓1%</em></b><span>Open Issues</span></div>
+      <div class="stg cases"><b>312 <em>↓1%</em></b><span>Cases</span></div>
     </div>
     <div class="breaklist" id="breaklist"></div>
     <div class="note">
       <h5>✦ VULNERABILITY PROCESSING</h5>
       <p>AI correlates raw findings with vulnerability &amp; threat intelligence, deduplicates, and scores by real-world exploitability and business impact.</p>
       <div class="r"><span>Correlated with</span><b>EPSS · KEV · asset context</b></div>
-      <div class="r"><span>Reduction</span><b>1.2M → 479 (99.96%)</b></div>
+      <div class="r"><span>Reduction</span><b>148K → 312 (99.8%)</b></div>
     </div>
   </div>
 
@@ -457,52 +457,54 @@ function bezPt(a,b,k,t){const dx=(b.x-a.x)*k;return cubic(a,{x:a.x+dx,y:a.y},{x:
 const ICONS={
   endpoint:'<rect x="2" y="3" width="12" height="8" rx="1"/><path d="M6 14h4M8 11v3"/>',
   identity:'<circle cx="8" cy="6" r="2.4"/><path d="M3.6 13a4.4 4.4 0 0 1 8.8 0"/>',
-  email:'<rect x="2" y="4" width="12" height="9" rx="1"/><path d="M2.5 5l5.5 4 5.5-4"/>',
   network:'<path d="M1.5 11c2-5 3.2-5 5 0s3 5 5 0 1.5-2 3-2"/>',
   firewall:'<rect x="2" y="3.5" width="12" height="9" rx="1"/><path d="M2 6.7h12M2 9.6h12M6 3.5v3.2M10 6.7v2.9M6 9.6V12.5"/>',
+  his:'<rect x="3" y="2" width="10" height="12" rx="1"/><path d="M6 5h4M6 7.4h4M8 9v3M6.5 10.5h3"/>',
+  iomt:'<rect x="2" y="4" width="12" height="8" rx="1"/><path d="M3 8h2l1.3-2.6L8.6 10l1-2h2.4"/>',
+  imaging:'<rect x="2.4" y="2.6" width="11.2" height="10.8" rx="1"/><circle cx="8" cy="8" r="2.6"/><path d="M8 5.4v5.2"/>',
+  flask:'<path d="M6.4 2v3.6L3.6 11.4A1.4 1.4 0 0 0 4.9 13.5h6.2a1.4 1.4 0 0 0 1.3-2.1L9.6 5.6V2M6 2h4M5.4 9.3h5.2"/>',
+  pharmacy:'<rect x="3.4" y="6.2" width="9.2" height="3.6" rx="1.8"/><path d="M8 6.2v3.6"/>',
+  hpc:'<rect x="3" y="3" width="10" height="3.4" rx="1"/><rect x="3" y="9.6" width="10" height="3.4" rx="1"/><path d="M5 4.7h.01M5 11.3h.01"/>',
   cloud:'<path d="M4.6 12h6a3 3 0 0 0 .3-6 4 4 0 0 0-7.6 1A2.6 2.6 0 0 0 4.6 12z"/>',
-  chip:'<rect x="4" y="4" width="8" height="8" rx="1"/><path d="M6 1.6v2.4M10 1.6v2.4M6 12v2.4M10 12v2.4M1.6 6h2.4M1.6 10h2.4M12 6h2.4M12 10h2.4"/>',
-  tmark:'<rect x="2.4" y="2.4" width="11.2" height="11.2" rx="2"/><path d="M4.8 5.4h6.4M8 5.4V11" stroke-width="1.5"/>',
-  shield:'<path d="M8 2l5 2v4c0 3.5-2.4 5.6-5 6.6C5.4 13.6 3 11.5 3 8V4z"/>',
   scan:'<circle cx="8" cy="8" r="5.5"/><path d="M8 2.5v11M2.5 8h11"/>',
   more:'<circle cx="4" cy="8" r="1.1"/><circle cx="8" cy="8" r="1.1"/><circle cx="12" cy="8" r="1.1"/>'
 };
-function iconSVG(k){return `<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">${ICONS[k]||''}</svg>`;}
+const TSVG='<svg class="sicon" viewBox="0 0 231 275" fill="currentColor" stroke="none"><path d="M55,181.5H0v-55h55v55ZM0,0v93.5h16.5v-2.75c0-44,24.75-71.5,71.5-71.5h2.75v198c0,27.5-11,38.5-38.5,38.5h-8.25v19.25h143v-19.25h-8.25c-27.5,0-38.5-11-38.5-38.5V19.25s2.75,0,2.75,0c46.75,0,71.5,27.5,71.5,71.5v2.75h16.5V0H0ZM176,181.5h55v-55h-55v55Z"/></svg>';
+function iconSVG(k){return k==='tmark'?TSVG:`<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">${ICONS[k]||''}</svg>`;}
 
 /* ---------- data (both modes) ---------- */
 const SRC24=[
-  {n:'Endpoints', s:'19.2K', icon:'endpoint', w:9, ep:1, rate:'56.3 TB/24H', res:'Germany Data Boundary'},
-  {n:'Identities', icon:'identity', w:2, rate:'13.0 K/24H', res:'Germany Data Boundary'},
-  {n:'Email', icon:'email', w:4, rate:'157 K scanned', res:'EU tenant'},
-  {n:'Network Data', icon:'network', w:5, rate:'2.2 GB/24H', res:'EU / on-prem'},
-  {n:'NGFW', icon:'firewall', w:6, rate:'11.4 B/24H', res:'EU / on-prem'},
-  {n:'Open Telekom Cloud', icon:'tmark', w:5, t:1, rate:'4.7 B/24H', res:'Open Telekom Cloud · DE'},
-  {n:'Industrial AI Cloud', icon:'chip', w:3, t:1, rate:'2.3 B/24H', res:'Telekom + NVIDIA · DE'},
-  {n:'AWS', icon:'cloud', w:6, rate:'5.9 B/24H', res:'eu-central-1'},
-  {n:'Azure', icon:'cloud', w:4, rate:'3.2 B/24H', res:'Germany West Central'},
-  {n:'Google Cloud', icon:'cloud', w:4, rate:'2.6 B/24H', res:'europe-west3'},
-  {more:'+68 Data Sources', icon:'more', w:3}
+  {n:'Medical Devices', s:'18.6K', icon:'iomt', w:9, ep:1, rate:'4.2 B events/24H', res:'IoMT network · segmented'},
+  {n:'Clinical Endpoints', icon:'endpoint', w:6, rate:'9,400 endpoints', res:'Germany Data Boundary'},
+  {n:'iMedOne · HIS', icon:'his', w:5, t:1, rate:'clinical + admin events', res:'hosted · T Cloud Public'},
+  {n:'Imaging / PACS', icon:'imaging', w:4, rate:'1.9 TB images/24H', res:'PACS · on-prem'},
+  {n:'Laboratory · LIS', icon:'flask', w:3, rate:'lab orders & results', res:'LIS'},
+  {n:'Identities & Access', icon:'identity', w:4, rate:'12.4 K identities', res:'IAM · Germany DB'},
+  {n:'Pharmacy / AGV', icon:'pharmacy', w:3, rate:'meds & AGV telemetry', res:'pharmacy logistics'},
+  {n:'T Cloud Public', icon:'tmark', w:5, t:1, rate:'3.4 B events/24H', res:'T Cloud Public · eu-de'},
+  {n:'Network / NGFW', icon:'firewall', w:6, rate:'11.4 B events/24H', res:'EU / on-prem'},
+  {n:'Research / HPC', icon:'hpc', w:3, rate:'HPC & genomics', res:'research network'},
+  {more:'+ 60 Data Sources', icon:'more', w:2}
 ];
 const SRC30=[
-  {n:'T Security ASM', icon:'tmark', w:8, t:1, rate:'273 K+ findings', res:'External attack surface'},
-  {n:'T Agentless', icon:'tmark', w:4, t:1, rate:'89 K+ findings', res:'Agentless scan · DE'},
-  {n:'Tenable', icon:'shield', w:6, rate:'159 K+ findings', res:'VM scanner'},
-  {n:'Microsoft', icon:'cloud', w:6, rate:'158 K+ findings', res:'Defender / MDE'},
-  {n:'CrowdStrike', icon:'shield', w:4, rate:'72 K+ findings', res:'Spotlight'},
-  {n:'Google', icon:'cloud', w:3, rate:'59 K+ findings', res:'SCC'},
-  {n:'Qualys', icon:'scan', w:3, rate:'42 K+ findings', res:'VMDR'},
-  {n:'Wiz', icon:'cloud', w:3, rate:'41 K+ findings', res:'CNAPP'},
-  {more:'+ Others', icon:'more', w:4}
+  {n:'IoMT Security', icon:'iomt', w:8, rate:'device vulnerabilities', res:'medical device VM'},
+  {n:'Endpoint (EDR)', icon:'endpoint', w:6, rate:'endpoint findings', res:'clinical endpoints'},
+  {n:'Vulnerability Scan', icon:'scan', w:6, rate:'network & servers', res:'authenticated scan'},
+  {n:'iMedOne · HIS', icon:'his', w:4, t:1, rate:'app & config', res:'HIS'},
+  {n:'T Cloud Posture', icon:'tmark', w:5, t:1, rate:'CSPM findings', res:'T Cloud Public'},
+  {n:'Imaging / PACS', icon:'imaging', w:3, rate:'modality vulns', res:'PACS'},
+  {n:'Identities & Access', icon:'identity', w:3, rate:'access exposure', res:'IAM'},
+  {more:'+ more Scanners', icon:'more', w:3}
 ];
 const MODES={
   h24:{label:'Last 24H', sources:SRC24,
-    left:{n:'2681',cap:'Issues',comma:1,hint:'correlating →',detail:'issues'},
+    left:{n:'2412',cap:'Issues',comma:1,hint:'correlating →',detail:'issues'},
     center:null,
-    right:{n:'125',cap:'Cases',hint:'breakdown →',detail:'cases'}},
+    right:{n:'96',cap:'Cases',hint:'breakdown →',detail:'cases'}},
   d30:{label:'Last 30 Days', sources:SRC30,
-    left:{n:'1.2',dec:1,suffix:'M',cap:'Vulnerabilities',hint:'sources →',detail:'vulns'},
-    center:{n:'865',suffix:'K',cap:'Unique Vulnerabilities',hint:'prioritization →',detail:'unique'},
-    right:{n:'479',cap:'Cases',hint:'breakdown →',detail:'cases30'}}
+    left:{n:'148',suffix:'K',cap:'Vulnerabilities',hint:'sources →',detail:'vulns'},
+    center:{n:'34',suffix:'K',cap:'Unique Vulnerabilities',hint:'prioritization →',detail:'unique'},
+    right:{n:'312',cap:'Cases',hint:'breakdown →',detail:'cases30'}}
 };
 let MODE='h24';
 
@@ -604,11 +606,12 @@ RINGS.forEach((r,ri)=>{const n=Math.max(6,Math.round(r*0.72));
 let wIdx=[];
 function slotPoint(){const rr=88+Math.random()*38, aa=Math.PI*(0.55+Math.random()*0.9);return {x:CENTER.x+Math.cos(aa)*rr, y:CENTER.y+Math.sin(aa)*rr};}
 function newInflow(p){const si=wIdx[(Math.random()*wIdx.length)|0];const sl=slotPoint();
-  p.si=si;p.mouth=srcPts[si]||WAIST;p.tx=sl.x;p.ty=sl.y;p.t=0;p.sp=0.0022+Math.random()*0.0016;p.col=MESS[(Math.random()*MESS.length)|0];return p;}
+  p.si=si;p.mouth=srcPts[si]||WAIST;p.tx=sl.x;p.ty=sl.y;p.t=0;p.sp=0.0022+Math.random()*0.0016;p.col=MESS[(Math.random()*MESS.length)|0];
+  p.mag=!!(MODES[MODE].sources[si]&&MODES[MODE].sources[si].t);return p;}
 const inflow=[];for(let k=0;k<64;k++){const p=newInflow({});p.t=Math.random();inflow.push(p);}
 const flashes=[];
 function rimRight(){const aa=(Math.random()*0.9-0.45);return {x:CENTER.x+Math.cos(aa)*CENTER.R,y:CENTER.y+Math.sin(aa)*CENTER.R};}
-function newOut(p){p.start=rimRight();p.t=0;p.sp=0.0018+Math.random()*0.0012;return p;}
+function newOut(p){p.start=rimRight();p.t=0;p.sp=0.0018+Math.random()*0.0012;p.mag=Math.random()<0.35;return p;}
 const outflow=[];for(let k=0;k<5;k++){const p=newOut({});p.t=Math.random();outflow.push(p);}
 const CASESPT={x:970,y:392};
 function rebuildParticles(){wIdx=[];MODES[MODE].sources.forEach((s,i)=>{if(s.more)return;for(let k=0;k<s.w;k++)wIdx.push(i);});
@@ -617,27 +620,29 @@ function rebuildParticles(){wIdx=[];MODES[MODE].sources.forEach((s,i)=>{if(s.mor
 function frame(t){ctx.clearRect(0,0,1440,810);
   if(VIEW==='assets'){drawAssets(t);requestAnimationFrame(frame);return;}
   if(!REDUCED){const period=4200,ph=(t%period)/period,rr=ph*(CENTER.R+26),al=(1-ph)*0.18;
-    ctx.strokeStyle=`rgba(47,214,192,${al})`;ctx.lineWidth=1.4;ctx.beginPath();ctx.arc(CENTER.x,CENTER.y,rr,0,6.283);ctx.stroke();}
+    ctx.strokeStyle=`rgba(47,214,192,${al})`;ctx.lineWidth=1.4;ctx.beginPath();ctx.arc(CENTER.x,CENTER.y,rr,0,6.283);ctx.stroke();
+    const ph2=((t+2100)%period)/period,rr2=ph2*(CENTER.R+26),al2=(1-ph2)*0.15;
+    ctx.strokeStyle=`rgba(226,0,116,${al2})`;ctx.beginPath();ctx.arc(CENTER.x,CENTER.y,rr2,0,6.283);ctx.stroke();}
   for(let ri=0;ri<RINGS.length;ri++){ if(!REDUCED) ringOff[ri]+=RDIR[ri]*RSPD[ri]; }
   const dim = (MODE==='d30')?0.55:1; // dim core a touch under the 30D center label
   for(const d of grid){const a=d.a+ringOff[d.ri];
     const x=CENTER.x+Math.cos(a)*d.r,y=CENTER.y+Math.sin(a)*d.r;
-    const col=d.accent?['#ff4d5e','#f5a623','#4aa3ff'][(d.ri)%3]:(d.r<50?'#6ff3e0':'#2fd6c0');
+    const col=d.accent?['#ff4d5e','#E20074','#f5a623','#4aa3ff'][(d.ri)%4]:(d.r<50?'#6ff3e0':'#2fd6c0');
     ctx.globalAlpha=(.30+.5*(0.5+0.5*Math.sin(t*.0019+d.ph)))*dim;ctx.fillStyle=col;
     ctx.beginPath();ctx.arc(x,y,d.accent?1.9:1.2,0,6.283);ctx.fill();}
   ctx.globalAlpha=1;
   for(const p of inflow){ if(!REDUCED)p.t+=p.sp;
-    if(p.t>=1){ flashes.push({x:p.tx,y:p.ty,life:0}); newInflow(p); continue; }
+    if(p.t>=1){ flashes.push({x:p.tx,y:p.ty,life:0,mag:p.mag}); newInflow(p); continue; }
     let pt,col,al,sz;
-    if(p.t<0.5){ pt=bezPt(p.mouth,WAIST,.6,p.t/0.5); col=p.col; al=.85; sz=1.7; }
-    else { const u=(p.t-0.5)/0.5; pt=bezPt(WAIST,{x:p.tx,y:p.ty},.5,u); col='#6ff3e0'; al=.9*(1-u*0.35)*dim; sz=1.7-u*0.4; }
+    if(p.t<0.5){ pt=bezPt(p.mouth,WAIST,.6,p.t/0.5); col=p.mag?'#E20074':p.col; al=.85; sz=1.7; }
+    else { const u=(p.t-0.5)/0.5; pt=bezPt(WAIST,{x:p.tx,y:p.ty},.5,u); col=p.mag?'#f4b9d8':'#6ff3e0'; al=.9*(1-u*0.35)*dim; sz=1.7-u*0.4; }
     ctx.globalAlpha=al;ctx.fillStyle=col;ctx.beginPath();ctx.arc(pt.x,pt.y,sz,0,6.283);ctx.fill();}
   for(let i=flashes.length-1;i>=0;i--){const f=flashes[i];f.life+=(REDUCED?99:1);const u=f.life/26;if(u>=1){flashes.splice(i,1);continue;}
-    ctx.globalAlpha=(1-u)*0.5*dim;ctx.strokeStyle='#a8fff0';ctx.lineWidth=1.2;ctx.beginPath();ctx.arc(f.x,f.y,2+u*7,0,6.283);ctx.stroke();}
+    ctx.globalAlpha=(1-u)*0.5*dim;ctx.strokeStyle=f.mag?'#f4b9d8':'#a8fff0';ctx.lineWidth=1.2;ctx.beginPath();ctx.arc(f.x,f.y,2+u*7,0,6.283);ctx.stroke();}
   for(const p of outflow){ if(!REDUCED)p.t+=p.sp;
     if(p.t>=1){ newOut(p); continue; }
     let pt; if(p.t<0.45){ pt=bezPt(p.start,CASESPT,.5,p.t/0.45);} else { pt=bezPt(CASESPT,(MODE==='h24'?AUTO:RES),.5,(p.t-0.45)/0.55);}
-    ctx.globalAlpha=.9;ctx.fillStyle='#a8fff0';ctx.beginPath();ctx.arc(pt.x,pt.y,1.9,0,6.283);ctx.fill();}
+    ctx.globalAlpha=.9;ctx.fillStyle=p.mag?'#f4b9d8':'#a8fff0';ctx.beginPath();ctx.arc(pt.x,pt.y,1.9,0,6.283);ctx.fill();}
   ctx.globalAlpha=1;requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
@@ -664,27 +669,27 @@ function setSpine(el,cfg){const span=el.querySelector('.num span');
 const pop=$('#pop');let popOpen=false;
 function detailHTML(key){
   const D={
-  engine:`<h4><span class="d"></span>AI Correlation Engine</h4><div class="r"><span>Analytics models</span><b>2,600+ ML</b></div><div class="r"><span>Detections</span><b>13,300+</b></div><div class="r"><span>MITRE ATT&CK</span><b class="ok">100% coverage</b></div><div class="r"><span>Noise reduced</span><b class="ok">≈ 99%</b></div><div class="foot">Groups 2,681 issues into 125 prioritized cases with root-cause</div>`,
-  issues:`<h4><span class="d"></span>2,681 Issues</h4><div class="r"><span>Window</span><b>Last 24H</b></div><div class="r"><span>Raised by</span><b>2,600+ ML models</b></div><div class="r"><span>Critical / High</span><b class="warn">318</b></div><div class="r"><span>Deduplicated</span><b class="ok">96%</b></div><div class="foot">Normalized to a common data model before correlation</div>`,
-  cases:`<h4><span class="d"></span>125 Cases</h4><div class="r"><span>From</span><b>2,681 issues</b></div><div class="r"><span>Automated</span><b class="ok">103</b></div><div class="r"><span>Manual</span><b class="warn">22</b></div><div class="r"><span>Resolved</span><b class="ok">114</b></div><div class="r"><span>Open</span><b class="warn">11</b></div><div class="foot">Each case carries the full attack story + root cause</div>`,
-  automated:`<h4><span class="d"></span>103 Automated</h4><div class="r"><span>Handled by</span><b>AI + playbooks</b></div><div class="r"><span>Playbooks run</span><b>168</b></div><div class="r"><span>Manual work</span><b class="ok">−75%</b></div><div class="foot">1,300+ built-in playbooks resolve most issues</div>`,
-  manual:`<h4><span class="d"></span>22 Manual</h4><div class="r"><span>Routed to</span><b>T Security SOC</b></div><div class="r"><span>Avg. handle</span><b>18m</b></div><div class="r"><span>Escalated</span><b class="warn">3</b></div><div class="foot">Analysts assisted by Magenta Security · Bonn CDC</div>`,
-  resolved:`<h4><span class="d"></span>114 Resolved Cases</h4><div class="r"><span>Auto-remediated</span><b class="ok">103</b></div><div class="r"><span>Analyst-closed</span><b>11</b></div><div class="r"><span>MTTR</span><b class="ok">−98%</b></div><div class="foot">Closed by automated playbooks / SOAR</div>`,
+  engine:`<h4><span class="d"></span>AI Correlation Engine</h4><div class="r"><span>Analytics models</span><b>2,600+ ML</b></div><div class="r"><span>Detections</span><b>13,300+</b></div><div class="r"><span>MITRE ATT&CK</span><b class="ok">100% coverage</b></div><div class="r"><span>Noise reduced</span><b class="ok">≈ 99%</b></div><div class="foot">Groups 2,412 issues into 96 prioritized cases with root-cause</div>`,
+  issues:`<h4><span class="d"></span>2,412 Issues</h4><div class="r"><span>Window</span><b>Last 24H</b></div><div class="r"><span>Raised by</span><b>2,600+ ML models</b></div><div class="r"><span>Critical / High</span><b class="warn">271</b></div><div class="r"><span>Deduplicated</span><b class="ok">96%</b></div><div class="foot">Normalized to a common data model before correlation</div>`,
+  cases:`<h4><span class="d"></span>96 Cases</h4><div class="r"><span>From</span><b>2,412 issues</b></div><div class="r"><span>Automated</span><b class="ok">78</b></div><div class="r"><span>Manual</span><b class="warn">18</b></div><div class="r"><span>Resolved</span><b class="ok">85</b></div><div class="r"><span>Open</span><b class="warn">11</b></div><div class="foot">Each case carries the full attack story + root cause</div>`,
+  automated:`<h4><span class="d"></span>78 Automated</h4><div class="r"><span>Handled by</span><b>AI + playbooks</b></div><div class="r"><span>Playbooks run</span><b>142</b></div><div class="r"><span>Manual work</span><b class="ok">−75%</b></div><div class="foot">1,300+ built-in playbooks resolve most issues</div>`,
+  manual:`<h4><span class="d"></span>18 Manual</h4><div class="r"><span>Routed to</span><b>Magenta Security · CDC Bonn</b></div><div class="r"><span>Avg. handle</span><b>18m</b></div><div class="r"><span>Escalated</span><b class="warn">3</b></div><div class="foot">Analysts assisted by the Cyber Defense Center</div>`,
+  resolved:`<h4><span class="d"></span>85 Resolved Cases</h4><div class="r"><span>Auto-remediated</span><b class="ok">78</b></div><div class="r"><span>Analyst-closed</span><b>7</b></div><div class="r"><span>MTTR</span><b class="ok">−98%</b></div><div class="foot">Closed by automated playbooks / SOAR</div>`,
   open:`<h4><span class="d"></span>11 Open Cases</h4><div class="r"><span>Critical</span><b class="bad">3</b></div><div class="r"><span>High</span><b class="bad">3</b></div><div class="r"><span>Medium</span><b class="warn">5</b></div><div class="r"><span>Low</span><b>0</b></div><div class="foot">Live queue — sorted by business risk</div>`,
-  events:`<h4><span class="d"></span>Events Ingestion</h4><div class="r"><span>Rate</span><b>43 B / 24H</b></div><div class="r"><span>Peak</span><b>2.1 M / sec</b></div><div class="r"><span>Sources</span><b>78 connectors</b></div><div class="r"><span>Residency</span><b class="ok">Germany DB</b></div>`,
-  data:`<h4><span class="d"></span>Data Ingestion</h4><div class="r"><span>Volume</span><b>65 TB / 24H</b></div><div class="r"><span>Trend (24H)</span><b>−4%</b></div><div class="r"><span>Hot store</span><b>1.9 PB</b></div><div class="r"><span>Hosting</span><b class="ok">Sovereign Cloud</b></div>`,
-  prevented:`<h4><span class="d"></span>Prevented Events</h4><div class="r"><span>Blocked (24H)</span><b>286 K</b></div><div class="r"><span>By NGFW</span><b>241 K</b></div><div class="r"><span>By endpoint agent</span><b>45 K</b></div><div class="foot">Inline prevention across the sovereign estate</div>`,
-  vulns:`<h4><span class="d"></span>1.2M Vulnerabilities</h4><div class="r"><span>Window</span><b>Last 30 days</b></div><div class="r"><span>Trend</span><b class="ok">↓3.8%</b></div><div class="r"><span>Scanners</span><b>9 sources</b></div><div class="foot">Raw findings across the estate before dedup</div>`,
-  unique:`<h4><span class="d"></span>865K Unique Vulnerabilities</h4><div class="r"><span>Deduplicated from</span><b>1.2M</b></div><div class="r"><span>Prioritized to</span><b class="ok">479 cases</b></div><div class="r"><span>Reduction</span><b class="ok">99.96%</b></div><div class="foot">Click the center to open the Prioritization view</div>`,
-  cases30:`<h4><span class="d"></span>479 Cases</h4><div class="r"><span>Active</span><b class="warn">263</b></div><div class="r"><span>Resolved</span><b class="ok">216</b></div><div class="r"><span>From</span><b>865K unique vulns</b></div><div class="foot">Grouped by asset, exploit path & owner</div>`,
-  p_attn:`<h4><span class="d"></span>Require Attention · 13</h4><div class="r"><span>Trend</span><b class="bad">↑2.5%</b></div><div class="r"><span>Exploited in wild</span><b class="bad">yes (KEV)</b></div><div class="foot">Internet-exposed, high business impact</div>`,
-  p_prog:`<h4><span class="d"></span>In Progress · 200</h4><div class="r"><span>Trend</span><b>↑4%</b></div><div class="r"><span>Owner assigned</span><b class="ok">yes</b></div><div class="foot">Remediation underway with SLAs</div>`,
-  p_mit:`<h4><span class="d"></span>Mitigated · 50</h4><div class="r"><span>Trend</span><b class="ok">↓13%</b></div><div class="r"><span>Via</span><b>compensating controls</b></div><div class="foot">Risk reduced without a full fix</div>`,
-  p_res:`<h4><span class="d"></span>Resolved · 87</h4><div class="r"><span>Trend</span><b class="ok">↑12%</b></div><div class="r"><span>Verified fixed</span><b class="ok">rescan passed</b></div>`,
-  p_risk:`<h4><span class="d"></span>Accepted Risk · 129</h4><div class="r"><span>Trend</span><b>↑5.3%</b></div><div class="r"><span>Sign-off</span><b>risk owner</b></div><div class="foot">Documented exception with review date</div>`,
-  vassets:`<h4><span class="d"></span>Vulnerable Assets</h4><div class="r"><span>Count</span><b>432 K</b></div><div class="r"><span>Trend</span><b class="bad">↑15%</b></div><div class="r"><span>Internet-exposed</span><b class="warn">38 K</b></div>`,
-  activecases:`<h4><span class="d"></span>Active Cases · 263</h4><div class="r"><span>Critical</span><b class="bad">101</b></div><div class="r"><span>High</span><b class="bad">132</b></div><div class="r"><span>Medium</span><b class="warn">29</b></div><div class="r"><span>Low</span><b>1</b></div>`,
-  mttr:`<h4><span class="d"></span>Mean Time To Resolve</h4><div class="r"><span>Overall</span><b>21 days</b></div><div class="r"><span>Critical</span><b class="ok">21 d</b></div><div class="r"><span>Medium</span><b>34 d</b></div><div class="r"><span>Low</span><b>35 d</b></div>`,
+  events:`<h4><span class="d"></span>Events Ingestion</h4><div class="r"><span>Rate</span><b>2.4 B / 24H</b></div><div class="r"><span>Peak</span><b>142 K / sec</b></div><div class="r"><span>Sources</span><b>71 connectors</b></div><div class="r"><span>Residency</span><b class="ok">Germany DB</b></div>`,
+  data:`<h4><span class="d"></span>Data Ingestion</h4><div class="r"><span>Volume</span><b>9 TB / 24H</b></div><div class="r"><span>Trend (24H)</span><b>−4%</b></div><div class="r"><span>Hot store</span><b>310 TB</b></div><div class="r"><span>Hosting</span><b class="ok">T Cloud Public</b></div>`,
+  prevented:`<h4><span class="d"></span>Prevented Events</h4><div class="r"><span>Blocked (24H)</span><b>54 K</b></div><div class="r"><span>By NGFW</span><b>45 K</b></div><div class="r"><span>By endpoint agent</span><b>9 K</b></div><div class="foot">Inline prevention across the connected estate</div>`,
+  vulns:`<h4><span class="d"></span>148K Vulnerabilities</h4><div class="r"><span>Window</span><b>Last 30 days</b></div><div class="r"><span>Trend</span><b class="ok">↓3.8%</b></div><div class="r"><span>Scanners</span><b>9 sources</b></div><div class="foot">Raw findings across the estate before dedup</div>`,
+  unique:`<h4><span class="d"></span>34K Unique Vulnerabilities</h4><div class="r"><span>Deduplicated from</span><b>148K</b></div><div class="r"><span>Prioritized to</span><b class="ok">312 cases</b></div><div class="r"><span>Reduction</span><b class="ok">99.8%</b></div><div class="foot">Click the center to open the Prioritization view</div>`,
+  cases30:`<h4><span class="d"></span>312 Cases</h4><div class="r"><span>Active</span><b class="warn">168</b></div><div class="r"><span>Resolved</span><b class="ok">144</b></div><div class="r"><span>From</span><b>34K unique vulns</b></div><div class="foot">Grouped by asset, exploit path & owner</div>`,
+  p_attn:`<h4><span class="d"></span>Require Attention · 9</h4><div class="r"><span>Trend</span><b class="bad">↑2.5%</b></div><div class="r"><span>Exploited in wild</span><b class="bad">yes (KEV)</b></div><div class="foot">Internet-exposed, high business impact</div>`,
+  p_prog:`<h4><span class="d"></span>In Progress · 121</h4><div class="r"><span>Trend</span><b>↑4%</b></div><div class="r"><span>Owner assigned</span><b class="ok">yes</b></div><div class="foot">Remediation underway with SLAs</div>`,
+  p_mit:`<h4><span class="d"></span>Mitigated · 38</h4><div class="r"><span>Trend</span><b class="ok">↓13%</b></div><div class="r"><span>Via</span><b>compensating controls</b></div><div class="foot">Risk reduced without a full fix</div>`,
+  p_res:`<h4><span class="d"></span>Resolved · 61</h4><div class="r"><span>Trend</span><b class="ok">↑12%</b></div><div class="r"><span>Verified fixed</span><b class="ok">rescan passed</b></div>`,
+  p_risk:`<h4><span class="d"></span>Accepted Risk · 83</h4><div class="r"><span>Trend</span><b>↑5.3%</b></div><div class="r"><span>Sign-off</span><b>risk owner</b></div><div class="foot">Documented exception with review date</div>`,
+  vassets:`<h4><span class="d"></span>Vulnerable Assets</h4><div class="r"><span>Count</span><b>5,840</b></div><div class="r"><span>Trend</span><b class="bad">↑15%</b></div><div class="r"><span>Internet-exposed</span><b class="warn">210</b></div>`,
+  activecases:`<h4><span class="d"></span>Active Cases · 168</h4><div class="r"><span>Critical</span><b class="bad">44</b></div><div class="r"><span>High</span><b class="bad">71</b></div><div class="r"><span>Medium</span><b class="warn">48</b></div><div class="r"><span>Low</span><b>5</b></div>`,
+  mttr:`<h4><span class="d"></span>Mean Time To Resolve</h4><div class="r"><span>Overall</span><b>26 days</b></div><div class="r"><span>Critical</span><b class="ok">21 d</b></div><div class="r"><span>High</span><b>21 d</b></div><div class="r"><span>Medium</span><b>34 d</b></div><div class="r"><span>Low</span><b>35 d</b></div>`,
   pv_git:`<h4><span class="d"></span>GitHub</h4><div class="r"><span>Assets</span><b>1,650</b></div><div class="r"><span>At risk</span><b class="warn">37</b></div><div class="r"><span>Repos scanned</span><b>2.1 K</b></div>`,
   pv_aws:`<h4><span class="d"></span>AWS</h4><div class="r"><span>Accounts</span><b>47</b></div><div class="r"><span>Assets</span><b>188</b></div><div class="r"><span>At risk</span><b class="bad">22</b></div><div class="r"><span>Region</span><b class="ok">eu-central-1</b></div>`,
   pv_az:`<h4><span class="d"></span>Azure</h4><div class="r"><span>Subscriptions</span><b>34</b></div><div class="r"><span>Assets</span><b>99</b></div><div class="r"><span>At risk</span><b class="warn">14</b></div>`,
@@ -732,12 +737,12 @@ function wireSources(list){$$('#srcWrap .src').forEach(row=>{const idx=row.datas
 
 /* ---------- prioritization overlay ---------- */
 const BREAK=[
-  {n:'412K',lab:'Duplicative Findings',f:1},
-  {n:'483K',lab:'Low & Medium CVSS',f:.85},
-  {n:'242K',lab:'Unlikely to be Exploited',f:.62},
-  {n:'54K',lab:'Low Business Impact',f:.24},
-  {n:'42K',lab:'Not Internet Exposed',f:.2},
-  {n:'27K',lab:'Deprioritized by Policy',f:.16}
+  {n:'58K',lab:'Duplicative Findings',f:1},
+  {n:'34K',lab:'Low & Medium CVSS',f:.72},
+  {n:'19K',lab:'Unlikely to be Exploited',f:.5},
+  {n:'8.4K',lab:'Mitigated by Segmentation',f:.3},
+  {n:'6.2K',lab:'Not Reachable',f:.22},
+  {n:'2.1K',lab:'Deprioritized by Policy',f:.14}
 ];
 (function(){const bl=$('#breaklist');bl.innerHTML=BREAK.map(b=>
   `<div class="brow"><b>${b.n}</b><span class="lab">${b.lab}</span><span class="bar" style="max-width:${Math.round(b.f*100)}%"></span></div>`).join('');})();
