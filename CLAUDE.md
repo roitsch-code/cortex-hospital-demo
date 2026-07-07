@@ -1,102 +1,144 @@
-# CLAUDE.md — Sovereign Cortex · Connected Hospital (guided security demo)
+# CLAUDE.md — Cyber Security Command Center (T Gallery hospital demo)
 
-> Read this fully before changing anything. This is a **design-led interactive demo**,
-> not a production app and not a slide. The look matters as much as the content.
+> Read this fully before changing anything. This is a **design-led interactive demo**
+> for the **T Gallery** (a Deutsche Telekom exhibit), not a production app and not a
+> slide. The look matters as much as the content. **Fake data, but internally
+> consistent and correct.**
 
 ## What this is
-An interactive, cinematic **security-operations demo** in the visual language of
-Palo Alto Networks **Cortex XSIAM** (dark, glowing, animated), adapted to a
-**hospital medication-logistics** AI-agent incident, and framed with **Deutsche
-Telekom / T-Systems** sovereign services. Intended for a live showcase / exhibit
-(think T Gallery), shown on a laptop or large screen. Single self-contained HTML,
-no build step.
+A cinematic **security-operations demo** in the visual language of Palo Alto Networks
+**Cortex XSIAM 3.0** (dark, glowing, animated), adapted to a **generic large university
+hospital** (~1,300 beds; research + global collaborations) and framed with Deutsche
+Telekom **T Security** branding. Single self-contained `index.html`, no build step,
+runs offline. Shown on a laptop or large screen at a live exhibit.
 
-## The story (the demo walks through this)
-A connected hospital runs medication delivery via **AGVs** (automated guided
-vehicles) between pharmacy, wards and patient rooms. An external **supplier
-logistics agent** is connected to optimise delivery and replenishment. It starts
-requesting **restricted** data (patient-linked routes, room-level AGV positions,
-clinical priority overrides). Its identity is valid, but its **behaviour does not
-match the approved permission profile**. The system: raises an alert → **isolates**
-the agent into a **secure simulation** (synthetic hospital, no real data) → keeps
-**fallback medication delivery running** → a **Telekom SOC analyst calls in**.
-Part 1 ends at the SOC call. Later parts: SOC review → governance → revoke.
+## The demo (two views, one file)
+Navigation is a small state machine: `showView('assets' | 'flow')`.
+
+1. **Assets Command Center** (`#assetsView`) — the **entry screen**. A centered radar
+   organised **by site** (not department, not geography): **Main Campus** dominant at
+   top, plus satellites (Outpatient Centers, T Cloud Public, Telemedicine & Home,
+   Reference Labs, Research Institute) as orbital callouts with a faint connector each.
+   Left anchor = the **iMedOne®** wordmark (real Telekom HIS). Four nested **buckets**
+   (All ⊃ At Risk ⊃ Active Threats ⊃ At Risk+Threats) re-tint the radar glow and count
+   up the center. A **magenta radar sweep** scans the static asset dot-field. Click a
+   site → slide-in detail (category donut + status). `Show Issues ›` → the flow.
+
+2. **Issue-Cases Flow** (`#flowView`) — the main pipeline, left→right:
+   **Sources** (hospital systems, left) → particle streams through curved ribbons →
+   central **correlation core** (concentric rings, some CW some CCW, count-up numbers) →
+   **Cases** → right-hand outcome funnel. A **24H ⇄ 30D** toggle (top-right) swaps the
+   whole flow. The 30D center opens a **Prioritization** overlay. Everything is
+   clickable → detail popovers (`detailHTML(key)`).
 
 ## HARD design constraints (do not violate)
-- **Keep the Cortex aesthetic**: near-black background, teal (#2fd6c0) glow,
-  flowing SVG "Sankey" ribbons, a central particle swarm, radial/orbital layouts,
-  soft shadows and pulses. Cinematic and reduced.
-- **DO NOT build a dense, multi-column "boxes-in-bands" architecture chart.**
-  A previous attempt did exactly that and was rejected as "a shitty PowerPoint."
-  When a detail/architecture view is needed, keep it **reduced** (few glowing
-  nodes, radial, lots of negative space).
-- **It is a guided flow, not a slide**: scenes with transitions and interaction,
-  not one static overview packed with labels.
-- Telekom **magenta (#E20074)** is an accent only (SOC card / "T Security"
-  branding). Cortex teal stays the primary colour.
+- **Keep the Cortex aesthetic**: near-black background, teal (`#2fd6c0`) glow, flowing
+  SVG ribbons, particle swarm, radial/orbital layouts, soft shadows and pulses.
+  Cinematic and reduced.
+- **DO NOT build a dense "boxes-in-bands" architecture chart.** A previous attempt did
+  and was rejected as "a shitty PowerPoint." Detail views stay **reduced** (few glowing
+  nodes, negative space).
+- **It is a guided flow, not a slide** — scenes with transitions and interaction.
+- **Telekom magenta (`#E20074`) is an accent only** — T Security branding, the iMedOne +
+  T Cloud sources/marks, the radar sweep, and a subtle magenta particle strand in the
+  flow. Cortex **teal stays primary**.
+- **Animation is SLOW** with clear left→right choreography. `prefers-reduced-motion`
+  is respected (all count-ups/particles snap to final state).
+
+## Real vs. concept — ONLY use real, verifiable names
+The user was emphatic: **"dont invent shit."** Do NOT invent product names.
+Real names used here (keep them):
+- **iMedOne®** — real Telekom Hospital Information System (HIS).
+- **T Cloud Public** — hosting for iMedOne + a cloud site/source.
+- **T Security** — the Deutsche Telekom security brand (header).
+- **Magenta Security · Cyber Defense Center (CDC) Bonn** — the SOC that assists.
+Generic on screen (no hospital name): the campus is just **"Main Campus"** — no
+"Venusberg"/UKB/Bonn hospital naming anywhere in the UI.
+> Before any public showing, re-verify product status (telekom.com / paloaltonetworks.com).
+
+## Logos / marks
+- The **only** real logo asset in the repo is **`docs/tsec-logo-white.svg`** — the
+  official Telekom **"T"** glyph. Its path is inlined as `TSVG` and reused for the T
+  Cloud source + cloud site mark. **viewBox MUST be `0 0 231 275`** — a smaller height
+  (e.g. 237) crops the bottom bar. **Never hand-draw / hallucinate a Telekom "T".**
+- **iMedOne®** is a recreated CSS wordmark (white on magenta), not an image.
+- All other source/site icons are clean line-drawn category glyphs (`ICONS`, `PMARK`) —
+  **not** vendor logos. If real vendor SVGs are ever added to the repo, wire them in via
+  `iconSVG()` / `PMARK`. (The user has referred to logos being "in the folder" more than
+  once, but only `tsec-logo-white.svg` has ever actually been present — check before
+  assuming others exist.)
+
+## The number model (single source of truth — keep everything reconciled)
+**Assets** (nested subsets): All **35,600** ⊃ At Risk **5,840** ⊃ Active Threats **84** ⊃
+At Risk+Threats **29**. All split = 24.9K Medical/Clinical · 10.7K IT & Cloud. Sites sum
+to 35,600 (Campus 30,200 · Outpatient 2,100 · T Cloud 1,760 · Telemedicine 640 · Labs 520
+· Research 380); each site's categories sum to its total and its statuses sum to the
+buckets (risk 5,840 / threat 84 / both 29). Data Ingestion = **9 TB/24H**.
+**Flow 24H**: **2,412** Issues → **96** Cases (**78** Automated / **18** Manual →
+**85** Resolved / **11** Open). Tiles: 2.4 B/24H · 9 TB/24H · 11 Open · 54 K prevented.
+Open breakdown 3/3/5/0. SOC tag: "assisted · Magenta Security · CDC Bonn".
+**Flow 30D**: **148K** → **34K** unique → **312** Cases (Active **168** = 9 Require
+Attention + 121 In Progress + 38 Mitigated; Resolved **144** = 61 Resolved + 83 Accepted
+Risk). Tiles: Vulnerable Assets **5,840** (ties to assets At Risk) · Active Cases 168
+(sev 44/71/48/5) · MTTR **26 days** (sev 21/21/34/35). Prioritization overlay:
+148K → 34K → 4.8K open issues → 312 (99.8% reduction).
+> When you change any number, update its detail popover in `detailHTML()` **and** any
+> mini-legend so the two never disagree.
 
 ## Tech
-- One file: `index.html`. Vanilla JS + Canvas (particles) + inline SVG (ribbons/
-  rings/connectors) + CSS. No frameworks, no bundler, no network calls, no
-  localStorage. Runs offline via `file://` or a static server.
+- One file: `index.html`. Vanilla JS + Canvas (particles/radar) + inline SVG
+  (ribbons/rings/marks) + CSS. No frameworks, no bundler, no network calls, no storage.
 - Fixed **1440×810** design stage, scaled to the viewport via CSS `transform`.
-- `prefers-reduced-motion` is respected.
-
-## Current state (3 scenes)
-- **Scene FLOW** (`#flow`): left hospital sources → central particle swarm
-  (correlation, count-up numbers) → right two clickable glowing hubs:
-  **Agent System** and **Response & Isolation**. Bottom: 3 minimal live stats.
-- **Scene AGENTS** (`#agents`): reduced **radial** architecture — Orchestrator in
-  the centre, 6 agents on an orbit, thin glowing spokes. The external **Supplier
-  Logistics Agent** is amber (foreshadow) and clickable → Isolation.
-- **Scene ISOLATION** (`#iso`): alert toast (red) → the supplier agent node
-  animates from the live side **into a dashed "Secure Simulation" bubble**; the
-  live AGV particle stream keeps flowing (fallback); an **incoming SOC call** card
-  rings, "Accept" reveals the analyst line; ends with "— end of part 1 —".
-  Auto-plays on first entry; `Run isolation` / `Reset` buttons in the corner.
-
-## Real vs. concept (be accurate if you add labels/copy)
-Real, verified Deutsche Telekom / T-Systems anchors used here:
-- **Sovereign Cortex with T Security** (PANW + DT, announced 2026-06-09; the exact
-  real product tying Cortex + Telekom sovereignty for regulated industries).
-- **T-Systems Sovereign Cloud powered by Google Cloud** (patient/med data).
-- **Open Sovereign Cloud** (confidential computing + HSM → hosts the sandbox).
-- **Telekom SOC / Magenta Security MDR** (Cyber Defense Center Bonn; auto-isolate).
-- **Germany Data Boundary by T-Systems / IAM** (identity, residency, access audit).
-- **Industrial AI Cloud (Telekom + NVIDIA)** (sovereign compute).
-Concept only (from the demo script, not a shipping product):
-- **T-Systems "AI Agent Governance Platform"** — keep it labelled as a concept if
-  surfaced; it maps onto the real IAM / Data-Boundary logic.
-> Verify product status before any public showing (telekom.com / paloaltonetworks.com).
-
-## What's next (Part 2 — not built yet)
-1. From the SOC call: **SOC review** panel (agent may be misconfigured /
-   compromised / out-of-scope).
-2. **Governance** view (reduced!): supplier permission profile —
-   Allowed: aggregated stock, delivery windows, non-patient logistics.
-   Restricted: patient-linked routes, room-level positions, clinical overrides.
-3. **Human confirm → execute response**: revoke access · remove credentials ·
-   trust policy updated · supplier escalation package · governance record.
-4. Return Scene FLOW to normal (incidents back to 0).
-Also: visually tune Scene ISOLATION positions (bubble, moving agent, cut line) —
-these are hand-placed and were not verified in a browser yet.
 
 ## Tuning map (where the knobs are, in index.html)
 - Colours / theme: the `:root` CSS variables at the top.
-- Scene content: the three `<section id="flow|agents|iso">` blocks.
-- Isolation beats + timing + target positions: the `runIso()` function
-  (each `T(fn, ms)` is one beat; `badAgent.style.left/top` is the isolate target).
-- Bubble shape: CSS `.bubble`. Live/caged particle counts: the `live`/`caged`
-  arrays. Flow ribbons/geometry: the IIFE that builds `#wFlow`; radial spokes in
-  the `#wAgents` IIFE.
-- Navigation state machine: `show(name)`.
+- Header brand: title "Cyber Security Command Center" + "AI-driven Security Operations ·
+  powered by [inline T Security logo]".
+- **Flow sources**: `SRC24` / `SRC30` arrays (name, `s` asset count, `icon`, `w` ribbon
+  weight, `ep` endpoint-highlight, `t` Telekom-magenta, `rate`, `res`). Icons via
+  `ICONS` + `iconSVG()`; the magenta "tmark" uses `TSVG`.
+- **Flow numbers**: `MODES` (`h24`/`d30` → `left`/`center`/`right` spine cfg); the DOM
+  in `#right24`/`#right30`/`#tiles24`/`#tiles30`; the prioritization `#prio` block +
+  `BREAK` array. Spine values come from `MODES` via `setSpine`, **overriding** the
+  static `data-count` placeholders in the HTML.
+- **Flow canvas** (particles, streams, magenta strand, core): the `frame()` render loop
+  + `newInflow`/`newOut`/`rebuildParticles`.
+- **Detail popovers**: the `D` object in `detailHTML(key)`; wired by `wire()` /
+  `wireSources()`.
+- **Assets**: `A_BUCKETS` (buckets), `A_LOC` (sites: cats + status), `PMARK` (site
+  marks), `buildAssetsUI` / `selectBucket` / `selectLocation` / `drawAssets` (radar +
+  magenta sweep). Radar center `AC={x:800,y:440,R:264}`, `ACX0=800`.
+- Navigation: `showView(name)`; mode switch: `renderMode(m)`.
 
 ## Run
-- `npm start`  (uses `npx serve .` → http://localhost:3000), or
-- `python3 -m http.server 8000` then open http://localhost:8000, or
-- just double-click `index.html` (works; no server needed).
+- `npm start` (`npx serve .` → http://localhost:3000), or
+- `python3 -m http.server 8000` → http://localhost:8000, or
+- just double-click `index.html` (works offline; no server needed).
+
+## Verifying a change (do this before committing)
+1. Syntax: extract the `<script>` and `node --check` it.
+2. Serve (`python3 -m http.server 8000`) and screenshot with Playwright — Chromium at
+   `/opt/pw-browsers/chromium-1194/chrome-linux/chrome`, `NODE_PATH=$(npm root -g)`,
+   viewport 1440×810, deviceScaleFactor 2. Capture the assets view, the 24H flow, the
+   30D flow, and any popover you touched. Listen for `pageerror` — must be **NO JS
+   ERRORS**. (The favicon 404 in the console is harmless.)
+3. Check numbers reconcile (see the number model) and no invented product names crept in.
+
+## Git
+- Branch: `claude/cortex-xsiam-research-drgysn`. Push with `-u origin <branch>` and
+  retry with backoff on network errors. Do **not** open a PR unless asked.
+- Commit-message footer:
+  `Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>` and
+  `Claude-Session: https://claude.ai/code/session_01XrAEhDXzShvHJUqrAaoYZE`.
+- Never put a model identifier in commits, PRs, code, or any pushed artifact.
+
+## What's next / open ideas (not built)
+- If real vendor logo SVGs are provided, swap them into the source list + site marks.
+- Possible Part 2 (from the original concept, not required): SOC review → governance
+  (supplier permission profile) → human-confirmed response (revoke / audit record).
+  Keep any such view **reduced**, real names only.
 
 ## Known limitations
-- **Not verified in a browser** by the author of the first draft — sanity-check
-  the render first, especially Scene ISOLATION alignment.
-- Brand logos are intentionally omitted (text labels only) to avoid IP issues.
+- Isolation/agent-architecture scenes from the original draft were **removed** — the
+  demo is now the two views above. Ignore older references to Scene AGENTS / ISOLATION.
+- Positions in both views are hand-placed for 1440×810; re-screenshot after edits.

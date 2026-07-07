@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Sovereign Cortex — Connected Hospital (guided flow)</title>
+<title>Cyber Security Command Center — powered by T Security</title>
 <style>
 :root{
   --bg:#010204;
   --teal:#2fd6c0; --teal-br:#6ff3e0; --teal-dim:#186158; --glow:rgba(47,214,192,.55);
-  --amber:#f5a623; --red:#ff4d5e; --magenta:#E20074;
+  --amber:#f5a623; --red:#ff4d5e; --blue:#4aa3ff; --magenta:#E20074;
   --text:#eef3f5; --muted:#8b959e; --dim:#4b545c; --hair:rgba(255,255,255,.07);
   --font:"Inter","Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
 }
@@ -16,240 +16,429 @@
 html,body{height:100%;background:var(--bg);overflow:hidden;font-family:var(--font);color:var(--text)}
 #fit{position:fixed;inset:0;display:grid;place-items:center}
 #stage{position:relative;width:1440px;height:810px;transform-origin:center;
-  background:radial-gradient(120% 90% at 50% 38%,#04070b 0%,#010204 72%);overflow:hidden}
+  background:radial-gradient(120% 90% at 50% 46%,#04070b 0%,#010204 74%);overflow:hidden}
 canvas#cv{position:absolute;inset:0;width:1440px;height:810px;pointer-events:none;z-index:1}
+.dome{position:absolute;left:720px;top:392px;width:760px;height:560px;transform:translate(-50%,-50%);z-index:0;
+  background:radial-gradient(50% 50% at 50% 50%,rgba(47,214,192,.09),rgba(47,214,192,0) 70%);pointer-events:none}
 
 /* ---------- top chrome ---------- */
-.top{position:absolute;top:20px;left:32px;right:32px;z-index:8;display:flex;align-items:center;justify-content:space-between}
-.brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:.2px}
-.logo{width:20px;height:20px;border:2px solid var(--teal);border-radius:50%;position:relative}
-.logo::after{content:"";position:absolute;inset:3px;border-radius:50%;border:2px solid transparent;border-top-color:var(--teal-br);animation:spin 4s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.brand small{color:var(--muted);font-weight:600;font-size:12px;margin-left:4px}
-.brand small b{color:var(--magenta)}
-.live{color:var(--muted);font-size:12px;border:1px solid var(--hair);border-radius:999px;padding:6px 14px;display:flex;align-items:center;gap:8px}
-.live .d{width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px var(--teal);animation:blink 1.6s ease-in-out infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.top{position:absolute;top:20px;left:34px;right:34px;z-index:12;display:flex;align-items:flex-start;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:16px}
+.tlogo-sm{height:12px;width:auto;vertical-align:middle;margin-left:4px}
+.tlogo-sm path{fill:#c8d0d6}
+.titles .tag{display:inline-flex;align-items:center}
+.titles .title{font-weight:700;letter-spacing:.2px;font-size:19px;display:flex;align-items:center;gap:8px}
+.titles .title .car{color:var(--muted);font-size:12px}
+.titles .tag{font-size:11.5px;color:var(--muted);margin-top:3px;letter-spacing:.02em}
+.titles .tag b{color:var(--magenta);font-weight:700}
+.tright{display:flex;align-items:center;gap:12px}
+.tseg{display:flex;border:1px solid var(--hair);border-radius:999px;overflow:hidden}
+.tseg button{background:transparent;border:0;color:var(--muted);font-family:var(--font);font-size:12px;font-weight:600;padding:7px 15px;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:7px}
+.tseg button.on{background:rgba(47,214,192,.14);color:var(--teal-br)}
+.tseg button .d{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px var(--teal)}
+.tseg button:not(.on) .d{display:none}
+.kebab{color:var(--muted);font-size:18px;letter-spacing:2px;cursor:pointer;padding:0 4px}
 
-.back{position:absolute;top:60px;left:34px;z-index:9;color:var(--muted);font-size:14px;font-weight:600;cursor:pointer;opacity:0;transition:.3s}
-.back:hover{color:var(--text)}
-.back.on{opacity:1}
-
-/* ---------- scenes ---------- */
-.scene{position:absolute;inset:0;z-index:2;opacity:0;transform:scale(1.05);pointer-events:none;transition:opacity .6s ease,transform .6s ease}
-.scene.active{opacity:1;transform:scale(1);pointer-events:auto}
-svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:2}
 
 /* generic glowing node */
 .node{position:absolute;transform:translate(-50%,-50%);z-index:4;text-align:center}
+.node.click{cursor:pointer;transition:transform .2s}
+.node.click:hover{transform:translate(-50%,-50%) scale(1.06)}
+.node.click:hover .num{text-shadow:0 0 26px var(--glow)}
 .num{font-weight:800;line-height:1;color:#fff}
-.cap{color:var(--muted);letter-spacing:.15em;font-size:11px;font-weight:700;text-transform:uppercase;margin-top:6px}
+.cap{color:var(--muted);letter-spacing:.14em;font-size:11px;font-weight:700;text-transform:uppercase;margin-top:7px;max-width:150px}
+.node .hint{font-size:10px;color:var(--teal-br);opacity:0;margin-top:4px;letter-spacing:.08em;transition:.2s}
+.node.click:hover .hint{opacity:.9}
+/* center label (30D) */
+#nCenter{z-index:4}
+#nCenter .num{font-size:34px}
+#nCenter.node.click:hover{transform:translate(-50%,-50%) scale(1.04)}
+#nCenter .disc{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:220px;height:220px;border-radius:50%;
+  background:radial-gradient(circle,rgba(1,4,8,.86),rgba(1,4,8,0) 68%);z-index:-1}
 
-/* clickable focus node */
-.hub{position:absolute;transform:translate(-50%,-50%);z-index:5;cursor:pointer;text-align:center;
-  transition:transform .25s}
-.hub .disc{width:118px;height:118px;border-radius:50%;margin:0 auto;display:grid;place-items:center;
-  border:1.5px solid var(--teal);background:radial-gradient(circle at 50% 40%,rgba(47,214,192,.18),rgba(4,10,12,.6));
-  box-shadow:0 0 30px var(--glow),inset 0 0 22px rgba(47,214,192,.2)}
-.hub .disc b{font-size:26px;font-weight:800}
-.hub .disc span{font-size:10px;color:var(--muted);display:block;margin-top:2px}
-.hub .lbl{margin-top:12px;font-size:13px;font-weight:700}
-.hub .hint{margin-top:4px;font-size:11px;color:var(--teal-br);opacity:.85}
-.hub:hover{transform:translate(-50%,-50%) scale(1.05)}
-.hub:hover .disc{box-shadow:0 0 46px var(--glow),inset 0 0 26px rgba(47,214,192,.3)}
-.hub.warn .disc{border-color:var(--amber);box-shadow:0 0 30px rgba(245,166,35,.5)}
-.hub.warn .hint{color:var(--amber)}
+/* left source rows */
+.src{position:absolute;transform:translateY(-50%);z-index:4;display:flex;align-items:center;gap:9px;
+  width:216px;font-size:12.5px;font-weight:600;color:#d7dde2;cursor:pointer;padding:2px 0;transition:.18s}
+.src .sicon{width:16px;height:16px;flex:0 0 auto;color:var(--muted)}
+.src .lab{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
+.src small{color:var(--muted);font-weight:600;font-size:11px}
+.src .dot{width:9px;height:9px;border-radius:50%;background:#20262d;border:1.5px solid var(--dim);flex:0 0 auto;transition:.18s}
+.src.ep{color:#fff}
+.src.ep .sicon{color:var(--teal-br)}
+.src.ep .dot{background:#0c3b34;border-color:var(--teal);box-shadow:0 0 9px var(--glow)}
+.src.tsys .lab{color:#f4b9d8}
+.src.tsys .sicon{color:var(--magenta)}
+.src.tsys .dot{background:#3a0a22;border-color:var(--magenta);box-shadow:0 0 8px rgba(226,0,116,.6)}
+.src:hover{color:#fff}
+.src.hot .dot{transform:scale(1.3)}
+.src.more{color:var(--muted);font-weight:700;cursor:default}
+.src.more .sicon{color:var(--dim)}
+.srchead{position:absolute;left:66px;z-index:4;font-size:10px;font-weight:700;letter-spacing:.16em;color:var(--dim);text-transform:uppercase}
 
-/* small source label (flow) */
-.src{position:absolute;transform:translateY(-50%);z-index:4;display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;color:#d7dde2}
-.src .dot{width:9px;height:9px;border-radius:50%;background:#20262d;border:1.5px solid var(--dim)}
-.src.ext .dot{background:var(--amber);border-color:var(--amber);box-shadow:0 0 8px var(--amber)}
-.src small{color:var(--muted);font-weight:600}
+/* right funnel (24H) */
+.funnode{position:absolute;transform:translate(-50%,-50%);z-index:5;cursor:pointer;text-align:center}
+.funnode .disc2{width:52px;height:52px;border-radius:50%;margin:0 auto;display:grid;place-items:center;
+  border:1.5px solid var(--teal);background:radial-gradient(circle at 50% 40%,rgba(47,214,192,.2),rgba(4,10,12,.7));
+  box-shadow:0 0 22px var(--glow)}
+.funnode.red .disc2{border-color:var(--red);box-shadow:0 0 22px rgba(255,77,94,.5)}
+.funnode .disc2 svg{width:24px;height:24px}
+.funnode:hover .disc2{box-shadow:0 0 34px var(--glow)}
+.funnode .fl{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap}
+.funnode .fl b{font-size:22px;font-weight:800;color:#fff}
+.funnode .fl span{font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-left:7px}
+.funnode .fl.above{bottom:58px}
+.funnode .fl.below{top:56px}
+.soctag{position:absolute;z-index:5;font-size:10px;font-weight:700;color:#f4b9d8;letter-spacing:.04em;
+  border:1px solid rgba(226,0,116,.55);border-radius:6px;padding:4px 10px;background:rgba(226,0,116,.10);white-space:nowrap;
+  box-shadow:0 0 16px rgba(226,0,116,.25)}
+.soctag b{color:#ff7ec8}
 
-/* flow bottom stats */
-.stats{position:absolute;left:34px;bottom:26px;z-index:4;display:flex;gap:34px}
-.stat b{font-size:26px;font-weight:800}.stat span{display:block;font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:4px}
+.outcome{position:absolute;transform:translateY(-50%);z-index:5;text-align:left}
+.outcome b{font-size:30px;font-weight:800;color:#fff;line-height:1}
+.outcome span{display:block;font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:5px}
+.outcome.click{cursor:pointer;transition:.2s}
+.outcome.click:hover b{text-shadow:0 0 24px var(--glow)}
 
-/* ---------- agents radial ---------- */
-.aTitle{position:absolute;top:96px;left:0;right:0;text-align:center;z-index:4}
-.aTitle h2{font-size:22px;font-weight:800;letter-spacing:.02em}
-.aTitle p{font-size:13px;color:var(--muted);margin-top:6px}
-.agent{position:absolute;transform:translate(-50%,-50%);z-index:5;text-align:center;cursor:default}
-.agent .c{width:66px;height:66px;border-radius:50%;margin:0 auto;display:grid;place-items:center;font-size:20px;
-  border:1.5px solid var(--teal-dim);background:radial-gradient(circle at 50% 40%,rgba(47,214,192,.14),rgba(4,10,12,.6));
-  box-shadow:0 0 18px rgba(47,214,192,.28)}
-.agent .n{font-size:12px;font-weight:700;margin-top:9px;max-width:130px}
-.agent .s{font-size:10px;color:var(--muted);margin-top:1px}
-.agent.core .c{width:92px;height:92px;border-color:var(--teal);box-shadow:0 0 34px var(--glow);font-size:24px}
-.agent.ext{cursor:pointer}
-.agent.ext .c{border-color:var(--amber);box-shadow:0 0 20px rgba(245,166,35,.4)}
-.agent.ext .n{color:#ffdf9e}
-.agent.ext:hover .c{box-shadow:0 0 34px rgba(245,166,35,.7)}
+.chev{position:absolute;z-index:5;display:flex;flex-direction:column;gap:9px;cursor:pointer}
+.chev .cv{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:800;color:#fff}
+.chev .cv i{font-style:normal;font-size:13px;line-height:1}
+.chev .cv.crit i{color:var(--red)} .chev .cv.high i{color:#ff7a52}
+.chev .cv.med i{color:var(--amber)} .chev .cv.low i{color:var(--blue)}
+.chev:hover .cv{filter:brightness(1.15)}
 
-/* ---------- isolation ---------- */
-.iso-title{position:absolute;top:96px;left:0;right:0;text-align:center;z-index:4}
-.iso-title h2{font-size:22px;font-weight:800}
-.livezone{position:absolute;left:150px;top:300px;z-index:4;text-align:center}
-.livezone .ring{width:150px;height:150px;border-radius:50%;border:1.5px solid var(--teal-dim);margin:0 auto;
-  display:grid;place-items:center;box-shadow:0 0 26px rgba(47,214,192,.25)}
-.livezone .ring b{font-size:34px}
-.livezone .t{margin-top:12px;font-size:13px;font-weight:700;color:var(--teal-br)}
-.livezone .s{font-size:11px;color:var(--muted);max-width:200px;margin:4px auto 0}
+/* right status cards (30D) */
+.pcard{position:absolute;z-index:5;width:172px;border:1px solid var(--hair);border-radius:12px;padding:12px 14px;
+  background:rgba(9,13,17,.7);cursor:pointer;transition:.18s}
+.pcard:hover{border-color:var(--teal-dim);box-shadow:0 0 20px rgba(47,214,192,.12)}
+.pcard b{font-size:22px;font-weight:800;color:#fff;display:flex;align-items:baseline;gap:8px}
+.pcard b em{font-style:normal;font-size:11px;font-weight:700}
+.pcard span{display:block;font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-top:5px;line-height:1.35}
+.pcard.rd{border-color:rgba(255,77,94,.45)} .pcard.rd b em{color:#ff9aa4}
+.pcard.tl{border-color:rgba(47,214,192,.4)} .pcard.tl b em{color:var(--teal-br)}
+.pcard em.up{color:var(--red)} .pcard em.dn{color:var(--teal-br)}
 
-.bubble{position:absolute;right:170px;top:250px;width:360px;height:300px;z-index:3;border-radius:48% 52% 55% 45%/50% 45% 55% 50%;
-  border:2px dashed var(--teal);background:radial-gradient(circle at 50% 45%,rgba(20,40,42,.55),rgba(4,10,12,.3));
-  box-shadow:inset 0 0 40px rgba(47,214,192,.15);display:grid;place-items:center;animation:breathe 5s ease-in-out infinite}
-@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.02)}}
-.bubble .lbl{position:absolute;top:-26px;left:0;right:0;text-align:center;font-size:12px;font-weight:700;color:var(--teal-br)}
-.bubble .sub{position:absolute;bottom:-30px;left:0;right:0;text-align:center;font-size:11px;color:var(--muted)}
+.corehit{position:absolute;transform:translate(-50%,-50%);z-index:3;border-radius:50%;cursor:pointer}
 
-.badagent{position:absolute;z-index:6;transform:translate(-50%,-50%);text-align:center;left:300px;top:375px;
-  transition:left 1.1s cubic-bezier(.7,0,.3,1),top 1.1s cubic-bezier(.7,0,.3,1)}
-.badagent .c{width:70px;height:70px;border-radius:50%;margin:0 auto;display:grid;place-items:center;font-size:22px;
-  border:2px solid var(--amber);background:radial-gradient(circle at 50% 40%,rgba(245,166,35,.2),rgba(20,8,4,.7));
-  box-shadow:0 0 22px rgba(245,166,35,.5)}
-.badagent.isolated .c{border-color:var(--red);box-shadow:0 0 26px rgba(255,77,94,.6)}
-.badagent .n{font-size:12px;font-weight:700;margin-top:8px;color:#ffdf9e}
+/* bottom stat tiles */
+.tiles{position:absolute;left:34px;right:34px;bottom:24px;z-index:6;display:flex;border-top:1px solid var(--hair);padding-top:16px}
+.tile{flex:1;padding:0 26px;display:flex;flex-direction:column;justify-content:center;position:relative;cursor:pointer;transition:.18s}
+.tile+.tile{border-left:1px solid var(--hair)}
+.tile .k{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:9px}
+.tile .vrow{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.tile .v{font-size:30px;font-weight:800;color:#fff;line-height:1;white-space:nowrap;display:flex;align-items:baseline;gap:5px}
+.tile .v u{font-size:12px;color:var(--muted);font-weight:600;text-decoration:none}
+.tile .v em{font-size:12px;font-weight:700;font-style:normal;color:var(--teal-br)}
+.tile:hover .v{text-shadow:0 0 20px var(--glow)}
+.tile svg.spark{width:130px;height:40px;flex:0 0 auto}
+.tile .sev{display:flex;gap:10px;font-size:12px;font-weight:700;color:var(--muted)}
+.tile .sev i{font-style:normal;display:inline-flex;align-items:center;gap:4px}
+.tile .sev b{color:#fff}
+.tile .sev .q{width:9px;height:9px;border-radius:2px;display:inline-block}
+.invest{appearance:none;border:1px solid var(--teal-dim);background:rgba(47,214,192,.08);color:var(--teal-br);
+  font-family:var(--font);font-weight:700;font-size:12px;padding:8px 14px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:7px;transition:.2s}
+.invest:hover{background:rgba(47,214,192,.16);box-shadow:0 0 18px var(--glow)}
+.invest .o{width:11px;height:11px;border-radius:50%;border:2px solid var(--teal);display:inline-block}
+.hidden{display:none!important}
 
-/* alert toast */
-.toast{position:absolute;top:150px;left:50%;transform:translate(-50%,-16px);z-index:9;
-  background:rgba(30,8,10,.92);border:1px solid var(--red);border-radius:12px;padding:12px 18px;
-  display:flex;align-items:center;gap:12px;max-width:640px;opacity:0;transition:.45s;box-shadow:0 8px 30px rgba(0,0,0,.5)}
-.toast.on{opacity:1;transform:translate(-50%,0)}
-.toast .ic{width:24px;height:24px;border-radius:6px;background:var(--red);display:grid;place-items:center;color:#fff;font-weight:800;flex:0 0 auto}
-.toast .tx{font-size:13px;color:#ffd7db;line-height:1.35}
-.toast .tx b{color:#fff}
+/* detail popover */
+.pop{position:absolute;z-index:20;width:248px;background:rgba(9,13,17,.97);border:1px solid var(--teal-dim);
+  border-radius:12px;padding:14px 15px;box-shadow:0 14px 44px rgba(0,0,0,.6),0 0 30px rgba(47,214,192,.12);
+  opacity:0;transform:translateY(6px);pointer-events:none;transition:.2s}
+.pop.on{opacity:1;transform:translateY(0);pointer-events:auto}
+.pop h4{font-size:13px;font-weight:800;color:#fff;display:flex;align-items:center;gap:8px;margin-bottom:9px}
+.pop h4 .d{width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px var(--teal);flex:0 0 auto}
+.pop .r{display:flex;justify-content:space-between;gap:12px;font-size:11.5px;padding:4px 0;border-top:1px solid var(--hair)}
+.pop .r:first-of-type{border-top:0}
+.pop .r span{color:var(--muted)} .pop .r b{color:#e7edf1;font-weight:700}
+.pop .r b.ok{color:var(--teal-br)} .pop .r b.warn{color:var(--amber)} .pop .r b.bad{color:var(--red)}
+.pop .foot{margin-top:10px;font-size:10.5px;color:var(--teal-br);opacity:.85;letter-spacing:.04em;line-height:1.4}
 
-.status{position:absolute;left:0;right:0;bottom:120px;text-align:center;z-index:6;font-size:13px;color:var(--teal-br);opacity:0;transition:.4s}
-.status.on{opacity:1}
+/* prioritization overlay */
+.prio{position:absolute;inset:0;z-index:30;background:radial-gradient(120% 90% at 50% 40%,#05080d,#010204 78%);
+  opacity:0;pointer-events:none;transition:opacity .4s}
+.prio.on{opacity:1;pointer-events:auto}
+.prio .back{position:absolute;top:74px;left:38px;color:var(--muted);font-size:14px;font-weight:600;cursor:pointer}
+.prio .back:hover{color:var(--text)}
+.prio h2{position:absolute;top:104px;left:0;right:0;text-align:center;font-size:24px;font-weight:800;letter-spacing:.18em}
+.prio .stages{position:absolute;top:180px;left:80px;right:80px;display:flex;justify-content:space-between}
+.prio .stg b{font-size:34px;font-weight:800;color:#fff}
+.prio .stg b em{font-style:normal;font-size:13px;color:var(--blue);margin-left:8px}
+.prio .stg span{display:block;font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-top:6px}
+.prio .stg.cases b{color:var(--teal-br)}
+.prio .breaklist{position:absolute;top:300px;left:120px;width:620px}
+.prio .brow{display:flex;align-items:center;gap:16px;padding:11px 0;border-top:1px solid var(--hair)}
+.prio .brow b{font-size:18px;font-weight:800;color:#fff;width:74px;text-align:right}
+.prio .brow .lab{font-size:13px;color:#cfd6db;width:230px}
+.prio .brow .bar{flex:1;height:8px;border-radius:6px;background:linear-gradient(90deg,rgba(255,77,94,.55),rgba(255,77,94,.12));}
+.prio .note{position:absolute;top:300px;right:120px;width:300px;border:1px solid rgba(47,214,192,.3);border-radius:12px;padding:16px;background:rgba(47,214,192,.05)}
+.prio .note h5{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--teal-br);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.prio .note p{font-size:12px;color:#cfd6db;line-height:1.5}
+.prio .note .r{display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px solid var(--hair);margin-top:6px}
+.prio .note .r span{color:var(--muted)} .prio .note .r b{color:#fff}
+.reduced .tseg button .d{animation:none}
 
-/* SOC call card */
-.soc{position:absolute;right:60px;bottom:96px;z-index:10;width:300px;background:rgba(9,12,16,.96);
-  border:1px solid var(--hair);border-radius:16px;padding:16px;box-shadow:0 12px 40px rgba(0,0,0,.6);
-  transform:translateY(20px);opacity:0;transition:.45s}
-.soc.on{transform:translateY(0);opacity:1}
-.soc .row{display:flex;align-items:center;gap:12px}
-.soc .av{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--magenta),#7a1450);
-  display:grid;place-items:center;font-weight:800;color:#fff;flex:0 0 auto}
-.soc.ring .av{animation:ring 1s ease-in-out infinite}
-@keyframes ring{0%,100%{box-shadow:0 0 0 0 rgba(226,0,116,.5)}50%{box-shadow:0 0 0 10px rgba(226,0,116,0)}}
-.soc .who b{font-size:14px}.soc .who span{display:block;font-size:11px;color:var(--muted)}
-.soc .msg{font-size:12px;color:#cfd6db;line-height:1.4;margin-top:12px;border-top:1px solid var(--hair);padding-top:10px;display:none}
-.soc.answered .msg{display:block}
-.soc .btns{display:flex;gap:8px;margin-top:12px}
-.soc button{flex:1;appearance:none;border:0;border-radius:8px;padding:9px;font-family:var(--font);font-weight:700;font-size:12px;cursor:pointer}
-.soc .accept{background:var(--teal);color:#02130f}
-.soc .end{background:#2a1013;color:#ff9aa4}
-
-.riskchip{position:absolute;right:60px;top:150px;z-index:7;background:#1a0c0f;border:1px solid var(--red);
-  color:#ff9aa4;font-size:11px;font-weight:800;padding:5px 10px;border-radius:6px;opacity:0;transition:.3s}
-.riskchip.on{opacity:1}
-
-/* controls */
-.ctrls{position:absolute;right:24px;bottom:22px;z-index:11;display:flex;gap:8px}
-.ctrls button{appearance:none;border:1px solid var(--teal);background:var(--teal);color:#02130f;
-  font-family:var(--font);font-weight:700;font-size:12px;padding:9px 15px;border-radius:9px;cursor:pointer}
-.ctrls button.ghost{background:transparent;color:var(--teal-br)}
-.reduced .logo::after{animation:none}
-.endnote{position:absolute;left:0;right:0;bottom:60px;text-align:center;z-index:6;font-size:12px;color:var(--dim);opacity:0;transition:.4s}
-.endnote.on{opacity:1}
+/* back button (flow view) */
+.backbtn{position:absolute;top:72px;left:38px;z-index:12;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;display:none;align-items:center;gap:6px}
+.backbtn:hover{color:var(--text)}
+body.view-flow .backbtn{display:flex}
+/* assets view */
+#assetsView.hidden{display:none}
+.astats{position:absolute;left:58px;top:250px;z-index:5;display:flex;flex-direction:column;gap:30px}
+.ast b{font-size:34px;font-weight:800;color:#fff;display:flex;align-items:baseline;line-height:1}
+.ast b em{font-style:normal;font-size:14px;color:var(--muted);margin-left:3px}
+.ast span{display:block;font-size:12px;color:var(--muted);margin-top:6px;position:relative;padding-left:16px}
+.ast span::before{content:"";position:absolute;left:0;top:4px;width:8px;height:8px;border-radius:50%;background:var(--dim)}
+.ast span.rd::before{background:var(--red);box-shadow:0 0 8px var(--red)}
+.ast span.rd2::before{background:#ff7a52}
+.ast span.am::before{background:var(--amber);box-shadow:0 0 8px var(--amber)}
+.ast.big b{font-size:40px}
+.acenter{position:absolute;left:800px;top:440px;transform:translate(-50%,-50%);z-index:6;text-align:center;pointer-events:none}
+.prov.pk-campus .sicon{color:#6ff3e0} .prov.pk-mvz .sicon{color:#8ab4f8} .prov.pk-cloud .sicon{color:var(--magenta)}
+.prov.pk-telemed .sicon{color:#6ff3e0} .prov.pk-labs .sicon{color:#f5a623} .prov.pk-research .sicon{color:#8ab4f8}
+.acenter .anum{font-size:64px;font-weight:800;color:#fff;line-height:1;text-shadow:0 0 34px rgba(245,166,35,.45)}
+.acenter .acap{font-size:15px;color:#e7edf1;margin-top:6px;font-weight:600}
+.acenter .asub{font-size:12px;color:var(--muted);margin-top:8px}
+.acenter .ashow{margin-top:14px;pointer-events:auto;appearance:none;border:1px solid var(--teal-dim);background:rgba(47,214,192,.08);color:var(--teal-br);font-family:var(--font);font-weight:700;font-size:12px;padding:9px 18px;border-radius:8px;cursor:pointer;transition:.2s}
+.acenter .ashow:hover{background:rgba(47,214,192,.18);box-shadow:0 0 18px var(--glow)}
+.prov{position:absolute;transform:translate(-50%,-50%);z-index:5;text-align:center;cursor:pointer;transition:.18s}
+.prov .sicon{width:18px;height:18px;color:var(--muted);margin:0 auto 5px;display:block}
+.prov b{font-size:15px;font-weight:800;color:#fff}
+.prov b em{font-style:normal;font-size:11px;color:var(--amber);font-weight:700;margin-left:5px}
+.prov span{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+.prov:hover b{text-shadow:0 0 16px var(--glow)}
+.region{position:absolute;transform:translate(-50%,-50%);z-index:4;font-size:10px;letter-spacing:.12em;color:var(--dim);text-transform:uppercase;pointer-events:none}
+/* severity filter (assets view) */
+.sevfilter{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:11px;font-weight:600}
+.sevfilter .sl{margin-right:2px}
+.sevfilter .sq{width:19px;height:19px;border-radius:5px;display:grid;place-items:center;font-size:10px;font-weight:800;color:#1a0406}
+.sevfilter .cur{margin-left:8px;border:1px solid var(--hair);border-radius:999px;padding:6px 12px;color:var(--muted);cursor:pointer}
+/* radar wrapper (slides on provider select) */
+#radarWrap{position:absolute;inset:0;transition:transform .45s cubic-bezier(.6,0,.3,1)}
+#acenter,#provWrap,#regionWrap{transition:opacity .3s}
+#radarWrap.detail #acenter,#radarWrap.detail #provWrap,#radarWrap.detail #regionWrap{opacity:0;pointer-events:none}
+/* iMedOne anchor (HIS) */
+#imedone{position:absolute;left:56px;top:128px;z-index:7;width:280px}
+#imedone .imo-logo{display:inline-block;background:var(--magenta);color:#fff;font-weight:800;font-size:21px;letter-spacing:.2px;padding:5px 11px 6px;border-radius:8px}
+#imedone .imo-logo sup{font-size:10px;font-weight:700;margin-left:1px}
+#imedone .imo-sub{font-size:12.5px;color:#e7edf1;font-weight:600;margin-top:9px}
+#imedone .imo-stat{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4}
+.viewby{position:absolute;left:566px;top:150px;z-index:7;font-size:12px;color:var(--muted);border:1px solid var(--hair);border-radius:999px;padding:6px 14px}
+.viewby b{color:var(--text);font-weight:700}.viewby span{color:var(--dim)}
+/* left buckets */
+.astats{position:absolute;left:56px;top:244px;z-index:7;display:flex;flex-direction:column;gap:7px;width:280px}
+.abucket{padding:12px 14px;border-radius:12px;border:1px solid transparent;cursor:pointer;transition:.18s;position:relative}
+.abucket:hover{background:rgba(255,255,255,.03)}
+.abucket.on{background:rgba(255,255,255,.045);border-color:var(--hair)}
+.abucket.on::before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:3px;border-radius:3px;background:var(--c)}
+.abucket b{font-size:30px;font-weight:800;color:#fff;display:flex;align-items:baseline;line-height:1}
+.abucket b em{font-style:normal;font-size:13px;color:var(--muted);margin-left:3px;font-weight:700}
+.abucket .lab{display:block;font-size:12px;color:var(--muted);margin-top:6px;position:relative;padding-left:16px}
+.abucket .lab::before{content:"";position:absolute;left:0;top:4px;width:9px;height:9px;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c)}
+.abucket.all{--c:#8b959e} .abucket.risk{--c:var(--amber)} .abucket.threat{--c:var(--red)} .abucket.both{--c:var(--magenta)}
+.abucket.big b{font-size:38px}
+/* overlap legend */
+.alegend{position:absolute;left:66px;top:552px;width:236px;height:96px;z-index:7}
+/* data ingestion bottom-left */
+.aingest{position:absolute;left:66px;bottom:34px;z-index:7}
+.aingest .k{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:6px}
+.aingest .vv{font-size:26px;font-weight:800;color:#fff}
+.aingest .vv u{font-size:12px;color:var(--muted);font-weight:600;text-decoration:none}
+/* provider detail panel */
+.provdetail{position:absolute;right:60px;top:150px;width:520px;z-index:9;opacity:0;transform:translateX(40px);pointer-events:none;transition:.42s cubic-bezier(.6,0,.3,1)}
+.provdetail.on{opacity:1;transform:translateX(0);pointer-events:auto}
+.provdetail .crumb{font-size:13px;color:var(--muted);font-weight:600;margin-bottom:22px;cursor:pointer}
+.provdetail .crumb b{color:#fff} .provdetail .crumb .bk{color:var(--teal-br)}
+.provdetail .head{display:flex;gap:54px;align-items:flex-start;margin-bottom:26px}
+.provdetail .head .h b{font-size:42px;font-weight:800;color:#fff;line-height:1}
+.provdetail .head .h span{display:block;font-size:12px;color:var(--muted);margin-top:6px;letter-spacing:.06em}
+.provdetail .head .h.u b{display:flex;align-items:center;gap:10px}
+.provdetail .head .h.u b svg{width:26px;height:26px}
+.provdetail .sec{font-size:12px;font-weight:700;color:#cfd6db;margin:10px 0 12px}
+.provdetail .cats{display:flex;gap:24px;align-items:center}
+.provdetail .donut{width:130px;height:130px;flex:0 0 auto}
+.provdetail .catlist .ci{display:flex;align-items:center;gap:10px;font-size:12.5px;padding:3px 0}
+.provdetail .catlist .ci .sw{width:9px;height:9px;border-radius:2px;flex:0 0 auto}
+.provdetail .catlist .ci b{color:#fff;font-weight:700;width:54px} .provdetail .catlist .ci span{color:var(--muted)}
+.provdetail .status{margin-top:26px;border-top:1px solid var(--hair);padding-top:18px;display:flex;gap:40px}
+.provdetail .status .st b{font-size:24px;font-weight:800;color:#fff}
+.provdetail .status .st span{display:block;font-size:11px;color:var(--muted);margin-top:5px;position:relative;padding-left:15px}
+.provdetail .status .st span::before{content:"";position:absolute;left:0;top:4px;width:8px;height:8px;border-radius:50%}
+.provdetail .status .st.b1 span::before{background:var(--magenta)} .provdetail .status .st.b2 span::before{background:var(--red)} .provdetail .status .st.b3 span::before{background:var(--amber)}
 </style>
 </head>
 <body>
 <div id="fit"><div id="stage">
+  <div class="dome"></div>
   <canvas id="cv"></canvas>
+  <svg class="wire" id="wFlow" viewBox="0 0 1440 810"></svg>
 
   <div class="top">
-    <div class="brand"><span class="logo"></span>Sovereign Cortex <small>· Connected Hospital · <b>T</b> Security</small></div>
-    <div class="live"><span class="d"></span><span id="liveLbl">Medication logistics · Live</span></div>
+    <div class="brand">
+      <div class="titles">
+        <div class="title">Cyber Security Command Center <span class="car">▾</span></div>
+        <div class="tag">AI-driven Security Operations · powered by <svg class="tlogo-sm" viewBox="0 0 1478.52 304.81" aria-label="T Security">
+        <g><path d="M336.72,185.25h44.46c3.62,18.44,15.81,25.69,32.28,25.69,18.77,0,28.32-10.54,28.32-24.7s-9.22-21.41-26.35-26.02l-25.36-7.25c-34.91-9.55-49.07-34.91-49.07-61.92,0-41.83,31.29-68.83,72.13-68.83,44.46,0,68.5,26.02,72.79,66.53h-43.47c-2.63-16.47-12.19-24.7-29.31-24.7-15.15,0-26.68,9.22-26.68,24.04s10.21,20.42,22.4,23.71l25.36,6.92c32.93,8.56,53.03,32.93,53.03,64.88,0,44.13-32.61,69.16-73.77,69.16-45.45,0-72.79-24.04-76.74-67.52Z"/><path d="M650.51,178.34h-99.46c2.31,29.97,14.49,38.53,30.63,38.53,12.84,0,21.41-4.94,25.36-14.82h42.82c-6.26,31.29-33.26,50.72-68.17,50.72-42.49,0-71.14-30.63-71.14-84.64s27.67-84.64,72.13-84.64c41.5,0,68.5,31.62,68.5,80.03,0,5.6,0,11.2-.66,14.82ZM552.37,147.71h58.62c-2.96-21.41-14.16-28.32-28.32-28.32-15.48,0-26.35,6.92-30.3,28.32Z"/><path d="M674.39,168.13c0-51.38,26.35-84.64,71.47-84.64,39.85,0,63.23,25.03,67.52,59.94h-42.81c-2.96-13.5-10.54-21.08-24.7-21.08-19.1,0-28.32,16.14-28.32,45.78s9.22,45.78,28.32,45.78c14.16,0,21.74-7.58,24.37-21.08h43.14c-4.28,34.91-27.67,59.94-67.52,59.94-45.12,0-71.47-33.59-71.47-84.64Z"/><path d="M839.88,193.82v-105.06h42.49v99.79c0,15.48,5.6,25.36,20.75,25.36,16.14,0,27.01-12.84,27.01-32.28v-92.88h42.49v158.74h-39.85v-19.43h-1.98c-8.23,15.48-23.38,24.7-42.49,24.7-32.28,0-48.41-20.09-48.41-58.95Z"/><path d="M1099.26,87.77v38.86c-4.28-.66-8.23-.66-11.53-.66-25.69,0-36.23,9.55-36.23,30.96v90.57h-42.49V88.76h39.85v19.43h1.98c7.57-14.16,20.42-22.07,37.22-22.07,3.62,0,7.58.33,11.2,1.65Z"/><path d="M1126,65.37V27.5h42.49v37.87h-42.49ZM1126,247.5V88.76h42.49v158.74h-42.49Z"/><path d="M1221.34,200.73v-75.75h-27.01v-36.23h27.01v-25.69l34.58-31.95h7.9v57.64h40.51v36.23h-40.51v70.48c0,11.86,6.92,18.11,19.1,18.11,6.26,0,12.51-.99,18.11-2.31v33.26c-8.89,3.95-18.44,5.6-30.3,5.6-29.31,0-49.4-17.13-49.4-49.4Z"/><path d="M1433.07,88.76h45.45l-61.92,175.87c-8.56,24.04-25.03,40.18-52.04,40.18-8.23,0-17.46-.99-25.69-4.28v-33.92c4.94,1.32,11.2,1.98,17.46,1.98,10.54,0,16.8-3.95,21.74-17.46l3.62-9.55-57.31-152.82h45.45l30.96,96.17h1.98l30.3-96.17Z"/></g>
+        <g><path d="M55,181.5H0v-55h55v55ZM0,0v93.5h16.5v-2.75c0-44,24.75-71.5,71.5-71.5h2.75v198c0,27.5-11,38.5-38.5,38.5h-8.25v19.25h143v-19.25h-8.25c-27.5,0-38.5-11-38.5-38.5V19.25s2.75,0,2.75,0c46.75,0,71.5,27.5,71.5,71.5v2.75h16.5V0H0ZM176,181.5h55v-55h-55v55Z"/></g>
+      </svg></div>
+      </div>
+    </div>
+    <div class="tright">
+      <div class="sevfilter hidden" id="sevFilter">
+        <span class="sl">Severity</span>
+        <span class="sq" style="background:var(--red)" title="Critical">C</span><span class="sq" style="background:#ff7a52" title="High">H</span>
+        <span class="sq" style="background:var(--amber)" title="Medium">M</span><span class="sq" style="background:var(--blue)" title="Low">L</span>
+        <span class="cur" title="Time range — current snapshot">Current <span style="color:var(--dim)">▾</span></span>
+      </div>
+      <div class="tseg" id="tseg">
+        <button data-mode="h24" class="on"><span class="d"></span>Last 24H</button>
+        <button data-mode="d30">Last 30 Days</button>
+      </div>
+      <div class="kebab">⋮</div>
+    </div>
   </div>
-  <div class="back" id="backBtn">‹ Back to flow</div>
 
-  <!-- ============ SCENE 1 : FLOW ============ -->
-  <section class="scene active" id="flow">
-    <svg class="wire" id="wFlow" viewBox="0 0 1440 810"></svg>
+  <div class="backbtn" id="backBtn">‹ Command Center</div>
 
-    <div class="src"      style="left:150px;top:250px"><span class="dot"></span><span>AGV Fleet Telemetry</span></div>
-    <div class="src"      style="left:150px;top:305px"><span class="dot"></span><span>Pharmacy System</span></div>
-    <div class="src"      style="left:150px;top:360px"><span class="dot"></span><span>Ward / Room Systems</span></div>
-    <div class="src ext"  style="left:150px;top:415px"><span class="dot"></span><span>Supplier Logistics Agent <small>· external</small></span></div>
-    <div class="src"      style="left:150px;top:470px"><span class="dot"></span><span>Access Logs / IAM</span></div>
-    <div class="src"      style="left:150px;top:525px"><span class="dot"></span><span>Clinical / EHR <small>· restricted</small></span></div>
+  <section id="flowView">
+  <div class="srchead" id="srcHead" style="top:238px">Sources</div>
+  <div id="srcWrap"></div>
 
-    <div class="node" style="left:545px;top:400px"><div class="num" style="font-size:48px"><span data-count="12480" data-comma>0</span></div><div class="cap">Events / min</div></div>
-    <div class="node" style="left:865px;top:400px"><div class="num" style="font-size:44px"><span data-count="24">0</span></div><div class="cap">Signals</div></div>
+  <!-- spine -->
+  <div class="node click" id="nLeft" style="left:505px;top:392px">
+    <div class="num" style="font-size:44px"><span data-count="2681" data-comma>0</span></div>
+    <div class="cap">Issues</div><div class="hint">correlating →</div>
+  </div>
+  <div class="node click hidden" id="nCenter" style="left:720px;top:392px">
+    <div class="disc"></div>
+    <div class="num"><span data-count="865" data-suffix="K">0</span></div>
+    <div class="cap">Unique Vulnerabilities</div><div class="hint">prioritization →</div>
+  </div>
+  <div class="corehit" id="coreHit" style="left:720px;top:392px;width:250px;height:250px"></div>
+  <div class="node click" id="nRight" style="left:930px;top:392px">
+    <div class="num" style="font-size:40px"><span data-count="125">0</span></div>
+    <div class="cap">Cases</div><div class="hint">breakdown →</div>
+  </div>
 
-    <div class="hub" id="hubAgents" style="left:1120px;top:305px">
-      <div class="disc"><div><b>6</b><span>agents</span></div></div>
-      <div class="lbl">Agent System</div>
-      <div class="hint">Explore architecture →</div>
+  <!-- right funnel (24H) -->
+  <div id="right24">
+    <div class="funnode" id="fnAuto" style="left:1080px;top:300px">
+      <div class="fl above"><b><span data-count="78">0</span></b><span>Automated</span></div>
+      <div class="disc2"><svg viewBox="0 0 24 24" fill="none" stroke="#6ff3e0" stroke-width="1.6">
+        <circle cx="12" cy="5" r="2.4"/><circle cx="5" cy="17" r="2.4"/><circle cx="19" cy="17" r="2.4"/>
+        <path d="M12 7.4V13M12 13l-5.5 2M12 13l5.5 2"/></svg></div>
     </div>
-    <div class="hub" id="hubIso" style="left:1120px;top:560px">
-      <div class="disc"><div><b>0</b><span>incidents</span></div></div>
-      <div class="lbl">Response &amp; Isolation</div>
-      <div class="hint">Enter isolation →</div>
+    <div class="funnode" id="fnManual" style="left:1080px;top:488px">
+      <div class="disc2"><svg viewBox="0 0 24 24" fill="none" stroke="#8b959e" stroke-width="1.6">
+        <circle cx="12" cy="8" r="3.4"/><path d="M5.5 19a6.5 6.5 0 0 1 13 0"/></svg></div>
+      <div class="fl below"><b><span data-count="18">0</span></b><span>Manual</span></div>
     </div>
+    <div class="soctag" id="socTag" style="left:1004px;top:588px">assisted by <b>T Security</b> · Cyber Defense Center Bonn</div>
+    <div class="outcome click" id="nResolved" style="left:1232px;top:292px">
+      <b><span data-count="85">0</span></b><span>Resolved Cases</span>
+    </div>
+    <div class="chev" id="chevOpen" style="left:1196px;top:446px">
+      <div class="cv crit"><i>▲▲</i>3</div><div class="cv high"><i>▲▲</i>3</div>
+      <div class="cv med"><i>▲</i>5</div><div class="cv low"><i>▲</i>0</div>
+    </div>
+    <div class="outcome click" id="nOpen" style="left:1276px;top:498px">
+      <b><span data-count="11">0</span></b><span>Open Cases</span>
+    </div>
+  </div>
 
-    <div class="stats">
-      <div class="stat"><b><span data-count="38">0</span></b><span>AGVs active</span></div>
-      <div class="stat"><b><span data-count="612">0</span></b><span>deliveries today</span></div>
-      <div class="stat"><b style="color:var(--teal-br)">OK</b><span>medication supply</span></div>
+  <!-- right status cards (30D) -->
+  <div id="right30" class="hidden">
+    <div class="funnode red" id="fnActive" style="left:1120px;top:288px">
+      <div class="fl above"><b><span data-count="168">0</span></b><span>Active Cases</span></div>
+      <div class="disc2"><svg viewBox="0 0 24 24" fill="none" stroke="#ff9aa4" stroke-width="1.6">
+        <path d="M12 3c1 4-2 5-2 8a4 4 0 0 0 8 0c0-2-1-3-1-5 3 2 4 5 4 8a9 9 0 1 1-15-6c2-2 3-4 4-5z"/></svg></div>
     </div>
+    <div class="funnode" id="fnResolvedN" style="left:1120px;top:520px">
+      <div class="disc2"><svg viewBox="0 0 24 24" fill="none" stroke="#6ff3e0" stroke-width="1.6">
+        <circle cx="12" cy="5" r="2.4"/><circle cx="5" cy="17" r="2.4"/><circle cx="19" cy="17" r="2.4"/>
+        <path d="M12 7.4V13M12 13l-5.5 2M12 13l5.5 2"/></svg></div>
+      <div class="fl below"><b><span data-count="144">0</span></b><span>Resolved Cases</span></div>
+    </div>
+    <div class="pcard rd" style="left:1258px;top:172px" data-detail="p_attn"><b><span data-count="9">0</span> <em class="up">↑2.5%</em></b><span>Require Attention</span></div>
+    <div class="pcard" style="left:1258px;top:262px" data-detail="p_prog"><b><span data-count="121">0</span> <em class="up">↑4%</em></b><span>In Progress</span></div>
+    <div class="pcard" style="left:1258px;top:352px" data-detail="p_mit"><b><span data-count="38">0</span> <em class="dn">↓13%</em></b><span>Mitigated · Compensating Controls</span></div>
+    <div class="pcard tl" style="left:1258px;top:470px" data-detail="p_res"><b><span data-count="61">0</span> <em class="up">↑12%</em></b><span>Resolved</span></div>
+    <div class="pcard tl" style="left:1258px;top:560px" data-detail="p_risk"><b><span data-count="83">0</span> <em class="up">↑5.3%</em></b><span>Accepted Risk</span></div>
+  </div>
+
+  <!-- bottom stat tiles (24H) -->
+  <div class="tiles" id="tiles24">
+    <div class="tile" data-detail="events"><div class="k">Events Ingestion</div>
+      <div class="vrow"><div class="v"><span data-count="2.4" data-decimals="1">0</span><u>B/24H</u></div>
+        <svg class="spark" id="spk1" viewBox="0 0 130 40" preserveAspectRatio="none"></svg></div></div>
+    <div class="tile" data-detail="data"><div class="k">Data Ingestion</div>
+      <div class="vrow"><div class="v"><span data-count="9">0</span><u>TB/24H</u></div>
+        <svg class="spark" id="spk2" viewBox="0 0 130 40" preserveAspectRatio="none"></svg></div></div>
+    <div class="tile" data-detail="open"><div class="k">Total Open Cases</div>
+      <div class="vrow"><div class="v"><span data-count="11">0</span></div>
+        <button class="invest" id="investBtn"><span class="o"></span>Investigate</button></div></div>
+    <div class="tile" data-detail="prevented"><div class="k">Prevented Events</div>
+      <div class="vrow"><div class="v"><span data-count="54">0</span><u>K</u></div>
+        <svg class="spark" id="spk3" viewBox="0 0 130 40" preserveAspectRatio="none"></svg></div></div>
+  </div>
+
+  <!-- bottom stat tiles (30D) -->
+  <div class="tiles hidden" id="tiles30">
+    <div class="tile" data-detail="vassets"><div class="k">Vulnerable Assets</div>
+      <div class="vrow"><div class="v"><span data-count="5840" data-comma>0</span> <em>↑15%</em></div>
+        <svg class="spark" id="spk4" viewBox="0 0 130 40" preserveAspectRatio="none"></svg></div></div>
+    <div class="tile" data-detail="activecases"><div class="k">Active Cases</div>
+      <div class="vrow"><div class="v"><span data-count="168">0</span></div>
+        <div class="sev"><i><span class="q" style="background:var(--red)"></span><b>44</b></i><i><span class="q" style="background:#ff7a52"></span><b>71</b></i><i><span class="q" style="background:var(--amber)"></span><b>48</b></i><i><span class="q" style="background:var(--blue)"></span><b>5</b></i></div></div></div>
+    <div class="tile" data-detail="mttr"><div class="k">Mean Time To Resolve</div>
+      <div class="vrow"><div class="v"><span data-count="26">0</span><u>Days</u></div>
+        <div class="sev"><i><span class="q" style="background:var(--red)"></span><b>21</b></i><i><span class="q" style="background:#ff7a52"></span><b>21</b></i><i><span class="q" style="background:var(--amber)"></span><b>34</b></i><i><span class="q" style="background:var(--blue)"></span><b>35</b></i></div></div></div>
+  </div>
+  </section><!--/flowView-->
+
+  <!-- ============ ASSETS ENTRY VIEW ============ -->
+  <section id="assetsView" class="hidden">
+    <div id="imedone">
+      <div class="imo-logo">iMedOne<sup>®</sup></div>
+      <div class="imo-sub">Hospital Information System (HIS)</div>
+      <div class="imo-stat">One core clinical system · used across all sites<br>hosted on T Cloud Public</div>
+    </div>
+    <div class="viewby" id="viewby">Connected estate · <b>by site</b> <span>▾</span></div>
+    <div id="radarWrap">
+      <svg class="wire" id="wAssets" viewBox="0 0 1440 810"></svg>
+      <div class="acenter" id="acenter">
+        <div class="anum"><span id="acNum">0</span></div>
+        <div class="acap" id="acCap">Total Assets</div>
+        <div class="asub" id="acSub">24.9K Medical / Clinical · 10.7K IT & Cloud</div>
+        <button class="ashow" id="assetShow">Show Issues ›</button>
+      </div>
+      <div id="provWrap"></div>
+      <div id="regionWrap"></div>
+    </div>
+    <div class="astats" id="astats"></div>
+    <div class="aingest"><div class="k">Data Ingestion</div><div class="vv"><b>9</b> <u>TB/24H</u></div></div>
+    <div class="provdetail" id="provDetail"></div>
   </section>
 
-  <!-- ============ SCENE 2 : AGENTS (reduced radial) ============ -->
-  <section class="scene" id="agents">
-    <svg class="wire" id="wAgents" viewBox="0 0 1440 810"></svg>
-    <div class="aTitle"><h2>Agent Architecture — Medication Logistics</h2>
-      <p>A small system of cooperating agents, coordinated by one orchestrator. Reduced to essentials.</p></div>
+  <div class="pop" id="pop"></div>
 
-    <div class="agent core" style="left:720px;top:430px"><div class="c">◎</div><div class="n">Orchestrator</div><div class="s">coordinates &amp; arbitrates</div></div>
-    <div class="agent"      style="left:720px;top:250px"><div class="c">⇄</div><div class="n">AGV Routing Agent</div></div>
-    <div class="agent"      style="left:918px;top:335px"><div class="c">▦</div><div class="n">Stock / Replenishment</div></div>
-    <div class="agent ext"  id="agSupplier" style="left:918px;top:525px"><div class="c">⚑</div><div class="n">Supplier Logistics Agent</div><div class="s">external · anomaly? →</div></div>
-    <div class="agent"      style="left:720px;top:610px"><div class="c">◈</div><div class="n">Permission &amp; Identity</div></div>
-    <div class="agent"      style="left:522px;top:525px"><div class="c">◔</div><div class="n">Behavior / Anomaly</div></div>
-    <div class="agent"      style="left:522px;top:335px"><div class="c">◇</div><div class="n">Context · Hospital KG</div></div>
-  </section>
-
-  <!-- ============ SCENE 3 : ISOLATION ============ -->
-  <section class="scene" id="iso">
-    <svg class="wire" id="wIso" viewBox="0 0 1440 810"></svg>
-    <div class="iso-title"><h2>Isolation &amp; Response</h2></div>
-    <div class="riskchip" id="riskChip">RISK: HIGH · medication supply</div>
-
-    <div class="livezone">
-      <div class="ring"><b>38</b></div>
-      <div class="t">Live hospital network</div>
-      <div class="s">medication AGVs keep running — fallback delivery continues</div>
+  <!-- prioritization overlay (30D center) -->
+  <div class="prio" id="prio">
+    <div class="back" id="prioBack">‹ Back to overview</div>
+    <h2>PRIORITIZATION</h2>
+    <div class="stages">
+      <div class="stg"><b>148K <em>↓3.8%</em></b><span>Vulnerabilities</span></div>
+      <div class="stg"><b>34K <em>↓2.5%</em></b><span>Unique Vulnerabilities</span></div>
+      <div class="stg"><b>4.8K <em>↓1%</em></b><span>Open Issues</span></div>
+      <div class="stg cases"><b>312 <em>↓1%</em></b><span>Cases</span></div>
     </div>
-
-    <div class="bubble">
-      <div class="lbl" id="bubbleLbl">Secure Simulation</div>
-      <div class="sub">synthetic hospital · no real patient / medication / location data</div>
+    <div class="breaklist" id="breaklist"></div>
+    <div class="note">
+      <h5>✦ VULNERABILITY PROCESSING</h5>
+      <p>AI correlates raw findings with vulnerability &amp; threat intelligence, deduplicates, and scores by real-world exploitability and business impact.</p>
+      <div class="r"><span>Correlated with</span><b>EPSS · KEV · asset context</b></div>
+      <div class="r"><span>Reduction</span><b>148K → 312 (99.8%)</b></div>
     </div>
-
-    <div class="badagent" id="badAgent"><div class="c">⚑</div><div class="n">Supplier Agent</div></div>
-
-    <div class="toast" id="toast">
-      <div class="ic">!</div>
-      <div class="tx"><b>Unusual agent behavior detected.</b> Supplier agent requesting restricted location and medication data.</div>
-    </div>
-
-    <div class="status" id="isoStatus">Agent isolated from live systems · redirected to secure simulation · fallback delivery continues.</div>
-
-    <div class="soc" id="soc">
-      <div class="row"><div class="av">SOC</div><div class="who"><b>Telekom SOC</b><span id="socState">Incoming call…</span></div></div>
-      <div class="msg" id="socMsg">“This agent may be misconfigured, compromised, or acting beyond its authorized scope. It keeps requesting patient medication schedules and room-level AGV positions. I recommend we revoke access.”</div>
-      <div class="btns"><button class="accept" id="socAccept">Accept call</button><button class="end" id="socEnd">Dismiss</button></div>
-    </div>
-
-    <div class="endnote" id="endNote">— end of part 1 —</div>
-  </section>
-
-  <div class="ctrls">
-    <button class="ghost" id="resetBtn" style="display:none">Reset</button>
-    <button id="playBtn" style="display:none">▶ Run isolation</button>
   </div>
 
 </div></div>
@@ -260,148 +449,471 @@ const REDUCED=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if(REDUCED)document.body.classList.add('reduced');
 const NS='http://www.w3.org/2000/svg';
 const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
 const svgEl=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
 function band(a,b,k=.55){const dx=(b.x-a.x)*k;return `M ${a.x} ${a.y} C ${a.x+dx} ${a.y}, ${b.x-dx} ${b.y}, ${b.x} ${b.y}`;}
+function cubic(p0,p1,p2,p3,t){const u=1-t;return {x:u*u*u*p0.x+3*u*u*t*p1.x+3*u*t*t*p2.x+t*t*t*p3.x,y:u*u*u*p0.y+3*u*u*t*p1.y+3*u*t*t*p2.y+t*t*t*p3.y};}
+function bezPt(a,b,k,t){const dx=(b.x-a.x)*k;return cubic(a,{x:a.x+dx,y:a.y},{x:b.x-dx,y:b.y},b,t);}
 
-/* ---- glow + gradient defs, ribbons ---- */
+/* icons */
+const ICONS={
+  endpoint:'<rect x="2" y="3" width="12" height="8" rx="1"/><path d="M6 14h4M8 11v3"/>',
+  identity:'<circle cx="8" cy="6" r="2.4"/><path d="M3.6 13a4.4 4.4 0 0 1 8.8 0"/>',
+  network:'<path d="M1.5 11c2-5 3.2-5 5 0s3 5 5 0 1.5-2 3-2"/>',
+  firewall:'<rect x="2" y="3.5" width="12" height="9" rx="1"/><path d="M2 6.7h12M2 9.6h12M6 3.5v3.2M10 6.7v2.9M6 9.6V12.5"/>',
+  his:'<rect x="3" y="2" width="10" height="12" rx="1"/><path d="M6 5h4M6 7.4h4M8 9v3M6.5 10.5h3"/>',
+  iomt:'<rect x="2" y="4" width="12" height="8" rx="1"/><path d="M3 8h2l1.3-2.6L8.6 10l1-2h2.4"/>',
+  imaging:'<rect x="2.4" y="2.6" width="11.2" height="10.8" rx="1"/><circle cx="8" cy="8" r="2.6"/><path d="M8 5.4v5.2"/>',
+  flask:'<path d="M6.4 2v3.6L3.6 11.4A1.4 1.4 0 0 0 4.9 13.5h6.2a1.4 1.4 0 0 0 1.3-2.1L9.6 5.6V2M6 2h4M5.4 9.3h5.2"/>',
+  pharmacy:'<rect x="3.4" y="6.2" width="9.2" height="3.6" rx="1.8"/><path d="M8 6.2v3.6"/>',
+  hpc:'<rect x="3" y="3" width="10" height="3.4" rx="1"/><rect x="3" y="9.6" width="10" height="3.4" rx="1"/><path d="M5 4.7h.01M5 11.3h.01"/>',
+  cloud:'<path d="M4.6 12h6a3 3 0 0 0 .3-6 4 4 0 0 0-7.6 1A2.6 2.6 0 0 0 4.6 12z"/>',
+  scan:'<circle cx="8" cy="8" r="5.5"/><path d="M8 2.5v11M2.5 8h11"/>',
+  more:'<circle cx="4" cy="8" r="1.1"/><circle cx="8" cy="8" r="1.1"/><circle cx="12" cy="8" r="1.1"/>'
+};
+const TSVG='<svg class="sicon" viewBox="0 0 231 275" fill="currentColor" stroke="none"><path d="M55,181.5H0v-55h55v55ZM0,0v93.5h16.5v-2.75c0-44,24.75-71.5,71.5-71.5h2.75v198c0,27.5-11,38.5-38.5,38.5h-8.25v19.25h143v-19.25h-8.25c-27.5,0-38.5-11-38.5-38.5V19.25s2.75,0,2.75,0c46.75,0,71.5,27.5,71.5,71.5v2.75h16.5V0H0ZM176,181.5h55v-55h-55v55Z"/></svg>';
+function iconSVG(k){return k==='tmark'?TSVG:`<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">${ICONS[k]||''}</svg>`;}
+
+/* ---------- data (both modes) ---------- */
+const SRC24=[
+  {n:'Medical Devices', s:'18.6K', icon:'iomt', w:9, ep:1, rate:'4.2 B events/24H', res:'IoMT network · segmented'},
+  {n:'Clinical Endpoints', icon:'endpoint', w:6, rate:'9,400 endpoints', res:'Germany Data Boundary'},
+  {n:'iMedOne · HIS', icon:'his', w:5, t:1, rate:'clinical + admin events', res:'hosted · T Cloud Public'},
+  {n:'Imaging / PACS', icon:'imaging', w:4, rate:'1.9 TB images/24H', res:'PACS · on-prem'},
+  {n:'Laboratory · LIS', icon:'flask', w:3, rate:'lab orders & results', res:'LIS'},
+  {n:'Identities & Access', icon:'identity', w:4, rate:'12.4 K identities', res:'IAM · Germany DB'},
+  {n:'Pharmacy / AGV', icon:'pharmacy', w:3, rate:'meds & AGV telemetry', res:'pharmacy logistics'},
+  {n:'T Cloud Public', icon:'tmark', w:5, t:1, rate:'3.4 B events/24H', res:'T Cloud Public · eu-de'},
+  {n:'Network / NGFW', icon:'firewall', w:6, rate:'11.4 B events/24H', res:'EU / on-prem'},
+  {n:'Research / HPC', icon:'hpc', w:3, rate:'HPC & genomics', res:'research network'},
+  {more:'+ 60 Data Sources', icon:'more', w:2}
+];
+const SRC30=[
+  {n:'IoMT Security', icon:'iomt', w:8, rate:'device vulnerabilities', res:'medical device VM'},
+  {n:'Endpoint (EDR)', icon:'endpoint', w:6, rate:'endpoint findings', res:'clinical endpoints'},
+  {n:'Vulnerability Scan', icon:'scan', w:6, rate:'network & servers', res:'authenticated scan'},
+  {n:'iMedOne · HIS', icon:'his', w:4, t:1, rate:'app & config', res:'HIS'},
+  {n:'T Cloud Posture', icon:'tmark', w:5, t:1, rate:'CSPM findings', res:'T Cloud Public'},
+  {n:'Imaging / PACS', icon:'imaging', w:3, rate:'modality vulns', res:'PACS'},
+  {n:'Identities & Access', icon:'identity', w:3, rate:'access exposure', res:'IAM'},
+  {more:'+ more Scanners', icon:'more', w:3}
+];
+const MODES={
+  h24:{label:'Last 24H', sources:SRC24,
+    left:{n:'2412',cap:'Issues',comma:1,hint:'correlating →',detail:'issues'},
+    center:null,
+    right:{n:'96',cap:'Cases',hint:'breakdown →',detail:'cases'}},
+  d30:{label:'Last 30 Days', sources:SRC30,
+    left:{n:'148',suffix:'K',cap:'Vulnerabilities',hint:'sources →',detail:'vulns'},
+    center:{n:'34',suffix:'K',cap:'Unique Vulnerabilities',hint:'prioritization →',detail:'unique'},
+    right:{n:'312',cap:'Cases',hint:'breakdown →',detail:'cases30'}}
+};
+let MODE='h24';
+
+const CENTER={x:720,y:392,R:132}, WAIST={x:470,y:392}, CASES={x:930,y:392};
+const AUTO={x:1080,y:300}, MAN={x:1080,y:488};       // 24H funnel nodes
+const ACT={x:1120,y:288}, RES={x:1120,y:520};        // 30D nodes
+const EP_Y=210, SRC_Y0=272, SRC_STEP=31, SRC_X=262;
+let srcPts=[];
+
+/* defs + ribbons */
 function defs(svg){const d=svgEl('defs',{});d.innerHTML=`
   <filter id="g" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-  <linearGradient id="teal" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#186158"/><stop offset="1" stop-color="#2fd6c0"/></linearGradient>`;svg.appendChild(d);}
-function ribbon(svg,a,b,w,col='url(#teal)',k=.55){
-  svg.appendChild(svgEl('path',{d:band(a,b,k),fill:'none',stroke:col,'stroke-width':w,'stroke-linecap':'round',opacity:.7,filter:'url(#g)'}));
-  const f=svgEl('path',{d:band(a,b,k),fill:'none',stroke:'#a8fff0','stroke-width':1.6,'stroke-dasharray':'2 90','stroke-linecap':'round',class:'fl'});
-  svg.appendChild(f);
-}
+  <linearGradient id="teal" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1a5a52"/><stop offset="1" stop-color="#2fd6c0"/></linearGradient>
+  <linearGradient id="tmag" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5a0b34"/><stop offset="1" stop-color="#2fd6c0"/></linearGradient>
+  <linearGradient id="ep" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#186158"/><stop offset="1" stop-color="#6ff3e0"/></linearGradient>
+  <linearGradient id="red" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2a2a33"/><stop offset="1" stop-color="#ff4d5e"/></linearGradient>`;svg.appendChild(d);}
+function ribbon(svg,a,b,w,col='url(#teal)',k=.55){svg.appendChild(svgEl('path',{d:band(a,b,k),fill:'none',stroke:col,'stroke-width':w,'stroke-linecap':'round',opacity:.7,filter:'url(#g)'}));}
 function ring(svg,cx,cy,r,n,op=.5){for(let i=0;i<n;i++){const a=i/n*6.283,r2=r+(i%6===0?7:3);
   svg.appendChild(svgEl('line',{x1:cx+Math.cos(a)*r,y1:cy+Math.sin(a)*r,x2:cx+Math.cos(a)*r2,y2:cy+Math.sin(a)*r2,stroke:`rgba(47,214,192,${op*.35})`,'stroke-width':1}));}}
 
-/* flow ribbons */
-(function(){const s=$('#wFlow');defs(s);
-  const srcs=[250,305,360,415,470,525].map(y=>({x:300,y}));
-  const disc={x:700,y:400};
-  srcs.forEach(p=>ribbon(s,p,{x:disc.x-90,y:disc.y},7,'rgba(150,168,178,.16)',.6));
-  srcs.forEach(p=>ribbon(s,p,{x:disc.x-90,y:disc.y},1.5,'url(#teal)',.6));
-  ring(s,disc.x,disc.y,150,110);
-  ribbon(s,{x:disc.x+90,y:disc.y},{x:1060,y:315},16);
-  ribbon(s,{x:disc.x+90,y:disc.y},{x:1060,y:560},9);
-})();
-
-/* agents radial spokes */
-(function(){const s=$('#wAgents');defs(s);const c={x:720,y:430};
-  const orbit=[[720,250],[918,335],[918,525],[720,610],[522,525],[522,335]];
-  ring(s,c.x,c.y,205,150,.35);
-  orbit.forEach(([x,y],i)=>{const ext=i===2;
-    s.appendChild(svgEl('line',{x1:c.x,y1:c.y,x2:x,y2:y,stroke:ext?'rgba(245,166,35,.45)':'rgba(47,214,192,.35)','stroke-width':ext?2:1.4,filter:'url(#g)'}));
+/* build sources + ribbons + wires for a mode */
+let srcRibbons=[];
+function buildSources(list){const wrap=$('#srcWrap');wrap.innerHTML='';srcPts=[];
+  const anyEp=list.some(s=>s.ep);
+  $('#srcHead').style.display = anyEp?'none':'block';
+  let seqY = anyEp?SRC_Y0:260, step = anyEp?SRC_STEP:33, seq=0;
+  list.forEach((s,i)=>{const y = s.ep?EP_Y:(seqY+seq*step); if(!s.ep)seq++;
+    const el=document.createElement('div');
+    if(s.more){el.className='src more';el.style.cssText=`left:66px;top:${y}px`;
+      el.innerHTML=`${iconSVG(s.icon)}<span class="lab">${s.more}</span><span class="dot"></span>`;}
+    else{el.className='src'+(s.ep?' ep':'')+(s.t?' tsys':'');el.style.cssText=`left:66px;top:${y}px`;el.dataset.idx=i;
+      el.innerHTML=`${iconSVG(s.icon)}<span class="lab">${s.n}${s.s?` <small>· ${s.s}</small>`:''}</span><span class="dot"></span>`;}
+    wrap.appendChild(el);srcPts.push({x:SRC_X,y});
   });
-})();
-
-/* isolation wires: live ring -> (severed) supplier agent */
-function drawIso(cut){const s=$('#wIso');s.innerHTML='';defs(s);
-  const live={x:225,y:375};
-  if(!cut){ribbon(s,live,{x:300,y:375},6);}
-  else{ // faded, cut connection
-    s.appendChild(svgEl('path',{d:band(live,{x:300,y:375},.55),fill:'none',stroke:'rgba(255,77,94,.35)','stroke-width':3,'stroke-dasharray':'4 8'}));
-    s.appendChild(svgEl('text',{x:262,y:360,fill:'#ff9aa4','font-size':16,'text-anchor':'middle'}));
+  wireSources(list);
+}
+function buildWires(){const s=$('#wFlow');s.innerHTML='';defs(s);srcRibbons=[];
+  const list=MODES[MODE].sources;
+  list.forEach((src,i)=>{const a=srcPts[i];
+    const greyW=2+src.w*0.95, lineW=0.7+src.w*0.16;
+    const col=src.ep?'url(#ep)':(src.t?'url(#tmag)':'url(#teal)');
+    const base=svgEl('path',{d:band(a,WAIST,.6),fill:'none',stroke:src.ep?'rgba(47,214,192,.16)':'rgba(150,168,178,.13)','stroke-width':greyW,'stroke-linecap':'round',opacity:.7,filter:'url(#g)'});
+    const line=svgEl('path',{d:band(a,WAIST,.6),fill:'none',stroke:col,'stroke-width':lineW,'stroke-linecap':'round',opacity:src.ep?.7:.45});
+    s.appendChild(base);s.appendChild(line);srcRibbons.push({base,line,greyW,lineW,ep:src.ep,t:src.t});
+  });
+  ribbon(s,{x:WAIST.x,y:WAIST.y},{x:CENTER.x-CENTER.R,y:CENTER.y},7,'url(#teal)',.5);
+  ring(s,CENTER.x,CENTER.y,CENTER.R+18,150,.55);
+  ring(s,CENTER.x,CENTER.y,CENTER.R+44,96,.26);
+  s.appendChild(svgEl('circle',{cx:CENTER.x,cy:CENTER.y,r:CENTER.R,fill:'none',stroke:'rgba(47,214,192,.16)','stroke-width':1}));
+  s.appendChild(svgEl('circle',{cx:CENTER.x,cy:CENTER.y,r:CENTER.R*0.62,fill:'none',stroke:'rgba(47,214,192,.10)','stroke-width':1}));
+  ribbon(s,{x:CENTER.x+CENTER.R,y:CENTER.y},{x:CASES.x-40,y:CASES.y},3,'url(#teal)',.55);
+  if(MODE==='h24'){
+    ribbon(s,{x:CASES.x+42,y:CASES.y},{x:AUTO.x-26,y:AUTO.y},9,'url(#teal)',.55);
+    ribbon(s,{x:CASES.x+42,y:CASES.y},{x:MAN.x-26,y:MAN.y},5,'rgba(150,168,178,.4)',.55);
+    ribbon(s,{x:AUTO.x+26,y:AUTO.y},{x:1220,y:294},14,'url(#teal)',.5);
+    [458,484,510,536].forEach(cy=>s.appendChild(svgEl('path',{d:band({x:MAN.x+26,y:MAN.y},{x:1190,y:cy},.5),fill:'none',stroke:'rgba(150,168,178,.3)','stroke-width':1.4})));
+    // magenta magic: manual cases assisted by T Security · Cyber Defense Center Bonn
+    s.appendChild(svgEl('path',{d:band({x:MAN.x,y:MAN.y+30},{x:1104,y:582},.35),fill:'none',stroke:'rgba(226,0,116,.5)','stroke-width':2.4,'stroke-linecap':'round',filter:'url(#g)'}));
+  }else{
+    ribbon(s,{x:CASES.x+42,y:CASES.y},{x:ACT.x-26,y:ACT.y},8,'url(#red)',.55);
+    ribbon(s,{x:CASES.x+42,y:CASES.y},{x:RES.x-26,y:RES.y},9,'url(#teal)',.55);
+    [206,296,386].forEach(cy=>s.appendChild(svgEl('path',{d:band({x:ACT.x+26,y:ACT.y},{x:1252,y:cy},.5),fill:'none',stroke:'rgba(255,120,120,.32)','stroke-width':2})));
+    [504,594].forEach(cy=>s.appendChild(svgEl('path',{d:band({x:RES.x+26,y:RES.y},{x:1252,y:cy},.5),fill:'none',stroke:'rgba(47,214,192,.32)','stroke-width':2})));
   }
 }
-drawIso(false);
+
+/* ---------- smooth sparklines ---------- */
+function smoothD(pts){let d=`M ${pts[0][0].toFixed(1)} ${pts[0][1].toFixed(1)}`;
+  for(let i=0;i<pts.length-1;i++){const p0=pts[i-1]||pts[i],p1=pts[i],p2=pts[i+1],p3=pts[i+2]||p2;
+    const c1x=p1[0]+(p2[0]-p0[0])/6,c1y=p1[1]+(p2[1]-p0[1])/6,c2x=p2[0]-(p3[0]-p1[0])/6,c2y=p2[1]-(p3[1]-p1[1])/6;
+    d+=` C ${c1x.toFixed(1)} ${c1y.toFixed(1)}, ${c2x.toFixed(1)} ${c2y.toFixed(1)}, ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}`;}
+  return d;}
+function spark(id,vals,col){const el=$('#'+id);if(!el)return;
+  const w=130,h=40,mn=Math.min(...vals),mx=Math.max(...vals),pad=5;
+  const pts=vals.map((v,i)=>[pad+i/(vals.length-1)*(w-2*pad), h-pad-(mx===mn?.5:(v-mn)/(mx-mn))*(h-2*pad)]);
+  const dLine=smoothD(pts),gid=id+'grad',last=pts[pts.length-1];
+  el.innerHTML=`<defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${col}" stop-opacity=".28"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient></defs>
+    <path d="${dLine} L ${w-pad} ${h} L ${pad} ${h} Z" fill="url(#${gid})"/>
+    <path d="${dLine}" fill="none" stroke="${col}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="${last[0].toFixed(1)}" cy="${last[1].toFixed(1)}" r="2.6" fill="${col}"/>`;
+}
+function drawSparks(){
+  spark('spk1',[26,30,27,33,29,35,31,34,32,36,34],'#6ff3e0');
+  spark('spk2',[66,64,67,63,62,64,60,61,59,60,58],'#8fa0aa');
+  spark('spk3',[240,246,252,258,263,268,272,277,281,284,286],'#2fd6c0');
+  spark('spk4',[360,372,381,390,398,405,412,419,424,429,432],'#6ff3e0');
+}
 
 /* ---------- particle canvas ---------- */
 const DPR=Math.min(devicePixelRatio||1,2);const cv=$('#cv');const ctx=cv.getContext('2d');
 cv.width=1440*DPR;cv.height=810*DPR;ctx.scale(DPR,DPR);
-const PAL=['#2fd6c0','#2fd6c0','#2fd6c0','#6ff3e0','#f5a623','#ff4d5e'];
-const swarm=[];for(let i=0;i<210;i++){const rad=14+Math.random()*104,ang=Math.random()*6.283;
-  swarm.push({ang,rad,sp:(Math.random()*.0006+.0002)*(Math.random()<.5?-1:1),ph:Math.random()*6.283,col:PAL[i%PAL.length],sz:Math.random()<.15?2.2:1.4});}
-const streak=[];for(let i=0;i<8;i++)streak.push({x:700,y:400+(Math.random()*40-20),sp:1.5+Math.random()*1.3});
-const live=[];for(let i=0;i<26;i++)live.push({x:120+Math.random()*160,y:355+Math.random()*40,sp:.6+Math.random()*1.2});
-const caged=[];for(let i=0;i<24;i++){const a=Math.random()*6.283,r=Math.random()*90;caged.push({a,r,sp:(Math.random()*.01+.004),ph:Math.random()*6.283});}
-let scene='flow',isolated=false;
+const MESS=['#2fd6c0','#6ff3e0','#f5a623','#ff4d5e','#4aa3ff','#e8c14a'];
+const RINGS=[24,42,60,78,96,112,126];
+const RDIR=RINGS.map((_,i)=>i%2?1:-1);
+const RSPD=RINGS.map((_,i)=>0.0009+0.0004*((i*7)%3));
+const ringOff=RINGS.map(()=>0);
+const grid=[];
+RINGS.forEach((r,ri)=>{const n=Math.max(6,Math.round(r*0.72));
+  for(let i=0;i<n;i++){ if(Math.random()<0.06) continue;
+    grid.push({ri, r:r+(Math.random()*2.2-1.1), a:i/n*6.283, ph:Math.random()*6.283, accent:(r<74 && Math.random()<0.16)});}});
+let wIdx=[];
+function slotPoint(){const rr=88+Math.random()*38, aa=Math.PI*(0.55+Math.random()*0.9);return {x:CENTER.x+Math.cos(aa)*rr, y:CENTER.y+Math.sin(aa)*rr};}
+function newInflow(p){const si=wIdx[(Math.random()*wIdx.length)|0];const sl=slotPoint();
+  p.si=si;p.mouth=srcPts[si]||WAIST;p.tx=sl.x;p.ty=sl.y;p.t=0;p.sp=0.0022+Math.random()*0.0016;p.col=MESS[(Math.random()*MESS.length)|0];
+  p.mag=!!(MODES[MODE].sources[si]&&MODES[MODE].sources[si].t);return p;}
+const inflow=[];for(let k=0;k<64;k++){const p=newInflow({});p.t=Math.random();inflow.push(p);}
+const flashes=[];
+function rimRight(){const aa=(Math.random()*0.9-0.45);return {x:CENTER.x+Math.cos(aa)*CENTER.R,y:CENTER.y+Math.sin(aa)*CENTER.R};}
+function newOut(p){p.start=rimRight();p.t=0;p.sp=0.0018+Math.random()*0.0012;p.mag=Math.random()<0.35;return p;}
+const outflow=[];for(let k=0;k<5;k++){const p=newOut({});p.t=Math.random();outflow.push(p);}
+const CASESPT={x:970,y:392};
+function rebuildParticles(){wIdx=[];MODES[MODE].sources.forEach((s,i)=>{if(s.more)return;for(let k=0;k<s.w;k++)wIdx.push(i);});
+  inflow.forEach(p=>{newInflow(p);p.t=Math.random();});}
 
 function frame(t){ctx.clearRect(0,0,1440,810);
-  if(scene==='flow'){
-    const cx=700,cy=400;
-    for(const p of swarm){if(!REDUCED)p.ang+=p.sp;const w=Math.sin(t*.0011+p.ph)*4;
-      const x=cx+Math.cos(p.ang)*(p.rad+w),y=cy+Math.sin(p.ang)*(p.rad+w);
-      ctx.globalAlpha=.35+.45*(0.5+0.5*Math.sin(t*.002+p.ph));ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(x,y,p.sz,0,6.283);ctx.fill();}
-    for(const s of streak){if(!REDUCED)s.x+=s.sp;if(s.x>960){s.x=cx+40;s.y=cy+(Math.random()*60-30);}
-      const g=ctx.createLinearGradient(s.x-26,0,s.x,0);g.addColorStop(0,'rgba(111,243,224,0)');g.addColorStop(1,'rgba(111,243,224,.9)');
-      ctx.strokeStyle=g;ctx.lineWidth=1.6;ctx.globalAlpha=1;ctx.beginPath();ctx.moveTo(s.x-26,s.y);ctx.lineTo(s.x,s.y);ctx.stroke();}
-  }else if(scene==='agents'){
-    for(let i=0;i<70;i++){const a=(t*.00006+i*.09)%6.283,r=210+Math.sin(t*.001+i)*6;
-      ctx.globalAlpha=.15+.1*Math.sin(t*.002+i);ctx.fillStyle='#2fd6c0';ctx.beginPath();ctx.arc(720+Math.cos(a)*r,430+Math.sin(a)*r,1.1,0,6.283);ctx.fill();}
-  }else if(scene==='iso'){
-    for(const p of live){if(!REDUCED)p.x+=p.sp;if(p.x>300){p.x=120;p.y=355+Math.random()*40;}
-      ctx.globalAlpha=.5+.4*Math.sin(t*.003+p.x);ctx.fillStyle='#2fd6c0';ctx.beginPath();ctx.arc(p.x,p.y,1.4,0,6.283);ctx.fill();}
-    if(isolated){const bx=350,by=400; // caged particles inside bubble
-      for(const p of caged){if(!REDUCED)p.a+=p.sp;const x=630+Math.cos(p.a)*p.r,y=400+Math.sin(p.a)*p.r*.85;
-        ctx.globalAlpha=.4+.3*Math.sin(t*.004+p.ph);ctx.fillStyle=Math.random()<.3?'#ff4d5e':'#f5a623';ctx.beginPath();ctx.arc(x,y,1.5,0,6.283);ctx.fill();}}
-  }
+  if(VIEW==='assets'){drawAssets(t);requestAnimationFrame(frame);return;}
+  if(!REDUCED){const period=4200,ph=(t%period)/period,rr=ph*(CENTER.R+26),al=(1-ph)*0.18;
+    ctx.strokeStyle=`rgba(47,214,192,${al})`;ctx.lineWidth=1.4;ctx.beginPath();ctx.arc(CENTER.x,CENTER.y,rr,0,6.283);ctx.stroke();
+    const ph2=((t+2100)%period)/period,rr2=ph2*(CENTER.R+26),al2=(1-ph2)*0.15;
+    ctx.strokeStyle=`rgba(226,0,116,${al2})`;ctx.beginPath();ctx.arc(CENTER.x,CENTER.y,rr2,0,6.283);ctx.stroke();}
+  for(let ri=0;ri<RINGS.length;ri++){ if(!REDUCED) ringOff[ri]+=RDIR[ri]*RSPD[ri]; }
+  const dim = (MODE==='d30')?0.55:1; // dim core a touch under the 30D center label
+  for(const d of grid){const a=d.a+ringOff[d.ri];
+    const x=CENTER.x+Math.cos(a)*d.r,y=CENTER.y+Math.sin(a)*d.r;
+    const col=d.accent?['#ff4d5e','#E20074','#f5a623','#4aa3ff'][(d.ri)%4]:(d.r<50?'#6ff3e0':'#2fd6c0');
+    ctx.globalAlpha=(.30+.5*(0.5+0.5*Math.sin(t*.0019+d.ph)))*dim;ctx.fillStyle=col;
+    ctx.beginPath();ctx.arc(x,y,d.accent?1.9:1.2,0,6.283);ctx.fill();}
+  ctx.globalAlpha=1;
+  for(const p of inflow){ if(!REDUCED)p.t+=p.sp;
+    if(p.t>=1){ flashes.push({x:p.tx,y:p.ty,life:0,mag:p.mag}); newInflow(p); continue; }
+    let pt,col,al,sz;
+    if(p.t<0.5){ pt=bezPt(p.mouth,WAIST,.6,p.t/0.5); col=p.mag?'#E20074':p.col; al=.85; sz=1.7; }
+    else { const u=(p.t-0.5)/0.5; pt=bezPt(WAIST,{x:p.tx,y:p.ty},.5,u); col=p.mag?'#f4b9d8':'#6ff3e0'; al=.9*(1-u*0.35)*dim; sz=1.7-u*0.4; }
+    ctx.globalAlpha=al;ctx.fillStyle=col;ctx.beginPath();ctx.arc(pt.x,pt.y,sz,0,6.283);ctx.fill();}
+  for(let i=flashes.length-1;i>=0;i--){const f=flashes[i];f.life+=(REDUCED?99:1);const u=f.life/26;if(u>=1){flashes.splice(i,1);continue;}
+    ctx.globalAlpha=(1-u)*0.5*dim;ctx.strokeStyle=f.mag?'#f4b9d8':'#a8fff0';ctx.lineWidth=1.2;ctx.beginPath();ctx.arc(f.x,f.y,2+u*7,0,6.283);ctx.stroke();}
+  for(const p of outflow){ if(!REDUCED)p.t+=p.sp;
+    if(p.t>=1){ newOut(p); continue; }
+    let pt; if(p.t<0.45){ pt=bezPt(p.start,CASESPT,.5,p.t/0.45);} else { pt=bezPt(CASESPT,(MODE==='h24'?AUTO:RES),.5,(p.t-0.45)/0.55);}
+    ctx.globalAlpha=.9;ctx.fillStyle=p.mag?'#f4b9d8':'#a8fff0';ctx.beginPath();ctx.arc(pt.x,pt.y,1.9,0,6.283);ctx.fill();}
   ctx.globalAlpha=1;requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
 
-/* flow-line dash animation */
-if(!REDUCED){const st=document.createElement('style');st.textContent='@keyframes flow{to{stroke-dashoffset:-1000}}.fl{animation:flow 6s linear infinite}';document.head.appendChild(st);}
-
-/* ---------- count-up ---------- */
+/* count-up */
 function countUp(root){root.querySelectorAll('[data-count]').forEach(el=>{
   const target=parseFloat(el.dataset.count),comma=el.hasAttribute('data-comma');
-  const fmt=v=>comma?Math.round(v).toLocaleString('en-US'):Math.round(v).toString();
+  const dec=el.dataset.decimals?+el.dataset.decimals:0,suf=el.dataset.suffix||'';
+  const fmt=v=>(comma?Math.round(v).toLocaleString('en-US'):(dec>0?v.toFixed(dec):Math.round(v).toString()))+suf;
   if(REDUCED){el.textContent=fmt(target);return;}
   const t0=performance.now();(function s(n){const p=Math.min(1,(n-t0)/1100),e=1-Math.pow(1-p,3);el.textContent=fmt(target*e);if(p<1)requestAnimationFrame(s);else el.textContent=fmt(target);})(t0);
 });}
-countUp($('#flow'));
 
-/* ---------- scene navigation ---------- */
-const scenes={flow:$('#flow'),agents:$('#agents'),iso:$('#iso')};
-function show(name){
-  Object.values(scenes).forEach(s=>s.classList.remove('active'));
-  scenes[name].classList.add('active');scene=name;
-  $('#backBtn').classList.toggle('on',name!=='flow');
-  $('#liveLbl').textContent = name==='iso' ? 'Incident · isolation active' : (name==='agents'?'Agent architecture':'Medication logistics · Live');
-  $('#playBtn').style.display = name==='iso' ? '' : 'none';
-  $('#resetBtn').style.display = name==='iso' ? '' : 'none';
-  if(name==='agents')countUp($('#agents'));
-  if(name==='iso'){resetIso();}
+/* set a spine node from cfg */
+function setSpine(el,cfg){const span=el.querySelector('.num span');
+  span.dataset.count=cfg.n; if(cfg.comma)span.setAttribute('data-comma','');else span.removeAttribute('data-comma');
+  if(cfg.dec)span.dataset.decimals=cfg.dec;else span.removeAttribute('data-decimals');
+  if(cfg.suffix)span.dataset.suffix=cfg.suffix;else span.removeAttribute('data-suffix');
+  el.querySelector('.cap').textContent=cfg.cap; el.querySelector('.hint').textContent=cfg.hint||'';
+  el.dataset.det=cfg.detail||'';
 }
-$('#hubAgents').onclick=()=>show('agents');
-$('#hubIso').onclick=()=>show('iso');
-$('#agSupplier').onclick=()=>show('iso');
-$('#backBtn').onclick=()=>show('flow');
 
-/* ---------- isolation sequence ---------- */
-const badAgent=$('#badAgent'),toast=$('#toast'),isoStatus=$('#isoStatus'),soc=$('#soc'),riskChip=$('#riskChip'),endNote=$('#endNote');
-let seqTimers=[];
-function resetIso(){
-  seqTimers.forEach(clearTimeout);seqTimers=[];
-  isolated=false;drawIso(false);
-  badAgent.classList.remove('isolated');badAgent.style.left='300px';badAgent.style.top='375px';
-  toast.classList.remove('on');isoStatus.classList.remove('on');
-  soc.classList.remove('on','ring','answered');$('#socState').textContent='Incoming call…';
-  riskChip.classList.remove('on');endNote.classList.remove('on');
+/* ---------- detail popover ---------- */
+const pop=$('#pop');let popOpen=false;
+function detailHTML(key){
+  const D={
+  engine:`<h4><span class="d"></span>AI Correlation Engine</h4><div class="r"><span>Analytics models</span><b>2,600+ ML</b></div><div class="r"><span>Detections</span><b>13,300+</b></div><div class="r"><span>MITRE ATT&CK</span><b class="ok">100% coverage</b></div><div class="r"><span>Noise reduced</span><b class="ok">≈ 99%</b></div><div class="foot">Groups 2,412 issues into 96 prioritized cases with root-cause</div>`,
+  issues:`<h4><span class="d"></span>2,412 Issues</h4><div class="r"><span>Window</span><b>Last 24H</b></div><div class="r"><span>Raised by</span><b>2,600+ ML models</b></div><div class="r"><span>Critical / High</span><b class="warn">271</b></div><div class="r"><span>Deduplicated</span><b class="ok">96%</b></div><div class="foot">Normalized to a common data model before correlation</div>`,
+  cases:`<h4><span class="d"></span>96 Cases</h4><div class="r"><span>From</span><b>2,412 issues</b></div><div class="r"><span>Automated</span><b class="ok">78</b></div><div class="r"><span>Manual</span><b class="warn">18</b></div><div class="r"><span>Resolved</span><b class="ok">85</b></div><div class="r"><span>Open</span><b class="warn">11</b></div><div class="foot">Each case carries the full attack story + root cause</div>`,
+  automated:`<h4><span class="d"></span>78 Automated</h4><div class="r"><span>Handled by</span><b>AI + playbooks</b></div><div class="r"><span>Playbooks run</span><b>142</b></div><div class="r"><span>Manual work</span><b class="ok">−75%</b></div><div class="foot">1,300+ built-in playbooks resolve most issues</div>`,
+  manual:`<h4><span class="d"></span>18 Manual</h4><div class="r"><span>Routed to</span><b>T Security · CDC Bonn</b></div><div class="r"><span>Avg. handle</span><b>18m</b></div><div class="r"><span>Escalated</span><b class="warn">3</b></div><div class="foot">Analysts assisted by the Cyber Defense Center</div>`,
+  resolved:`<h4><span class="d"></span>85 Resolved Cases</h4><div class="r"><span>Auto-remediated</span><b class="ok">78</b></div><div class="r"><span>Analyst-closed</span><b>7</b></div><div class="r"><span>MTTR</span><b class="ok">−98%</b></div><div class="foot">Closed by automated playbooks / SOAR</div>`,
+  open:`<h4><span class="d"></span>11 Open Cases</h4><div class="r"><span>Critical</span><b class="bad">3</b></div><div class="r"><span>High</span><b class="bad">3</b></div><div class="r"><span>Medium</span><b class="warn">5</b></div><div class="r"><span>Low</span><b>0</b></div><div class="foot">Live queue — sorted by business risk</div>`,
+  events:`<h4><span class="d"></span>Events Ingestion</h4><div class="r"><span>Rate</span><b>2.4 B / 24H</b></div><div class="r"><span>Peak</span><b>142 K / sec</b></div><div class="r"><span>Sources</span><b>71 connectors</b></div><div class="r"><span>Residency</span><b class="ok">Germany DB</b></div>`,
+  data:`<h4><span class="d"></span>Data Ingestion</h4><div class="r"><span>Volume</span><b>9 TB / 24H</b></div><div class="r"><span>Trend (24H)</span><b>−4%</b></div><div class="r"><span>Hot store</span><b>310 TB</b></div><div class="r"><span>Hosting</span><b class="ok">T Cloud Public</b></div>`,
+  prevented:`<h4><span class="d"></span>Prevented Events</h4><div class="r"><span>Blocked (24H)</span><b>54 K</b></div><div class="r"><span>By NGFW</span><b>45 K</b></div><div class="r"><span>By endpoint agent</span><b>9 K</b></div><div class="foot">Inline prevention across the connected estate</div>`,
+  vulns:`<h4><span class="d"></span>148K Vulnerabilities</h4><div class="r"><span>Window</span><b>Last 30 days</b></div><div class="r"><span>Trend</span><b class="ok">↓3.8%</b></div><div class="r"><span>Scanners</span><b>9 sources</b></div><div class="foot">Raw findings across the estate before dedup</div>`,
+  unique:`<h4><span class="d"></span>34K Unique Vulnerabilities</h4><div class="r"><span>Deduplicated from</span><b>148K</b></div><div class="r"><span>Prioritized to</span><b class="ok">312 cases</b></div><div class="r"><span>Reduction</span><b class="ok">99.8%</b></div><div class="foot">Click the center to open the Prioritization view</div>`,
+  cases30:`<h4><span class="d"></span>312 Cases</h4><div class="r"><span>Active</span><b class="warn">168</b></div><div class="r"><span>Resolved</span><b class="ok">144</b></div><div class="r"><span>From</span><b>34K unique vulns</b></div><div class="foot">Grouped by asset, exploit path & owner</div>`,
+  p_attn:`<h4><span class="d"></span>Require Attention · 9</h4><div class="r"><span>Trend</span><b class="bad">↑2.5%</b></div><div class="r"><span>Exploited in wild</span><b class="bad">yes (KEV)</b></div><div class="foot">Internet-exposed, high business impact</div>`,
+  p_prog:`<h4><span class="d"></span>In Progress · 121</h4><div class="r"><span>Trend</span><b>↑4%</b></div><div class="r"><span>Owner assigned</span><b class="ok">yes</b></div><div class="foot">Remediation underway with SLAs</div>`,
+  p_mit:`<h4><span class="d"></span>Mitigated · 38</h4><div class="r"><span>Trend</span><b class="ok">↓13%</b></div><div class="r"><span>Via</span><b>compensating controls</b></div><div class="foot">Risk reduced without a full fix</div>`,
+  p_res:`<h4><span class="d"></span>Resolved · 61</h4><div class="r"><span>Trend</span><b class="ok">↑12%</b></div><div class="r"><span>Verified fixed</span><b class="ok">rescan passed</b></div>`,
+  p_risk:`<h4><span class="d"></span>Accepted Risk · 83</h4><div class="r"><span>Trend</span><b>↑5.3%</b></div><div class="r"><span>Sign-off</span><b>risk owner</b></div><div class="foot">Documented exception with review date</div>`,
+  vassets:`<h4><span class="d"></span>Vulnerable Assets</h4><div class="r"><span>Count</span><b>5,840</b></div><div class="r"><span>Trend</span><b class="bad">↑15%</b></div><div class="r"><span>Internet-exposed</span><b class="warn">210</b></div>`,
+  activecases:`<h4><span class="d"></span>Active Cases · 168</h4><div class="r"><span>Critical</span><b class="bad">44</b></div><div class="r"><span>High</span><b class="bad">71</b></div><div class="r"><span>Medium</span><b class="warn">48</b></div><div class="r"><span>Low</span><b>5</b></div>`,
+  mttr:`<h4><span class="d"></span>Mean Time To Resolve</h4><div class="r"><span>Overall</span><b>26 days</b></div><div class="r"><span>Critical</span><b class="ok">21 d</b></div><div class="r"><span>High</span><b>21 d</b></div><div class="r"><span>Medium</span><b>34 d</b></div><div class="r"><span>Low</span><b>35 d</b></div>`,
+  pv_git:`<h4><span class="d"></span>GitHub</h4><div class="r"><span>Assets</span><b>1,650</b></div><div class="r"><span>At risk</span><b class="warn">37</b></div><div class="r"><span>Repos scanned</span><b>2.1 K</b></div>`,
+  pv_aws:`<h4><span class="d"></span>AWS</h4><div class="r"><span>Accounts</span><b>47</b></div><div class="r"><span>Assets</span><b>188</b></div><div class="r"><span>At risk</span><b class="bad">22</b></div><div class="r"><span>Region</span><b class="ok">eu-central-1</b></div>`,
+  pv_az:`<h4><span class="d"></span>Azure</h4><div class="r"><span>Subscriptions</span><b>34</b></div><div class="r"><span>Assets</span><b>99</b></div><div class="r"><span>At risk</span><b class="warn">14</b></div>`,
+  pv_gcp:`<h4><span class="d"></span>Google Cloud</h4><div class="r"><span>Projects</span><b>51</b></div><div class="r"><span>Assets</span><b>1,879</b></div><div class="r"><span>At risk</span><b class="bad">41</b></div><div class="r"><span>Region</span><b class="ok">europe-west3</b></div>`,
+  pv_dc:`<h4><span class="d"></span>On-prem Data Center</h4><div class="r"><span>Assets</span><b>56</b></div><div class="r"><span>At risk</span><b class="warn">9</b></div><div class="r"><span>Residency</span><b class="ok">Germany</b></div>`};
+  return D[key]||'';
 }
-function runIso(){
-  resetIso();
-  const T=(f,ms)=>seqTimers.push(setTimeout(f,ms));
-  T(()=>{toast.classList.add('on');riskChip.classList.add('on');},400);
-  T(()=>{ // isolate: move agent into bubble, sever link
-    isolated=true;drawIso(true);
-    badAgent.classList.add('isolated');badAgent.style.left='630px';badAgent.style.top='400px';
-  },1900);
-  T(()=>{isoStatus.classList.add('on');},3100);
-  T(()=>{soc.classList.add('on','ring');},4200);
+function openDetail(px,py,html){if(!html)return;pop.innerHTML=html;
+  let left=px+18;if(left+248>1414)left=px-248-18;left=Math.max(24,left);
+  let top=Math.max(64,Math.min(py-30,560));pop.style.left=left+'px';pop.style.top=top+'px';pop.classList.add('on');popOpen=true;}
+function closeDetail(){pop.classList.remove('on');popOpen=false;}
+document.addEventListener('click',e=>{if(popOpen&&!pop.contains(e.target)&&!e.target.closest('[data-pop]'))closeDetail();},true);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDetail();closePrio();}});
+function anchor(el){const r=el.getBoundingClientRect(),sr=stage.getBoundingClientRect(),sc=sr.width/1440;
+  return {x:(r.left+r.width/2-sr.left)/sc, y:(r.top+r.height/2-sr.top)/sc};}
+function wire(el,key){if(!el)return;el.setAttribute('data-pop','');el.style.cursor='pointer';
+  el.onclick=e=>{e.stopPropagation();const k=(typeof key==='function')?key():key;const a=anchor(el);openDetail(a.x,a.y,detailHTML(k));};}
+
+/* wire static + dynamic elements */
+wire($('#fnAuto'),'automated');wire($('#fnManual'),'manual');
+wire($('#nResolved'),'resolved');wire($('#nOpen'),'open');wire($('#chevOpen'),'open');
+wire($('#fnActive'),'activecases');wire($('#fnResolvedN'),'cases30');
+$$('.pcard').forEach(c=>wire(c,c.dataset.detail));
+$$('.tile[data-detail]').forEach(t=>wire(t,t.dataset.detail));
+$('#investBtn').onclick=e=>{e.stopPropagation();const a=anchor($('#investBtn'));openDetail(a.x,a.y,detailHTML('open'));};
+wire($('#nLeft'),()=>MODES[MODE].left.detail);
+wire($('#nRight'),()=>MODES[MODE].right.detail);
+$('#nCenter').onclick=e=>{e.stopPropagation();openPrio();};
+$('#coreHit').setAttribute('data-pop','');
+$('#coreHit').onclick=e=>{e.stopPropagation(); if(MODE==='d30'){openPrio();} else {const a=anchor($('#coreHit'));openDetail(a.x,a.y,detailHTML('engine'));}};
+
+function wireSources(list){$$('#srcWrap .src').forEach(row=>{const idx=row.dataset.idx;if(idx==null)return;const src=list[idx];
+  row.setAttribute('data-pop','');
+  row.onmouseenter=()=>{row.classList.add('hot');const rb=srcRibbons[idx];if(rb){rb.line.setAttribute('stroke-width',rb.lineW+1.6);rb.line.setAttribute('opacity',1);rb.base.setAttribute('opacity',1);}};
+  row.onmouseleave=()=>{row.classList.remove('hot');const rb=srcRibbons[idx];if(rb){rb.line.setAttribute('stroke-width',rb.lineW);rb.line.setAttribute('opacity',rb.ep?.7:.45);rb.base.setAttribute('opacity',.7);}};
+  row.onclick=e=>{e.stopPropagation();const a=anchor(row);
+    let h='<h4><span class="d"></span>'+src.n+'</h4>'
+      +'<div class="r"><span>Status</span><b class="ok">● connected</b></div>'
+      +'<div class="r"><span>Ingest</span><b>'+src.rate+'</b></div>'
+      +(src.s?'<div class="r"><span>Assets</span><b>'+src.s+'</b></div>':'')
+      +'<div class="r"><span>Residency</span><b class="ok">'+src.res+'</b></div>';
+    openDetail(a.x,a.y,h);};
+  });
 }
-$('#playBtn').onclick=runIso;
-$('#resetBtn').onclick=resetIso;
-$('#socAccept').onclick=()=>{soc.classList.remove('ring');soc.classList.add('answered');$('#socState').textContent='Connected · analyst';endNote.classList.add('on');};
-$('#socEnd').onclick=()=>{soc.classList.remove('on','ring');};
 
-/* auto-run the isolation beats when first entering the scene */
-let isoSeen=false;
-$('#hubIso').addEventListener('click',()=>{if(!isoSeen){isoSeen=true;setTimeout(runIso,700);}});
-$('#agSupplier').addEventListener('click',()=>{if(!isoSeen){isoSeen=true;setTimeout(runIso,700);}});
+/* ---------- prioritization overlay ---------- */
+const BREAK=[
+  {n:'58K',lab:'Duplicative Findings',f:1},
+  {n:'34K',lab:'Low & Medium CVSS',f:.72},
+  {n:'19K',lab:'Unlikely to be Exploited',f:.5},
+  {n:'8.4K',lab:'Mitigated by Segmentation',f:.3},
+  {n:'6.2K',lab:'Not Reachable',f:.22},
+  {n:'2.1K',lab:'Deprioritized by Policy',f:.14}
+];
+(function(){const bl=$('#breaklist');bl.innerHTML=BREAK.map(b=>
+  `<div class="brow"><b>${b.n}</b><span class="lab">${b.lab}</span><span class="bar" style="max-width:${Math.round(b.f*100)}%"></span></div>`).join('');})();
+function openPrio(){closeDetail();$('#prio').classList.add('on');}
+function closePrio(){$('#prio').classList.remove('on');}
+$('#prioBack').onclick=closePrio;
 
-/* ---------- fit ---------- */
+/* ---------- mode switch ---------- */
+function renderMode(m){MODE=m;const cfg=MODES[m];
+  $$('#tseg button').forEach(b=>b.classList.toggle('on',b.dataset.mode===m));
+  const d30=(m==='d30');
+  $('#right24').classList.toggle('hidden',d30);
+  $('#right30').classList.toggle('hidden',!d30);
+  $('#tiles24').classList.toggle('hidden',d30);
+  $('#tiles30').classList.toggle('hidden',!d30);
+  $('#nCenter').classList.toggle('hidden',!cfg.center);
+  setSpine($('#nLeft'),cfg.left);
+  setSpine($('#nRight'),cfg.right);
+  if(cfg.center)setSpine($('#nCenter'),cfg.center);
+  buildSources(cfg.sources);
+  buildWires();
+  rebuildParticles();
+  drawSparks();
+  // count-up visible numbers
+  countUp($('#nLeft'));countUp($('#nRight'));if(cfg.center)countUp($('#nCenter'));
+  countUp(d30?$('#right30'):$('#right24'));
+  countUp(d30?$('#tiles30'):$('#tiles24'));
+}
+$$('#tseg button').forEach(b=>b.onclick=()=>{if(b.dataset.mode!==MODE){closePrio();renderMode(b.dataset.mode);}});
+
+/* ---------- assets Command Center ---------- */
+const AC={x:800,y:440,R:264};
+const ACX0=800;
+const fmt=n=>n.toLocaleString('en-US');
+// buckets (nested subsets)
+const A_BUCKETS=[
+  {key:'all',   disp:'35.6<em>K</em>', n:35600, comma:1, cls:'all big', cap:'Total Assets',                        sub:'24.9K Medical / Clinical · 10.7K IT & Cloud', label:'All Assets',      glow:[245,170,80]},
+  {key:'risk',  disp:'5,840',          n:5840,  comma:1, cls:'risk',    cap:'Assets at Risk',                       sub:'412 Open Issues · 88 Open Cases', label:'At Risk',        glow:[245,166,35]},
+  {key:'threat',disp:'84',             n:84,             cls:'threat',  cap:'Assets with Active Threats',           sub:'96 Open Issues · 19 Open Cases', label:'Active Threats', glow:[255,77,94]},
+  {key:'both',  disp:'29',             n:29,             cls:'both',    cap:'Critical · At Risk + Active Threats',   sub:'41 Open Issues · 8 Open Cases', label:'At Risk + Threats', glow:[226,0,116]}
+];
+// locations (assets sum = 35,600; risk sum = 5,840; threat = 84; both = 29)
+const A_LOC=[
+  {key:'campus',  name:'Main Campus',           tag:'Hospital', mark:'campus',  assets:30200, unit:'Buildings',  unitN:6,       ang:-1.5708, cats:[['Medical Devices (IoMT)',17800],['Clinical Endpoints',8600],['Imaging / PACS',1180],['Laboratory (LIS)',940],['Servers & VMs',1010],['Network & OT',670]], status:{both:25,threat:71,risk:5275}},
+  {key:'mvz',     name:'Outpatient Centers',    tag:'Clinics',  mark:'mvz',     assets:2100,  unit:'Locations',  unitN:12,      ang:-0.62,   cats:[['Workstations',980],['Medical Devices',720],['Network',240],['Servers',160]], status:{both:1,threat:4,risk:310}},
+  {key:'cloud',   name:'T Cloud Public',        tag:'Cloud',    mark:'cloud',   assets:1760,  unit:'Region',     unitN:'eu-de', ang:0.6,     cats:[['Virtual Machines',620],['Object Storage',430],['Databases',320],['Patient Portal',190],['Backup Vaults',200]], status:{both:0,threat:1,risk:22}},
+  {key:'telemed', name:'Telemedicine & Home',   tag:'Remote',   mark:'telemed', assets:640,   unit:'Programs',   unitN:9,       ang:1.5708,  cats:[['Home Monitors',320],['Video Endpoints',140],['Wearables',120],['Gateways',60]], status:{both:2,threat:5,risk:180}},
+  {key:'labs',    name:'Reference Labs',        tag:'External', mark:'labs',    assets:520,   unit:'Partners',   unitN:5,       ang:2.5,     cats:[['Analyzer Interfaces',210],['Data Feeds',160],['Gateways',90],['Identities',60]], status:{both:1,threat:2,risk:44}},
+  {key:'research',name:'Research Institute',    tag:'Research', mark:'research',assets:380,   unit:'Partners',   unitN:14,      ang:-2.85,   cats:[['Partner Gateways',90],['Shared Datasets',140],['Federated Nodes',60],['External Researchers',90]], status:{both:0,threat:1,risk:9}}
+];
+const PMARK={
+  campus:'<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M2 14h12M3.6 14V6.2L8 3.2l4.4 3V14"/><path d="M8 8v2.6M6.7 9.3h2.6" stroke-width="1.5"/></svg>',
+  mvz:'<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><rect x="3" y="4" width="10" height="10" rx="1"/><path d="M8 6.3v3.4M6.3 8h3.4" stroke-width="1.5"/></svg>',
+  cloud:'<svg class="sicon" viewBox="0 0 231 275" fill="currentColor"><path d="M55,181.5H0v-55h55v55ZM0,0v93.5h16.5v-2.75c0-44,24.75-71.5,71.5-71.5h2.75v198c0,27.5-11,38.5-38.5,38.5h-8.25v19.25h143v-19.25h-8.25c-27.5,0-38.5-11-38.5-38.5V19.25s2.75,0,2.75,0c46.75,0,71.5,27.5,71.5,71.5v2.75h16.5V0H0ZM176,181.5h55v-55h-55v55Z"/></svg>',
+  telemed:'<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><rect x="2" y="3.5" width="12" height="8" rx="1"/><path d="M6.6 6.1l3.3 1.9-3.3 1.9z" fill="currentColor" stroke="none"/><path d="M5.5 13.6h5"/></svg>',
+  labs:'<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M6.5 2v3.8L3.6 11.6A1.4 1.4 0 0 0 4.9 13.7h6.2a1.4 1.4 0 0 0 1.3-2.1L9.5 5.8V2M6 2h4M5.4 9.4h5.2"/></svg>',
+  research:'<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="8" cy="8" r="6"/><path d="M2 8h12M8 2c2.4 2 2.4 10 0 12M8 2c-2.4 2-2.4 10 0 12"/></svg>'
+};
+const CAT_COLORS=['#2fd6c0','#6ff3e0','#4aa3ff','#f5a623','#E20074','#ff7a52','#8b959e','#9b8cff'];
+
+// asset dot field (static; the magenta radar sweeps it)
+const assets=[];
+(function(){for(let r=58;r<=AC.R-8;r+=12){const n=Math.max(8,Math.round(r*0.5));
+  for(let i=0;i<n;i++){const a=i/n*6.283+(Math.random()*.02-.01);
+    let type='neutral';
+    if(a>-1.4 && a<-0.15 && r<180 && Math.random()<0.5) type='risk';
+    else if(Math.random()<0.02) type='threat';
+    const col=type==='risk'?'#f5a623':(type==='threat'?'#ff4d5e':'rgba(120,150,150,.5)');
+    assets.push({a,r:r+(Math.random()*3-1.5),type,col,al:type==='neutral'?.5:.9,sz:type==='neutral'?1.25:1.7,ph:Math.random()*6.283});
+  }}})();
+let sweepAng=0, radarShift=0, radarTarget=0, glowRGB=[245,170,80];
+function drawAssets(t){
+  radarShift+=(radarTarget-radarShift)*0.14; AC.x=ACX0+radarShift;
+  const rw=$('#radarWrap'); if(rw) rw.style.transform=`translateX(${radarShift.toFixed(1)}px)`;
+  const gr=glowRGB;
+  const g=ctx.createRadialGradient(AC.x,AC.y,8,AC.x,AC.y,190);
+  g.addColorStop(0,`rgba(${gr[0]},${gr[1]},${gr[2]},.48)`);g.addColorStop(.5,`rgba(${gr[0]},${gr[1]},${gr[2]},.12)`);g.addColorStop(1,`rgba(${gr[0]},${gr[1]},${gr[2]},0)`);
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(AC.x,AC.y,190,0,6.283);ctx.fill();
+  // magenta radar sweep
+  if(!REDUCED)sweepAng+=0.006;
+  const SW=0.6;
+  ctx.beginPath();ctx.moveTo(AC.x,AC.y);ctx.arc(AC.x,AC.y,AC.R,sweepAng-SW,sweepAng);ctx.closePath();
+  ctx.fillStyle='rgba(226,0,116,.07)';ctx.fill();
+  ctx.strokeStyle='rgba(226,0,116,.5)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(AC.x,AC.y);ctx.lineTo(AC.x+Math.cos(sweepAng)*AC.R,AC.y+Math.sin(sweepAng)*AC.R);ctx.stroke();
+  // dots + scan glow
+  for(const d of assets){const x=AC.x+Math.cos(d.a)*d.r,y=AC.y+Math.sin(d.a)*d.r;
+    let da=sweepAng-d.a; da=((da%6.283)+6.283)%6.283; const scan=da<SW?(1-da/SW):0;
+    ctx.globalAlpha=Math.min(1,d.al*(.55+.45*Math.sin(t*.0018+d.ph))+scan*0.55);
+    ctx.fillStyle=(scan>0.35&&d.type==='neutral')?'#f4b9d8':d.col;
+    ctx.beginPath();ctx.arc(x,y,d.sz+scan*0.9,0,6.283);ctx.fill();}
+  ctx.globalAlpha=1;
+}
+function ppos(ang){return {x:ACX0+Math.cos(ang)*(AC.R+52), y:AC.y+Math.sin(ang)*(AC.R+52)};}
+function buildAssetsUI(){
+  const s=$('#wAssets');s.innerHTML='';defs(s);
+  ring(s,ACX0,AC.y,AC.R+14,190,.5);
+  [AC.R,AC.R*0.66,AC.R*0.33].forEach((rr,i)=>s.appendChild(svgEl('circle',{cx:ACX0,cy:AC.y,r:rr,fill:'none',stroke:`rgba(47,214,192,${(.12-i*.03).toFixed(2)})`,'stroke-width':1})));
+  $('#regionWrap').innerHTML=''; // no department labels — the radar is organised by SITE, not department
+  // faint connectors tying each site to the estate ring
+  A_LOC.forEach(p=>{const o={x:ACX0+Math.cos(p.ang)*(AC.R+40),y:AC.y+Math.sin(p.ang)*(AC.R+40)},i={x:ACX0+Math.cos(p.ang)*(AC.R+14),y:AC.y+Math.sin(p.ang)*(AC.R+14)};
+    s.appendChild(svgEl('line',{x1:o.x.toFixed(1),y1:o.y.toFixed(1),x2:i.x.toFixed(1),y2:i.y.toFixed(1),stroke:'rgba(130,150,160,.22)','stroke-width':1}));});
+  const pw=$('#provWrap');pw.innerHTML='';
+  A_LOC.forEach(p=>{const pos=ppos(p.ang);const el=document.createElement('div');
+    el.className='prov pk-'+p.mark;el.style.cssText=`left:${pos.x.toFixed(0)}px;top:${pos.y.toFixed(0)}px`;
+    el.innerHTML=`${PMARK[p.mark]}<b>${fmt(p.assets)} <em>${p.tag}</em></b><span>${p.name}</span>`;
+    el.onclick=e=>{e.stopPropagation();selectLocation(p.key);};pw.appendChild(el);});
+  const bw=$('#astats');bw.innerHTML='';
+  A_BUCKETS.forEach(bk=>{const el=document.createElement('div');el.className='abucket '+bk.cls;el.dataset.key=bk.key;
+    el.innerHTML=`<b>${bk.disp}</b><span class="lab">${bk.label}</span>`;el.onclick=()=>selectBucket(bk.key);bw.appendChild(el);});
+}
+function animNum(el,target,comma){const t0=performance.now();
+  const f=v=>comma?Math.round(v).toLocaleString('en-US'):Math.round(v).toString();
+  if(REDUCED){el.textContent=f(target);return;}
+  (function s(n){const p=Math.min(1,(n-t0)/900),e=1-Math.pow(1-p,3);el.textContent=f(target*e);if(p<1)requestAnimationFrame(s);else el.textContent=f(target);})(t0);
+}
+function selectBucket(key){const bk=A_BUCKETS.find(b=>b.key===key);if(!bk)return;
+  $$('#astats .abucket').forEach(e=>e.classList.toggle('on',e.dataset.key===key));
+  glowRGB=bk.glow;$('#acCap').textContent=bk.cap;$('#acSub').textContent=bk.sub;animNum($('#acNum'),bk.n,bk.comma);
+}
+function donutSVG(cats,total){const cx=65,cy=65,r=46,sw=15;let acc=0;
+  const arc=(a0,a1)=>{const s=a0-1.5708,e=a1-1.5708;const x0=cx+Math.cos(s)*r,y0=cy+Math.sin(s)*r,x1=cx+Math.cos(e)*r,y1=cy+Math.sin(e)*r,lg=(a1-a0)>Math.PI?1:0;return `M ${x0.toFixed(1)} ${y0.toFixed(1)} A ${r} ${r} 0 ${lg} 1 ${x1.toFixed(1)} ${y1.toFixed(1)}`;};
+  const paths=cats.map((c,i)=>{const f0=acc/total,f1=(acc+c[1])/total;acc+=c[1];return `<path d="${arc(f0*6.28,f1*6.28-0.03)}" fill="none" stroke="${CAT_COLORS[i%CAT_COLORS.length]}" stroke-width="${sw}"/>`;}).join('');
+  return `<svg class="donut" viewBox="0 0 130 130">${paths}</svg>`;
+}
+function selectLocation(key){const p=A_LOC.find(x=>x.key===key);if(!p)return;
+  radarTarget=-300;$('#radarWrap').classList.add('detail');
+  const catlist=p.cats.map((c,i)=>`<div class="ci"><span class="sw" style="background:${CAT_COLORS[i%CAT_COLORS.length]}"></span><b>${fmt(c[1])}</b><span>${c[0]}</span></div>`).join('');
+  const unitRow=p.unitN?`<div class="h u"><b>${PMARK[p.mark]}${p.unitN}</b><span>${p.unit}</span></div>`:'';
+  $('#provDetail').innerHTML=`
+   <div class="crumb" id="provCrumb"><span class="bk">‹ All Assets</span> / <b>${p.name}</b></div>
+   <div class="head"><div class="h"><b>${fmt(p.assets)}</b><span>Assets</span></div>${unitRow}</div>
+   <div class="sec">All ${p.name} Assets by Category</div>
+   <div class="cats">${donutSVG(p.cats,p.assets)}<div class="catlist">${catlist}</div></div>
+   <div class="status">
+     <div class="st b1"><b>${p.status.both}</b><span>At Risk &amp; Active Threats</span></div>
+     <div class="st b2"><b>${p.status.threat}</b><span>Active Threats</span></div>
+     <div class="st b3"><b>${fmt(p.status.risk)}</b><span>At Risk</span></div>
+   </div>`;
+  $('#provCrumb').onclick=backRadar;
+  $('#provDetail').classList.add('on');
+}
+function backRadar(){radarTarget=0;$('#radarWrap').classList.remove('detail');$('#provDetail').classList.remove('on');}
+
+/* ---------- view system ---------- */
+let VIEW='assets';
+function showView(v){VIEW=v;
+  document.body.classList.toggle('view-flow',v==='flow');
+  $('#flowView').classList.toggle('hidden',v!=='flow');
+  $('#assetsView').classList.toggle('hidden',v!=='assets');
+  $('#wFlow').style.display=(v==='flow')?'':'none';
+  const dm=$('.dome');if(dm)dm.style.display=(v==='flow')?'':'none';
+  $('#tseg').style.display=(v==='flow')?'':'none';
+  $('#sevFilter').classList.toggle('hidden',v!=='assets');
+  closeDetail();closePrio();
+  if(v==='assets'){backRadar();selectBucket('all');}
+  else{countUp($('#nLeft'));countUp($('#nRight'));if(MODES[MODE].center)countUp($('#nCenter'));
+    countUp(MODE==='d30'?$('#right30'):$('#right24'));countUp(MODE==='d30'?$('#tiles30'):$('#tiles24'));}
+}
+$('#assetShow').onclick=()=>showView('flow');
+$('#backBtn').onclick=()=>showView('assets');
+
+/* init */
+renderMode('h24');
+buildAssetsUI();
+showView('assets');
+
+/* fit */
 function fit(){const s=Math.min(innerWidth/1440,innerHeight/810);stage.style.transform=`scale(${s})`;}
 addEventListener('resize',fit);fit();
 </script>
