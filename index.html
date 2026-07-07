@@ -301,6 +301,47 @@ body.view-flow .backbtn{display:flex}
 .dvnode .disc3{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:154px;height:154px;border-radius:50%;
   border:1.5px solid var(--teal);box-shadow:0 0 34px var(--glow),inset 0 0 26px rgba(47,214,192,.14);z-index:-1}
 
+
+/* ===== Dynamic View ===== */
+.dyn-stat{position:absolute;left:44px;z-index:6}
+.dyn-stat .k{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:6px}
+.dyn-stat .v{font-size:26px;font-weight:800;color:#fff}
+.dyn-stat .v u{font-size:12px;color:var(--muted);font-weight:600;text-decoration:none;margin-left:3px}
+.dyn-donutwrap{position:absolute;transform:translate(-50%,-50%);z-index:4}
+.dyn-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:5;text-align:center;width:184px}
+.dyn-center .pct{font-size:52px;font-weight:800;color:#fff;line-height:1}
+.dyn-center .lab{font-size:10px;font-weight:700;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin-top:8px}
+.dyn-center .sub{font-size:12px;color:var(--teal-br);margin-top:8px;font-weight:700;letter-spacing:.06em}
+.dyn-mark{position:absolute;transform:translate(-50%,-50%);z-index:5;text-align:center;width:100px}
+.dyn-mark .mc{width:42px;height:42px;border-radius:50%;margin:0 auto;display:grid;place-items:center;
+  border:1.5px solid var(--teal-dim);background:radial-gradient(circle at 50% 40%,rgba(47,214,192,.12),rgba(4,10,12,.6));
+  box-shadow:0 0 16px rgba(47,214,192,.2)}
+.dyn-mark .mc svg{width:20px;height:20px;color:var(--muted)}
+.dyn-mark .mc img{max-width:22px;max-height:14px;filter:brightness(0) invert(.72);opacity:.85}
+.dyn-mark.t .mc{border-color:var(--magenta);box-shadow:0 0 16px rgba(226,0,116,.3)}
+.dyn-mark.t .mc svg{color:var(--magenta)}
+.dyn-mark .ml{font-size:10px;color:var(--muted);margin-top:7px;white-space:nowrap;letter-spacing:.02em}
+.dyn-mark .sev{position:absolute;top:-3px;right:22px;font-size:10px;line-height:1}
+.dyn-mark .sev.c{color:var(--red)} .dyn-mark .sev.h{color:#ff7a52} .dyn-mark .sev.m{color:var(--amber)}
+.dyn-rotring{transform-origin:590px 440px;animation:dynrot 90s linear infinite}
+.reduced .dyn-rotring{animation:none}
+@keyframes dynrot{to{transform:rotate(360deg)}}
+/* live feed */
+.dyn-feed{position:absolute;right:44px;top:150px;width:322px;z-index:6}
+.dyn-feed .fh{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin-bottom:14px}
+.dyn-feed .fh .d{width:8px;height:8px;border-radius:50%;background:#63e6a0;box-shadow:0 0 10px #63e6a0;animation:blink 1.6s ease-in-out infinite}
+.reduced .dyn-feed .fh .d{animation:none}
+.dyn-feed .fi{display:flex;align-items:center;gap:10px;border:1px solid var(--hair);border-left-width:2px;border-radius:8px;
+  padding:9px 12px;margin-bottom:8px;font-size:12px;background:rgba(255,255,255,.015)}
+.dyn-feed .fi .ic{width:15px;height:15px;flex:0 0 auto;color:var(--teal-br)}
+.dyn-feed .fi .ic svg{width:15px;height:15px;display:block}
+.dyn-feed .fi .tx{color:#cfd6db;flex:1}
+.dyn-feed .fi .tx b{color:#fff;font-weight:700}
+.dyn-feed .fi .tx .id{color:var(--teal-br);font-weight:700}
+.dyn-feed .fi.teal{border-left-color:var(--teal)}
+.dyn-feed .fi.red{border-left-color:var(--red)} .dyn-feed .fi.red .ic{color:#ff9aa4} .dyn-feed .fi.red .tx .id{color:#ff9aa4}
+.dyn-feed .fi.mut{border-left-color:var(--dim)} .dyn-feed .fi.mut .ic{color:var(--muted)} .dyn-feed .fi.mut .tx{color:var(--muted)}
+
 </style>
 </head>
 <body>
@@ -485,6 +526,20 @@ body.view-flow .backbtn{display:flex}
     <div id="dvInvList"></div>
     <div class="dvnode" id="dvInvIssues" style="left:1040px;top:380px"><div class="disc3"></div><b><span data-count="2412" data-comma>0</span></b><span>Issues</span></div>
     <div class="dvnode sm" id="dvInvPrev" style="left:1150px;top:566px"><b><span data-count="54">0</span>K</b><span>Prevented Events</span></div>
+  </div>
+
+  <!-- ===== Dynamic View overlay (Core, 24H) ===== -->
+  <div class="dv" id="dvDynamic">
+    <div class="dv-back" id="dvDynBack">‹ Flow</div>
+    <div class="dv-head"><h2>Dynamic View</h2><p>Live correlation · automation in real time · Last 24H</p></div>
+    <svg class="dv-wire" id="dynWire" viewBox="0 0 1440 810"></svg>
+    <div id="dynMarks"></div>
+    <div class="dyn-donutwrap" style="left:590px;top:440px;width:236px;height:236px">
+      <div class="dyn-center"><div class="pct"><span data-count="81">0</span>%</div><div class="lab">Automatically Resolved</div><div class="sub">96 Cases</div></div>
+    </div>
+    <div class="dyn-feed" id="dynFeed"></div>
+    <div class="dyn-stat" style="top:264px"><div class="k">Data Ingestion</div><div class="v">9 <u>TB/24H</u></div></div>
+    <div class="dyn-stat" style="top:352px"><div class="k">Total Open Cases</div><div class="v">11</div></div>
   </div>
 
 </div></div>
@@ -1011,6 +1066,64 @@ function closeInventory(){$('#dvInventory').classList.remove('on');}
 $('#dvInvBack').onclick=closeInventory;
 $('#nLeft').onclick=e=>{e.stopPropagation(); if(MODE==='h24')openInventory(); else {const a=anchor($('#nLeft'));openDetail(a.x,a.y,detailHTML(MODES[MODE].left.detail));}};
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeInventory();});
+
+
+/* ===== Dynamic View (Core click, 24H) ===== */
+const DYN_C={x:590,y:440};
+const DYN_MARKS=[
+ {icon:'iomt',n:'Medical Devices',ang:-90,r:252},
+ {icon:'imaging',n:'Imaging / PACS',ang:-57.3,r:300,sev:'m'},
+ {icon:'his',n:'iMedOne · HIS',ang:-24.5,r:250,t:1},
+ {icon:'tmark',n:'T Cloud Public',ang:8.2,r:300,t:1},
+ {icon:'firewall',n:'Network / NGFW',ang:40.9,r:252,sev:'c'},
+ {icon:'identity',n:'Identities',ang:73.6,r:300},
+ {icon:'flask',n:'Laboratory · LIS',ang:106.4,r:252},
+ {logo:'azure',n:'Azure',ang:139.1,r:300},
+ {icon:'pharmacy',n:'Pharmacy / AGV',ang:171.8,r:252,sev:'h'},
+ {icon:'endpoint',n:'Clinical Endpoints',ang:204.5,r:300},
+ {icon:'hpc',n:'Research / HPC',ang:237.3,r:252}
+];
+const DYN_IC={
+ play:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="8" cy="8" r="6"/><path d="M6.6 5.4l4 2.6-4 2.6z" fill="currentColor" stroke="none"/></svg>',
+ up:'<svg viewBox="0 0 16 16" fill="currentColor" stroke="none"><path d="M8 4.4l4.6 6.2H3.4z"/></svg>',
+ dot:'<svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>'
+};
+const DYN_FEED=[
+ {cls:'teal',ic:'play',tx:'Playbook triggered · <span class="id">ID-968</span>'},
+ {cls:'red', ic:'up',  tx:'12 Issues added to <b>2 Cases</b>'},
+ {cls:'red', ic:'up',  tx:'Case created · <span class="id">ID-906</span>'},
+ {cls:'teal',ic:'play',tx:'Case auto-resolved · <span class="id">ID-882</span>'},
+ {cls:'teal',ic:'play',tx:'New playbook suggestion · <span class="id">ID-971</span>'},
+ {cls:'teal',ic:'dot', tx:'6 Issues correlated to <b>1 Case</b>'},
+ {cls:'red', ic:'up',  tx:'Case reopened · <span class="id">ID-923</span>'},
+ {cls:'mut', ic:'dot', tx:'Medical Devices · 285 MB ingested'},
+ {cls:'teal',ic:'play',tx:'6 Playbooks triggered for <b>2 Cases</b>'}
+];
+function buildDynamic(){
+  const s=$('#dynWire'); s.innerHTML=''; defs(s);
+  [300,220,150].forEach((r,i)=>s.appendChild(svgEl('circle',{cx:DYN_C.x,cy:DYN_C.y,r,fill:'none',stroke:`rgba(47,214,192,${(.10-i*.02).toFixed(2)})`,'stroke-width':1})));
+  const g=svgEl('g',{class:'dyn-rotring'});
+  for(let i=0;i<120;i++){const a=i/120*6.283,r=176,r2=r+(i%6===0?7:3);
+    g.appendChild(svgEl('line',{x1:(DYN_C.x+Math.cos(a)*r).toFixed(1),y1:(DYN_C.y+Math.sin(a)*r).toFixed(1),x2:(DYN_C.x+Math.cos(a)*r2).toFixed(1),y2:(DYN_C.y+Math.sin(a)*r2).toFixed(1),stroke:'rgba(47,214,192,.18)','stroke-width':1}));}
+  s.appendChild(g);
+  const R=118, sw=30, C=2*Math.PI*R, autoFrac=78/96;
+  s.appendChild(svgEl('circle',{cx:DYN_C.x,cy:DYN_C.y,r:R,fill:'none',stroke:'rgba(150,168,178,.16)','stroke-width':sw}));
+  s.appendChild(svgEl('circle',{cx:DYN_C.x,cy:DYN_C.y,r:R,fill:'none',stroke:'url(#teal)','stroke-width':sw,'stroke-linecap':'round','stroke-dasharray':`${(C*autoFrac).toFixed(1)} ${C.toFixed(1)}`,transform:`rotate(-90 ${DYN_C.x} ${DYN_C.y})`,filter:'url(#g)'}));
+  const mk=$('#dynMarks'); mk.innerHTML='';
+  DYN_MARKS.forEach(m=>{const a=m.ang*Math.PI/180,x=DYN_C.x+Math.cos(a)*m.r,y=DYN_C.y+Math.sin(a)*m.r;
+    s.appendChild(svgEl('line',{x1:(DYN_C.x+Math.cos(a)*138).toFixed(1),y1:(DYN_C.y+Math.sin(a)*138).toFixed(1),x2:(x-Math.cos(a)*26).toFixed(1),y2:(y-Math.sin(a)*26).toFixed(1),stroke:m.t?'rgba(226,0,116,.16)':'rgba(130,150,160,.12)','stroke-width':1}));
+    const el=document.createElement('div');el.className='dyn-mark'+(m.t?' t':'');el.style.cssText=`left:${x.toFixed(0)}px;top:${y.toFixed(0)}px`;
+    const mark=m.logo?`<img src="${LOGO[m.logo]}" alt="">`:iconSVG(m.icon);
+    el.innerHTML=`<div class="mc">${mark}</div><div class="ml">${m.n}</div>${m.sev?`<div class="sev ${m.sev}">▲</div>`:''}`;
+    mk.appendChild(el);});
+  $('#dynFeed').innerHTML='<div class="fh"><span class="d"></span>Live Feed</div>'+DYN_FEED.map(f=>
+    `<div class="fi ${f.cls}"><span class="ic">${DYN_IC[f.ic]}</span><span class="tx">${f.tx}</span></div>`).join('');
+}
+function openDynamic(){closeDetail();buildDynamic();$('#dvDynamic').classList.add('on');countUp($('#dvDynamic'));}
+function closeDynamic(){$('#dvDynamic').classList.remove('on');}
+$('#dvDynBack').onclick=closeDynamic;
+$('#coreHit').onclick=e=>{e.stopPropagation(); if(MODE==='d30')openPrio(); else openDynamic();};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDynamic();});
 
 
 /* init */
