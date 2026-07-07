@@ -342,6 +342,40 @@ body.view-flow .backbtn{display:flex}
 .dyn-feed .fi.red{border-left-color:var(--red)} .dyn-feed .fi.red .ic{color:#ff9aa4} .dyn-feed .fi.red .tx .id{color:#ff9aa4}
 .dyn-feed .fi.mut{border-left-color:var(--dim)} .dyn-feed .fi.mut .ic{color:var(--muted)} .dyn-feed .fi.mut .tx{color:var(--muted)}
 
+
+/* ===== Cases Overview ===== */
+.co-node{position:absolute;transform:translate(-50%,-50%);z-index:5;text-align:center}
+.co-node b{font-size:34px;font-weight:800;color:#fff;line-height:1;white-space:nowrap}
+.co-node.sm b{font-size:24px}
+.co-node.cases b{font-size:40px}
+.co-node>span{display:block;font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-top:7px}
+.co-node .disc4{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:120px;height:120px;border-radius:50%;
+  border:1.5px solid var(--teal);box-shadow:0 0 26px var(--glow),inset 0 0 20px rgba(47,214,192,.14);z-index:-1}
+.co-hd{position:absolute;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);z-index:5}
+.co-bars{position:absolute;left:120px;width:360px;z-index:5}
+.co-bar{margin-bottom:16px}
+.co-bar .lab{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:6px}
+.co-bar .lab .n{color:#d7dde2;font-weight:600}
+.co-bar .lab .v{color:#fff;font-weight:800}
+.co-bar .track{height:8px;border-radius:6px;background:rgba(255,255,255,.05);overflow:hidden}
+.co-bar .fill{height:100%;border-radius:6px}
+.co-bar.auto .fill{background:linear-gradient(90deg,#1a5a52,var(--teal))}
+.co-bar.analyst .fill{background:linear-gradient(90deg,#5a0b34,var(--magenta))}
+.co-bar.open .fill{background:linear-gradient(90deg,#7a5a12,var(--amber))}
+.co-bar.auto .lab .v{color:var(--teal-br)} .co-bar.analyst .lab .v{color:#f4b9d8} .co-bar.open .lab .v{color:var(--amber)}
+.co-auto{position:absolute;left:120px;width:360px;border:1px solid rgba(47,214,192,.3);border-radius:12px;padding:14px 16px;background:rgba(47,214,192,.05);z-index:5}
+.co-auto h5{font-size:12px;font-weight:800;letter-spacing:.1em;color:var(--teal-br);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.co-auto p{font-size:12px;color:#cfd6db;line-height:1.5}
+.co-auto p b{color:#fff}
+.co-mitre{position:absolute;right:64px;top:180px;width:404px;z-index:5}
+.co-mitre .mh{font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin-bottom:14px}
+.co-mrow{display:flex;align-items:center;gap:14px;padding:7.5px 0;border-top:1px solid var(--hair)}
+.co-mrow:first-of-type{border-top:0}
+.co-mrow .c{font-size:15px;font-weight:800;color:#fff;width:26px;text-align:right}
+.co-mrow .t{font-size:13px;color:#cfd6db;flex:1}
+.co-mrow .bar{width:90px;flex:0 0 auto;height:6px;border-radius:4px;background:linear-gradient(90deg,rgba(47,214,192,.55),rgba(47,214,192,.1))}
+.co-mrow.hi .c{color:var(--teal-br)}
+
 </style>
 </head>
 <body>
@@ -540,6 +574,23 @@ body.view-flow .backbtn{display:flex}
     <div class="dyn-feed" id="dynFeed"></div>
     <div class="dyn-stat" style="top:264px"><div class="k">Data Ingestion</div><div class="v">9 <u>TB/24H</u></div></div>
     <div class="dyn-stat" style="top:352px"><div class="k">Total Open Cases</div><div class="v">11</div></div>
+  </div>
+
+  <!-- ===== Cases Overview overlay (Cases, 24H) ===== -->
+  <div class="dv" id="dvCases">
+    <div class="dv-back" id="dvCasesBack">‹ Flow</div>
+    <div class="dv-head"><h2>Cases Overview</h2><p>Correlated case lifecycle · Last 24H</p></div>
+    <svg class="dv-wire" id="coWire" viewBox="0 0 1440 810"></svg>
+    <div class="co-node" style="left:150px;top:250px"><b><span data-count="2412" data-comma>0</span></b><span>Issues</span></div>
+    <div class="co-node cases" style="left:400px;top:250px"><div class="disc4"></div><b><span data-count="96">0</span></b><span>Cases</span></div>
+    <div class="co-node sm" style="left:640px;top:190px"><b><span data-count="78">0</span></b><span>Automated</span></div>
+    <div class="co-node sm" style="left:640px;top:312px"><b><span data-count="18">0</span></b><span>Manual</span></div>
+    <div class="co-node sm" style="left:880px;top:190px"><b><span data-count="85">0</span></b><span>Resolved</span></div>
+    <div class="co-node sm" style="left:880px;top:312px"><b><span data-count="11">0</span></b><span>Open</span></div>
+    <div class="co-hd" style="left:120px;top:408px">Case handling · 96 cases</div>
+    <div class="co-bars" id="coBars" style="top:440px"></div>
+    <div class="co-auto" style="top:640px"><h5>✦ AUTOMATION HEADROOM</h5><p><b>12</b> of 18 manual cases are automatable · <b>8</b> playbook recommendations from the correlation engine.</p></div>
+    <div class="co-mitre" id="coMitre"></div>
   </div>
 
 </div></div>
@@ -1124,6 +1175,30 @@ function closeDynamic(){$('#dvDynamic').classList.remove('on');}
 $('#dvDynBack').onclick=closeDynamic;
 $('#coreHit').onclick=e=>{e.stopPropagation(); if(MODE==='d30')openPrio(); else openDynamic();};
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDynamic();});
+
+
+/* ===== Cases Overview (Cases click, 24H) ===== */
+function buildCases(){
+  const s=$('#coWire'); s.innerHTML=''; defs(s);
+  const IS={x:212,y:250},CL={x:342,y:250},CR={x:458,y:250},AU={x:600,y:190},MA={x:600,y:312},RE={x:840,y:190},OP={x:840,y:312};
+  ribbon(s,IS,CL,10,'url(#teal)',.5);
+  s.appendChild(svgEl('circle',{cx:400,cy:250,r:70,fill:'none',stroke:'rgba(47,214,192,.14)','stroke-width':1}));
+  ribbon(s,CR,AU,8,'url(#teal)',.5);
+  ribbon(s,CR,MA,5,'rgba(150,168,178,.4)',.5);
+  ribbon(s,{x:672,y:190},RE,7,'url(#teal)',.5);
+  ribbon(s,{x:672,y:312},OP,5,'rgba(150,168,178,.4)',.5);
+  s.appendChild(svgEl('path',{d:band({x:672,y:312},RE,.5),fill:'none',stroke:'rgba(150,168,178,.22)','stroke-width':1.6}));
+  s.appendChild(svgEl('path',{d:band({x:672,y:190},OP,.5),fill:'none',stroke:'rgba(150,168,178,.18)','stroke-width':1.4}));
+  const HB=[{cls:'auto',n:'Automation · playbooks',v:78},{cls:'analyst',n:'T Security · CDC Bonn',v:7},{cls:'open',n:'Open · in queue',v:11}];
+  $('#coBars').innerHTML=HB.map(b=>`<div class="co-bar ${b.cls}"><div class="lab"><span class="n">${b.n}</span><span class="v">${b.v}</span></div><div class="track"><div class="fill" style="width:${Math.round(b.v/96*100)}%"></div></div></div>`).join('');
+  const MT=[['Reconnaissance',5],['Resource Development',3],['Initial Access',13],['Execution',7],['Persistence',6],['Privilege Escalation',5],['Defense Evasion',9],['Credential Access',8],['Discovery',10],['Lateral Movement',9],['Collection',5],['Command and Control',7],['Exfiltration',4],['Impact',5]];
+  $('#coMitre').innerHTML='<div class="mh">MITRE ATT&amp;CK · cases by tactic</div>'+MT.map(([t,c])=>`<div class="co-mrow${c>=9?' hi':''}"><span class="c">${c}</span><span class="t">${t}</span><span class="bar" style="max-width:${Math.round(c/13*90)}px"></span></div>`).join('');
+}
+function openCases(){closeDetail();buildCases();$('#dvCases').classList.add('on');countUp($('#dvCases'));}
+function closeCases(){$('#dvCases').classList.remove('on');}
+$('#dvCasesBack').onclick=closeCases;
+$('#nRight').onclick=e=>{e.stopPropagation(); if(MODE==='h24')openCases(); else {const a=anchor($('#nRight'));openDetail(a.x,a.y,detailHTML(MODES[MODE].right.detail));}};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeCases();});
 
 
 /* init */
