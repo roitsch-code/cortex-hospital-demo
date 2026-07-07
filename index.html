@@ -24,9 +24,8 @@ canvas#cv{position:absolute;inset:0;width:1440px;height:810px;pointer-events:non
 /* ---------- top chrome ---------- */
 .top{position:absolute;top:20px;left:34px;right:34px;z-index:12;display:flex;align-items:flex-start;justify-content:space-between}
 .brand{display:flex;align-items:center;gap:16px}
-.tlogo{height:26px;width:auto;display:block}
-.tlogo path{fill:#fff}
-.vdiv{width:1px;height:30px;background:var(--hair)}
+.tlogo-sm{height:13px;width:auto;vertical-align:-1px;margin-left:3px}
+.tlogo-sm path{fill:#c8d0d6}
 .titles .title{font-weight:700;letter-spacing:.2px;font-size:19px;display:flex;align-items:center;gap:8px}
 .titles .title .car{color:var(--muted);font-size:12px}
 .titles .tag{font-size:11.5px;color:var(--muted);margin-top:3px;letter-spacing:.02em}
@@ -191,7 +190,9 @@ body.view-flow .backbtn{display:flex}
 .ast span.rd2::before{background:#ff7a52}
 .ast span.am::before{background:var(--amber);box-shadow:0 0 8px var(--amber)}
 .ast.big b{font-size:40px}
-.acenter{position:absolute;left:940px;top:432px;transform:translate(-50%,-50%);z-index:6;text-align:center;pointer-events:none}
+.acenter{position:absolute;left:720px;top:448px;transform:translate(-50%,-50%);z-index:6;text-align:center;pointer-events:none}
+.prov.pk-github .sicon{color:#e7edf1} .prov.pk-aws .sicon{color:#ff9d2e} .prov.pk-azure .sicon{color:#4aa3ff}
+.prov.pk-gcp .sicon{color:#8ab4f8} .prov.pk-t .sicon{color:var(--magenta)} .prov.pk-dc .sicon{color:#8b959e}
 .acenter .anum{font-size:64px;font-weight:800;color:#fff;line-height:1;text-shadow:0 0 34px rgba(245,166,35,.45)}
 .acenter .acap{font-size:15px;color:#e7edf1;margin-top:6px;font-weight:600}
 .acenter .asub{font-size:12px;color:var(--muted);margin-top:8px}
@@ -204,6 +205,55 @@ body.view-flow .backbtn{display:flex}
 .prov span{display:block;font-size:11px;color:var(--muted);margin-top:2px}
 .prov:hover b{text-shadow:0 0 16px var(--glow)}
 .region{position:absolute;transform:translate(-50%,-50%);z-index:4;font-size:10px;letter-spacing:.12em;color:var(--dim);text-transform:uppercase;pointer-events:none}
+/* severity filter (assets view) */
+.sevfilter{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:11px;font-weight:600}
+.sevfilter .sl{margin-right:2px}
+.sevfilter .sq{width:19px;height:19px;border-radius:5px;display:grid;place-items:center;font-size:10px;font-weight:800;color:#1a0406}
+.sevfilter .cur{margin-left:8px;border:1px solid var(--hair);border-radius:999px;padding:6px 12px;color:var(--muted);cursor:pointer}
+/* radar wrapper (slides on provider select) */
+#radarWrap{position:absolute;inset:0;transition:transform .45s cubic-bezier(.6,0,.3,1)}
+#acenter,#provWrap,#regionWrap{transition:opacity .3s}
+#radarWrap.detail #acenter,#radarWrap.detail #provWrap,#radarWrap.detail #regionWrap{opacity:0;pointer-events:none}
+/* left buckets */
+.astats{position:absolute;left:56px;top:196px;z-index:7;display:flex;flex-direction:column;gap:8px;width:270px}
+.abucket{padding:12px 14px;border-radius:12px;border:1px solid transparent;cursor:pointer;transition:.18s;position:relative}
+.abucket:hover{background:rgba(255,255,255,.03)}
+.abucket.on{background:rgba(255,255,255,.045);border-color:var(--hair)}
+.abucket.on::before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:3px;border-radius:3px;background:var(--c)}
+.abucket b{font-size:30px;font-weight:800;color:#fff;display:flex;align-items:baseline;line-height:1}
+.abucket b em{font-style:normal;font-size:13px;color:var(--muted);margin-left:3px;font-weight:700}
+.abucket .lab{display:block;font-size:12px;color:var(--muted);margin-top:6px;position:relative;padding-left:16px}
+.abucket .lab::before{content:"";position:absolute;left:0;top:4px;width:9px;height:9px;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c)}
+.abucket.all{--c:#8b959e} .abucket.risk{--c:var(--amber)} .abucket.threat{--c:var(--red)} .abucket.both{--c:var(--magenta)}
+.abucket.big b{font-size:38px}
+/* overlap legend */
+.alegend{position:absolute;left:66px;top:552px;width:236px;height:96px;z-index:7}
+/* data ingestion bottom-left */
+.aingest{position:absolute;left:66px;bottom:34px;z-index:7}
+.aingest .k{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:6px}
+.aingest .vv{font-size:26px;font-weight:800;color:#fff}
+.aingest .vv u{font-size:12px;color:var(--muted);font-weight:600;text-decoration:none}
+/* provider detail panel */
+.provdetail{position:absolute;right:60px;top:150px;width:520px;z-index:9;opacity:0;transform:translateX(40px);pointer-events:none;transition:.42s cubic-bezier(.6,0,.3,1)}
+.provdetail.on{opacity:1;transform:translateX(0);pointer-events:auto}
+.provdetail .crumb{font-size:13px;color:var(--muted);font-weight:600;margin-bottom:22px;cursor:pointer}
+.provdetail .crumb b{color:#fff} .provdetail .crumb .bk{color:var(--teal-br)}
+.provdetail .head{display:flex;gap:54px;align-items:flex-start;margin-bottom:26px}
+.provdetail .head .h b{font-size:42px;font-weight:800;color:#fff;line-height:1}
+.provdetail .head .h span{display:block;font-size:12px;color:var(--muted);margin-top:6px;letter-spacing:.06em}
+.provdetail .head .h.u b{display:flex;align-items:center;gap:10px}
+.provdetail .head .h.u b svg{width:26px;height:26px}
+.provdetail .sec{font-size:12px;font-weight:700;color:#cfd6db;margin:10px 0 12px}
+.provdetail .cats{display:flex;gap:24px;align-items:center}
+.provdetail .donut{width:130px;height:130px;flex:0 0 auto}
+.provdetail .catlist .ci{display:flex;align-items:center;gap:10px;font-size:12.5px;padding:3px 0}
+.provdetail .catlist .ci .sw{width:9px;height:9px;border-radius:2px;flex:0 0 auto}
+.provdetail .catlist .ci b{color:#fff;font-weight:700;width:54px} .provdetail .catlist .ci span{color:var(--muted)}
+.provdetail .status{margin-top:26px;border-top:1px solid var(--hair);padding-top:18px;display:flex;gap:40px}
+.provdetail .status .st b{font-size:24px;font-weight:800;color:#fff}
+.provdetail .status .st span{display:block;font-size:11px;color:var(--muted);margin-top:5px;position:relative;padding-left:15px}
+.provdetail .status .st span::before{content:"";position:absolute;left:0;top:4px;width:8px;height:8px;border-radius:50%}
+.provdetail .status .st.b1 span::before{background:var(--magenta)} .provdetail .status .st.b2 span::before{background:var(--red)} .provdetail .status .st.b3 span::before{background:var(--amber)}
 </style>
 </head>
 <body>
@@ -214,17 +264,21 @@ body.view-flow .backbtn{display:flex}
 
   <div class="top">
     <div class="brand">
-      <svg class="tlogo" viewBox="0 0 1478.52 304.81" aria-label="T Security">
-        <g><path d="M336.72,185.25h44.46c3.62,18.44,15.81,25.69,32.28,25.69,18.77,0,28.32-10.54,28.32-24.7s-9.22-21.41-26.35-26.02l-25.36-7.25c-34.91-9.55-49.07-34.91-49.07-61.92,0-41.83,31.29-68.83,72.13-68.83,44.46,0,68.5,26.02,72.79,66.53h-43.47c-2.63-16.47-12.19-24.7-29.31-24.7-15.15,0-26.68,9.22-26.68,24.04s10.21,20.42,22.4,23.71l25.36,6.92c32.93,8.56,53.03,32.93,53.03,64.88,0,44.13-32.61,69.16-73.77,69.16-45.45,0-72.79-24.04-76.74-67.52Z"/><path d="M650.51,178.34h-99.46c2.31,29.97,14.49,38.53,30.63,38.53,12.84,0,21.41-4.94,25.36-14.82h42.82c-6.26,31.29-33.26,50.72-68.17,50.72-42.49,0-71.14-30.63-71.14-84.64s27.67-84.64,72.13-84.64c41.5,0,68.5,31.62,68.5,80.03,0,5.6,0,11.2-.66,14.82ZM552.37,147.71h58.62c-2.96-21.41-14.16-28.32-28.32-28.32-15.48,0-26.35,6.92-30.3,28.32Z"/><path d="M674.39,168.13c0-51.38,26.35-84.64,71.47-84.64,39.85,0,63.23,25.03,67.52,59.94h-42.81c-2.96-13.5-10.54-21.08-24.7-21.08-19.1,0-28.32,16.14-28.32,45.78s9.22,45.78,28.32,45.78c14.16,0,21.74-7.58,24.37-21.08h43.14c-4.28,34.91-27.67,59.94-67.52,59.94-45.12,0-71.47-33.59-71.47-84.64Z"/><path d="M839.88,193.82v-105.06h42.49v99.79c0,15.48,5.6,25.36,20.75,25.36,16.14,0,27.01-12.84,27.01-32.28v-92.88h42.49v158.74h-39.85v-19.43h-1.98c-8.23,15.48-23.38,24.7-42.49,24.7-32.28,0-48.41-20.09-48.41-58.95Z"/><path d="M1099.26,87.77v38.86c-4.28-.66-8.23-.66-11.53-.66-25.69,0-36.23,9.55-36.23,30.96v90.57h-42.49V88.76h39.85v19.43h1.98c7.57-14.16,20.42-22.07,37.22-22.07,3.62,0,7.58.33,11.2,1.65Z"/><path d="M1126,65.37V27.5h42.49v37.87h-42.49ZM1126,247.5V88.76h42.49v158.74h-42.49Z"/><path d="M1221.34,200.73v-75.75h-27.01v-36.23h27.01v-25.69l34.58-31.95h7.9v57.64h40.51v36.23h-40.51v70.48c0,11.86,6.92,18.11,19.1,18.11,6.26,0,12.51-.99,18.11-2.31v33.26c-8.89,3.95-18.44,5.6-30.3,5.6-29.31,0-49.4-17.13-49.4-49.4Z"/><path d="M1433.07,88.76h45.45l-61.92,175.87c-8.56,24.04-25.03,40.18-52.04,40.18-8.23,0-17.46-.99-25.69-4.28v-33.92c4.94,1.32,11.2,1.98,17.46,1.98,10.54,0,16.8-3.95,21.74-17.46l3.62-9.55-57.31-152.82h45.45l30.96,96.17h1.98l30.3-96.17Z"/></g>
-        <g><path d="M55,181.5H0v-55h55v55ZM0,0v93.5h16.5v-2.75c0-44,24.75-71.5,71.5-71.5h2.75v198c0,27.5-11,38.5-38.5,38.5h-8.25v19.25h143v-19.25h-8.25c-27.5,0-38.5-11-38.5-38.5V19.25s2.75,0,2.75,0c46.75,0,71.5,27.5,71.5,71.5v2.75h16.5V0H0ZM176,181.5h55v-55h-55v55Z"/></g>
-      </svg>
-      <span class="vdiv"></span>
       <div class="titles">
         <div class="title">Cyber Security Command Center <span class="car">▾</span></div>
-        <div class="tag">AI-driven Security Operations · powered by <b>T</b> Security</div>
+        <div class="tag">AI-driven Security Operations · powered by <svg class="tlogo-sm" viewBox="0 0 1478.52 304.81" aria-label="T Security">
+        <g><path d="M336.72,185.25h44.46c3.62,18.44,15.81,25.69,32.28,25.69,18.77,0,28.32-10.54,28.32-24.7s-9.22-21.41-26.35-26.02l-25.36-7.25c-34.91-9.55-49.07-34.91-49.07-61.92,0-41.83,31.29-68.83,72.13-68.83,44.46,0,68.5,26.02,72.79,66.53h-43.47c-2.63-16.47-12.19-24.7-29.31-24.7-15.15,0-26.68,9.22-26.68,24.04s10.21,20.42,22.4,23.71l25.36,6.92c32.93,8.56,53.03,32.93,53.03,64.88,0,44.13-32.61,69.16-73.77,69.16-45.45,0-72.79-24.04-76.74-67.52Z"/><path d="M650.51,178.34h-99.46c2.31,29.97,14.49,38.53,30.63,38.53,12.84,0,21.41-4.94,25.36-14.82h42.82c-6.26,31.29-33.26,50.72-68.17,50.72-42.49,0-71.14-30.63-71.14-84.64s27.67-84.64,72.13-84.64c41.5,0,68.5,31.62,68.5,80.03,0,5.6,0,11.2-.66,14.82ZM552.37,147.71h58.62c-2.96-21.41-14.16-28.32-28.32-28.32-15.48,0-26.35,6.92-30.3,28.32Z"/><path d="M674.39,168.13c0-51.38,26.35-84.64,71.47-84.64,39.85,0,63.23,25.03,67.52,59.94h-42.81c-2.96-13.5-10.54-21.08-24.7-21.08-19.1,0-28.32,16.14-28.32,45.78s9.22,45.78,28.32,45.78c14.16,0,21.74-7.58,24.37-21.08h43.14c-4.28,34.91-27.67,59.94-67.52,59.94-45.12,0-71.47-33.59-71.47-84.64Z"/><path d="M839.88,193.82v-105.06h42.49v99.79c0,15.48,5.6,25.36,20.75,25.36,16.14,0,27.01-12.84,27.01-32.28v-92.88h42.49v158.74h-39.85v-19.43h-1.98c-8.23,15.48-23.38,24.7-42.49,24.7-32.28,0-48.41-20.09-48.41-58.95Z"/><path d="M1099.26,87.77v38.86c-4.28-.66-8.23-.66-11.53-.66-25.69,0-36.23,9.55-36.23,30.96v90.57h-42.49V88.76h39.85v19.43h1.98c7.57-14.16,20.42-22.07,37.22-22.07,3.62,0,7.58.33,11.2,1.65Z"/><path d="M1126,65.37V27.5h42.49v37.87h-42.49ZM1126,247.5V88.76h42.49v158.74h-42.49Z"/><path d="M1221.34,200.73v-75.75h-27.01v-36.23h27.01v-25.69l34.58-31.95h7.9v57.64h40.51v36.23h-40.51v70.48c0,11.86,6.92,18.11,19.1,18.11,6.26,0,12.51-.99,18.11-2.31v33.26c-8.89,3.95-18.44,5.6-30.3,5.6-29.31,0-49.4-17.13-49.4-49.4Z"/><path d="M1433.07,88.76h45.45l-61.92,175.87c-8.56,24.04-25.03,40.18-52.04,40.18-8.23,0-17.46-.99-25.69-4.28v-33.92c4.94,1.32,11.2,1.98,17.46,1.98,10.54,0,16.8-3.95,21.74-17.46l3.62-9.55-57.31-152.82h45.45l30.96,96.17h1.98l30.3-96.17Z"/></g>
+        <g><path d="M55,181.5H0v-55h55v55ZM0,0v93.5h16.5v-2.75c0-44,24.75-71.5,71.5-71.5h2.75v198c0,27.5-11,38.5-38.5,38.5h-8.25v19.25h143v-19.25h-8.25c-27.5,0-38.5-11-38.5-38.5V19.25s2.75,0,2.75,0c46.75,0,71.5,27.5,71.5,71.5v2.75h16.5V0H0ZM176,181.5h55v-55h-55v55Z"/></g>
+      </svg></div>
       </div>
     </div>
     <div class="tright">
+      <div class="sevfilter hidden" id="sevFilter">
+        <span class="sl">Severity</span>
+        <span class="sq" style="background:var(--red)">C</span><span class="sq" style="background:#ff7a52">H</span>
+        <span class="sq" style="background:var(--amber)">M</span><span class="sq" style="background:var(--blue)">L</span>
+        <span class="cur">Current <span style="color:var(--dim)">▾</span></span>
+      </div>
       <div class="tseg" id="tseg">
         <button data-mode="h24" class="on"><span class="d"></span>Last 24H</button>
         <button data-mode="d30">Last 30 Days</button>
@@ -333,39 +387,21 @@ body.view-flow .backbtn{display:flex}
 
   <!-- ============ ASSETS ENTRY VIEW ============ -->
   <section id="assetsView" class="hidden">
-    <svg class="wire" id="wAssets" viewBox="0 0 1440 810"></svg>
-    <div class="astats">
-      <div class="ast big"><b>51.7<em>K</em></b><span>All Assets</span></div>
-      <div class="ast"><b>67</b><span class="rd">At Risk &amp; Active Threats</span></div>
-      <div class="ast"><b>167</b><span class="rd2">With Active Threats</span></div>
-      <div class="ast"><b>3,956</b><span class="am">At Risk</span></div>
+    <div id="radarWrap">
+      <svg class="wire" id="wAssets" viewBox="0 0 1440 810"></svg>
+      <div class="acenter" id="acenter">
+        <div class="anum"><span id="acNum">0</span></div>
+        <div class="acap" id="acCap">Total Assets</div>
+        <div class="asub" id="acSub">31.3K Cloud · 19.5K Enterprise</div>
+        <button class="ashow" id="assetShow">Show Issues ›</button>
+      </div>
+      <div id="provWrap"></div>
+      <div id="regionWrap"></div>
     </div>
-    <div class="acenter">
-      <div class="anum"><span data-count="3956" data-comma>0</span></div>
-      <div class="acap">Assets at Risk</div>
-      <div class="asub">369 Open Issues · 95 Open Cases</div>
-      <button class="ashow" id="assetShow">Show Issues ›</button>
-    </div>
-    <div class="prov" id="pvGithub" style="left:940px;top:104px" data-detail="pv_git">
-      <svg class="sicon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 0 0-2.2 13.6c.35.07.48-.15.48-.34v-1.3c-1.95.42-2.36-.83-2.36-.83-.32-.8-.78-1.02-.78-1.02-.64-.44.05-.43.05-.43.7.05 1.07.72 1.07.72.63 1.07 1.64.76 2.04.58.06-.45.24-.76.44-.94-1.56-.18-3.2-.78-3.2-3.46 0-.76.28-1.39.72-1.88-.07-.18-.31-.9.07-1.88 0 0 .59-.19 1.93.72a6.7 6.7 0 0 1 3.52 0c1.34-.91 1.93-.72 1.93-.72.38.98.14 1.7.07 1.88.45.49.72 1.12.72 1.88 0 2.69-1.64 3.28-3.2 3.45.25.22.48.65.48 1.31v1.95c0 .19.13.41.49.34A7 7 0 0 0 8 1z"/></svg>
-      <b>1,650</b><span>GitHub · Assets</span>
-    </div>
-    <div class="prov" id="pvAws" style="left:1300px;top:300px" data-detail="pv_aws">
-      <svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4.6 12h6a3 3 0 0 0 .3-6 4 4 0 0 0-7.6 1A2.6 2.6 0 0 0 4.6 12z"/></svg>
-      <b>188 <em>47 acct</em></b><span>AWS · Assets</span>
-    </div>
-    <div class="prov" id="pvAzure" style="left:1300px;top:556px" data-detail="pv_az">
-      <svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M6 2L2 13h3l1-3 3 3h4L6 2z"/></svg>
-      <b>99 <em>34 sub</em></b><span>Azure · Assets</span>
-    </div>
-    <div class="prov" id="pvGcp" style="left:612px;top:632px" data-detail="pv_gcp">
-      <svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4.6 12h6a3 3 0 0 0 .3-6 4 4 0 0 0-7.6 1A2.6 2.6 0 0 0 4.6 12z"/></svg>
-      <b>1,879 <em>51 proj</em></b><span>GCP · Assets</span>
-    </div>
-    <div class="prov" id="pvDc" style="left:940px;top:768px" data-detail="pv_dc">
-      <svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="2" width="10" height="12"/><path d="M6 5h4M6 8h4M6 11h4"/></svg>
-      <b>56</b><span>On-prem · Assets</span>
-    </div>
+    <div class="astats" id="astats"></div>
+    <svg class="alegend" id="alegend" viewBox="0 0 236 96"></svg>
+    <div class="aingest"><div class="k">Data Ingestion</div><div class="vv"><b>65</b> <u>TB/24H</u></div></div>
+    <div class="provdetail" id="provDetail"></div>
   </section>
 
   <div class="pop" id="pop"></div>
@@ -718,38 +754,127 @@ function renderMode(m){MODE=m;const cfg=MODES[m];
 }
 $$('#tseg button').forEach(b=>b.onclick=()=>{if(b.dataset.mode!==MODE){closePrio();renderMode(b.dataset.mode);}});
 
-/* ---------- assets radar view ---------- */
-const AC={x:940,y:432,R:330};
+/* ---------- assets Command Center ---------- */
+const AC={x:720,y:436,R:284};
+const fmt=n=>n.toLocaleString('en-US');
+// buckets (nested subsets)
+const A_BUCKETS=[
+  {key:'all',   disp:'50.8<em>K</em>', n:50800, comma:1, cls:'all big', cap:'Total Assets',                    sub:'31.3K Cloud · 19.5K Enterprise', label:'All Assets',      glow:[245,170,80]},
+  {key:'risk',  disp:'3,956',          n:3956,  comma:1, cls:'risk',    cap:'Assets at Risk',                   sub:'369 Open Issues · 95 Open Cases', label:'At Risk',        glow:[245,166,35]},
+  {key:'threat',disp:'167',            n:167,            cls:'threat',  cap:'Assets with Active Threats',       sub:'140 Open Issues · 28 Open Cases', label:'Active Threats', glow:[255,77,94]},
+  {key:'both',  disp:'67',             n:67,             cls:'both',    cap:'Critical · At Risk + Active Threats', sub:'61 Open Issues · 14 Open Cases', label:'At Risk + Threats', glow:[226,0,116]}
+];
+// providers (assets sum = 50,800; cloud six = 31,300; risk sum = 3,956; threat = 167; both = 67)
+const A_PROV=[
+  {key:'github',name:'GitHub',            mark:'github',assets:5200, unit:'Orgs',         unitN:6, ang:-1.5708, cats:[['Repositories',3100],['Actions Runners',820],['Packages',640],['Apps',380],['Webhooks',260]], status:{both:2,threat:9,risk:37}},
+  {key:'aws',   name:'AWS',               mark:'aws',   assets:8900, unit:'Accounts',     unitN:24,ang:-0.62,  cats:[['EC2 Instance',3200],['S3 Bucket',2100],['VPC',1400],['IAM Role',980],['Lambda',760],['RDS',460]], status:{both:22,threat:41,risk:520}},
+  {key:'azure', name:'Azure',             mark:'azure', assets:4600, unit:'Subscriptions',unitN:16,ang:0.6,    cats:[['Virtual Machine',1600],['Blob Storage',1050],['VNet',720],['App Service',560],['Key Vault',380],['AKS',290]], status:{both:14,threat:26,risk:300}},
+  {key:'gcp',   name:'Google Cloud',      mark:'gcp',   assets:6760, unit:'Projects',     unitN:41,ang:2.5,    cats:[['VM Instance',2400],['Cloud Storage',1500],['VPC Network',1100],['GKE',780],['Cloud SQL',540],['Artifact Registry',440]], status:{both:18,threat:34,risk:420}},
+  {key:'tcloud',name:'T Cloud Public',    mark:'t',     assets:3120, unit:'Tenants',      unitN:12,ang:2.95,   sov:1, cats:[['Virtual Machine',980],['Object Storage',640],['Virtual Network',470],['Container Registry',360],['Managed Database',300],['Kubernetes',210],['+2 More',160]], status:{both:0,threat:1,risk:38}},
+  {key:'tsov',  name:'T-Systems Sovereign',mark:'t',    assets:2720, unit:'Tenants',      unitN:9, ang:-2.85,  sov:1, cats:[['Confidential VM',760],['Encrypted Storage',560],['Private Network',420],['HSM Vault',300],['Managed DB',260],['+2 More',420]], status:{both:0,threat:0,risk:19}},
+  {key:'onprem',name:'On-prem · Enterprise',mark:'dc',  assets:19500,unit:'Sites',        unitN:7, ang:1.5708, cats:[['Endpoints',12800],['Servers',3400],['Network Devices',1900],['OT / IoT',900],['Printers',500]], status:{both:11,threat:56,risk:2622}}
+];
+const PMARK={
+  github:'<svg class="sicon" viewBox="0 0 16 16" fill="currentColor"><circle cx="4.4" cy="4" r="1.7"/><circle cx="4.4" cy="12" r="1.7"/><circle cx="11.6" cy="6.2" r="1.7"/><rect x="3.7" y="4" width="1.4" height="8" rx=".7"/><path d="M5.1 5.5c3 .35 5.1.9 5.7 1.4l-.9 1.2C9 7.7 7.3 7.3 5.1 7.1z"/></svg>',
+  aws:'<svg class="sicon" viewBox="0 0 16 16" fill="currentColor"><path d="M2.6 6h1.7l.9 2.6L6 6h1.4l.8 2.6L9.1 6h1.7l-1.6 4.4H7.9l-.9-2.7-.9 2.7H4.7z"/><path d="M2.8 12.2c3.5 2 6.9 2 10.4 0l-.4-.95c-3.2 1.75-6.3 1.75-9.7 0z"/></svg>',
+  azure:'<svg class="sicon" viewBox="0 0 16 16" fill="currentColor"><path d="M6.9 3.2L3.1 12.4h2.7l4.7-.85-2.5 1.35H13L8.3 3.2z"/></svg>',
+  gcp:'<svg class="sicon" viewBox="0 0 16 16" fill="currentColor"><circle cx="5" cy="5" r="1.7"/><circle cx="11" cy="5" r="1.7"/><circle cx="5" cy="11" r="1.7"/><circle cx="11" cy="11" r="1.7"/></svg>',
+  t:'<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.4" y="2.4" width="11.2" height="11.2" rx="2"/><path d="M4.8 5.6h6.4M8 5.6V11"/></svg>',
+  dc:'<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><rect x="3" y="2.5" width="10" height="11" rx="1"/><path d="M6 5.2h4M6 8h4M6 10.8h4"/></svg>'
+};
+const CAT_COLORS=['#2fd6c0','#6ff3e0','#4aa3ff','#f5a623','#E20074','#ff7a52','#8b959e','#9b8cff'];
+
+// asset dot field (static; the magenta radar sweeps it)
 const assets=[];
-(function(){for(let r=72;r<=AC.R;r+=13){const n=Math.max(8,Math.round(r*0.5));
-  for(let i=0;i<n;i++){const a=i/n*6.283;
-    let col='rgba(120,150,150,.5)',al=.5,sz=1.3;
-    const risk=(a>-1.35 && a<-0.15 && r<205 && Math.random()<0.5);
-    if(risk){col='#f5a623';al=.92;sz=1.7;}
-    else if(Math.random()<0.028){col='#ff4d5e';al=.8;sz=1.6;}
-    assets.push({a:a+(Math.random()*.02-.01),r:r+(Math.random()*3-1.5),col,al,ph:Math.random()*6.283,sz});
+(function(){for(let r=58;r<=AC.R-8;r+=12){const n=Math.max(8,Math.round(r*0.5));
+  for(let i=0;i<n;i++){const a=i/n*6.283+(Math.random()*.02-.01);
+    let type='neutral';
+    if(a>-1.4 && a<-0.15 && r<180 && Math.random()<0.5) type='risk';
+    else if(Math.random()<0.02) type='threat';
+    const col=type==='risk'?'#f5a623':(type==='threat'?'#ff4d5e':'rgba(120,150,150,.5)');
+    assets.push({a,r:r+(Math.random()*3-1.5),type,col,al:type==='neutral'?.5:.9,sz:type==='neutral'?1.25:1.7,ph:Math.random()*6.283});
   }}})();
-let assetRot=0;
+let sweepAng=0, radarShift=0, radarTarget=0, glowRGB=[245,170,80];
 function drawAssets(t){
-  const g=ctx.createRadialGradient(AC.x,AC.y,8,AC.x,AC.y,200);
-  g.addColorStop(0,'rgba(245,180,90,.5)');g.addColorStop(.5,'rgba(240,150,60,.13)');g.addColorStop(1,'rgba(240,150,60,0)');
-  ctx.fillStyle=g;ctx.beginPath();ctx.arc(AC.x,AC.y,200,0,6.283);ctx.fill();
-  ctx.fillStyle='rgba(47,214,192,.05)';ctx.beginPath();ctx.moveTo(AC.x,AC.y);ctx.arc(AC.x,AC.y,AC.R,-0.55,0.55);ctx.closePath();ctx.fill();
-  if(!REDUCED)assetRot+=0.00008;
-  for(const d of assets){const a=d.a+assetRot;const x=AC.x+Math.cos(a)*d.r,y=AC.y+Math.sin(a)*d.r;
-    ctx.globalAlpha=d.al*(.6+.4*Math.sin(t*.0018+d.ph));ctx.fillStyle=d.col;ctx.beginPath();ctx.arc(x,y,d.sz,0,6.283);ctx.fill();}
+  radarShift+=(radarTarget-radarShift)*0.14; AC.x=720+radarShift;
+  const rw=$('#radarWrap'); if(rw) rw.style.transform=`translateX(${radarShift.toFixed(1)}px)`;
+  const gr=glowRGB;
+  const g=ctx.createRadialGradient(AC.x,AC.y,8,AC.x,AC.y,190);
+  g.addColorStop(0,`rgba(${gr[0]},${gr[1]},${gr[2]},.48)`);g.addColorStop(.5,`rgba(${gr[0]},${gr[1]},${gr[2]},.12)`);g.addColorStop(1,`rgba(${gr[0]},${gr[1]},${gr[2]},0)`);
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(AC.x,AC.y,190,0,6.283);ctx.fill();
+  // magenta radar sweep
+  if(!REDUCED)sweepAng+=0.006;
+  const SW=0.6;
+  ctx.beginPath();ctx.moveTo(AC.x,AC.y);ctx.arc(AC.x,AC.y,AC.R,sweepAng-SW,sweepAng);ctx.closePath();
+  ctx.fillStyle='rgba(226,0,116,.07)';ctx.fill();
+  ctx.strokeStyle='rgba(226,0,116,.5)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(AC.x,AC.y);ctx.lineTo(AC.x+Math.cos(sweepAng)*AC.R,AC.y+Math.sin(sweepAng)*AC.R);ctx.stroke();
+  // dots + scan glow
+  for(const d of assets){const x=AC.x+Math.cos(d.a)*d.r,y=AC.y+Math.sin(d.a)*d.r;
+    let da=sweepAng-d.a; da=((da%6.283)+6.283)%6.283; const scan=da<SW?(1-da/SW):0;
+    ctx.globalAlpha=Math.min(1,d.al*(.55+.45*Math.sin(t*.0018+d.ph))+scan*0.55);
+    ctx.fillStyle=(scan>0.35&&d.type==='neutral')?'#f4b9d8':d.col;
+    ctx.beginPath();ctx.arc(x,y,d.sz+scan*0.9,0,6.283);ctx.fill();}
   ctx.globalAlpha=1;
 }
-(function(){const s=$('#wAssets');defs(s);
-  ring(s,AC.x,AC.y,AC.R+14,190,.5);
-  s.appendChild(svgEl('circle',{cx:AC.x,cy:AC.y,r:AC.R,fill:'none',stroke:'rgba(47,214,192,.12)','stroke-width':1}));
-  s.appendChild(svgEl('circle',{cx:AC.x,cy:AC.y,r:AC.R*0.66,fill:'none',stroke:'rgba(47,214,192,.08)','stroke-width':1}));
-  s.appendChild(svgEl('circle',{cx:AC.x,cy:AC.y,r:AC.R*0.33,fill:'none',stroke:'rgba(47,214,192,.06)','stroke-width':1}));
-  const regs=[['us-east',-0.35],['us-west',0.5],['central',1.2],['ap-southeast',2.0],['europe-w',2.7],['europe-n',-2.55],['asia',-1.75]];
-  regs.forEach(([lab,ang])=>{const rr=AC.R-4;const x=AC.x+Math.cos(ang)*rr,y=AC.y+Math.sin(ang)*rr;
-    const el=document.createElement('div');el.className='region';el.style.cssText=`left:${x}px;top:${y}px`;el.textContent=lab;$('#assetsView').appendChild(el);});
-})();
-$$('#assetsView .prov').forEach(p=>wire(p,p.dataset.detail));
+function ppos(ang){return {x:720+Math.cos(ang)*(AC.R+58), y:AC.y+Math.sin(ang)*(AC.R+58)};}
+function buildAssetsUI(){
+  const s=$('#wAssets');s.innerHTML='';defs(s);
+  ring(s,720,AC.y,AC.R+14,190,.5);
+  [AC.R,AC.R*0.66,AC.R*0.33].forEach((rr,i)=>s.appendChild(svgEl('circle',{cx:720,cy:AC.y,r:rr,fill:'none',stroke:`rgba(47,214,192,${(.12-i*.03).toFixed(2)})`,'stroke-width':1})));
+  const rw=$('#regionWrap');rw.innerHTML='';
+  [['us-east',-0.5],['us-west',0.35],['central',1.05],['ap-southeast',1.9],['europe-w',2.75],['europe-n',-2.75],['asia',-1.95]].forEach(([lab,ang])=>{
+    const rr=AC.R-8,x=720+Math.cos(ang)*rr,y=AC.y+Math.sin(ang)*rr;
+    const el=document.createElement('div');el.className='region';el.style.cssText=`left:${x}px;top:${y}px`;el.textContent=lab;rw.appendChild(el);});
+  const pw=$('#provWrap');pw.innerHTML='';
+  A_PROV.forEach(p=>{const pos=ppos(p.ang);const el=document.createElement('div');
+    el.className='prov pk-'+p.mark;el.style.cssText=`left:${pos.x.toFixed(0)}px;top:${pos.y.toFixed(0)}px`;
+    const unit=p.unitN?` <em>${p.unitN} ${p.unit}</em>`:'';
+    el.innerHTML=`${PMARK[p.mark]}<b>${fmt(p.assets)}${unit}</b><span>${p.name}</span>`;
+    el.onclick=e=>{e.stopPropagation();selectProvider(p.key);};pw.appendChild(el);});
+  const bw=$('#astats');bw.innerHTML='';
+  A_BUCKETS.forEach(bk=>{const el=document.createElement('div');el.className='abucket '+bk.cls;el.dataset.key=bk.key;
+    el.innerHTML=`<b>${bk.disp}</b><span class="lab">${bk.label}</span>`;el.onclick=()=>selectBucket(bk.key);bw.appendChild(el);});
+  $('#alegend').innerHTML=`
+    <circle cx="88" cy="40" r="33" fill="rgba(245,166,35,.10)" stroke="rgba(245,166,35,.7)"/>
+    <circle cx="140" cy="40" r="33" fill="rgba(255,77,94,.10)" stroke="rgba(255,77,94,.7)"/>
+    <text x="64" y="44" fill="#f5a623" font-size="10" text-anchor="middle" font-weight="700">At Risk</text>
+    <text x="166" y="44" fill="#ff8a8a" font-size="10" text-anchor="middle" font-weight="700">Threats</text>
+    <text x="114" y="38" fill="#f4b9d8" font-size="12" text-anchor="middle" font-weight="800">67</text>
+    <text x="114" y="50" fill="#8b959e" font-size="8" text-anchor="middle">both</text>
+    <text x="114" y="90" fill="#5a636b" font-size="9" text-anchor="middle">overlap = highest priority</text>`;
+}
+function animNum(el,target,comma){const t0=performance.now();
+  const f=v=>comma?Math.round(v).toLocaleString('en-US'):Math.round(v).toString();
+  if(REDUCED){el.textContent=f(target);return;}
+  (function s(n){const p=Math.min(1,(n-t0)/900),e=1-Math.pow(1-p,3);el.textContent=f(target*e);if(p<1)requestAnimationFrame(s);else el.textContent=f(target);})(t0);
+}
+function selectBucket(key){const bk=A_BUCKETS.find(b=>b.key===key);if(!bk)return;
+  $$('#astats .abucket').forEach(e=>e.classList.toggle('on',e.dataset.key===key));
+  glowRGB=bk.glow;$('#acCap').textContent=bk.cap;$('#acSub').textContent=bk.sub;animNum($('#acNum'),bk.n,bk.comma);
+}
+function donutSVG(cats,total){const cx=65,cy=65,r=46,sw=15;let acc=0;
+  const arc=(a0,a1)=>{const s=a0-1.5708,e=a1-1.5708;const x0=cx+Math.cos(s)*r,y0=cy+Math.sin(s)*r,x1=cx+Math.cos(e)*r,y1=cy+Math.sin(e)*r,lg=(a1-a0)>Math.PI?1:0;return `M ${x0.toFixed(1)} ${y0.toFixed(1)} A ${r} ${r} 0 ${lg} 1 ${x1.toFixed(1)} ${y1.toFixed(1)}`;};
+  const paths=cats.map((c,i)=>{const f0=acc/total,f1=(acc+c[1])/total;acc+=c[1];return `<path d="${arc(f0*6.28,f1*6.28-0.03)}" fill="none" stroke="${CAT_COLORS[i%CAT_COLORS.length]}" stroke-width="${sw}"/>`;}).join('');
+  return `<svg class="donut" viewBox="0 0 130 130">${paths}</svg>`;
+}
+function selectProvider(key){const p=A_PROV.find(x=>x.key===key);if(!p)return;
+  radarTarget=-300;$('#radarWrap').classList.add('detail');
+  const catlist=p.cats.map((c,i)=>`<div class="ci"><span class="sw" style="background:${CAT_COLORS[i%CAT_COLORS.length]}"></span><b>${fmt(c[1])}</b><span>${c[0]}</span></div>`).join('');
+  const unitRow=p.unitN?`<div class="h u"><b>${PMARK[p.mark]}${p.unitN}</b><span>${p.unit}</span></div>`:'';
+  $('#provDetail').innerHTML=`
+   <div class="crumb" id="provCrumb"><span class="bk">‹ All Assets</span> / <b>${p.name}</b></div>
+   <div class="head"><div class="h"><b>${fmt(p.assets)}</b><span>Assets</span></div>${unitRow}</div>
+   <div class="sec">All ${p.name} Assets by Category</div>
+   <div class="cats">${donutSVG(p.cats,p.assets)}<div class="catlist">${catlist}</div></div>
+   <div class="status">
+     <div class="st b1"><b>${p.status.both}</b><span>At Risk &amp; Active Threats</span></div>
+     <div class="st b2"><b>${p.status.threat}</b><span>Active Threats</span></div>
+     <div class="st b3"><b>${fmt(p.status.risk)}</b><span>At Risk</span></div>
+   </div>`;
+  $('#provCrumb').onclick=backRadar;
+  $('#provDetail').classList.add('on');
+}
+function backRadar(){radarTarget=0;$('#radarWrap').classList.remove('detail');$('#provDetail').classList.remove('on');}
 
 /* ---------- view system ---------- */
 let VIEW='assets';
@@ -760,8 +885,9 @@ function showView(v){VIEW=v;
   $('#wFlow').style.display=(v==='flow')?'':'none';
   const dm=$('.dome');if(dm)dm.style.display=(v==='flow')?'':'none';
   $('#tseg').style.display=(v==='flow')?'':'none';
+  $('#sevFilter').classList.toggle('hidden',v!=='assets');
   closeDetail();closePrio();
-  if(v==='assets'){countUp($('#assetsView'));}
+  if(v==='assets'){backRadar();selectBucket('all');}
   else{countUp($('#nLeft'));countUp($('#nRight'));if(MODES[MODE].center)countUp($('#nCenter'));
     countUp(MODE==='d30'?$('#right30'):$('#right24'));countUp(MODE==='d30'?$('#tiles30'):$('#tiles24'));}
 }
@@ -770,6 +896,7 @@ $('#backBtn').onclick=()=>showView('assets');
 
 /* init */
 renderMode('h24');
+buildAssetsUI();
 showView('assets');
 
 /* fit */
