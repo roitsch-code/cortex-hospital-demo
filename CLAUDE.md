@@ -126,9 +126,21 @@ Risk). Tiles: Vulnerable Assets **5,840** (ties to assets At Risk) · Active Cas
   + `newInflow`/`newOut`/`rebuildParticles`.
 - **Detail popovers**: the `D` object in `detailHTML(key)`; wired by `wire()` /
   `wireSources()`.
-- **Assets**: `A_BUCKETS` (buckets), `A_LOC` (sites: cats + status), `PMARK` (site
-  marks), `buildAssetsUI` / `selectBucket` / `selectLocation` / `drawAssets` (radar +
-  magenta sweep). Radar center `AC={x:800,y:440,R:264}`, `ACX0=800`.
+- **Assets**: `A_BUCKETS` (buckets), `A_LOC` (sites: cats + status; `imedone:1` on the
+  clinical-care sites Main Campus + Outpatient renders the magenta iMedOne® system chip
+  in `selectLocation`), `PMARK` (site marks), `buildAssetsUI` / `selectBucket` /
+  `selectLocation` / `drawAssets` (radar + magenta sweep). Radar center
+  `AC={x:800,y:440,R:264}`, `ACX0=800`.
+- **Shared asset vocabulary (KEEP CONSISTENT)**: the same category/source strings —
+  **Medical Devices (IoMT)** · **Clinical Endpoints** · **Imaging / PACS** ·
+  **Laboratory (LIS)** · **Identities & Access** · **Servers & VMs** · **Network & OT** —
+  are reused verbatim across `SRC24`, `A_LOC` cats (both clinical sites), `INV`, and
+  `DYN_MARKS`. Never re-spell one of them in only one list.
+- **Two case-flows share one grammar (KEEP IN SYNC)**: the main-flow funnel (`buildWires`
+  24H block) and the Cases-Overview lifecycle (`buildCases`) draw the *same* ribbon set —
+  Cases→Automated (teal) / Cases→Manual (grey); Automated→Resolved (teal, 78);
+  Manual→Resolved (teal, the 7 rising bottom→top); Manual→Open (amber, 11). There is **no
+  Automated→Open** ribbon (it would be 0). Edit both together.
 - **24H detail overlays** (`.dv` pattern, opened by overriding the spine clicks):
   `buildInventory`/`openInventory` (Data Inventory, `INV`), `buildDynamic`/`openDynamic`
   (Dynamic View, `DYN_MARKS`/`DYN_FEED`), `buildCases`/`openCases` (Cases Overview,
