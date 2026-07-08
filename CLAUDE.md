@@ -156,7 +156,16 @@ Risk). Tiles: Vulnerable Assets **5,840** (ties to assets At Risk) · Active Cas
   24H block) and the Cases-Overview lifecycle (`buildCases`) draw the *same* ribbon set —
   Cases→Automated (teal) / Cases→Manual (grey); Automated→Resolved (teal, 78);
   Manual→Resolved (teal, the 7 rising bottom→top); Manual→Open (amber, 11). There is **no
-  Automated→Open** ribbon (it would be 0). Edit both together.
+  Automated→Open** ribbon (it would be 0). Both use the same circle nodes: Automated /
+  Manual are 52px `.disc2` icon circles (`.co-fun` reuses the funnode styles on the
+  overview). Edit both together.
+- **Connection rule (EVERY flow line, all views)**: lines attach at a node's **edge at
+  mid-height** (horizontal tangents; vertical drops leave the bottom edge → top edge) and
+  **stop exactly on the rim** — never float, never enter a shape. Numbers are the anchors:
+  `.cap`/`.co-node>span`/`.outcome>span` labels hang absolutely BELOW the number so the
+  number's midline sits exactly on the wire height. Wires start/stop at the number's
+  left/right edge (e.g. `buildWires`: waist 440 → "2,412" → 562→core-rim; Cases +30/−32;
+  funnel discs ±26). Same rule in `buildCases` and the agent scene (`agLinkH`/`agLinkV`).
 - **24H detail overlays** (`.dv` pattern, opened by overriding the spine clicks):
   `buildInventory`/`openInventory` (Data Inventory, `INV`), `buildDynamic`/`openDynamic`
   (Dynamic View, `DYN_MARKS`/`DYN_FEED`), `buildCases`/`openCases` (Cases Overview,

@@ -48,8 +48,9 @@ svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;ov
 .node.click:hover{transform:translate(-50%,-50%) scale(1.06)}
 .node.click:hover .num{text-shadow:0 0 26px var(--glow)}
 .num{font-weight:800;line-height:1;color:#fff}
-.cap{color:var(--muted);letter-spacing:.14em;font-size:11px;font-weight:700;text-transform:uppercase;margin-top:7px;max-width:150px}
-.node .hint{font-size:10px;color:var(--teal-br);opacity:0;margin-top:4px;letter-spacing:.08em;transition:.2s}
+/* cap+hint hang below the num so the NUMBER's midline sits exactly on the node anchor (wire height) */
+.cap{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);color:var(--muted);letter-spacing:.14em;font-size:11px;font-weight:700;text-transform:uppercase;white-space:nowrap}
+.node .hint{position:absolute;top:calc(100% + 27px);left:50%;transform:translateX(-50%);white-space:nowrap;font-size:10px;color:var(--teal-br);opacity:0;letter-spacing:.08em;transition:.2s}
 .node.click:hover .hint{opacity:.9}
 /* center label (30D) */
 #nCenter{z-index:4}
@@ -78,26 +79,27 @@ svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;ov
 .srchead{position:absolute;left:66px;z-index:4;font-size:10px;font-weight:700;letter-spacing:.16em;color:var(--dim);text-transform:uppercase}
 
 /* right funnel (24H) */
-.funnode{position:absolute;transform:translate(-50%,-50%);z-index:5;cursor:pointer;text-align:center}
-.funnode .disc2{width:52px;height:52px;border-radius:50%;margin:0 auto;display:grid;place-items:center;
+.funnode,.co-fun{position:absolute;transform:translate(-50%,-50%);z-index:5;cursor:pointer;text-align:center}
+.co-fun{cursor:default}
+.funnode .disc2,.co-fun .disc2{width:52px;height:52px;border-radius:50%;margin:0 auto;display:grid;place-items:center;
   border:1.5px solid var(--teal);background:radial-gradient(circle at 50% 40%,rgba(47,214,192,.2),rgba(4,10,12,.7));
   box-shadow:0 0 22px var(--glow)}
 .funnode.red .disc2{border-color:var(--red);box-shadow:0 0 22px rgba(255,77,94,.5)}
-.funnode .disc2 svg{width:24px;height:24px}
+.funnode .disc2 svg,.co-fun .disc2 svg{width:24px;height:24px}
 .funnode:hover .disc2{box-shadow:0 0 34px var(--glow)}
-.funnode .fl{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap}
-.funnode .fl b{font-size:22px;font-weight:800;color:#fff}
-.funnode .fl span{font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-left:7px}
-.funnode .fl.above{bottom:58px}
-.funnode .fl.below{top:56px}
+.funnode .fl,.co-fun .fl{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap}
+.funnode .fl b,.co-fun .fl b{font-size:22px;font-weight:800;color:#fff}
+.funnode .fl span,.co-fun .fl span{font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-left:7px}
+.funnode .fl.above,.co-fun .fl.above{bottom:58px}
+.funnode .fl.below,.co-fun .fl.below{top:56px}
 .soctag{position:absolute;z-index:5;font-size:10px;font-weight:700;color:#f4b9d8;letter-spacing:.04em;
   border:1px solid rgba(226,0,116,.55);border-radius:6px;padding:4px 10px;background:rgba(226,0,116,.10);white-space:nowrap;
   box-shadow:0 0 16px rgba(226,0,116,.25)}
 .soctag b{color:#ff7ec8}
 
 .outcome{position:absolute;transform:translateY(-50%);z-index:5;text-align:left}
-.outcome b{font-size:30px;font-weight:800;color:#fff;line-height:1}
-.outcome span{display:block;font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:5px}
+.outcome b{font-size:30px;font-weight:800;color:#fff;line-height:1;display:block}
+.outcome>span{position:absolute;top:calc(100% + 6px);left:0;display:block;font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
 .outcome.click{cursor:pointer;transition:.2s}
 .outcome.click:hover b{text-shadow:0 0 24px var(--glow)}
 
@@ -351,10 +353,11 @@ body.view-flow .backbtn{display:flex}
 
 /* ===== Cases Overview ===== */
 .co-node{position:absolute;transform:translate(-50%,-50%);z-index:5;text-align:center}
-.co-node b{font-size:34px;font-weight:800;color:#fff;line-height:1;white-space:nowrap}
+.co-node b{font-size:34px;font-weight:800;color:#fff;line-height:1;white-space:nowrap;display:block}
 .co-node.sm b{font-size:24px}
 .co-node.cases b{font-size:40px}
-.co-node>span{display:block;font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-top:7px}
+/* label hangs below so the NUMBER's midline sits exactly on the node anchor (wire height) */
+.co-node>span{position:absolute;top:calc(100% + 7px);left:50%;transform:translateX(-50%);display:block;font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
 .co-node .disc4{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:120px;height:120px;border-radius:50%;
   border:1.5px solid var(--teal);box-shadow:0 0 26px var(--glow),inset 0 0 20px rgba(47,214,192,.14);z-index:-1}
 .co-hd{position:absolute;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);z-index:5}
@@ -708,8 +711,17 @@ body.view-flow .backbtn{display:flex}
     <svg class="dv-wire" id="coWire" viewBox="0 0 1440 810"></svg>
     <div class="co-node" style="left:150px;top:250px"><b><span data-count="2412" data-comma>0</span></b><span>Issues</span></div>
     <div class="co-node cases" style="left:400px;top:250px"><div class="disc4"></div><b><span data-count="96">0</span></b><span>Cases</span></div>
-    <div class="co-node sm" style="left:640px;top:190px"><b><span data-count="78">0</span></b><span>Automated</span></div>
-    <div class="co-node sm" style="left:640px;top:312px"><b><span data-count="18">0</span></b><span>Manual</span></div>
+    <div class="co-fun" style="left:640px;top:190px">
+      <div class="fl above"><b><span data-count="78">0</span></b><span>Automated</span></div>
+      <div class="disc2"><svg viewBox="0 0 24 24" fill="none" stroke="#6ff3e0" stroke-width="1.6">
+        <circle cx="12" cy="5" r="2.4"/><circle cx="5" cy="17" r="2.4"/><circle cx="19" cy="17" r="2.4"/>
+        <path d="M12 7.4V13M12 13l-5.5 2M12 13l5.5 2"/></svg></div>
+    </div>
+    <div class="co-fun" style="left:640px;top:312px">
+      <div class="disc2"><svg viewBox="0 0 24 24" fill="none" stroke="#8b959e" stroke-width="1.6">
+        <circle cx="12" cy="8" r="3.4"/><path d="M5.5 19a6.5 6.5 0 0 1 13 0"/></svg></div>
+      <div class="fl below"><b><span data-count="18">0</span></b><span>Manual</span></div>
+    </div>
     <div class="co-node sm" style="left:880px;top:190px"><b><span data-count="85">0</span></b><span>Resolved</span></div>
     <div class="co-node sm" style="left:880px;top:312px"><b><span data-count="11">0</span></b><span>Open</span></div>
     <div class="co-hd" style="left:120px;top:408px">Case handling · 96 cases</div>
@@ -878,7 +890,7 @@ const MODES={
 };
 let MODE='h24';
 
-const CENTER={x:720,y:392,R:132}, WAIST={x:470,y:392}, CASES={x:930,y:392};
+const CENTER={x:720,y:392,R:132}, WAIST={x:440,y:392}, CASES={x:930,y:392};
 const AUTO={x:1080,y:300}, MAN={x:1080,y:488};       // 24H funnel nodes
 const ACT={x:1120,y:288}, RES={x:1120,y:520};        // 30D nodes
 const EP_Y=210, SRC_Y0=272, SRC_STEP=31, SRC_X=262;
@@ -931,25 +943,26 @@ function buildWires(){const s=$('#wFlow');s.innerHTML='';defs(s);srcRibbons=[];
     const line=svgEl('path',{d:band(a,WAIST,.6),fill:'none',stroke:col,'stroke-width':lineW,'stroke-linecap':'round',opacity:src.ep?.7:.45});
     s.appendChild(base);s.appendChild(line);srcRibbons.push({base,line,greyW,lineW,ep:src.ep,t:src.t});
   });
-  ribbon(s,{x:WAIST.x,y:WAIST.y},{x:CENTER.x-CENTER.R,y:CENTER.y},7,'url(#teal)',.5);
+  // wires attach at the NUMBER's edge (mid-height) and stop exactly on circle rims
+  ribbon(s,{x:562,y:CENTER.y},{x:CENTER.x-CENTER.R,y:CENTER.y},7,'url(#teal)',.5);
   ring(s,CENTER.x,CENTER.y,CENTER.R+18,150,.55);
   ring(s,CENTER.x,CENTER.y,CENTER.R+44,96,.26);
   s.appendChild(svgEl('circle',{cx:CENTER.x,cy:CENTER.y,r:CENTER.R,fill:'none',stroke:'rgba(47,214,192,.16)','stroke-width':1}));
   s.appendChild(svgEl('circle',{cx:CENTER.x,cy:CENTER.y,r:CENTER.R*0.62,fill:'none',stroke:'rgba(47,214,192,.10)','stroke-width':1}));
-  ribbon(s,{x:CENTER.x+CENTER.R,y:CENTER.y},{x:CASES.x-40,y:CASES.y},3,'url(#teal)',.55);
+  ribbon(s,{x:CENTER.x+CENTER.R,y:CENTER.y},{x:CASES.x-32,y:CASES.y},3,'url(#teal)',.55);
   if(MODE==='h24'){
-    // Cases core → Automated / Manual (clean split, widths ∝ share)
-    ribbon(s,{x:CASES.x+42,y:CASES.y},{x:AUTO.x-26,y:AUTO.y},10,'url(#teal)',.55);
-    ribbon(s,{x:CASES.x+42,y:CASES.y},{x:MAN.x-26,y:MAN.y},5,'rgba(150,168,178,.42)',.55);
+    // Cases number → Automated / Manual (leave the number's right edge at mid-height)
+    ribbon(s,{x:CASES.x+30,y:CASES.y},{x:AUTO.x-26,y:AUTO.y},10,'url(#teal)',.55);
+    ribbon(s,{x:CASES.x+30,y:CASES.y},{x:MAN.x-26,y:MAN.y},5,'rgba(150,168,178,.42)',.55);
     // Automated → Resolved (all 78 flow straight through to Resolved)
-    ribbon(s,{x:AUTO.x+26,y:AUTO.y},{x:1212,y:292},11,'url(#teal)',.5);
+    ribbon(s,{x:AUTO.x+26,y:AUTO.y},{x:1224,y:292},11,'url(#teal)',.5);
     // Manual → Resolved (the 7 CDC-resolved rise from the bottom into the 85 Resolved)
-    ribbon(s,{x:MAN.x+24,y:MAN.y-6},{x:1212,y:300},3.6,'url(#teal)',.5);
+    ribbon(s,{x:MAN.x+26,y:MAN.y},{x:1224,y:298},3.6,'url(#teal)',.5);
     // Manual → Open (the 11 still in the CDC queue)
-    ribbon(s,{x:MAN.x+26,y:MAN.y+6},{x:1256,y:498},5,'rgba(245,166,35,.34)',.5);
+    ribbon(s,{x:MAN.x+26,y:MAN.y},{x:1268,y:498},5,'rgba(245,166,35,.34)',.5);
   }else{
-    ribbon(s,{x:CASES.x+42,y:CASES.y},{x:ACT.x-26,y:ACT.y},8,'url(#red)',.55);
-    ribbon(s,{x:CASES.x+42,y:CASES.y},{x:RES.x-26,y:RES.y},9,'url(#teal)',.55);
+    ribbon(s,{x:CASES.x+30,y:CASES.y},{x:ACT.x-26,y:ACT.y},8,'url(#red)',.55);
+    ribbon(s,{x:CASES.x+30,y:CASES.y},{x:RES.x-26,y:RES.y},9,'url(#teal)',.55);
     [206,296,386].forEach(cy=>s.appendChild(svgEl('path',{d:band({x:ACT.x+26,y:ACT.y},{x:1252,y:cy},.5),fill:'none',stroke:'rgba(255,120,120,.32)','stroke-width':2})));
     [504,594].forEach(cy=>s.appendChild(svgEl('path',{d:band({x:RES.x+26,y:RES.y},{x:1252,y:cy},.5),fill:'none',stroke:'rgba(47,214,192,.32)','stroke-width':2})));
   }
@@ -999,7 +1012,7 @@ const flashes=[];
 function rimRight(){const aa=(Math.random()*0.9-0.45);return {x:CENTER.x+Math.cos(aa)*CENTER.R,y:CENTER.y+Math.sin(aa)*CENTER.R};}
 function newOut(p){p.start=rimRight();p.t=0;p.sp=0.0018+Math.random()*0.0012;p.mag=Math.random()<0.35;return p;}
 const outflow=[];for(let k=0;k<5;k++){const p=newOut({});p.t=Math.random();outflow.push(p);}
-const CASESPT={x:970,y:392};
+const CASESPT={x:962,y:392};
 function rebuildParticles(){wIdx=[];MODES[MODE].sources.forEach((s,i)=>{if(s.more)return;for(let k=0;k<s.w;k++)wIdx.push(i);});
   inflow.forEach(p=>{newInflow(p);p.t=Math.random();});}
 
@@ -1028,7 +1041,7 @@ function frame(t){ctx.clearRect(0,0,1440,810);
     ctx.globalAlpha=(1-u)*0.5*dim;ctx.strokeStyle=f.mag?'#f4b9d8':'#a8fff0';ctx.lineWidth=1.2;ctx.beginPath();ctx.arc(f.x,f.y,2+u*7,0,6.283);ctx.stroke();}
   for(const p of outflow){ if(!REDUCED)p.t+=p.sp;
     if(p.t>=1){ newOut(p); continue; }
-    let pt; if(p.t<0.45){ pt=bezPt(p.start,CASESPT,.5,p.t/0.45);} else { pt=bezPt(CASESPT,(MODE==='h24'?AUTO:RES),.5,(p.t-0.45)/0.55);}
+    let pt; if(p.t<0.45){ pt=bezPt(p.start,{x:CASES.x-32,y:CASES.y},.5,p.t/0.45);} else { const tg=(MODE==='h24'?AUTO:RES); pt=bezPt(CASESPT,{x:tg.x-26,y:tg.y},.5,(p.t-0.45)/0.55);}
     ctx.globalAlpha=.9;ctx.fillStyle=p.mag?'#f4b9d8':'#a8fff0';ctx.beginPath();ctx.arc(pt.x,pt.y,1.9,0,6.283);ctx.fill();}
   ctx.globalAlpha=1;requestAnimationFrame(frame);
 }
@@ -1420,17 +1433,18 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDynamic();});
 function buildCases(){
   dvClear();
   const s=$('#coWire'); s.innerHTML=''; defs(s);
-  const IS={x:212,y:250},CL={x:342,y:250},CR={x:458,y:250},AU={x:600,y:190},MA={x:600,y:312},RE={x:840,y:190},OP={x:840,y:312};
+  // wires attach at the NUMBER's edge (mid-height) and stop exactly on circle rims
+  const IS={x:198,y:250},CL={x:340,y:250},CR={x:460,y:250},AU={x:640,y:190},MA={x:640,y:312},RE={x:858,y:190},OP={x:860,y:312};
   const TEAL='rgba(130,240,224,.95)',GREY='rgba(180,192,200,.8)',AMB='rgba(245,190,90,.92)';
   dvFlow(s,ribbon(s,IS,CL,10,'url(#teal)',.5),4,TEAL,{spMin:0.0016,spMax:0.003,r:2}); // Issues → Cases
   s.appendChild(svgEl('circle',{cx:400,cy:250,r:70,fill:'none',stroke:'rgba(47,214,192,.14)','stroke-width':1}));
   // same grammar as the main-flow funnel: split → Automated/Manual, then the
   // 7 CDC-resolved cross up into Resolved, the 11 stay Open (no Automated→Open)
-  dvFlow(s,ribbon(s,CR,AU,9,'url(#teal)',.5),3,TEAL,{});                          // Cases → Automated (78)
-  dvFlow(s,ribbon(s,CR,MA,5,'rgba(150,168,178,.42)',.5),2,GREY,{});              // Cases → Manual (18)
-  dvFlow(s,ribbon(s,{x:672,y:190},RE,9,'url(#teal)',.5),3,TEAL,{});              // Automated → Resolved (78)
-  dvFlow(s,ribbon(s,{x:672,y:312},RE,3,'url(#teal)',.5),2,TEAL,{});             // Manual → Resolved (7, rises from bottom)
-  dvFlow(s,ribbon(s,{x:672,y:312},OP,4.5,'rgba(245,166,35,.34)',.5),2,AMB,{}); // Manual → Open (11, still in queue)
+  dvFlow(s,ribbon(s,CR,{x:AU.x-26,y:AU.y},9,'url(#teal)',.5),3,TEAL,{});          // Cases → Automated (78)
+  dvFlow(s,ribbon(s,CR,{x:MA.x-26,y:MA.y},5,'rgba(150,168,178,.42)',.5),2,GREY,{}); // Cases → Manual (18)
+  dvFlow(s,ribbon(s,{x:AU.x+26,y:AU.y},RE,9,'url(#teal)',.5),3,TEAL,{});          // Automated → Resolved (78)
+  dvFlow(s,ribbon(s,{x:MA.x+26,y:MA.y},{x:RE.x,y:RE.y+6},3,'url(#teal)',.5),2,TEAL,{}); // Manual → Resolved (7, rises from bottom)
+  dvFlow(s,ribbon(s,{x:MA.x+26,y:MA.y},OP,4.5,'rgba(245,166,35,.34)',.5),2,AMB,{}); // Manual → Open (11, still in queue)
   const HB=[{cls:'auto',n:'Automation · playbooks',v:78},{cls:'analyst',n:'T Security · CDC Bonn · resolved',v:7},{cls:'open',n:'T Security · CDC Bonn · in queue',v:11}];
   $('#coBars').innerHTML=HB.map(b=>`<div class="co-bar ${b.cls}"><div class="lab"><span class="n">${b.n}</span><span class="v">${b.v}</span></div><div class="track"><div class="fill" style="width:${Math.round(b.v/96*100)}%"></div></div></div>`).join('');
   const MT=[['Reconnaissance',5],['Resource Development',3],['Initial Access',13],['Execution',7],['Persistence',6],['Privilege Escalation',5],['Defense Evasion',9],['Credential Access',8],['Discovery',10],['Lateral Movement',9],['Collection',5],['Command and Control',7],['Exfiltration',4],['Impact',5]];
@@ -1488,44 +1502,46 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOpenView();});
 
 /* ===== agent case JS ===== */
 const AG={
-  C:{x:656,y:399},
   sup:{x:272,y:398,r:33}, gate:{x:452,y:398,r:22},
   del:{x:650,y:332,r:28}, stock:{x:650,y:466,r:28}, route:{x:860,y:398,r:28},
   phar:{x:250,y:690,r:24}, ward:{x:500,y:690,r:24}, pat:{x:760,y:690,r:24},
   blk:[{x:452,y:586},{x:706,y:586},{x:936,y:586}]
 };
 let agState=1, agGateParts=[];
-// a flow line that plugs into each node's rim radially (centre-aligned), with an
-// optional outward bow (away from the mesh centre AG.C) so the mesh reads as a lens.
-function agLink(s,a,b,w,bow){
-  const dx=b.x-a.x,dy=b.y-a.y,L=Math.hypot(dx,dy)||1,ux=dx/L,uy=dy/L;
-  const ax=a.x+ux*a.r, ay=a.y+uy*a.r, bx=b.x-ux*b.r, by=b.y-uy*b.r;
-  let cx=(ax+bx)/2, cy=(ay+by)/2;
-  if(bow){ let ox=cx-AG.C.x, oy=cy-AG.C.y, oL=Math.hypot(ox,oy)||1; cx+=ox/oL*bow; cy+=oy/oL*bow; }
-  const p=svgEl('path',{d:'M '+ax.toFixed(1)+' '+ay.toFixed(1)+' Q '+cx.toFixed(1)+' '+cy.toFixed(1)+' '+bx.toFixed(1)+' '+by.toFixed(1),fill:'none',stroke:'url(#teal)','stroke-width':w,'stroke-linecap':'round',opacity:.8,filter:'url(#g)'});
+// flow lines attach at each node's edge at MID-HEIGHT with horizontal tangents
+// (reference style: leave the right edge, arrive at the left edge, centred).
+function agLinkH(s,a,b,w){
+  const p=svgEl('path',{d:band({x:a.x+a.r,y:a.y},{x:b.x-b.r,y:b.y},.5),fill:'none',stroke:'url(#teal)','stroke-width':w,'stroke-linecap':'round',opacity:.8,filter:'url(#g)'});
+  s.appendChild(p); return p;
+}
+// vertical drop variant: leave the bottom edge, arrive at the top edge (vertical tangents)
+function agLinkV(s,a,b,w){
+  const ay=a.y+a.r, by=b.y-b.r, dy=(by-ay)*.5;
+  const p=svgEl('path',{d:'M '+a.x+' '+ay+' C '+a.x+' '+(ay+dy)+', '+b.x+' '+(by-dy)+', '+b.x+' '+by,fill:'none',stroke:'url(#teal)','stroke-width':w,'stroke-linecap':'round',opacity:.8,filter:'url(#g)'});
   s.appendChild(p); return p;
 }
 function agBuild(){
   const s=$('#agWire'); s.innerHTML=''; defs(s); dvClear(); agGateParts=[];
   // approved scope: supplier ↔ gateway — request/response, flows both ways (severed on revoke)
-  const g1=agLink(s,AG.sup,AG.gate,2.4,0); g1.classList.add('ag-gatelink'); g1.setAttribute('stroke','rgba(150,240,224,.7)'); g1.setAttribute('filter','none');
+  const g1=agLinkH(s,AG.sup,AG.gate,2.4); g1.classList.add('ag-gatelink'); g1.setAttribute('stroke','rgba(150,240,224,.7)'); g1.setAttribute('filter','none');
   const pre=dvParts.length;
   dvFlow(s,g1,2,'rgba(130,240,224,.9)',{spMin:0.0018,spMax:0.003,r:2});
   dvFlow(s,g1,2,'rgba(150,236,255,.85)',{spMin:0.0018,spMax:0.003,r:2,rev:true});
   agGateParts=dvParts.slice(pre);
-  // internal mesh: gateway → delivery/stock → route (bowed outward into a lens, never stops)
+  // internal mesh: gateway → delivery/stock → route (the reference lens, never stops)
   [[AG.gate,AG.del],[AG.gate,AG.stock],[AG.del,AG.route],[AG.stock,AG.route]].forEach(function(pr){
-    const p=agLink(s,pr[0],pr[1],2.4,14); dvFlow(s,p,2,'rgba(130,240,224,.85)',{spMin:0.0016,spMax:0.0028,r:1.8}); });
-  // dispatcher → physical fleet
-  const d1=agLink(s,AG.route,AG.ward,2.6,0); dvFlow(s,d1,3,'rgba(130,240,224,.9)',{spMin:0.0016,spMax:0.0028,r:2});
-  // physical corridor: pharmacy → ward → patient (rim-to-rim)
-  const c1=agLink(s,AG.phar,AG.ward,5,0), c2=agLink(s,AG.ward,AG.pat,5,0);
+    const p=agLinkH(s,pr[0],pr[1],2.4); dvFlow(s,p,2,'rgba(130,240,224,.85)',{spMin:0.0016,spMax:0.0028,r:1.8}); });
+  // dispatcher → physical fleet (drops from the bottom edge onto the ward tile's top edge)
+  const d1=agLinkV(s,AG.route,AG.ward,2.6); dvFlow(s,d1,3,'rgba(130,240,224,.9)',{spMin:0.0016,spMax:0.0028,r:2});
+  // physical corridor: pharmacy → ward → patient (edge to edge at mid-height)
+  const c1=agLinkH(s,AG.phar,AG.ward,5), c2=agLinkH(s,AG.ward,AG.pat,5);
   dvFlow(s,c1,3,'rgba(130,240,224,.95)',{spMin:0.0018,spMax:0.0034,r:2.3});
   dvFlow(s,c2,3,'rgba(130,240,224,.95)',{spMin:0.0018,spMax:0.0034,r:2.3});
-  // attempted (denied) access: one supplier anchor fans out to each restricted target
-  const tx=AG.C.x-AG.sup.x, ty=560-AG.sup.y, tL=Math.hypot(tx,ty), ax=AG.sup.x+tx/tL*AG.sup.r, ay=AG.sup.y+ty/tL*AG.sup.r;
-  AG.blk.forEach(function(b){ const cx=(ax+b.x)/2, cy=(ay+b.y-14)/2;
-    s.appendChild(svgEl('path',{d:'M '+ax.toFixed(1)+' '+ay.toFixed(1)+' Q '+cx.toFixed(1)+' '+cy.toFixed(1)+' '+b.x+' '+(b.y-14),fill:'none',stroke:'rgba(255,90,150,.5)','stroke-width':1.4,'stroke-dasharray':'5 6','stroke-linecap':'round',class:'ag-suplink'})); });
+  // attempted (denied) access: dashed lines leave the SAME right-edge point as the
+  // approved link and curve down into each blocked chip's left edge at mid-height
+  const ax=AG.sup.x+AG.sup.r, ay=AG.sup.y, HW=[66,74,62];
+  AG.blk.forEach(function(b,i){
+    s.appendChild(svgEl('path',{d:band({x:ax,y:ay},{x:b.x-HW[i],y:b.y},.45),fill:'none',stroke:'rgba(255,90,150,.5)','stroke-width':1.4,'stroke-dasharray':'5 6','stroke-linecap':'round',class:'ag-suplink'})); });
   agState=1; agRender();
 }
 function agRender(){
