@@ -154,7 +154,10 @@ Risk). Tiles: Vulnerable Assets **5,840** (ties to assets At Risk) · Active Cas
 - **Vendor logos**: `LOGO` = 4 inlined webp data-URIs (Microsoft 365, Azure, Google
   Cloud, GitHub), tinted mono via `filter:brightness(0) invert(.72)`. Used ONLY in the
   Data Inventory + Dynamic View as subordinate third-party sources — **never** in the
-  main flow, and **never** above/replacing T Cloud Public. Sources live in `docs/*.webp`.
+  main flow, and **never** above/replacing T Cloud Public. All four are **icon-only marks
+  + a normal text label** (no baked-in wordmark) so the third-party rows read uniformly;
+  the Office/Google wordmark logos were cropped to their icon (`docs/o365-icon.webp`,
+  `docs/gcp-icon.webp`; the `wide` row variant is retired). Sources live in `docs/*.webp`.
 - Navigation: `showView(name)`; mode switch: `renderMode(m)`.
 
 ## Run
