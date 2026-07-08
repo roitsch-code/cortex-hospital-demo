@@ -486,6 +486,9 @@ body.view-flow .backbtn{display:flex}
 /* blocked / attempted access chips */
 .ag-blk{position:absolute;transform:translate(-50%,-50%);z-index:6;display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;color:#ffb3cf;border:1px dashed rgba(226,0,116,.55);background:rgba(226,0,116,.09);border-radius:999px;padding:4px 10px;white-space:nowrap;transition:.5s}
 .ag-blk .x{color:#ff7ec8;font-weight:800}
+.ag-blk.stk{left:auto;transform:translateY(-50%);justify-content:flex-start;width:172px}
+.ag-denlab{position:absolute;transform:translateX(-50%);z-index:6;font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#e08bb2;white-space:nowrap;transition:.5s}
+#dvAgent.s2 .ag-denlab,#dvAgent.s3 .ag-denlab{opacity:.28}
 #dvAgent.s2 .ag-blk,#dvAgent.s3 .ag-blk{opacity:.28;filter:grayscale(.4)}
 /* sandbox */
 .ag-sandbox{position:absolute;border:1.5px dashed rgba(226,0,116,.55);border-radius:16px;z-index:4;background:rgba(226,0,116,.05);opacity:0;transition:opacity .6s;pointer-events:none;box-shadow:inset 0 0 44px rgba(226,0,116,.08)}
@@ -563,7 +566,7 @@ body.view-flow .backbtn{display:flex}
 
   <!-- right funnel (24H) -->
   <div id="right24">
-    <div class="funnode" id="fnAuto" style="left:1080px;top:300px">
+    <div class="funnode" id="fnAuto" style="left:1080px;top:296px">
       <div class="fl above"><b><span data-count="78">0</span></b><span>Automated</span></div>
       <div class="disc2"><svg viewBox="0 0 24 24" fill="none" stroke="#6ff3e0" stroke-width="1.6">
         <circle cx="12" cy="5" r="2.4"/><circle cx="5" cy="17" r="2.4"/><circle cx="19" cy="17" r="2.4"/>
@@ -575,14 +578,14 @@ body.view-flow .backbtn{display:flex}
       <div class="fl below"><b><span data-count="18">0</span></b><span>Manual</span></div>
     </div>
     <div class="soctag" id="socTag" style="left:998px;top:556px">Assisted by <svg class="soclogo" viewBox="0 0 1478.52 304.81" fill="currentColor" aria-label="T Security"><path d="M336.72,185.25h44.46c3.62,18.44,15.81,25.69,32.28,25.69,18.77,0,28.32-10.54,28.32-24.7s-9.22-21.41-26.35-26.02l-25.36-7.25c-34.91-9.55-49.07-34.91-49.07-61.92,0-41.83,31.29-68.83,72.13-68.83,44.46,0,68.5,26.02,72.79,66.53h-43.47c-2.63-16.47-12.19-24.7-29.31-24.7-15.15,0-26.68,9.22-26.68,24.04s10.21,20.42,22.4,23.71l25.36,6.92c32.93,8.56,53.03,32.93,53.03,64.88,0,44.13-32.61,69.16-73.77,69.16-45.45,0-72.79-24.04-76.74-67.52Z"/><path d="M650.51,178.34h-99.46c2.31,29.97,14.49,38.53,30.63,38.53,12.84,0,21.41-4.94,25.36-14.82h42.82c-6.26,31.29-33.26,50.72-68.17,50.72-42.49,0-71.14-30.63-71.14-84.64s27.67-84.64,72.13-84.64c41.5,0,68.5,31.62,68.5,80.03,0,5.6,0,11.2-.66,14.82ZM552.37,147.71h58.62c-2.96-21.41-14.16-28.32-28.32-28.32-15.48,0-26.35,6.92-30.3,28.32Z"/><path d="M674.39,168.13c0-51.38,26.35-84.64,71.47-84.64,39.85,0,63.23,25.03,67.52,59.94h-42.81c-2.96-13.5-10.54-21.08-24.7-21.08-19.1,0-28.32,16.14-28.32,45.78s9.22,45.78,28.32,45.78c14.16,0,21.74-7.58,24.37-21.08h43.14c-4.28,34.91-27.67,59.94-67.52,59.94-45.12,0-71.47-33.59-71.47-84.64Z"/><path d="M839.88,193.82v-105.06h42.49v99.79c0,15.48,5.6,25.36,20.75,25.36,16.14,0,27.01-12.84,27.01-32.28v-92.88h42.49v158.74h-39.85v-19.43h-1.98c-8.23,15.48-23.38,24.7-42.49,24.7-32.28,0-48.41-20.09-48.41-58.95Z"/><path d="M1099.26,87.77v38.86c-4.28-.66-8.23-.66-11.53-.66-25.69,0-36.23,9.55-36.23,30.96v90.57h-42.49V88.76h39.85v19.43h1.98c7.57-14.16,20.42-22.07,37.22-22.07,3.62,0,7.58.33,11.2,1.65Z"/><path d="M1126,65.37V27.5h42.49v37.87h-42.49ZM1126,247.5V88.76h42.49v158.74h-42.49Z"/><path d="M1221.34,200.73v-75.75h-27.01v-36.23h27.01v-25.69l34.58-31.95h7.9v57.64h40.51v36.23h-40.51v70.48c0,11.86,6.92,18.11,19.1,18.11,6.26,0,12.51-.99,18.11-2.31v33.26c-8.89,3.95-18.44,5.6-30.3,5.6-29.31,0-49.4-17.13-49.4-49.4Z"/><path d="M1433.07,88.76h45.45l-61.92,175.87c-8.56,24.04-25.03,40.18-52.04,40.18-8.23,0-17.46-.99-25.69-4.28v-33.92c4.94,1.32,11.2,1.98,17.46,1.98,10.54,0,16.8-3.95,21.74-17.46l3.62-9.55-57.31-152.82h45.45l30.96,96.17h1.98l30.3-96.17Z"/><path d="M55,181.5H0v-55h55v55ZM0,0v93.5h16.5v-2.75c0-44,24.75-71.5,71.5-71.5h2.75v198c0,27.5-11,38.5-38.5,38.5h-8.25v19.25h143v-19.25h-8.25c-27.5,0-38.5-11-38.5-38.5V19.25s2.75,0,2.75,0c46.75,0,71.5,27.5,71.5,71.5v2.75h16.5V0H0ZM176,181.5h55v-55h-55v55Z"/></svg> · Cyber Defense Center Bonn</div>
-    <div class="outcome click" id="nResolved" style="left:1232px;top:292px">
+    <div class="outcome click" id="nResolved" style="left:1232px;top:296px">
       <b><span data-count="85">0</span></b><span>Resolved cases</span>
     </div>
-    <div class="chev" id="chevOpen" style="left:1196px;top:446px">
+    <div class="chev" id="chevOpen" style="left:1196px;top:440px">
       <div class="cv crit"><i>▲▲</i>3</div><div class="cv high"><i>▲▲</i>3</div>
       <div class="cv med"><i>▲</i>5</div><div class="cv low"><i>▲</i>0</div>
     </div>
-    <div class="outcome click" id="nOpen" style="left:1276px;top:498px">
+    <div class="outcome click" id="nOpen" style="left:1276px;top:488px">
       <b><span data-count="11">0</span></b><span>Open cases</span>
     </div>
   </div>
@@ -772,11 +775,11 @@ body.view-flow .backbtn{display:flex}
       <div class="g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4-3 7-7 9-4-2-7-5-7-9V6l7-3z"/><path d="M9.3 12l1.8 1.8L15 10.2"/></svg></div>
       <div class="nm">API gateway &#183; scoped</div>
     </div>
-    <div class="ag-dagent" style="left:650px;top:332px;--ac:#2fd6c0">
+    <div class="ag-dagent" style="left:656px;top:330px;--ac:#2fd6c0">
       <div class="orb"><i class="r1"></i><i class="r2"></i><i class="r3"></i></div>
       <div class="nm">Delivery scheduling</div><div class="pl">142 tasks &#183; nominal</div>
     </div>
-    <div class="ag-dagent" style="left:650px;top:466px;--ac:#4aa3ff">
+    <div class="ag-dagent" style="left:656px;top:466px;--ac:#4aa3ff">
       <div class="orb"><i class="r1"></i><i class="r2"></i><i class="r3"></i></div>
       <div class="nm">Stock replenishment</div><div class="pl">96 tasks &#183; nominal</div>
     </div>
@@ -785,10 +788,11 @@ body.view-flow .backbtn{display:flex}
       <div class="nm">Route &amp; traffic control</div><div class="pl">fleet dispatch</div>
     </div>
 
-    <!-- attempted (denied) access -->
-    <div class="ag-blk" style="left:452px;top:586px"><span class="x">&#10005;</span>Live AGV location</div>
-    <div class="ag-blk" style="left:706px;top:586px"><span class="x">&#10005;</span>Patient-linked routes</div>
-    <div class="ag-blk" style="left:936px;top:586px"><span class="x">&#10005;</span>Restricted ward</div>
+    <!-- attempted (denied) access — blocked at the gateway, hung as a tidy stack below it -->
+    <div class="ag-denlab" style="left:341px;top:488px">Denied &#183; out of profile</div>
+    <div class="ag-blk stk" style="right:1013px;top:512px"><span class="x">&#10005;</span>Live AGV location</div>
+    <div class="ag-blk stk" style="right:1013px;top:556px"><span class="x">&#10005;</span>Patient-linked routes</div>
+    <div class="ag-blk stk" style="right:1013px;top:600px"><span class="x">&#10005;</span>Restricted ward</div>
 
     <!-- secure-simulation sandbox (appears on isolate) -->
     <div class="ag-sandbox" style="left:150px;top:322px;width:252px;height:152px"><span>Secure simulation</span></div>
@@ -892,7 +896,7 @@ const MODES={
 let MODE='h24';
 
 const CENTER={x:720,y:392,R:132}, WAIST={x:440,y:392}, CASES={x:930,y:392};
-const AUTO={x:1080,y:300}, MAN={x:1080,y:488};       // 24H funnel nodes
+const AUTO={x:1080,y:296}, MAN={x:1080,y:488};       // 24H funnel nodes (aligned w/ Resolved/Open numbers)
 const ACT={x:1120,y:288}, RES={x:1120,y:520};        // 30D nodes
 const EP_Y=210, SRC_Y0=272, SRC_STEP=31, SRC_X=262;
 let srcPts=[];
@@ -904,7 +908,13 @@ function defs(svg){const d=svgEl('defs',{});d.innerHTML=`
   <linearGradient id="tmag" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5a0b34"/><stop offset="1" stop-color="#2fd6c0"/></linearGradient>
   <linearGradient id="ep" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#186158"/><stop offset="1" stop-color="#6ff3e0"/></linearGradient>
   <linearGradient id="red" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2a2a33"/><stop offset="1" stop-color="#ff4d5e"/></linearGradient>`;svg.appendChild(d);}
-function ribbon(svg,a,b,w,col='url(#teal)',k=.55){const p=svgEl('path',{d:band(a,b,k),fill:'none',stroke:col,'stroke-width':w,'stroke-linecap':'round',opacity:.7,filter:'url(#g)'});svg.appendChild(p);return p;}
+function ribbon(svg,a,b,w,col='url(#teal)',k=.55){
+  // near-horizontal lines get a gentle even bow so their bounding box isn't zero-height
+  // (a flat bbox collapses the url(#g) filter region and the gradient → the line vanishes)
+  let d;
+  if(Math.abs(a.y-b.y)<3){const my=(a.y+b.y)/2-6,dx=(b.x-a.x)*.4;d=`M ${a.x} ${a.y} C ${a.x+dx} ${my}, ${b.x-dx} ${my}, ${b.x} ${b.y}`;}
+  else d=band(a,b,k);
+  const p=svgEl('path',{d,fill:'none',stroke:col,'stroke-width':w,'stroke-linecap':'round',opacity:.7,filter:'url(#g)'});svg.appendChild(p);return p;}
 /* ---- animated particles that flow along detail-overlay ribbons/lines ---- */
 let dvParts=[];
 function dvClear(){dvParts=[];}
@@ -956,12 +966,12 @@ function buildWires(){const s=$('#wFlow');s.innerHTML='';defs(s);srcRibbons=[];
     // Cases number → Automated / Manual (leave the number's right edge at mid-height)
     ribbon(s,{x:CASES.x+30,y:CASES.y},{x:AUTO.x-33,y:AUTO.y},10,'url(#teal)',.55);
     ribbon(s,{x:CASES.x+30,y:CASES.y},{x:MAN.x-31,y:MAN.y},5,'rgba(150,168,178,.42)',.55);
-    // Automated → Resolved (all 78 flow straight through to Resolved)
-    ribbon(s,{x:AUTO.x+34,y:AUTO.y},{x:1222,y:292},11,'url(#teal)',.5);
-    // Manual → Resolved (the 7 CDC-resolved rise from the bottom into the 85 Resolved)
-    ribbon(s,{x:MAN.x+30,y:MAN.y},{x:1222,y:298},3.6,'url(#teal)',.5);
-    // Manual → Open (the 11 still in the CDC queue)
-    ribbon(s,{x:MAN.x+31,y:MAN.y},{x:1266,y:498},5,'rgba(245,166,35,.34)',.5);
+    // Automated → Resolved (all 78 flow straight through — horizontal, aligned)
+    ribbon(s,{x:AUTO.x+34,y:AUTO.y},{x:1224,y:AUTO.y},11,'url(#teal)',.5);
+    // Manual → Resolved (the 7 CDC-resolved rise from the bottom, merging into Resolved from below)
+    ribbon(s,{x:MAN.x+30,y:MAN.y},{x:1224,y:AUTO.y+6},3.6,'url(#teal)',.5);
+    // Manual → Open (the 11 still in the CDC queue — horizontal, aligned)
+    ribbon(s,{x:MAN.x+31,y:MAN.y},{x:1268,y:MAN.y},5,'rgba(245,166,35,.34)',.5);
   }else{
     ribbon(s,{x:CASES.x+30,y:CASES.y},{x:ACT.x-32,y:ACT.y},8,'url(#red)',.55);
     ribbon(s,{x:CASES.x+30,y:CASES.y},{x:RES.x-33,y:RES.y},9,'url(#teal)',.55);
@@ -1506,9 +1516,9 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOpenView();});
 /* ===== agent case JS ===== */
 const AG={
   sup:{x:272,y:398,r:33}, gate:{x:452,y:398,r:22},
-  del:{x:650,y:332,r:28}, stock:{x:650,y:466,r:28}, route:{x:860,y:398,r:28},
+  del:{x:656,y:330,r:28}, stock:{x:656,y:466,r:28}, route:{x:860,y:398,r:28},
   phar:{x:250,y:690,r:24}, ward:{x:500,y:690,r:24}, pat:{x:760,y:690,r:24},
-  blk:[{x:452,y:586},{x:706,y:586},{x:936,y:586}]
+  den:[512,556,600]   // y of each denied chip (right edge at x=427)
 };
 let agState=1, agGateParts=[];
 // flow lines attach at each node's edge at MID-HEIGHT with horizontal tangents
@@ -1542,11 +1552,12 @@ function agBuild(){
   const c1=agLinkH(s,AG.phar,AG.ward,5), c2=agLinkH(s,AG.ward,AG.pat,5);
   dvFlow(s,c1,3,'rgba(130,240,224,.95)',{spMin:0.0018,spMax:0.0034,r:2.3});
   dvFlow(s,c2,3,'rgba(130,240,224,.95)',{spMin:0.0018,spMax:0.0034,r:2.3});
-  // attempted (denied) access: dashed lines leave the SAME right-edge point as the
-  // approved link and curve down into each blocked chip's left edge at mid-height
-  const ax=AG.sup.x+AG.sup.r+3, ay=AG.sup.y, HW=[69,77,65];
-  AG.blk.forEach(function(b,i){
-    s.appendChild(svgEl('path',{d:band({x:ax,y:ay},{x:b.x-HW[i],y:b.y},.45),fill:'none',stroke:'rgba(255,90,150,.5)','stroke-width':1.4,'stroke-dasharray':'5 6','stroke-linecap':'round',class:'ag-suplink'})); });
+  // attempted (denied) access: out-of-profile requests are blocked AT the gateway and
+  // shunted into a tidy stack below it — one rail, no line crosses the mesh or dispatch
+  const RX=430, DEN='rgba(255,90,150,.5)';
+  s.appendChild(svgEl('path',{d:band({x:AG.gate.x,y:AG.gate.y+AG.gate.r+2},{x:RX,y:AG.den[0]-6},.5),fill:'none',stroke:DEN,'stroke-width':1.4,'stroke-dasharray':'5 6','stroke-linecap':'round',class:'ag-suplink'}));
+  s.appendChild(svgEl('path',{d:'M '+RX+' '+(AG.den[0]-6)+' L '+RX+' '+(AG.den[2]+6),fill:'none',stroke:'rgba(255,90,150,.4)','stroke-width':1.4,'stroke-dasharray':'5 6','stroke-linecap':'round',class:'ag-suplink'}));
+  AG.den.forEach(function(y){ s.appendChild(svgEl('path',{d:'M '+RX+' '+y+' L '+(RX-8)+' '+y,fill:'none',stroke:DEN,'stroke-width':1.4,'stroke-linecap':'round',class:'ag-suplink'})); });
   agState=1; agRender();
 }
 function agRender(){

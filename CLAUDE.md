@@ -169,7 +169,13 @@ Risk). Tiles: Vulnerable Assets **5,840** (ties to assets At Risk) · Active Cas
   so a line's cap sits ON the rim and never bleeds inside the shape. The SHAPES are
   anchors too: `.ag-dagent`/`.ag-gate`/`.ag-loc` labels hang absolutely below, so each
   orb/tile centre sits exactly on its (x,y). Same rule in `buildCases` and the agent
-  scene (`agLinkH`/`agLinkV` apply the setback automatically).
+  scene (`agLinkH`/`agLinkV` apply the setback automatically). **No line crosses another**
+  — the funnel's Automated→Resolved and Manual→Open are horizontal/aligned, the 7
+  Manual→Resolved merges into Resolved from below; the agent-scene denied requests hang as
+  one tidy rail off the gateway (never fanning across the mesh). NB: a **perfectly
+  horizontal ribbon has a zero-height bbox that collapses the `url(#g)` filter + gradient
+  and the line vanishes** — `ribbon()` gives near-horizontal lines a small even bow so they
+  always render.
 - **24H detail overlays** (`.dv` pattern, opened by overriding the spine clicks):
   `buildInventory`/`openInventory` (Data Inventory, `INV`), `buildDynamic`/`openDynamic`
   (Dynamic View, `DYN_MARKS`/`DYN_FEED`), `buildCases`/`openCases` (Cases Overview,
