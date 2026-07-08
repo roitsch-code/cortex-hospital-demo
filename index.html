@@ -56,7 +56,7 @@ svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;ov
 #nCenter{z-index:4}
 #nCenter .num{font-size:34px}
 #nCenter.node.click:hover{transform:translate(-50%,-50%) scale(1.04)}
-#nCenter .disc{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:220px;height:220px;border-radius:50%;
+#nCenter .disc{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:220px;height:220px;border-radius:50%;
   background:radial-gradient(circle,rgba(1,4,8,.86),rgba(1,4,8,0) 68%);z-index:-1}
 
 /* left source rows */
@@ -447,8 +447,9 @@ body.view-flow .backbtn{display:flex}
 .ag-dagent .orb i.r1{inset:0;border:1.5px solid var(--ac);opacity:.4}
 .ag-dagent .orb i.r2{inset:26%;border:2px solid var(--ac);box-shadow:0 0 13px var(--ac)}
 .ag-dagent .orb i.r3{inset:40%;background:var(--ac);box-shadow:0 0 11px var(--ac)}
-.ag-dagent .nm{font-size:12px;font-weight:700;color:#e0e7ec;margin-top:11px;white-space:nowrap}
-.ag-dagent .pl{font-size:10px;color:var(--muted);margin-top:2px;white-space:nowrap}
+/* labels hang below so the ORB's centre sits exactly on the node anchor (wire height) */
+.ag-dagent .nm{position:absolute;top:calc(100% + 11px);left:50%;transform:translateX(-50%);font-size:12px;font-weight:700;color:#e0e7ec;white-space:nowrap}
+.ag-dagent .pl{position:absolute;top:calc(100% + 29px);left:50%;transform:translateX(-50%);font-size:10px;color:var(--muted);white-space:nowrap}
 .ag-sup{--ac:#ff7ea6;z-index:7}
 .ag-sup .orb{width:64px;height:64px}
 .ag-sup .orb i.r1{border-style:dashed;opacity:.75}
@@ -462,7 +463,7 @@ body.view-flow .backbtn{display:flex}
 .ag-gate{position:absolute;transform:translate(-50%,-50%);z-index:6;text-align:center}
 .ag-gate .g{width:42px;height:42px;border-radius:11px;margin:0 auto;display:grid;place-items:center;border:1px solid rgba(150,180,210,.45);background:rgba(80,115,155,.14);color:#b3d0ea}
 .ag-gate .g svg{width:21px;height:21px}
-.ag-gate .nm{font-size:10px;color:var(--muted);margin-top:6px;white-space:nowrap}
+.ag-gate .nm{position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);font-size:10px;color:var(--muted);white-space:nowrap}
 /* physical layer */
 .ag-corridor{position:absolute;height:36px;border-radius:19px;border:1px solid rgba(140,160,180,.18);background:linear-gradient(180deg,rgba(120,150,180,.07),rgba(120,150,180,.02));z-index:3}
 .ag-corridor::after{content:"";position:absolute;left:16px;right:16px;top:50%;border-top:1px dashed rgba(150,170,190,.22)}
@@ -470,7 +471,7 @@ body.view-flow .backbtn{display:flex}
 .ag-loc .b{width:46px;height:46px;border-radius:11px;margin:0 auto;display:grid;place-items:center;border:1.4px solid rgba(165,185,205,.5);background:rgba(28,38,50,.9);color:#ccd8e2;box-shadow:0 2px 11px rgba(0,0,0,.45)}
 .ag-loc .b svg{width:23px;height:23px}
 .ag-loc.lock .b{border-color:rgba(226,0,116,.45);color:#f0b8d2;background:rgba(40,20,32,.9)}
-.ag-loc .nm{font-size:11px;font-weight:700;color:#c2cbd2;margin-top:8px;white-space:nowrap}
+.ag-loc .nm{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);font-size:11px;font-weight:700;color:#c2cbd2;white-space:nowrap}
 .ag-cart{position:absolute;transform:translate(-50%,-50%);z-index:6;color:#e2ebf3}
 .ag-cart .c{width:32px;height:26px;border-radius:6px;display:grid;place-items:center;position:relative;border:1.3px solid rgba(185,205,225,.75);background:linear-gradient(180deg,#2b3947,#18222e);box-shadow:0 3px 9px rgba(0,0,0,.55)}
 .ag-cart .c svg{width:17px;height:17px}
@@ -943,28 +944,29 @@ function buildWires(){const s=$('#wFlow');s.innerHTML='';defs(s);srcRibbons=[];
     const line=svgEl('path',{d:band(a,WAIST,.6),fill:'none',stroke:col,'stroke-width':lineW,'stroke-linecap':'round',opacity:src.ep?.7:.45});
     s.appendChild(base);s.appendChild(line);srcRibbons.push({base,line,greyW,lineW,ep:src.ep,t:src.t});
   });
-  // wires attach at the NUMBER's edge (mid-height) and stop exactly on circle rims
-  ribbon(s,{x:562,y:CENTER.y},{x:CENTER.x-CENTER.R,y:CENTER.y},7,'url(#teal)',.5);
+  // wires attach at the NUMBER's edge (mid-height) and stop ON circle rims —
+  // endpoints are set back by half stroke + glow so round caps never enter a shape
+  ribbon(s,{x:562,y:CENTER.y},{x:CENTER.x-CENTER.R-6,y:CENTER.y},7,'url(#teal)',.5);
   ring(s,CENTER.x,CENTER.y,CENTER.R+18,150,.55);
   ring(s,CENTER.x,CENTER.y,CENTER.R+44,96,.26);
   s.appendChild(svgEl('circle',{cx:CENTER.x,cy:CENTER.y,r:CENTER.R,fill:'none',stroke:'rgba(47,214,192,.16)','stroke-width':1}));
   s.appendChild(svgEl('circle',{cx:CENTER.x,cy:CENTER.y,r:CENTER.R*0.62,fill:'none',stroke:'rgba(47,214,192,.10)','stroke-width':1}));
-  ribbon(s,{x:CENTER.x+CENTER.R,y:CENTER.y},{x:CASES.x-32,y:CASES.y},3,'url(#teal)',.55);
+  ribbon(s,{x:CENTER.x+CENTER.R+4,y:CENTER.y},{x:CASES.x-32,y:CASES.y},3,'url(#teal)',.55);
   if(MODE==='h24'){
     // Cases number → Automated / Manual (leave the number's right edge at mid-height)
-    ribbon(s,{x:CASES.x+30,y:CASES.y},{x:AUTO.x-26,y:AUTO.y},10,'url(#teal)',.55);
-    ribbon(s,{x:CASES.x+30,y:CASES.y},{x:MAN.x-26,y:MAN.y},5,'rgba(150,168,178,.42)',.55);
+    ribbon(s,{x:CASES.x+30,y:CASES.y},{x:AUTO.x-33,y:AUTO.y},10,'url(#teal)',.55);
+    ribbon(s,{x:CASES.x+30,y:CASES.y},{x:MAN.x-31,y:MAN.y},5,'rgba(150,168,178,.42)',.55);
     // Automated → Resolved (all 78 flow straight through to Resolved)
-    ribbon(s,{x:AUTO.x+26,y:AUTO.y},{x:1224,y:292},11,'url(#teal)',.5);
+    ribbon(s,{x:AUTO.x+34,y:AUTO.y},{x:1222,y:292},11,'url(#teal)',.5);
     // Manual → Resolved (the 7 CDC-resolved rise from the bottom into the 85 Resolved)
-    ribbon(s,{x:MAN.x+26,y:MAN.y},{x:1224,y:298},3.6,'url(#teal)',.5);
+    ribbon(s,{x:MAN.x+30,y:MAN.y},{x:1222,y:298},3.6,'url(#teal)',.5);
     // Manual → Open (the 11 still in the CDC queue)
-    ribbon(s,{x:MAN.x+26,y:MAN.y},{x:1268,y:498},5,'rgba(245,166,35,.34)',.5);
+    ribbon(s,{x:MAN.x+31,y:MAN.y},{x:1266,y:498},5,'rgba(245,166,35,.34)',.5);
   }else{
-    ribbon(s,{x:CASES.x+30,y:CASES.y},{x:ACT.x-26,y:ACT.y},8,'url(#red)',.55);
-    ribbon(s,{x:CASES.x+30,y:CASES.y},{x:RES.x-26,y:RES.y},9,'url(#teal)',.55);
-    [206,296,386].forEach(cy=>s.appendChild(svgEl('path',{d:band({x:ACT.x+26,y:ACT.y},{x:1252,y:cy},.5),fill:'none',stroke:'rgba(255,120,120,.32)','stroke-width':2})));
-    [504,594].forEach(cy=>s.appendChild(svgEl('path',{d:band({x:RES.x+26,y:RES.y},{x:1252,y:cy},.5),fill:'none',stroke:'rgba(47,214,192,.32)','stroke-width':2})));
+    ribbon(s,{x:CASES.x+30,y:CASES.y},{x:ACT.x-32,y:ACT.y},8,'url(#red)',.55);
+    ribbon(s,{x:CASES.x+30,y:CASES.y},{x:RES.x-33,y:RES.y},9,'url(#teal)',.55);
+    [206,296,386].forEach(cy=>s.appendChild(svgEl('path',{d:band({x:ACT.x+29,y:ACT.y},{x:1252,y:cy},.5),fill:'none',stroke:'rgba(255,120,120,.32)','stroke-width':2})));
+    [504,594].forEach(cy=>s.appendChild(svgEl('path',{d:band({x:RES.x+29,y:RES.y},{x:1252,y:cy},.5),fill:'none',stroke:'rgba(47,214,192,.32)','stroke-width':2})));
   }
 }
 
@@ -1041,7 +1043,7 @@ function frame(t){ctx.clearRect(0,0,1440,810);
     ctx.globalAlpha=(1-u)*0.5*dim;ctx.strokeStyle=f.mag?'#f4b9d8':'#a8fff0';ctx.lineWidth=1.2;ctx.beginPath();ctx.arc(f.x,f.y,2+u*7,0,6.283);ctx.stroke();}
   for(const p of outflow){ if(!REDUCED)p.t+=p.sp;
     if(p.t>=1){ newOut(p); continue; }
-    let pt; if(p.t<0.45){ pt=bezPt(p.start,{x:CASES.x-32,y:CASES.y},.5,p.t/0.45);} else { const tg=(MODE==='h24'?AUTO:RES); pt=bezPt(CASESPT,{x:tg.x-26,y:tg.y},.5,(p.t-0.45)/0.55);}
+    let pt; if(p.t<0.45){ pt=bezPt(p.start,{x:CASES.x-32,y:CASES.y},.5,p.t/0.45);} else { const tg=(MODE==='h24'?AUTO:RES); pt=bezPt(CASESPT,{x:tg.x-31,y:tg.y},.5,(p.t-0.45)/0.55);}
     ctx.globalAlpha=.9;ctx.fillStyle=p.mag?'#f4b9d8':'#a8fff0';ctx.beginPath();ctx.arc(pt.x,pt.y,1.9,0,6.283);ctx.fill();}
   ctx.globalAlpha=1;requestAnimationFrame(frame);
 }
@@ -1433,18 +1435,19 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDynamic();});
 function buildCases(){
   dvClear();
   const s=$('#coWire'); s.innerHTML=''; defs(s);
-  // wires attach at the NUMBER's edge (mid-height) and stop exactly on circle rims
-  const IS={x:198,y:250},CL={x:340,y:250},CR={x:460,y:250},AU={x:640,y:190},MA={x:640,y:312},RE={x:858,y:190},OP={x:860,y:312};
+  // wires attach at the NUMBER's edge (mid-height) and stop ON circle rims
+  // (endpoints set back by half stroke + glow so round caps never enter a shape)
+  const IS={x:198,y:250},CL={x:333,y:250},CR={x:467,y:250},AU={x:640,y:190},MA={x:640,y:312},RE={x:858,y:190},OP={x:860,y:312};
   const TEAL='rgba(130,240,224,.95)',GREY='rgba(180,192,200,.8)',AMB='rgba(245,190,90,.92)';
   dvFlow(s,ribbon(s,IS,CL,10,'url(#teal)',.5),4,TEAL,{spMin:0.0016,spMax:0.003,r:2}); // Issues → Cases
   s.appendChild(svgEl('circle',{cx:400,cy:250,r:70,fill:'none',stroke:'rgba(47,214,192,.14)','stroke-width':1}));
   // same grammar as the main-flow funnel: split → Automated/Manual, then the
   // 7 CDC-resolved cross up into Resolved, the 11 stay Open (no Automated→Open)
-  dvFlow(s,ribbon(s,CR,{x:AU.x-26,y:AU.y},9,'url(#teal)',.5),3,TEAL,{});          // Cases → Automated (78)
-  dvFlow(s,ribbon(s,CR,{x:MA.x-26,y:MA.y},5,'rgba(150,168,178,.42)',.5),2,GREY,{}); // Cases → Manual (18)
-  dvFlow(s,ribbon(s,{x:AU.x+26,y:AU.y},RE,9,'url(#teal)',.5),3,TEAL,{});          // Automated → Resolved (78)
-  dvFlow(s,ribbon(s,{x:MA.x+26,y:MA.y},{x:RE.x,y:RE.y+6},3,'url(#teal)',.5),2,TEAL,{}); // Manual → Resolved (7, rises from bottom)
-  dvFlow(s,ribbon(s,{x:MA.x+26,y:MA.y},OP,4.5,'rgba(245,166,35,.34)',.5),2,AMB,{}); // Manual → Open (11, still in queue)
+  dvFlow(s,ribbon(s,CR,{x:AU.x-33,y:AU.y},9,'url(#teal)',.5),3,TEAL,{});          // Cases → Automated (78)
+  dvFlow(s,ribbon(s,CR,{x:MA.x-31,y:MA.y},5,'rgba(150,168,178,.42)',.5),2,GREY,{}); // Cases → Manual (18)
+  dvFlow(s,ribbon(s,{x:AU.x+33,y:AU.y},RE,9,'url(#teal)',.5),3,TEAL,{});          // Automated → Resolved (78)
+  dvFlow(s,ribbon(s,{x:MA.x+30,y:MA.y},{x:RE.x,y:RE.y+6},3,'url(#teal)',.5),2,TEAL,{}); // Manual → Resolved (7, rises from bottom)
+  dvFlow(s,ribbon(s,{x:MA.x+31,y:MA.y},OP,4.5,'rgba(245,166,35,.34)',.5),2,AMB,{}); // Manual → Open (11, still in queue)
   const HB=[{cls:'auto',n:'Automation · playbooks',v:78},{cls:'analyst',n:'T Security · CDC Bonn · resolved',v:7},{cls:'open',n:'T Security · CDC Bonn · in queue',v:11}];
   $('#coBars').innerHTML=HB.map(b=>`<div class="co-bar ${b.cls}"><div class="lab"><span class="n">${b.n}</span><span class="v">${b.v}</span></div><div class="track"><div class="fill" style="width:${Math.round(b.v/96*100)}%"></div></div></div>`).join('');
   const MT=[['Reconnaissance',5],['Resource Development',3],['Initial Access',13],['Execution',7],['Persistence',6],['Privilege Escalation',5],['Defense Evasion',9],['Credential Access',8],['Discovery',10],['Lateral Movement',9],['Collection',5],['Command and Control',7],['Exfiltration',4],['Impact',5]];
@@ -1510,13 +1513,15 @@ const AG={
 let agState=1, agGateParts=[];
 // flow lines attach at each node's edge at MID-HEIGHT with horizontal tangents
 // (reference style: leave the right edge, arrive at the left edge, centred).
+// setback = half stroke + glow so the round cap stops ON the rim, never inside it.
 function agLinkH(s,a,b,w){
-  const p=svgEl('path',{d:band({x:a.x+a.r,y:a.y},{x:b.x-b.r,y:b.y},.5),fill:'none',stroke:'url(#teal)','stroke-width':w,'stroke-linecap':'round',opacity:.8,filter:'url(#g)'});
+  const off=w/2+2;
+  const p=svgEl('path',{d:band({x:a.x+a.r+off,y:a.y},{x:b.x-b.r-off,y:b.y},.5),fill:'none',stroke:'url(#teal)','stroke-width':w,'stroke-linecap':'round',opacity:.8,filter:'url(#g)'});
   s.appendChild(p); return p;
 }
 // vertical drop variant: leave the bottom edge, arrive at the top edge (vertical tangents)
 function agLinkV(s,a,b,w){
-  const ay=a.y+a.r, by=b.y-b.r, dy=(by-ay)*.5;
+  const off=w/2+2, ay=a.y+a.r+off, by=b.y-b.r-off, dy=(by-ay)*.5;
   const p=svgEl('path',{d:'M '+a.x+' '+ay+' C '+a.x+' '+(ay+dy)+', '+b.x+' '+(by-dy)+', '+b.x+' '+by,fill:'none',stroke:'url(#teal)','stroke-width':w,'stroke-linecap':'round',opacity:.8,filter:'url(#g)'});
   s.appendChild(p); return p;
 }
@@ -1539,7 +1544,7 @@ function agBuild(){
   dvFlow(s,c2,3,'rgba(130,240,224,.95)',{spMin:0.0018,spMax:0.0034,r:2.3});
   // attempted (denied) access: dashed lines leave the SAME right-edge point as the
   // approved link and curve down into each blocked chip's left edge at mid-height
-  const ax=AG.sup.x+AG.sup.r, ay=AG.sup.y, HW=[66,74,62];
+  const ax=AG.sup.x+AG.sup.r+3, ay=AG.sup.y, HW=[69,77,65];
   AG.blk.forEach(function(b,i){
     s.appendChild(svgEl('path',{d:band({x:ax,y:ay},{x:b.x-HW[i],y:b.y},.45),fill:'none',stroke:'rgba(255,90,150,.5)','stroke-width':1.4,'stroke-dasharray':'5 6','stroke-linecap':'round',class:'ag-suplink'})); });
   agState=1; agRender();

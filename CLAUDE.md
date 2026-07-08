@@ -165,7 +165,11 @@ Risk). Tiles: Vulnerable Assets **5,840** (ties to assets At Risk) · Active Cas
   `.cap`/`.co-node>span`/`.outcome>span` labels hang absolutely BELOW the number so the
   number's midline sits exactly on the wire height. Wires start/stop at the number's
   left/right edge (e.g. `buildWires`: waist 440 → "2,412" → 562→core-rim; Cases +30/−32;
-  funnel discs ±26). Same rule in `buildCases` and the agent scene (`agLinkH`/`agLinkV`).
+  funnel discs ±26). Endpoints are **set back by half the stroke + glow** (round caps!)
+  so a line's cap sits ON the rim and never bleeds inside the shape. The SHAPES are
+  anchors too: `.ag-dagent`/`.ag-gate`/`.ag-loc` labels hang absolutely below, so each
+  orb/tile centre sits exactly on its (x,y). Same rule in `buildCases` and the agent
+  scene (`agLinkH`/`agLinkV` apply the setback automatically).
 - **24H detail overlays** (`.dv` pattern, opened by overriding the spine clicks):
   `buildInventory`/`openInventory` (Data Inventory, `INV`), `buildDynamic`/`openDynamic`
   (Dynamic View, `DYN_MARKS`/`DYN_FEED`), `buildCases`/`openCases` (Cases Overview,
