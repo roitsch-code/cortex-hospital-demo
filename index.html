@@ -449,7 +449,7 @@ body.view-flow .backbtn{display:flex}
         <circle cx="12" cy="8" r="3.4"/><path d="M5.5 19a6.5 6.5 0 0 1 13 0"/></svg></div>
       <div class="fl below"><b><span data-count="18">0</span></b><span>Manual</span></div>
     </div>
-    <div class="soctag" id="socTag" style="left:1004px;top:588px">assisted by <b>T Security</b> · Cyber Defense Center Bonn</div>
+    <div class="soctag" id="socTag" style="left:998px;top:556px">assisted by <b>T Security</b> · Cyber Defense Center Bonn</div>
     <div class="outcome click" id="nResolved" style="left:1232px;top:292px">
       <b><span data-count="85">0</span></b><span>Resolved Cases</span>
     </div>
@@ -727,8 +727,6 @@ function buildWires(){const s=$('#wFlow');s.innerHTML='';defs(s);srcRibbons=[];
     ribbon(s,{x:MAN.x+24,y:MAN.y-6},{x:1212,y:300},3.6,'url(#teal)',.5);
     // Manual → Open (the 11 still in the CDC queue)
     ribbon(s,{x:MAN.x+26,y:MAN.y+6},{x:1256,y:498},5,'rgba(245,166,35,.34)',.5);
-    // magenta: all 18 manual routed to T Security · Cyber Defense Center Bonn
-    s.appendChild(svgEl('path',{d:band({x:MAN.x,y:MAN.y+28},{x:1050,y:586},.5),fill:'none',stroke:'rgba(226,0,116,.55)','stroke-width':2.2,'stroke-linecap':'round',filter:'url(#g)'}));
   }else{
     ribbon(s,{x:CASES.x+42,y:CASES.y},{x:ACT.x-26,y:ACT.y},8,'url(#red)',.55);
     ribbon(s,{x:CASES.x+42,y:CASES.y},{x:RES.x-26,y:RES.y},9,'url(#teal)',.55);
@@ -962,8 +960,8 @@ const A_LOC=[
   {key:'research',name:'Research Institute',    tag:'Research', mark:'research',assets:380,   unit:'Partners',   unitN:14,      ang:-2.85,   cats:[['Partner Gateways',90],['Shared Datasets',140],['Federated Nodes',60],['External Researchers',90]], status:{both:0,threat:1,risk:9}}
 ];
 const PMARK={
-  campus:'<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M2 14h12M3.6 14V6.2L8 3.2l4.4 3V14"/><path d="M8 8v2.6M6.7 9.3h2.6" stroke-width="1.5"/></svg>',
-  mvz:'<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><rect x="3" y="4" width="10" height="10" rx="1"/><path d="M8 6.3v3.4M6.3 8h3.4" stroke-width="1.5"/></svg>',
+  campus:'<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"><path d="M2.4 7.6 8 2.5l5.6 5.1"/><path d="M3.8 7.7v6.1h8.4V7.7"/><path d="M4.9 5.3V3.4h1.1V4.6"/><circle cx="8" cy="10.2" r="2.4"/><path d="M8 8.9v2.6M6.8 10.2h2.4" stroke-width="1.3"/></svg>',
+  mvz:'<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="7" r="4"/><path d="M10 5.1v3.8M8.1 7h3.8" stroke-width="1.3"/><circle cx="3.8" cy="4.9" r="1.7"/><path d="M1.2 11.4a2.6 2.6 0 0 1 5.2 0"/></svg>',
   cloud:'<svg class="sicon" viewBox="0 0 231 275" fill="currentColor"><path d="M55,181.5H0v-55h55v55ZM0,0v93.5h16.5v-2.75c0-44,24.75-71.5,71.5-71.5h2.75v198c0,27.5-11,38.5-38.5,38.5h-8.25v19.25h143v-19.25h-8.25c-27.5,0-38.5-11-38.5-38.5V19.25s2.75,0,2.75,0c46.75,0,71.5,27.5,71.5,71.5v2.75h16.5V0H0ZM176,181.5h55v-55h-55v55Z"/></svg>',
   telemed:'<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><rect x="2" y="3.5" width="12" height="8" rx="1"/><path d="M6.6 6.1l3.3 1.9-3.3 1.9z" fill="currentColor" stroke="none"/><path d="M5.5 13.6h5"/></svg>',
   labs:'<svg class="sicon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M6.5 2v3.8L3.6 11.6A1.4 1.4 0 0 0 4.9 13.7h6.2a1.4 1.4 0 0 0 1.3-2.1L9.5 5.8V2M6 2h4M5.4 9.4h5.2"/></svg>',
