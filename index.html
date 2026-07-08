@@ -512,7 +512,7 @@ body.view-flow .backbtn{display:flex}
     <div id="imedone">
       <div class="imo-logo">iMedOne<sup>®</sup></div>
       <div class="imo-sub">Hospital Information System (HIS)</div>
-      <div class="imo-stat">One core clinical system · used across all sites<br>hosted on T Cloud Public</div>
+      <div class="imo-stat">Clinical core · Hospital &amp; Outpatient clinics<br>Medical / Clinical estate · hosted on T Cloud Public</div>
     </div>
     <div class="viewby" id="viewby">Connected estate · <b>by site</b> <span>▾</span></div>
     <div id="radarWrap">
@@ -713,12 +713,17 @@ function buildWires(){const s=$('#wFlow');s.innerHTML='';defs(s);srcRibbons=[];
   s.appendChild(svgEl('circle',{cx:CENTER.x,cy:CENTER.y,r:CENTER.R*0.62,fill:'none',stroke:'rgba(47,214,192,.10)','stroke-width':1}));
   ribbon(s,{x:CENTER.x+CENTER.R,y:CENTER.y},{x:CASES.x-40,y:CASES.y},3,'url(#teal)',.55);
   if(MODE==='h24'){
-    ribbon(s,{x:CASES.x+42,y:CASES.y},{x:AUTO.x-26,y:AUTO.y},9,'url(#teal)',.55);
-    ribbon(s,{x:CASES.x+42,y:CASES.y},{x:MAN.x-26,y:MAN.y},5,'rgba(150,168,178,.4)',.55);
-    ribbon(s,{x:AUTO.x+26,y:AUTO.y},{x:1220,y:294},14,'url(#teal)',.5);
-    [458,484,510,536].forEach(cy=>s.appendChild(svgEl('path',{d:band({x:MAN.x+26,y:MAN.y},{x:1190,y:cy},.5),fill:'none',stroke:'rgba(150,168,178,.3)','stroke-width':1.4})));
-    // magenta magic: manual cases assisted by T Security · Cyber Defense Center Bonn
-    s.appendChild(svgEl('path',{d:band({x:MAN.x,y:MAN.y+30},{x:1104,y:582},.35),fill:'none',stroke:'rgba(226,0,116,.5)','stroke-width':2.4,'stroke-linecap':'round',filter:'url(#g)'}));
+    // Cases core → Automated / Manual (clean split, widths ∝ share)
+    ribbon(s,{x:CASES.x+42,y:CASES.y},{x:AUTO.x-26,y:AUTO.y},10,'url(#teal)',.55);
+    ribbon(s,{x:CASES.x+42,y:CASES.y},{x:MAN.x-26,y:MAN.y},5,'rgba(150,168,178,.42)',.55);
+    // Automated → Resolved (all 78 flow straight through to Resolved)
+    ribbon(s,{x:AUTO.x+26,y:AUTO.y},{x:1212,y:292},11,'url(#teal)',.5);
+    // Manual → Resolved (the 7 CDC-resolved rise from the bottom into the 85 Resolved)
+    ribbon(s,{x:MAN.x+24,y:MAN.y-6},{x:1212,y:300},3.6,'url(#teal)',.5);
+    // Manual → Open (the 11 still in the CDC queue)
+    ribbon(s,{x:MAN.x+26,y:MAN.y+6},{x:1256,y:498},5,'rgba(245,166,35,.34)',.5);
+    // magenta: all 18 manual routed to T Security · Cyber Defense Center Bonn
+    s.appendChild(svgEl('path',{d:band({x:MAN.x,y:MAN.y+28},{x:1050,y:586},.5),fill:'none',stroke:'rgba(226,0,116,.55)','stroke-width':2.2,'stroke-linecap':'round',filter:'url(#g)'}));
   }else{
     ribbon(s,{x:CASES.x+42,y:CASES.y},{x:ACT.x-26,y:ACT.y},8,'url(#red)',.55);
     ribbon(s,{x:CASES.x+42,y:CASES.y},{x:RES.x-26,y:RES.y},9,'url(#teal)',.55);
@@ -831,7 +836,7 @@ function detailHTML(key){
   issues:`<h4><span class="d"></span>2,412 Issues</h4><div class="r"><span>Window</span><b>Last 24H</b></div><div class="r"><span>Raised by</span><b>2,600+ ML models</b></div><div class="r"><span>Critical / High</span><b class="warn">271</b></div><div class="r"><span>Deduplicated</span><b class="ok">96%</b></div><div class="foot">Normalized to a common data model before correlation</div>`,
   cases:`<h4><span class="d"></span>96 Cases</h4><div class="r"><span>From</span><b>2,412 issues</b></div><div class="r"><span>Automated</span><b class="ok">78</b></div><div class="r"><span>Manual</span><b class="warn">18</b></div><div class="r"><span>Resolved</span><b class="ok">85</b></div><div class="r"><span>Open</span><b class="warn">11</b></div><div class="foot">Each case carries the full attack story + root cause</div>`,
   automated:`<h4><span class="d"></span>78 Automated</h4><div class="r"><span>Handled by</span><b>AI + playbooks</b></div><div class="r"><span>Playbooks run</span><b>142</b></div><div class="r"><span>Manual work</span><b class="ok">−75%</b></div><div class="foot">1,300+ built-in playbooks resolve most issues</div>`,
-  manual:`<h4><span class="d"></span>18 Manual</h4><div class="r"><span>Routed to</span><b>T Security · CDC Bonn</b></div><div class="r"><span>Avg. handle</span><b>18m</b></div><div class="r"><span>Escalated</span><b class="warn">3</b></div><div class="foot">Analysts assisted by the Cyber Defense Center</div>`,
+  manual:`<h4><span class="d"></span>18 Manual</h4><div class="r"><span>Routed to</span><b>T Security · CDC Bonn</b></div><div class="r"><span>Resolved</span><b class="ok">7</b></div><div class="r"><span>In queue</span><b class="warn">11</b></div><div class="r"><span>Avg. handle</span><b>18m</b></div><div class="r"><span>Escalated</span><b class="warn">3</b></div><div class="foot">All 18 handled by the Cyber Defense Center Bonn · the 7 resolved fold into the 85 Resolved</div>`,
   resolved:`<h4><span class="d"></span>85 Resolved Cases</h4><div class="r"><span>Auto-remediated</span><b class="ok">78</b></div><div class="r"><span>Analyst-closed</span><b>7</b></div><div class="r"><span>MTTR</span><b class="ok">−98%</b></div><div class="foot">Closed by automated playbooks / SOAR</div>`,
   open:`<h4><span class="d"></span>11 Open Cases</h4><div class="r"><span>Critical</span><b class="bad">3</b></div><div class="r"><span>High</span><b class="bad">3</b></div><div class="r"><span>Medium</span><b class="warn">5</b></div><div class="r"><span>Low</span><b>0</b></div><div class="foot">Live queue — sorted by business risk</div>`,
   events:`<h4><span class="d"></span>Events Ingestion</h4><div class="r"><span>Rate</span><b>2.4 B / 24H</b></div><div class="r"><span>Peak</span><b>142 K / sec</b></div><div class="r"><span>Sources</span><b>71 connectors</b></div><div class="r"><span>Residency</span><b class="ok">Germany DB</b></div>`,
@@ -944,7 +949,7 @@ const A_BUCKETS=[
 ];
 // locations (assets sum = 35,600; risk sum = 5,840; threat = 84; both = 29)
 const A_LOC=[
-  {key:'campus',  name:'Main Campus',           tag:'Hospital', mark:'campus',  assets:30200, unit:'Buildings',  unitN:6,       ang:-1.5708, cats:[['Medical Devices (IoMT)',17800],['Clinical Endpoints',8600],['Imaging / PACS',1180],['Laboratory (LIS)',940],['Servers & VMs',1010],['Network & OT',670]], status:{both:25,threat:71,risk:5275}},
+  {key:'campus',  name:'Main Campus',           tag:'Hospital', mark:'campus',  assets:30200, unit:'Buildings',  unitN:17,      ang:-1.5708, cats:[['Medical Devices (IoMT)',17800],['Clinical Endpoints',8600],['Imaging / PACS',1180],['Laboratory (LIS)',940],['Servers & VMs',1010],['Network & OT',670]], status:{both:25,threat:71,risk:5275}},
   {key:'mvz',     name:'Outpatient Centers',    tag:'Clinics',  mark:'mvz',     assets:2100,  unit:'Locations',  unitN:12,      ang:-0.62,   cats:[['Workstations',980],['Medical Devices',720],['Network',240],['Servers',160]], status:{both:1,threat:4,risk:310}},
   {key:'cloud',   name:'T Cloud Public',        tag:'Cloud',    mark:'cloud',   assets:1760,  unit:'Region',     unitN:'eu-de', ang:0.6,     cats:[['Virtual Machines',620],['Object Storage',430],['Databases',320],['Patient Portal',190],['Backup Vaults',200]], status:{both:0,threat:1,risk:22}},
   {key:'telemed', name:'Telemedicine & Home',   tag:'Remote',   mark:'telemed', assets:640,   unit:'Programs',   unitN:9,       ang:1.5708,  cats:[['Home Monitors',320],['Video Endpoints',140],['Wearables',120],['Gateways',60]], status:{both:2,threat:5,risk:180}},
@@ -1189,7 +1194,7 @@ function buildCases(){
   ribbon(s,{x:672,y:312},OP,5,'rgba(150,168,178,.4)',.5);
   s.appendChild(svgEl('path',{d:band({x:672,y:312},RE,.5),fill:'none',stroke:'rgba(150,168,178,.22)','stroke-width':1.6}));
   s.appendChild(svgEl('path',{d:band({x:672,y:190},OP,.5),fill:'none',stroke:'rgba(150,168,178,.18)','stroke-width':1.4}));
-  const HB=[{cls:'auto',n:'Automation · playbooks',v:78},{cls:'analyst',n:'T Security · CDC Bonn',v:7},{cls:'open',n:'Open · in queue',v:11}];
+  const HB=[{cls:'auto',n:'Automation · playbooks',v:78},{cls:'analyst',n:'T Security · CDC Bonn · resolved',v:7},{cls:'open',n:'T Security · CDC Bonn · in queue',v:11}];
   $('#coBars').innerHTML=HB.map(b=>`<div class="co-bar ${b.cls}"><div class="lab"><span class="n">${b.n}</span><span class="v">${b.v}</span></div><div class="track"><div class="fill" style="width:${Math.round(b.v/96*100)}%"></div></div></div>`).join('');
   const MT=[['Reconnaissance',5],['Resource Development',3],['Initial Access',13],['Execution',7],['Persistence',6],['Privilege Escalation',5],['Defense Evasion',9],['Credential Access',8],['Discovery',10],['Lateral Movement',9],['Collection',5],['Command and Control',7],['Exfiltration',4],['Impact',5]];
   $('#coMitre').innerHTML='<div class="mh">MITRE ATT&amp;CK · cases by tactic</div>'+MT.map(([t,c])=>`<div class="co-mrow${c>=9?' hi':''}"><span class="c">${c}</span><span class="t">${t}</span><span class="bar" style="max-width:${Math.round(c/13*90)}px"></span></div>`).join('');

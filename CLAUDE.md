@@ -92,7 +92,11 @@ to 35,600 (Campus 30,200 · Outpatient 2,100 · T Cloud 1,760 · Telemedicine 64
 · Research 380); each site's categories sum to its total and its statuses sum to the
 buckets (risk 5,840 / threat 84 / both 29). Data Ingestion = **9 TB/24H**.
 **Flow 24H**: **2,412** Issues → **96** Cases (**78** Automated / **18** Manual →
-**85** Resolved / **11** Open). Tiles: 2.4 B/24H · 9 TB/24H · 11 Open · 54 K prevented.
+**85** Resolved / **11** Open). The **18 Manual are all handled by CDC Bonn**: **7**
+analyst-closed (fold into the 85 Resolved = 78 auto + 7 manual) + **11** still Open in
+queue — so the CDC-handled count is **18** everywhere (Cases-Overview bars split it
+7 resolved / 11 in queue; the funnel draws the 7 rising from Manual up into Resolved).
+Tiles: 2.4 B/24H · 9 TB/24H · 11 Open · 54 K prevented.
 Open breakdown 3/3/5/0. SOC tag: "assisted by T Security · Cyber Defense Center Bonn".
 **Flow 30D**: **148K** → **34K** unique → **312** Cases (Active **168** = 9 Require
 Attention + 121 In Progress + 38 Mitigated; Resolved **144** = 61 Resolved + 83 Accepted

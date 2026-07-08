@@ -41,8 +41,12 @@ grey third-party sources inside Data Inventory + Dynamic View.
 
 ## Numbers (see CLAUDE.md for the full reconciled model)
 24H: **2,412** Issues → **96** Cases (**78** Automated / **18** Manual → **85** Resolved /
-**11** Open); 9 TB/24H · 2.4 B/24H · 54 K prevented. Dynamic donut 78/96 = **81%**. Cases
-Overview handling (78+7+11) and MITRE tactics both sum to **96**. 30D: 148K → 34K → 312.
+**11** Open); 9 TB/24H · 2.4 B/24H · 54 K prevented. Dynamic donut 78/96 = **81%**. The
+**18 Manual are all handled by CDC Bonn** — **7** analyst-closed (fold into 85 Resolved =
+78 auto + 7) + **11** still Open in queue; the funnel draws the 7 rising from Manual into
+Resolved, and the Cases-Overview bars split CDC Bonn 7 resolved / 11 in queue (so the
+CDC-handled count reads **18** everywhere). Handling bars (78+7+11) and MITRE tactics both
+sum to **96**. 30D: 148K → 34K → 312.
 
 ## How to view / run
 - **Offline (best):** open the branch and double-click `index.html` — no server needed.
