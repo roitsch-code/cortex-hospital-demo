@@ -190,7 +190,7 @@
         <div class="cap">Alerts</div>
       </div>
       <div class="node" style="left:1005px;top:410px">
-        <div class="num" style="font-size:56px"><span data-count="95">0</span></div>
+        <div class="num" style="font-size:56px"><span data-count="96">0</span></div>
         <div class="cap">Incidents</div>
       </div>
 
@@ -200,11 +200,11 @@
         <div class="cap">Automated</div>
       </div>
       <div class="node" style="left:1150px;top:640px">
-        <div class="num" style="font-size:40px"><span data-count="17">0</span></div>
+        <div class="num" style="font-size:40px"><span data-count="7">0</span></div>
         <div class="cap">Manual</div>
       </div>
       <div class="node" style="left:1340px;top:300px">
-        <div class="num" style="font-size:44px"><span data-count="84">0</span></div>
+        <div class="num" style="font-size:44px"><span data-count="85">0</span></div>
         <div class="cap">Resolved<br>Incidents</div>
       </div>
       <div class="node" style="left:1340px;top:560px;text-align:left">
@@ -406,10 +406,13 @@ function buildSocBands(){
   });
 
   // right outcome ribbons (teal)
+  // 96 incidents split → 78 automated · 7 manual (CDC Bonn) · 11 open.
+  // Both automated and manual close into Resolved (85 = 78 + 7); the manual
+  // ribbon sweeps from the bottom node up into Resolved so the 7 read as
+  // "counted on top". Open (11) branches straight off Incidents.
   const ribbons=[
-    [SOC.incid,SOC.auto,14],[SOC.incid,SOC.manual,10],
-    [SOC.auto,SOC.resolved,26],[SOC.auto,SOC.open,4],
-    [SOC.manual,SOC.open,10],[SOC.manual,SOC.resolved,4]
+    [SOC.incid,SOC.auto,16],[SOC.incid,SOC.manual,6],[SOC.incid,SOC.open,6],
+    [SOC.auto,SOC.resolved,22],[SOC.manual,SOC.resolved,9]
   ];
   ribbons.forEach(([a,b,w])=>{
     g.appendChild(svg('path',{d:band(a,b,.5),fill:'none',stroke:'url(#gTeal)',
