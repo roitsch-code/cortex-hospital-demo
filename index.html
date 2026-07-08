@@ -126,7 +126,9 @@ svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;ov
 .tile{flex:1;padding:0 26px;display:flex;flex-direction:column;justify-content:center;position:relative;cursor:pointer;transition:.18s}
 .tile+.tile{border-left:1px solid var(--hair)}
 .tile .k{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:9px}
-.tile .vrow{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.tile .vrow{display:flex;align-items:center;justify-content:flex-start;gap:16px}
+.tile .k .drillhint{font-style:normal;font-weight:700;font-size:11px;color:var(--teal-br);margin-left:6px;letter-spacing:.02em}
+.tile.drill:hover .k .drillhint{text-shadow:0 0 12px var(--glow)}
 .tile .v{font-size:30px;font-weight:800;color:#fff;line-height:1;white-space:nowrap;display:flex;align-items:baseline;gap:5px}
 .tile .v u{font-size:12px;color:var(--muted);font-weight:600;text-decoration:none}
 .tile .v em{font-size:12px;font-weight:700;font-style:normal;color:var(--teal-br)}
@@ -379,6 +381,44 @@ body.view-flow .backbtn{display:flex}
 .co-mrow .t{font-size:13px;color:#cfd6db;flex:1}
 .co-mrow .bar{width:90px;flex:0 0 auto;height:6px;border-radius:4px;background:linear-gradient(90deg,rgba(47,214,192,.55),rgba(47,214,192,.1))}
 .co-mrow.hi .c{color:var(--teal-br)}
+/* Open cases live queue overlay */
+.oc-wrap{position:absolute;left:96px;top:186px;width:380px;z-index:5}
+.oc-count{display:flex;align-items:baseline;gap:15px}
+.oc-count b{font-size:78px;font-weight:800;color:#fff;line-height:.9}
+.oc-count b.pulse{animation:ocpulse .7s ease-out}
+@keyframes ocpulse{0%{color:#ff9a6a;text-shadow:0 0 28px rgba(255,122,82,.7)}100%{color:#fff;text-shadow:none}}
+.oc-count>span{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.oc-new{margin-top:16px;display:inline-flex;align-items:center;gap:9px;font-size:12px;font-weight:700;color:#ffb890;
+  border:1px solid rgba(255,122,82,.5);background:rgba(255,122,82,.10);border-radius:999px;padding:6px 13px;
+  opacity:0;transform:translateY(-5px);transition:.5s;box-shadow:0 0 18px rgba(255,122,82,.18)}
+.oc-new.show{opacity:1;transform:none}
+.oc-new .d{width:7px;height:7px;border-radius:50%;background:#ff7a52;box-shadow:0 0 9px #ff7a52;animation:blink 1.4s infinite}
+.reduced .oc-new .d{animation:none}
+.oc-sev{margin-top:34px;display:flex;flex-direction:column;gap:15px;width:300px}
+.oc-sev .r{display:flex;align-items:center;gap:13px;font-size:14px}
+.oc-sev .r .sv{flex:0 0 auto;width:23px;height:23px;border-radius:6px;display:grid;place-items:center;font-size:11px;font-weight:800;color:#12060a}
+.oc-sev .r .lb{color:#cfd6db;flex:1}
+.oc-sev .r .n{font-weight:800;font-size:19px;color:#fff;transition:color .4s}
+.oc-sev .r.bump .n{color:#ff9a6a}
+.oc-soc{position:static;display:inline-flex;align-items:center;margin-top:40px;left:auto;top:auto}
+.oc-soc .soclogo{height:11px;width:auto;color:#ff9ed6;vertical-align:middle;margin:0 3px}
+.oc-queue{position:absolute;right:64px;top:150px;width:560px;z-index:5}
+.oc-qh{font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.oc-qh .d{width:8px;height:8px;border-radius:50%;background:#63e6a0;box-shadow:0 0 10px #63e6a0;animation:blink 1.6s infinite}
+.reduced .oc-qh .d{animation:none}
+.oc-row{display:flex;align-items:center;gap:13px;border:1px solid var(--hair);border-left-width:3px;border-radius:8px;padding:9px 14px;margin-bottom:8px;background:rgba(255,255,255,.015)}
+.oc-row .sv{flex:0 0 auto;width:20px;height:20px;border-radius:5px;display:grid;place-items:center;font-size:10px;font-weight:800;color:#12060a}
+.oc-row .tt{flex:1;font-size:13px;color:#dfe5ea;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.oc-row .id{font-size:11px;color:var(--muted);font-weight:700;flex:0 0 auto}
+.oc-row .mt{font-size:11px;color:var(--dim);flex:0 0 auto;width:92px;text-align:right}
+.oc-row.c .sv{background:var(--red)} .oc-row.h .sv{background:#ff7a52} .oc-row.m .sv{background:var(--amber)} .oc-row.l .sv{background:var(--blue)}
+.oc-row.c{border-left-color:var(--red)} .oc-row.h{border-left-color:#ff7a52} .oc-row.m{border-left-color:var(--amber)} .oc-row.l{border-left-color:var(--blue)}
+.oc-row.neu{border-color:rgba(255,122,82,.55);background:rgba(255,122,82,.06);box-shadow:0 0 22px rgba(255,122,82,.28)}
+.oc-row.neu .nt{font-size:9px;font-weight:800;letter-spacing:.1em;color:#ffb890;border:1px solid rgba(255,122,82,.6);border-radius:4px;padding:1px 5px;flex:0 0 auto}
+.oc-row.pending{display:none}
+.oc-row.arrive{animation:ocIn .55s cubic-bezier(.4,0,.2,1)}
+@keyframes ocIn{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:none}}
+.reduced .oc-row.arrive{animation:none}
 
 </style>
 </head>
@@ -480,12 +520,12 @@ body.view-flow .backbtn{display:flex}
     <div class="tile" data-detail="data"><div class="k">Data ingestion</div>
       <div class="vrow"><div class="v"><span data-count="9">0</span><u>TB/24H</u></div>
         <svg class="spark" id="spk2" viewBox="0 0 130 40" preserveAspectRatio="none"></svg></div></div>
-    <div class="tile" data-detail="open"><div class="k">Total open cases</div>
-      <div class="vrow"><div class="v"><span data-count="11">0</span></div>
-        <button class="invest" id="investBtn"><span class="o"></span>Investigate</button></div></div>
     <div class="tile" data-detail="prevented"><div class="k">Prevented events</div>
       <div class="vrow"><div class="v"><span data-count="54">0</span><u>K</u></div>
         <svg class="spark" id="spk3" viewBox="0 0 130 40" preserveAspectRatio="none"></svg></div></div>
+    <div class="tile drill" data-detail="open"><div class="k">Total open cases <em class="drillhint">live queue ›</em></div>
+      <div class="vrow"><div class="v"><span data-count="11">0</span></div>
+        <button class="invest" id="investBtn"><span class="o"></span>Investigate</button></div></div>
   </div>
 
   <!-- bottom stat tiles (30D) -->
@@ -586,6 +626,19 @@ body.view-flow .backbtn{display:flex}
     <div class="co-bars" id="coBars" style="top:440px"></div>
     <div class="co-auto" style="top:640px"><h5>✦ AUTOMATION HEADROOM</h5><p><b>12</b> of 18 manual cases are automatable · <b>8</b> playbook recommendations from the correlation engine.</p></div>
     <div class="co-mitre" id="coMitre"></div>
+  </div>
+
+  <!-- ===== Open cases live queue overlay (Total open cases tile, 24H) ===== -->
+  <div class="dv" id="dvOpen">
+    <div class="dv-back" id="dvOpenBack">‹ Flow</div>
+    <div class="dv-head"><h2>Open cases</h2><p>Live case queue · sorted by business risk · Last 24H</p></div>
+    <div class="oc-wrap">
+      <div class="oc-count"><b><span id="ocNum">11</span></b><span>Open cases</span></div>
+      <div class="oc-new" id="ocNew"><span class="d"></span>＋1 · High · just arrived</div>
+      <div class="oc-sev" id="ocSev"></div>
+      <div class="soctag oc-soc">Assisted by <svg class="soclogo" viewBox="0 0 1478.52 304.81" fill="currentColor" aria-label="T Security"><path d="M336.72 185.25h44.46c3.62 18.44 15.81 25.69 32.28 25.69 18.77 0 28.32-10.54 28.32-24.7s-9.22-21.41-26.35-26.02l-25.36-7.25c-34.91-9.55-49.07-34.91-49.07-61.92 0-41.83 31.29-68.83 72.13-68.83 44.46 0 68.5 26.02 72.79 66.53h-43.47c-2.63-16.47-12.19-24.7-29.31-24.7-15.15 0-26.68 9.22-26.68 24.04s10.21 20.42 22.4 23.71l25.36 6.92c32.93 8.56 53.03 32.93 53.03 64.88 0 44.13-32.61 69.16-73.77 69.16-45.45 0-72.79-24.04-76.74-67.52Z"/><path d="M650.51 178.34h-99.46c2.31 29.97 14.49 38.53 30.63 38.53 12.84 0 21.41-4.94 25.36-14.82h42.82c-6.26 31.29-33.26 50.72-68.17 50.72-42.49 0-71.14-30.63-71.14-84.64s27.67-84.64 72.13-84.64c41.5 0 68.5 31.62 68.5 80.03 0 5.6 0 11.2-.66 14.82ZM552.37 147.71h58.62c-2.96-21.41-14.16-28.32-28.32-28.32-15.48 0-26.35 6.92-30.3 28.32Z"/><path d="M674.39 168.13c0-51.38 26.35-84.64 71.47-84.64 39.85 0 63.23 25.03 67.52 59.94h-42.81c-2.96-13.5-10.54-21.08-24.7-21.08-19.1 0-28.32 16.14-28.32 45.78s9.22 45.78 28.32 45.78c14.16 0 21.74-7.58 24.37-21.08h43.14c-4.28 34.91-27.67 59.94-67.52 59.94-45.12 0-71.47-33.59-71.47-84.64Z"/><path d="M839.88 193.82v-105.06h42.49v99.79c0 15.48 5.6 25.36 20.75 25.36 16.14 0 27.01-12.84 27.01-32.28v-92.88h42.49v158.74h-39.85v-19.43h-1.98c-8.23 15.48-23.38 24.7-42.49 24.7-32.28 0-48.41-20.09-48.41-58.95Z"/><path d="M1099.26 87.77v38.86c-4.28-.66-8.23-.66-11.53-.66-25.69 0-36.23 9.55-36.23 30.96v90.57h-42.49V88.76h39.85v19.43h1.98c7.57-14.16 20.42-22.07 37.22-22.07 3.62 0 7.58.33 11.2 1.65Z"/><path d="M1126 65.37V27.5h42.49v37.87h-42.49ZM1126 247.5V88.76h42.49v158.74h-42.49Z"/><path d="M1221.34 200.73v-75.75h-27.01v-36.23h27.01v-25.69l34.58-31.95h7.9v57.64h40.51v36.23h-40.51v70.48c0 11.86 6.92 18.11 19.1 18.11 6.26 0 12.51-.99 18.11-2.31v33.26c-8.89 3.95-18.44 5.6-30.3 5.6-29.31 0-49.4-17.13-49.4-49.4Z"/><path d="M1433.07 88.76h45.45l-61.92 175.87c-8.56 24.04-25.03 40.18-52.04 40.18-8.23 0-17.46-.99-25.69-4.28v-33.92c4.94 1.32 11.2 1.98 17.46 1.98 10.54 0 16.8-3.95 21.74-17.46l3.62-9.55-57.31-152.82h45.45l30.96 96.17h1.98l30.3-96.17Z"/><path d="M55 181.5H0v-55h55v55ZM0 0v93.5h16.5v-2.75c0-44 24.75-71.5 71.5-71.5h2.75v198c0 27.5-11 38.5-38.5 38.5h-8.25v19.25h143v-19.25h-8.25c-27.5 0-38.5-11-38.5-38.5V19.25s2.75 0 2.75 0c46.75 0 71.5 27.5 71.5 71.5v2.75h16.5V0H0ZM176 181.5h55v-55h-55v55Z"/></svg> · Cyber Defense Center Bonn</div>
+    </div>
+    <div class="oc-queue"><div class="oc-qh"><span class="d"></span>Live queue · <span id="ocQn">11</span> open</div><div id="ocList"></div></div>
   </div>
 
 </div></div>
@@ -1222,6 +1275,48 @@ function closeCases(){dvClear();$('#dvCases').classList.remove('on');}
 $('#dvCasesBack').onclick=closeCases;
 $('#nRight').onclick=e=>{e.stopPropagation(); if(MODE==='h24')openCases(); else {const a=anchor($('#nRight'));openDetail(a.x,a.y,detailHTML(MODES[MODE].right.detail));}};
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeCases();});
+
+
+/* ===== Open cases live queue (Total open cases tile → detail page) ===== */
+const OC_SEV=[{k:'c',lb:'Critical',bg:'var(--red)',n:3},{k:'h',lb:'High',bg:'#ff7a52',n:3},{k:'m',lb:'Medium',bg:'var(--amber)',n:5},{k:'l',lb:'Low',bg:'var(--blue)',n:0}];
+const OC_NEW={sev:'h',t:'Lateral movement · WS → PACS',id:'C-4490',mt:'just now',neu:1};
+const OC_LIST=[
+ {sev:'c',t:'Ransomware staging · imaging VLAN',id:'C-4471',mt:'IoMT · 2 assets'},
+ {sev:'c',t:'Domain-admin credential abuse',id:'C-4468',mt:'Identities'},
+ {sev:'c',t:'Data exfil to unknown ASN',id:'C-4455',mt:'Research'},
+ {sev:'h',t:'NGFW policy-bypass attempt',id:'C-4462',mt:'Network'},
+ {sev:'h',t:'Suspicious OAuth grant · M365',id:'C-4458',mt:'Identities'},
+ {sev:'h',t:'Anomalous DB egress · T Cloud',id:'C-4451',mt:'T Cloud'},
+ {sev:'m',t:'Unpatched CVE · infusion pumps',id:'C-4449',mt:'IoMT'},
+ {sev:'m',t:'Phishing cluster · outpatient',id:'C-4444',mt:'Endpoints'},
+ {sev:'m',t:'Config drift · backup vault',id:'C-4440',mt:'T Cloud'},
+ {sev:'m',t:'Stale privileged account',id:'C-4436',mt:'Identities'},
+ {sev:'m',t:'TLS downgrade · lab interface',id:'C-4431',mt:'LIS'}
+];
+const SEVU={c:'C',h:'H',m:'M',l:'L'};
+let ocTimer=null;
+function ocRow(x){return `<div class="oc-row ${x.sev}${x.neu?' neu pending':''}"><span class="sv">${SEVU[x.sev]}</span><span class="tt">${x.t}</span>${x.neu?'<span class="nt">NEW</span>':''}<span class="id">${x.id}</span><span class="mt">${x.mt}</span></div>`;}
+function buildOpenView(){
+  $('#ocSev').innerHTML=OC_SEV.map(s=>`<div class="r" data-k="${s.k}"><span class="sv" style="background:${s.bg}">${s.k.toUpperCase()}</span><span class="lb">${s.lb}</span><span class="n">${s.n}</span></div>`).join('');
+  $('#ocList').innerHTML=ocRow(OC_NEW)+OC_LIST.map(ocRow).join('');
+  $('#ocNum').textContent='11'; $('#ocNum').parentElement.classList.remove('pulse');
+  $('#ocQn').textContent='11'; $('#ocNew').classList.remove('show');
+}
+function ocArrive(){
+  const nr=$('#dvOpen .oc-row.neu'); if(nr){nr.classList.remove('pending');nr.classList.add('arrive');}
+  const num=$('#ocNum'); num.textContent='12'; const bb=num.parentElement; bb.classList.add('pulse'); setTimeout(()=>bb.classList.remove('pulse'),700);
+  $('#ocQn').textContent='12';
+  const hr=$('#dvOpen .oc-sev .r[data-k="h"]'); if(hr){hr.querySelector('.n').textContent='4';hr.classList.add('bump');}
+  $('#ocNew').classList.add('show');
+}
+function openOpenView(){closeDetail();buildOpenView();$('#dvOpen').classList.add('on');
+  if(ocTimer)clearTimeout(ocTimer);
+  if(REDUCED)ocArrive(); else ocTimer=setTimeout(ocArrive,1150);}
+function closeOpenView(){if(ocTimer){clearTimeout(ocTimer);ocTimer=null;}$('#dvOpen').classList.remove('on');}
+$('#dvOpenBack').onclick=closeOpenView;
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOpenView();});
+(function(){const t=$('.tile[data-detail="open"]'); if(t)t.onclick=e=>{e.stopPropagation();openOpenView();};
+ const ib=$('#investBtn'); if(ib)ib.onclick=e=>{e.stopPropagation();openOpenView();};})();
 
 
 /* init */

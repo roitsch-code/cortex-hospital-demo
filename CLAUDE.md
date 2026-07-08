@@ -96,8 +96,17 @@ buckets (risk 5,840 / threat 84 / both 29). Data Ingestion = **9 TB/24H**.
 analyst-closed (fold into the 85 Resolved = 78 auto + 7 manual) + **11** still Open in
 queue — so the CDC-handled count is **18** everywhere (Cases-Overview bars split it
 7 resolved / 11 in queue; the funnel draws the 7 rising from Manual up into Resolved).
-Tiles: 2.4 B/24H · 9 TB/24H · 11 Open · 54 K prevented.
-Open breakdown 3/3/5/0. SOC tag: "assisted by T Security · Cyber Defense Center Bonn".
+Tiles (order): Events ingestion 2.4 B/24H · Data ingestion 9 TB/24H · Prevented events
+54 K · **Total open cases 11** (the last tile is the jump-off into the Open-cases live
+queue — see below). Open breakdown 3/3/5/0. SOC tag: "assisted by T Security · Cyber
+Defense Center Bonn".
+> **Open-cases live queue** (`#dvOpen`, `buildOpenView`/`openOpenView`/`closeOpenView`,
+> data `OC_SEV`/`OC_LIST`/`OC_NEW`): the *Total open cases* tile is an Absprungpunkt to a
+> `.dv` detail page. It opens showing **11**, then after ~1.1 s a **12th case arrives
+> live — a High**, `C-4490 "Lateral movement · WS → PACS"`: the count pulses 11→12, the
+> new row slides in at the top of the queue with a NEW badge + glow, and High bumps 3→4
+> (so 3/4/5/0 = 12). This "+1 live" is intentional narrative — the snapshot tiles / the
+> `nOpen` funnel popover stay at **11**; do NOT reconcile them to 12.
 **Flow 30D**: **148K** → **34K** unique → **312** Cases (Active **168** = 9 Require
 Attention + 121 In Progress + 38 Mitigated; Resolved **144** = 61 Resolved + 83 Accepted
 Risk). Tiles: Vulnerable Assets **5,840** (ties to assets At Risk) · Active Cases 168
