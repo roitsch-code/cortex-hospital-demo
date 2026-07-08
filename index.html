@@ -452,7 +452,7 @@ body.view-flow .backbtn{display:flex}
 .ag-sup .orb i.r2{animation:agpulse 1.5s infinite}
 .reduced .ag-sup .orb i.r2{animation:none}
 @keyframes agpulse{0%,100%{box-shadow:0 0 7px var(--ac)}50%{box-shadow:0 0 22px var(--ac)}}
-.ag-sup .bdg{position:absolute;top:-7px;left:50%;transform:translateX(-50%);font-size:8px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#ffd0e0;background:rgba(226,0,116,.22);border:1px solid rgba(226,0,116,.5);border-radius:4px;padding:1px 6px;white-space:nowrap}
+.ag-sup .bdg{position:absolute;top:-19px;left:50%;transform:translateX(-50%);font-size:8px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#ffd0e0;background:rgba(226,0,116,.22);border:1px solid rgba(226,0,116,.5);border-radius:4px;padding:1px 6px;white-space:nowrap}
 #dvAgent.s2 .ag-sup,#dvAgent.s3 .ag-sup{--ac:#e2007a}
 #dvAgent.s3 .ag-sup{opacity:.4;filter:grayscale(.5)}
 /* API gateway */
@@ -640,7 +640,6 @@ body.view-flow .backbtn{display:flex}
       <div class="imo-sub">Hospital Information System (HIS)</div>
       <div class="imo-stat">Clinical core · Main Campus &amp; Outpatient Centers<br>Medical / Clinical estate · hosted on T Cloud Public</div>
     </div>
-    <div class="viewby" id="viewby">Connected estate · <b>by site</b> <span>▾</span></div>
     <div id="radarWrap">
       <svg class="wire" id="wAssets" viewBox="0 0 1440 810"></svg>
       <div class="acenter" id="acenter">
@@ -1489,36 +1488,44 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOpenView();});
 
 /* ===== agent case JS ===== */
 const AG={
-  sup:{x:272,y:398,r:37}, gate:{x:452,y:398,r:25},
-  del:{x:650,y:332,r:31}, stock:{x:650,y:466,r:31}, route:{x:860,y:398,r:31},
-  phar:{x:250,y:690,r:25}, ward:{x:500,y:690,r:25}, pat:{x:760,y:690,r:25},
+  C:{x:656,y:399},
+  sup:{x:272,y:398,r:33}, gate:{x:452,y:398,r:22},
+  del:{x:650,y:332,r:28}, stock:{x:650,y:466,r:28}, route:{x:860,y:398,r:28},
+  phar:{x:250,y:690,r:24}, ward:{x:500,y:690,r:24}, pat:{x:760,y:690,r:24},
   blk:[{x:452,y:586},{x:706,y:586},{x:936,y:586}]
 };
 let agState=1, agGateParts=[];
-// edge-to-edge segment between two nodes (centre-aligned, stops at each rim)
-function agEdge(a,b){const dx=b.x-a.x,dy=b.y-a.y,L=Math.hypot(dx,dy)||1,ux=dx/L,uy=dy/L;
-  return [{x:a.x+ux*(a.r||0),y:a.y+uy*(a.r||0)},{x:b.x-ux*(b.r||0),y:b.y-uy*(b.r||0)}];}
-function agRib(s,a,b,w,k){const e=agEdge(a,b);return ribbon(s,e[0],e[1],w,'url(#teal)',k);}
+// a flow line that plugs into each node's rim radially (centre-aligned), with an
+// optional outward bow (away from the mesh centre AG.C) so the mesh reads as a lens.
+function agLink(s,a,b,w,bow){
+  const dx=b.x-a.x,dy=b.y-a.y,L=Math.hypot(dx,dy)||1,ux=dx/L,uy=dy/L;
+  const ax=a.x+ux*a.r, ay=a.y+uy*a.r, bx=b.x-ux*b.r, by=b.y-uy*b.r;
+  let cx=(ax+bx)/2, cy=(ay+by)/2;
+  if(bow){ let ox=cx-AG.C.x, oy=cy-AG.C.y, oL=Math.hypot(ox,oy)||1; cx+=ox/oL*bow; cy+=oy/oL*bow; }
+  const p=svgEl('path',{d:'M '+ax.toFixed(1)+' '+ay.toFixed(1)+' Q '+cx.toFixed(1)+' '+cy.toFixed(1)+' '+bx.toFixed(1)+' '+by.toFixed(1),fill:'none',stroke:'url(#teal)','stroke-width':w,'stroke-linecap':'round',opacity:.8,filter:'url(#g)'});
+  s.appendChild(p); return p;
+}
 function agBuild(){
   const s=$('#agWire'); s.innerHTML=''; defs(s); dvClear(); agGateParts=[];
   // approved scope: supplier ↔ gateway — request/response, flows both ways (severed on revoke)
-  const g1=agRib(s,AG.sup,AG.gate,3,.5); g1.classList.add('ag-gatelink');
+  const g1=agLink(s,AG.sup,AG.gate,2.4,0); g1.classList.add('ag-gatelink'); g1.setAttribute('stroke','rgba(150,240,224,.7)'); g1.setAttribute('filter','none');
   const pre=dvParts.length;
   dvFlow(s,g1,2,'rgba(130,240,224,.9)',{spMin:0.0018,spMax:0.003,r:2});
   dvFlow(s,g1,2,'rgba(150,236,255,.85)',{spMin:0.0018,spMax:0.003,r:2,rev:true});
   agGateParts=dvParts.slice(pre);
-  // internal mesh: gateway → orchestration agents → dispatcher (never stops)
+  // internal mesh: gateway → delivery/stock → route (bowed outward into a lens, never stops)
   [[AG.gate,AG.del],[AG.gate,AG.stock],[AG.del,AG.route],[AG.stock,AG.route]].forEach(function(pr){
-    const p=agRib(s,pr[0],pr[1],2.4,.5); dvFlow(s,p,2,'rgba(130,240,224,.85)',{spMin:0.0016,spMax:0.0028,r:1.8}); });
+    const p=agLink(s,pr[0],pr[1],2.4,14); dvFlow(s,p,2,'rgba(130,240,224,.85)',{spMin:0.0016,spMax:0.0028,r:1.8}); });
   // dispatcher → physical fleet
-  const d1=agRib(s,AG.route,AG.ward,2.6,.4); dvFlow(s,d1,3,'rgba(130,240,224,.9)',{spMin:0.0016,spMax:0.0028,r:2});
+  const d1=agLink(s,AG.route,AG.ward,2.6,0); dvFlow(s,d1,3,'rgba(130,240,224,.9)',{spMin:0.0016,spMax:0.0028,r:2});
   // physical corridor: pharmacy → ward → patient (rim-to-rim)
-  const c1=agRib(s,AG.phar,AG.ward,5,.4), c2=agRib(s,AG.ward,AG.pat,5,.4);
+  const c1=agLink(s,AG.phar,AG.ward,5,0), c2=agLink(s,AG.ward,AG.pat,5,0);
   dvFlow(s,c1,3,'rgba(130,240,224,.95)',{spMin:0.0018,spMax:0.0034,r:2.3});
   dvFlow(s,c2,3,'rgba(130,240,224,.95)',{spMin:0.0018,spMax:0.0034,r:2.3});
-  // attempted (denied) access: supplier rim → restricted targets
-  AG.blk.forEach(function(b){ const st=agEdge(AG.sup,{x:b.x,y:b.y,r:0})[0];
-    s.appendChild(svgEl('path',{d:band({x:st.x,y:st.y},{x:b.x,y:b.y-13},.4),fill:'none',stroke:'rgba(255,90,150,.55)','stroke-width':1.5,'stroke-dasharray':'5 6','stroke-linecap':'round',class:'ag-suplink'})); });
+  // attempted (denied) access: one supplier anchor fans out to each restricted target
+  const tx=AG.C.x-AG.sup.x, ty=560-AG.sup.y, tL=Math.hypot(tx,ty), ax=AG.sup.x+tx/tL*AG.sup.r, ay=AG.sup.y+ty/tL*AG.sup.r;
+  AG.blk.forEach(function(b){ const cx=(ax+b.x)/2, cy=(ay+b.y-14)/2;
+    s.appendChild(svgEl('path',{d:'M '+ax.toFixed(1)+' '+ay.toFixed(1)+' Q '+cx.toFixed(1)+' '+cy.toFixed(1)+' '+b.x+' '+(b.y-14),fill:'none',stroke:'rgba(255,90,150,.5)','stroke-width':1.4,'stroke-dasharray':'5 6','stroke-linecap':'round',class:'ag-suplink'})); });
   agState=1; agRender();
 }
 function agRender(){
