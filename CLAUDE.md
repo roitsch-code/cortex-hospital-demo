@@ -103,8 +103,8 @@ Defense Center Bonn".
 > **Open-cases live queue** (`#dvOpen`, `buildOpenView`/`openOpenView`/`closeOpenView`,
 > data `OC_SEV`/`OC_LIST`/`OC_NEW`): the *Total open cases* tile is an Absprungpunkt to a
 > `.dv` detail page. It opens showing **11**, then after ~1.1 s a **12th case arrives
-> live — a High**, `C-4490 "Lateral movement · WS → PACS"`: the count pulses 11→12, the
-> new row slides in at the top of the queue with a NEW badge + glow, and High bumps 3→4
+> live — a High**, `C-4490 "Supplier agent · out-of-profile data request"` (clicking it opens the Part 2 case): the count pulses 11→12, the
+> new row slides in at the top with a NEW badge + glow, and High bumps 3→4
 > (so 3/4/5/0 = 12). This "+1 live" is intentional narrative — the snapshot tiles / the
 > `nOpen` funnel popover stay at **11**; do NOT reconcile them to 12.
 **Flow 30D**: **148K** → **34K** unique → **312** Cases (Active **168** = 9 Require
