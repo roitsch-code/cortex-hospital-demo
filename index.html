@@ -151,7 +151,7 @@ svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;ov
 .pop h4 .d{width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px var(--teal);flex:0 0 auto}
 .pop .r{display:flex;justify-content:space-between;gap:12px;font-size:11.5px;padding:4px 0;border-top:1px solid var(--hair)}
 .pop .r:first-of-type{border-top:0}
-.pop .r span{color:var(--muted)} .pop .r b{color:#e7edf1;font-weight:700}
+.pop .r span{color:var(--muted);display:flex;align-items:center} .pop .r b{color:#e7edf1;font-weight:700}
 .pop .r b.ok{color:var(--teal-br)} .pop .r b.warn{color:var(--amber)} .pop .r b.bad{color:var(--red)}
 .pop .foot{margin-top:10px;font-size:10.5px;color:var(--teal-br);opacity:.85;letter-spacing:.04em;line-height:1.4}
 
@@ -211,7 +211,7 @@ body.view-flow .backbtn{display:flex}
 .region{position:absolute;transform:translate(-50%,-50%);z-index:4;font-size:10px;letter-spacing:.12em;color:var(--dim);text-transform:uppercase;pointer-events:none}
 /* severity filter (assets view) */
 /* severity chip inside detail popovers (Open / Active Cases / MTTR) */
-.pop .r .sev{display:inline-grid;place-items:center;width:16px;height:16px;border-radius:4px;font-size:9.5px;font-weight:800;color:#12060a;margin-right:9px;font-style:normal;vertical-align:-3px}
+.pop .r .sev{flex:0 0 auto;display:inline-grid;place-items:center;width:16px;height:16px;border-radius:4px;font-size:9.5px;font-weight:800;color:#12060a;margin-right:9px;font-style:normal}
 /* radar wrapper (slides on provider select) */
 #radarWrap{position:absolute;inset:0;transition:transform .45s cubic-bezier(.6,0,.3,1)}
 #acenter,#provWrap,#regionWrap{transition:opacity .3s}
@@ -675,7 +675,18 @@ function defs(svg){const d=svgEl('defs',{});d.innerHTML=`
   <linearGradient id="tmag" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5a0b34"/><stop offset="1" stop-color="#2fd6c0"/></linearGradient>
   <linearGradient id="ep" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#186158"/><stop offset="1" stop-color="#6ff3e0"/></linearGradient>
   <linearGradient id="red" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2a2a33"/><stop offset="1" stop-color="#ff4d5e"/></linearGradient>`;svg.appendChild(d);}
-function ribbon(svg,a,b,w,col='url(#teal)',k=.55){svg.appendChild(svgEl('path',{d:band(a,b,k),fill:'none',stroke:col,'stroke-width':w,'stroke-linecap':'round',opacity:.7,filter:'url(#g)'}));}
+function ribbon(svg,a,b,w,col='url(#teal)',k=.55){const p=svgEl('path',{d:band(a,b,k),fill:'none',stroke:col,'stroke-width':w,'stroke-linecap':'round',opacity:.7,filter:'url(#g)'});svg.appendChild(p);return p;}
+/* ---- animated particles that flow along detail-overlay ribbons/lines ---- */
+let dvParts=[];
+function dvClear(){dvParts=[];}
+function dvFlow(svg,geom,n,col,o){o=o||{};const spMin=o.spMin||0.0016,spMax=o.spMax||0.0038,r=o.r||1.7,rev=!!o.rev;
+  for(let i=0;i<n;i++){const el=svgEl('circle',{r,fill:col,opacity:0,filter:'url(#g)'});svg.appendChild(el);
+    dvParts.push({geom,el,rev,len:0,t:i/n,sp:spMin+Math.random()*(spMax-spMin)});}}
+function dvTick(){if(REDUCED||!dvParts.length)return;
+  for(const p of dvParts){ if(!p.len){try{p.len=p.geom.getTotalLength();}catch(e){} if(!p.len)continue;}
+    p.t+=p.sp; if(p.t>=1)p.t-=1;
+    const pt=p.geom.getPointAtLength((p.rev?1-p.t:p.t)*p.len), fade=Math.min(1,p.t*7,(1-p.t)*7);
+    p.el.setAttribute('cx',pt.x.toFixed(1));p.el.setAttribute('cy',pt.y.toFixed(1));p.el.setAttribute('opacity',(0.9*fade).toFixed(2));}}
 function ring(svg,cx,cy,r,n,op=.5){for(let i=0;i<n;i++){const a=i/n*6.283,r2=r+(i%6===0?7:3);
   svg.appendChild(svgEl('line',{x1:cx+Math.cos(a)*r,y1:cy+Math.sin(a)*r,x2:cx+Math.cos(a)*r2,y2:cy+Math.sin(a)*r2,stroke:`rgba(47,214,192,${op*.35})`,'stroke-width':1}));}}
 
@@ -777,6 +788,7 @@ function rebuildParticles(){wIdx=[];MODES[MODE].sources.forEach((s,i)=>{if(s.mor
   inflow.forEach(p=>{newInflow(p);p.t=Math.random();});}
 
 function frame(t){ctx.clearRect(0,0,1440,810);
+  dvTick();
   if(VIEW==='assets'){drawAssets(t);requestAnimationFrame(frame);return;}
   if(!REDUCED){const period=4200,ph=(t%period)/period,rr=ph*(CENTER.R+26),al=(1-ph)*0.18;
     ctx.strokeStyle=`rgba(47,214,192,${al})`;ctx.lineWidth=1.4;ctx.beginPath();ctx.arc(CENTER.x,CENTER.y,rr,0,6.283);ctx.stroke();
@@ -1090,6 +1102,7 @@ const INV=[
 ];
 const INV_THROAT={x:752,y:404}, INV_ISSUES={x:965,y:380}, INV_PREV={x:1090,y:560};
 function buildInventory(){
+  dvClear();
   const list=$('#dvInvList'); list.innerHTML='';
   const s=$('#dvInvWire'); s.innerHTML=''; defs(s);
   let y=150; const pts=[];
@@ -1110,13 +1123,17 @@ function buildInventory(){
     const col=p.t?'url(#tmag)':(p.ep?'url(#ep)':'url(#teal)');
     const greyW=2+p.w*0.85, lineW=0.7+p.w*0.15;
     s.appendChild(svgEl('path',{d:band(p,INV_THROAT,.55),fill:'none',stroke:p.t?'rgba(226,0,116,.14)':(p.ep?'rgba(47,214,192,.16)':'rgba(150,168,178,.12)'),'stroke-width':greyW,'stroke-linecap':'round',opacity:.7,filter:'url(#g)'}));
-    s.appendChild(svgEl('path',{d:band(p,INV_THROAT,.55),fill:'none',stroke:col,'stroke-width':lineW,'stroke-linecap':'round',opacity:p.t?.75:.4}));
+    const line=svgEl('path',{d:band(p,INV_THROAT,.55),fill:'none',stroke:col,'stroke-width':lineW,'stroke-linecap':'round',opacity:p.t?.75:.4});
+    s.appendChild(line);
+    dvFlow(s,line,2,p.t?'rgba(240,130,195,.95)':(p.ep?'rgba(150,246,224,.95)':'rgba(120,235,220,.9)'),{spMin:0.0018,spMax:0.0042});
   });
-  ribbon(s,INV_THROAT,INV_ISSUES,16,'url(#teal)',.5);
-  ribbon(s,INV_THROAT,INV_PREV,7,'rgba(150,168,178,.5)',.5);
+  const rIssues=ribbon(s,INV_THROAT,INV_ISSUES,16,'url(#teal)',.5);
+  const rPrev=ribbon(s,INV_THROAT,INV_PREV,7,'rgba(150,168,178,.5)',.5);
+  dvFlow(s,rIssues,6,'rgba(130,240,224,.95)',{spMin:0.0016,spMax:0.003,r:2.1});
+  dvFlow(s,rPrev,3,'rgba(175,188,197,.85)',{spMin:0.0016,spMax:0.003});
 }
 function openInventory(){closeDetail();buildInventory();$('#dvInventory').classList.add('on');countUp($('#dvInventory'));}
-function closeInventory(){$('#dvInventory').classList.remove('on');}
+function closeInventory(){dvClear();$('#dvInventory').classList.remove('on');}
 $('#dvInvBack').onclick=closeInventory;
 $('#nLeft').onclick=e=>{e.stopPropagation(); if(MODE==='h24')openInventory(); else {const a=anchor($('#nLeft'));openDetail(a.x,a.y,detailHTML(MODES[MODE].left.detail));}};
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeInventory();});
@@ -1154,6 +1171,7 @@ const DYN_FEED=[
  {cls:'teal',ic:'play',tx:'6 Playbooks triggered for <b>2 Cases</b>'}
 ];
 function buildDynamic(){
+  dvClear();
   const s=$('#dynWire'); s.innerHTML=''; defs(s);
   [300,220,150].forEach((r,i)=>s.appendChild(svgEl('circle',{cx:DYN_C.x,cy:DYN_C.y,r,fill:'none',stroke:`rgba(47,214,192,${(.10-i*.02).toFixed(2)})`,'stroke-width':1})));
   const g=svgEl('g',{class:'dyn-rotring'});
@@ -1165,7 +1183,9 @@ function buildDynamic(){
   s.appendChild(svgEl('circle',{cx:DYN_C.x,cy:DYN_C.y,r:R,fill:'none',stroke:'url(#teal)','stroke-width':sw,'stroke-linecap':'round','stroke-dasharray':`${(C*autoFrac).toFixed(1)} ${C.toFixed(1)}`,transform:`rotate(-90 ${DYN_C.x} ${DYN_C.y})`,filter:'url(#g)'}));
   const mk=$('#dynMarks'); mk.innerHTML='';
   DYN_MARKS.forEach(m=>{const a=m.ang*Math.PI/180,x=DYN_C.x+Math.cos(a)*m.r,y=DYN_C.y+Math.sin(a)*m.r;
-    s.appendChild(svgEl('line',{x1:(DYN_C.x+Math.cos(a)*138).toFixed(1),y1:(DYN_C.y+Math.sin(a)*138).toFixed(1),x2:(x-Math.cos(a)*26).toFixed(1),y2:(y-Math.sin(a)*26).toFixed(1),stroke:m.t?'rgba(226,0,116,.16)':'rgba(130,150,160,.12)','stroke-width':1}));
+    const ln=svgEl('line',{x1:(DYN_C.x+Math.cos(a)*138).toFixed(1),y1:(DYN_C.y+Math.sin(a)*138).toFixed(1),x2:(x-Math.cos(a)*26).toFixed(1),y2:(y-Math.sin(a)*26).toFixed(1),stroke:m.t?'rgba(226,0,116,.16)':'rgba(130,150,160,.12)','stroke-width':1});
+    s.appendChild(ln);
+    dvFlow(s,ln,2,m.t?'rgba(240,130,195,.9)':'rgba(140,235,220,.85)',{rev:true,spMin:0.0016,spMax:0.0036,r:1.6});
     const el=document.createElement('div');el.className='dyn-mark'+(m.t?' t':'');el.style.cssText=`left:${x.toFixed(0)}px;top:${y.toFixed(0)}px`;
     const mark=m.logo?`<img src="${LOGO[m.logo]}" alt="">`:iconSVG(m.icon);
     el.innerHTML=`<div class="mc">${mark}</div><div class="ml">${m.n}</div>${m.sev?`<div class="sev ${m.sev}">▲</div>`:''}`;
@@ -1174,7 +1194,7 @@ function buildDynamic(){
     `<div class="fi ${f.cls}"><span class="ic">${DYN_IC[f.ic]}</span><span class="tx">${f.tx}</span></div>`).join('');
 }
 function openDynamic(){closeDetail();buildDynamic();$('#dvDynamic').classList.add('on');countUp($('#dvDynamic'));}
-function closeDynamic(){$('#dvDynamic').classList.remove('on');}
+function closeDynamic(){dvClear();$('#dvDynamic').classList.remove('on');}
 $('#dvDynBack').onclick=closeDynamic;
 $('#coreHit').onclick=e=>{e.stopPropagation(); if(MODE==='d30')openPrio(); else openDynamic();};
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDynamic();});
@@ -1182,24 +1202,26 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDynamic();});
 
 /* ===== Cases Overview (Cases click, 24H) ===== */
 function buildCases(){
+  dvClear();
   const s=$('#coWire'); s.innerHTML=''; defs(s);
   const IS={x:212,y:250},CL={x:342,y:250},CR={x:458,y:250},AU={x:600,y:190},MA={x:600,y:312},RE={x:840,y:190},OP={x:840,y:312};
-  ribbon(s,IS,CL,10,'url(#teal)',.5);
+  const TEAL='rgba(130,240,224,.95)',GREY='rgba(180,192,200,.8)',AMB='rgba(245,190,90,.92)';
+  dvFlow(s,ribbon(s,IS,CL,10,'url(#teal)',.5),4,TEAL,{spMin:0.0016,spMax:0.003,r:2}); // Issues → Cases
   s.appendChild(svgEl('circle',{cx:400,cy:250,r:70,fill:'none',stroke:'rgba(47,214,192,.14)','stroke-width':1}));
   // same grammar as the main-flow funnel: split → Automated/Manual, then the
   // 7 CDC-resolved cross up into Resolved, the 11 stay Open (no Automated→Open)
-  ribbon(s,CR,AU,9,'url(#teal)',.5);                          // Cases → Automated (78)
-  ribbon(s,CR,MA,5,'rgba(150,168,178,.42)',.5);              // Cases → Manual (18)
-  ribbon(s,{x:672,y:190},RE,9,'url(#teal)',.5);              // Automated → Resolved (78)
-  ribbon(s,{x:672,y:312},RE,3,'url(#teal)',.5);              // Manual → Resolved (7, rises from bottom)
-  ribbon(s,{x:672,y:312},OP,4.5,'rgba(245,166,35,.34)',.5); // Manual → Open (11, still in queue)
+  dvFlow(s,ribbon(s,CR,AU,9,'url(#teal)',.5),3,TEAL,{});                          // Cases → Automated (78)
+  dvFlow(s,ribbon(s,CR,MA,5,'rgba(150,168,178,.42)',.5),2,GREY,{});              // Cases → Manual (18)
+  dvFlow(s,ribbon(s,{x:672,y:190},RE,9,'url(#teal)',.5),3,TEAL,{});              // Automated → Resolved (78)
+  dvFlow(s,ribbon(s,{x:672,y:312},RE,3,'url(#teal)',.5),2,TEAL,{});             // Manual → Resolved (7, rises from bottom)
+  dvFlow(s,ribbon(s,{x:672,y:312},OP,4.5,'rgba(245,166,35,.34)',.5),2,AMB,{}); // Manual → Open (11, still in queue)
   const HB=[{cls:'auto',n:'Automation · playbooks',v:78},{cls:'analyst',n:'T Security · CDC Bonn · resolved',v:7},{cls:'open',n:'T Security · CDC Bonn · in queue',v:11}];
   $('#coBars').innerHTML=HB.map(b=>`<div class="co-bar ${b.cls}"><div class="lab"><span class="n">${b.n}</span><span class="v">${b.v}</span></div><div class="track"><div class="fill" style="width:${Math.round(b.v/96*100)}%"></div></div></div>`).join('');
   const MT=[['Reconnaissance',5],['Resource Development',3],['Initial Access',13],['Execution',7],['Persistence',6],['Privilege Escalation',5],['Defense Evasion',9],['Credential Access',8],['Discovery',10],['Lateral Movement',9],['Collection',5],['Command and Control',7],['Exfiltration',4],['Impact',5]];
   $('#coMitre').innerHTML='<div class="mh">MITRE ATT&amp;CK · cases by tactic</div>'+MT.map(([t,c])=>`<div class="co-mrow${c>=9?' hi':''}"><span class="c">${c}</span><span class="t">${t}</span><span class="bar" style="max-width:${Math.round(c/13*90)}px"></span></div>`).join('');
 }
 function openCases(){closeDetail();buildCases();$('#dvCases').classList.add('on');countUp($('#dvCases'));}
-function closeCases(){$('#dvCases').classList.remove('on');}
+function closeCases(){dvClear();$('#dvCases').classList.remove('on');}
 $('#dvCasesBack').onclick=closeCases;
 $('#nRight').onclick=e=>{e.stopPropagation(); if(MODE==='h24')openCases(); else {const a=anchor($('#nRight'));openDetail(a.x,a.y,detailHTML(MODES[MODE].right.detail));}};
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeCases();});

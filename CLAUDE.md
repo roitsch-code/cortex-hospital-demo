@@ -151,6 +151,13 @@ Risk). Tiles: Vulnerable Assets **5,840** (ties to assets At Risk) · Active Cas
   handling bars + MITRE list). Wired at the end of the script; each has a `‹ Flow` back
   button and Esc-closes. NB: scope label rules as `.dvnode>span` / `.co-node>span` so the
   count-up number spans keep the big font.
+- **Animated overlay flows**: all three overlays run **particles along their ribbons/lines**
+  via `dvFlow(svg,geom,n,col,opts)` (spawns SVG dots) + `dvTick()` (advances them with
+  `getPointAtLength`, hooked into the main `frame()` loop). `ribbon()` returns its path so
+  callers can animate it. Data Inventory flows **source→centre** (+ centre→Issues/Prevented),
+  Dynamic View flows **outer marks→centre** (`rev:true`), Cases Overview flows **along the
+  lifecycle**. Each `buildX` calls `dvClear()` first; each `closeX` calls `dvClear()` so the
+  loop idles when closed. `prefers-reduced-motion` → `dvTick` no-ops (no particles).
 - **Vendor logos**: `LOGO` = 4 inlined webp data-URIs (Microsoft 365, Azure, Google
   Cloud, GitHub), tinted mono via `filter:brightness(0) invert(.72)`. Used ONLY in the
   Data Inventory + Dynamic View as subordinate third-party sources — **never** in the
