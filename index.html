@@ -327,7 +327,7 @@ body.view-flow .backbtn{display:flex}
 .dyn-mark .ml{font-size:10px;color:var(--muted);margin-top:7px;white-space:nowrap;letter-spacing:.02em}
 .dyn-mark .sev{position:absolute;top:-3px;right:22px;font-size:10px;line-height:1}
 .dyn-mark .sev.c{color:var(--red)} .dyn-mark .sev.h{color:#ff7a52} .dyn-mark .sev.m{color:var(--amber)}
-.dyn-rotring{transform-origin:590px 440px;animation:dynrot 90s linear infinite}
+.dyn-rotring{transform-origin:720px 440px;animation:dynrot 90s linear infinite}
 .reduced .dyn-rotring{animation:none}
 @keyframes dynrot{to{transform:rotate(360deg)}}
 /* live feed */
@@ -563,7 +563,7 @@ body.view-flow .backbtn{display:flex}
     <div class="dv-head"><h2>Dynamic View</h2><p>Live correlation · automation in real time · Last 24H</p></div>
     <svg class="dv-wire" id="dynWire" viewBox="0 0 1440 810"></svg>
     <div id="dynMarks"></div>
-    <div class="dyn-donutwrap" style="left:590px;top:440px;width:236px;height:236px">
+    <div class="dyn-donutwrap" style="left:720px;top:440px;width:236px;height:236px">
       <div class="dyn-center"><div class="pct"><span data-count="81">0</span>%</div><div class="lab">Automatically resolved</div><div class="sub">96 Cases</div></div>
     </div>
     <div class="dyn-feed" id="dynFeed"></div>
@@ -1137,19 +1137,19 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeInventory();});
 
 
 /* ===== Dynamic View (Core click, 24H) ===== */
-const DYN_C={x:590,y:440};
+const DYN_C={x:720,y:440};
 const DYN_MARKS=[
- {icon:'iomt',n:'Medical Devices (IoMT)',ang:-90,r:252},
- {icon:'imaging',n:'Imaging / PACS',ang:-57.3,r:300,sev:'m'},
- {icon:'his',n:'iMedOne · HIS',ang:-24.5,r:250,t:1},
- {icon:'tmark',n:'T Cloud Public',ang:8.2,r:300,t:1},
- {icon:'firewall',n:'Network / NGFW',ang:40.9,r:252,sev:'c'},
- {icon:'identity',n:'Identities & Access',ang:73.6,r:300},
- {icon:'flask',n:'Laboratory (LIS)',ang:106.4,r:252},
- {logo:'azure',n:'Azure',ang:139.1,r:300},
- {icon:'pharmacy',n:'Pharmacy / AGV',ang:171.8,r:252,sev:'h'},
- {icon:'endpoint',n:'Clinical Endpoints',ang:204.5,r:300},
- {icon:'hpc',n:'Research / HPC',ang:237.3,r:252}
+ {icon:'iomt',n:'Medical Devices (IoMT)',ang:-90,r:282},
+ {icon:'imaging',n:'Imaging / PACS',ang:-57.3,r:282,sev:'m'},
+ {icon:'his',n:'iMedOne · HIS',ang:-24.5,r:282,t:1},
+ {icon:'tmark',n:'T Cloud Public',ang:8.2,r:282,t:1},
+ {icon:'firewall',n:'Network / NGFW',ang:40.9,r:282,sev:'c'},
+ {icon:'identity',n:'Identities & Access',ang:73.6,r:282},
+ {icon:'flask',n:'Laboratory (LIS)',ang:106.4,r:282},
+ {logo:'azure',n:'Azure',ang:139.1,r:282},
+ {icon:'pharmacy',n:'Pharmacy / AGV',ang:171.8,r:282,sev:'h'},
+ {icon:'endpoint',n:'Clinical Endpoints',ang:204.5,r:282},
+ {icon:'hpc',n:'Research / HPC',ang:237.3,r:282}
 ];
 const DYN_IC={
  play:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="8" cy="8" r="6"/><path d="M6.6 5.4l4 2.6-4 2.6z" fill="currentColor" stroke="none"/></svg>',
