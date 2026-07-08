@@ -210,7 +210,7 @@ body.view-flow .backbtn{display:flex}
 .prov:hover b{text-shadow:0 0 16px var(--glow)}
 .region{position:absolute;transform:translate(-50%,-50%);z-index:4;font-size:10px;letter-spacing:.12em;color:var(--dim);text-transform:uppercase;pointer-events:none}
 /* severity filter (assets view) */
-/* severity chip inside detail popovers (Open / Active Cases / MTTR) */
+/* severity chip inside detail popovers (Open / Active cases / MTTR) */
 .pop .r .sev{flex:0 0 auto;display:inline-grid;place-items:center;width:16px;height:16px;border-radius:4px;font-size:9.5px;font-weight:800;color:#12060a;margin-right:9px;font-style:normal}
 /* radar wrapper (slides on provider select) */
 #radarWrap{position:absolute;inset:0;transition:transform .45s cubic-bezier(.6,0,.3,1)}
@@ -398,7 +398,7 @@ body.view-flow .backbtn{display:flex}
     <div class="tright">
       <div class="tseg" id="tseg">
         <button data-mode="h24" class="on"><span class="d"></span>Last 24H</button>
-        <button data-mode="d30">Last 30 Days</button>
+        <button data-mode="d30">Last 30 days</button>
       </div>
       <div class="kebab">⋮</div>
     </div>
@@ -418,7 +418,7 @@ body.view-flow .backbtn{display:flex}
   <div class="node click hidden" id="nCenter" style="left:720px;top:392px">
     <div class="disc"></div>
     <div class="num"><span data-count="865" data-suffix="K">0</span></div>
-    <div class="cap">Unique Vulnerabilities</div><div class="hint">prioritization →</div>
+    <div class="cap">Unique vulnerabilities</div><div class="hint">prioritization →</div>
   </div>
   <div class="corehit" id="coreHit" style="left:720px;top:392px;width:250px;height:250px"></div>
   <div class="node click" id="nRight" style="left:930px;top:392px">
@@ -441,21 +441,21 @@ body.view-flow .backbtn{display:flex}
     </div>
     <div class="soctag" id="socTag" style="left:998px;top:556px">Assisted by <svg class="soclogo" viewBox="0 0 1478.52 304.81" fill="currentColor" aria-label="T Security"><path d="M336.72,185.25h44.46c3.62,18.44,15.81,25.69,32.28,25.69,18.77,0,28.32-10.54,28.32-24.7s-9.22-21.41-26.35-26.02l-25.36-7.25c-34.91-9.55-49.07-34.91-49.07-61.92,0-41.83,31.29-68.83,72.13-68.83,44.46,0,68.5,26.02,72.79,66.53h-43.47c-2.63-16.47-12.19-24.7-29.31-24.7-15.15,0-26.68,9.22-26.68,24.04s10.21,20.42,22.4,23.71l25.36,6.92c32.93,8.56,53.03,32.93,53.03,64.88,0,44.13-32.61,69.16-73.77,69.16-45.45,0-72.79-24.04-76.74-67.52Z"/><path d="M650.51,178.34h-99.46c2.31,29.97,14.49,38.53,30.63,38.53,12.84,0,21.41-4.94,25.36-14.82h42.82c-6.26,31.29-33.26,50.72-68.17,50.72-42.49,0-71.14-30.63-71.14-84.64s27.67-84.64,72.13-84.64c41.5,0,68.5,31.62,68.5,80.03,0,5.6,0,11.2-.66,14.82ZM552.37,147.71h58.62c-2.96-21.41-14.16-28.32-28.32-28.32-15.48,0-26.35,6.92-30.3,28.32Z"/><path d="M674.39,168.13c0-51.38,26.35-84.64,71.47-84.64,39.85,0,63.23,25.03,67.52,59.94h-42.81c-2.96-13.5-10.54-21.08-24.7-21.08-19.1,0-28.32,16.14-28.32,45.78s9.22,45.78,28.32,45.78c14.16,0,21.74-7.58,24.37-21.08h43.14c-4.28,34.91-27.67,59.94-67.52,59.94-45.12,0-71.47-33.59-71.47-84.64Z"/><path d="M839.88,193.82v-105.06h42.49v99.79c0,15.48,5.6,25.36,20.75,25.36,16.14,0,27.01-12.84,27.01-32.28v-92.88h42.49v158.74h-39.85v-19.43h-1.98c-8.23,15.48-23.38,24.7-42.49,24.7-32.28,0-48.41-20.09-48.41-58.95Z"/><path d="M1099.26,87.77v38.86c-4.28-.66-8.23-.66-11.53-.66-25.69,0-36.23,9.55-36.23,30.96v90.57h-42.49V88.76h39.85v19.43h1.98c7.57-14.16,20.42-22.07,37.22-22.07,3.62,0,7.58.33,11.2,1.65Z"/><path d="M1126,65.37V27.5h42.49v37.87h-42.49ZM1126,247.5V88.76h42.49v158.74h-42.49Z"/><path d="M1221.34,200.73v-75.75h-27.01v-36.23h27.01v-25.69l34.58-31.95h7.9v57.64h40.51v36.23h-40.51v70.48c0,11.86,6.92,18.11,19.1,18.11,6.26,0,12.51-.99,18.11-2.31v33.26c-8.89,3.95-18.44,5.6-30.3,5.6-29.31,0-49.4-17.13-49.4-49.4Z"/><path d="M1433.07,88.76h45.45l-61.92,175.87c-8.56,24.04-25.03,40.18-52.04,40.18-8.23,0-17.46-.99-25.69-4.28v-33.92c4.94,1.32,11.2,1.98,17.46,1.98,10.54,0,16.8-3.95,21.74-17.46l3.62-9.55-57.31-152.82h45.45l30.96,96.17h1.98l30.3-96.17Z"/><path d="M55,181.5H0v-55h55v55ZM0,0v93.5h16.5v-2.75c0-44,24.75-71.5,71.5-71.5h2.75v198c0,27.5-11,38.5-38.5,38.5h-8.25v19.25h143v-19.25h-8.25c-27.5,0-38.5-11-38.5-38.5V19.25s2.75,0,2.75,0c46.75,0,71.5,27.5,71.5,71.5v2.75h16.5V0H0ZM176,181.5h55v-55h-55v55Z"/></svg> · Cyber Defense Center Bonn</div>
     <div class="outcome click" id="nResolved" style="left:1232px;top:292px">
-      <b><span data-count="85">0</span></b><span>Resolved Cases</span>
+      <b><span data-count="85">0</span></b><span>Resolved cases</span>
     </div>
     <div class="chev" id="chevOpen" style="left:1196px;top:446px">
       <div class="cv crit"><i>▲▲</i>3</div><div class="cv high"><i>▲▲</i>3</div>
       <div class="cv med"><i>▲</i>5</div><div class="cv low"><i>▲</i>0</div>
     </div>
     <div class="outcome click" id="nOpen" style="left:1276px;top:498px">
-      <b><span data-count="11">0</span></b><span>Open Cases</span>
+      <b><span data-count="11">0</span></b><span>Open cases</span>
     </div>
   </div>
 
   <!-- right status cards (30D) -->
   <div id="right30" class="hidden">
     <div class="funnode red" id="fnActive" style="left:1120px;top:288px">
-      <div class="fl above"><b><span data-count="168">0</span></b><span>Active Cases</span></div>
+      <div class="fl above"><b><span data-count="168">0</span></b><span>Active cases</span></div>
       <div class="disc2"><svg viewBox="0 0 24 24" fill="none" stroke="#ff9aa4" stroke-width="1.6">
         <path d="M12 3c1 4-2 5-2 8a4 4 0 0 0 8 0c0-2-1-3-1-5 3 2 4 5 4 8a9 9 0 1 1-15-6c2-2 3-4 4-5z"/></svg></div>
     </div>
@@ -463,40 +463,40 @@ body.view-flow .backbtn{display:flex}
       <div class="disc2"><svg viewBox="0 0 24 24" fill="none" stroke="#6ff3e0" stroke-width="1.6">
         <circle cx="12" cy="5" r="2.4"/><circle cx="5" cy="17" r="2.4"/><circle cx="19" cy="17" r="2.4"/>
         <path d="M12 7.4V13M12 13l-5.5 2M12 13l5.5 2"/></svg></div>
-      <div class="fl below"><b><span data-count="144">0</span></b><span>Resolved Cases</span></div>
+      <div class="fl below"><b><span data-count="144">0</span></b><span>Resolved cases</span></div>
     </div>
-    <div class="pcard rd" style="left:1258px;top:172px" data-detail="p_attn"><b><span data-count="9">0</span> <em class="up">↑2.5%</em></b><span>Require Attention</span></div>
-    <div class="pcard" style="left:1258px;top:262px" data-detail="p_prog"><b><span data-count="121">0</span> <em class="up">↑4%</em></b><span>In Progress</span></div>
-    <div class="pcard" style="left:1258px;top:352px" data-detail="p_mit"><b><span data-count="38">0</span> <em class="dn">↓13%</em></b><span>Mitigated · Compensating Controls</span></div>
+    <div class="pcard rd" style="left:1258px;top:172px" data-detail="p_attn"><b><span data-count="9">0</span> <em class="up">↑2.5%</em></b><span>Require attention</span></div>
+    <div class="pcard" style="left:1258px;top:262px" data-detail="p_prog"><b><span data-count="121">0</span> <em class="up">↑4%</em></b><span>In progress</span></div>
+    <div class="pcard" style="left:1258px;top:352px" data-detail="p_mit"><b><span data-count="38">0</span> <em class="dn">↓13%</em></b><span>Mitigated · compensating controls</span></div>
     <div class="pcard tl" style="left:1258px;top:470px" data-detail="p_res"><b><span data-count="61">0</span> <em class="up">↑12%</em></b><span>Resolved</span></div>
-    <div class="pcard tl" style="left:1258px;top:560px" data-detail="p_risk"><b><span data-count="83">0</span> <em class="up">↑5.3%</em></b><span>Accepted Risk</span></div>
+    <div class="pcard tl" style="left:1258px;top:560px" data-detail="p_risk"><b><span data-count="83">0</span> <em class="up">↑5.3%</em></b><span>Accepted risk</span></div>
   </div>
 
   <!-- bottom stat tiles (24H) -->
   <div class="tiles" id="tiles24">
-    <div class="tile" data-detail="events"><div class="k">Events Ingestion</div>
+    <div class="tile" data-detail="events"><div class="k">Events ingestion</div>
       <div class="vrow"><div class="v"><span data-count="2.4" data-decimals="1">0</span><u>B/24H</u></div>
         <svg class="spark" id="spk1" viewBox="0 0 130 40" preserveAspectRatio="none"></svg></div></div>
-    <div class="tile" data-detail="data"><div class="k">Data Ingestion</div>
+    <div class="tile" data-detail="data"><div class="k">Data ingestion</div>
       <div class="vrow"><div class="v"><span data-count="9">0</span><u>TB/24H</u></div>
         <svg class="spark" id="spk2" viewBox="0 0 130 40" preserveAspectRatio="none"></svg></div></div>
-    <div class="tile" data-detail="open"><div class="k">Total Open Cases</div>
+    <div class="tile" data-detail="open"><div class="k">Total open cases</div>
       <div class="vrow"><div class="v"><span data-count="11">0</span></div>
         <button class="invest" id="investBtn"><span class="o"></span>Investigate</button></div></div>
-    <div class="tile" data-detail="prevented"><div class="k">Prevented Events</div>
+    <div class="tile" data-detail="prevented"><div class="k">Prevented events</div>
       <div class="vrow"><div class="v"><span data-count="54">0</span><u>K</u></div>
         <svg class="spark" id="spk3" viewBox="0 0 130 40" preserveAspectRatio="none"></svg></div></div>
   </div>
 
   <!-- bottom stat tiles (30D) -->
   <div class="tiles hidden" id="tiles30">
-    <div class="tile" data-detail="vassets"><div class="k">Vulnerable Assets</div>
+    <div class="tile" data-detail="vassets"><div class="k">Vulnerable assets</div>
       <div class="vrow"><div class="v"><span data-count="5840" data-comma>0</span> <em>↑15%</em></div>
         <svg class="spark" id="spk4" viewBox="0 0 130 40" preserveAspectRatio="none"></svg></div></div>
-    <div class="tile" data-detail="activecases"><div class="k">Active Cases</div>
+    <div class="tile" data-detail="activecases"><div class="k">Active cases</div>
       <div class="vrow"><div class="v"><span data-count="168">0</span></div>
         <div class="sev"><i><span class="q" style="background:var(--red)"></span><b>44</b></i><i><span class="q" style="background:#ff7a52"></span><b>71</b></i><i><span class="q" style="background:var(--amber)"></span><b>48</b></i><i><span class="q" style="background:var(--blue)"></span><b>5</b></i></div></div></div>
-    <div class="tile" data-detail="mttr"><div class="k">Mean Time To Resolve</div>
+    <div class="tile" data-detail="mttr"><div class="k">Mean time to resolve</div>
       <div class="vrow"><div class="v"><span data-count="26">0</span><u>Days</u></div>
         <div class="sev"><i><span class="q" style="background:var(--red)"></span><b>21</b></i><i><span class="q" style="background:#ff7a52"></span><b>21</b></i><i><span class="q" style="background:var(--amber)"></span><b>34</b></i><i><span class="q" style="background:var(--blue)"></span><b>35</b></i></div></div></div>
   </div>
@@ -514,15 +514,15 @@ body.view-flow .backbtn{display:flex}
       <svg class="wire" id="wAssets" viewBox="0 0 1440 810"></svg>
       <div class="acenter" id="acenter">
         <div class="anum"><span id="acNum">0</span></div>
-        <div class="acap" id="acCap">Total Assets</div>
+        <div class="acap" id="acCap">Total assets</div>
         <div class="asub" id="acSub">24.9K Medical / Clinical · 10.7K IT & Cloud</div>
-        <button class="ashow" id="assetShow">Show Issues ›</button>
+        <button class="ashow" id="assetShow">Show issues ›</button>
       </div>
       <div id="provWrap"></div>
       <div id="regionWrap"></div>
     </div>
     <div class="astats" id="astats"></div>
-    <div class="aingest"><div class="k">Data Ingestion</div><div class="vv"><b>9</b> <u>TB/24H</u></div></div>
+    <div class="aingest"><div class="k">Data ingestion</div><div class="vv"><b>9</b> <u>TB/24H</u></div></div>
     <div class="provdetail" id="provDetail"></div>
   </section>
 
@@ -534,8 +534,8 @@ body.view-flow .backbtn{display:flex}
     <h2>PRIORITIZATION</h2>
     <div class="stages">
       <div class="stg"><b>148K <em>↓3.8%</em></b><span>Vulnerabilities</span></div>
-      <div class="stg"><b>34K <em>↓2.5%</em></b><span>Unique Vulnerabilities</span></div>
-      <div class="stg"><b>4.8K <em>↓1%</em></b><span>Open Issues</span></div>
+      <div class="stg"><b>34K <em>↓2.5%</em></b><span>Unique vulnerabilities</span></div>
+      <div class="stg"><b>4.8K <em>↓1%</em></b><span>Open issues</span></div>
       <div class="stg cases"><b>312 <em>↓1%</em></b><span>Cases</span></div>
     </div>
     <div class="breaklist" id="breaklist"></div>
@@ -554,7 +554,7 @@ body.view-flow .backbtn{display:flex}
     <svg class="dv-wire" id="dvInvWire" viewBox="0 0 1440 810"></svg>
     <div id="dvInvList"></div>
     <div class="dvnode" id="dvInvIssues" style="left:1040px;top:380px"><div class="disc3"></div><b><span data-count="2412" data-comma>0</span></b><span>Issues</span></div>
-    <div class="dvnode sm" id="dvInvPrev" style="left:1150px;top:566px"><b><span data-count="54">0</span>K</b><span>Prevented Events</span></div>
+    <div class="dvnode sm" id="dvInvPrev" style="left:1150px;top:566px"><b><span data-count="54">0</span>K</b><span>Prevented events</span></div>
   </div>
 
   <!-- ===== Dynamic View overlay (Core, 24H) ===== -->
@@ -564,11 +564,11 @@ body.view-flow .backbtn{display:flex}
     <svg class="dv-wire" id="dynWire" viewBox="0 0 1440 810"></svg>
     <div id="dynMarks"></div>
     <div class="dyn-donutwrap" style="left:590px;top:440px;width:236px;height:236px">
-      <div class="dyn-center"><div class="pct"><span data-count="81">0</span>%</div><div class="lab">Automatically Resolved</div><div class="sub">96 Cases</div></div>
+      <div class="dyn-center"><div class="pct"><span data-count="81">0</span>%</div><div class="lab">Automatically resolved</div><div class="sub">96 Cases</div></div>
     </div>
     <div class="dyn-feed" id="dynFeed"></div>
-    <div class="dyn-stat" style="top:264px"><div class="k">Data Ingestion</div><div class="v">9 <u>TB/24H</u></div></div>
-    <div class="dyn-stat" style="top:352px"><div class="k">Total Open Cases</div><div class="v">11</div></div>
+    <div class="dyn-stat" style="top:264px"><div class="k">Data ingestion</div><div class="v">9 <u>TB/24H</u></div></div>
+    <div class="dyn-stat" style="top:352px"><div class="k">Total open cases</div><div class="v">11</div></div>
   </div>
 
   <!-- ===== Cases Overview overlay (Cases, 24H) ===== -->
@@ -635,7 +635,7 @@ const SRC24=[
   {n:'T Cloud Public', icon:'tmark', w:5, t:1, rate:'3.4 B events/24H', res:'T Cloud Public · eu-de'},
   {n:'Network / NGFW', icon:'firewall', w:6, rate:'11.4 B events/24H', res:'EU / on-prem'},
   {n:'Research / HPC', icon:'hpc', w:3, rate:'HPC & genomics', res:'research network'},
-  {more:'+ 60 Data Sources', icon:'more', w:2}
+  {more:'+ 60 Data sources', icon:'more', w:2}
 ];
 const SRC30=[
   {n:'IoMT Security', icon:'iomt', w:8, rate:'device vulnerabilities', res:'medical device VM'},
@@ -652,9 +652,9 @@ const MODES={
     left:{n:'2412',cap:'Issues',comma:1,hint:'correlating →',detail:'issues'},
     center:null,
     right:{n:'96',cap:'Cases',hint:'breakdown →',detail:'cases'}},
-  d30:{label:'Last 30 Days', sources:SRC30,
+  d30:{label:'Last 30 days', sources:SRC30,
     left:{n:'148',suffix:'K',cap:'Vulnerabilities',hint:'sources →',detail:'vulns'},
-    center:{n:'34',suffix:'K',cap:'Unique Vulnerabilities',hint:'prioritization →',detail:'unique'},
+    center:{n:'34',suffix:'K',cap:'Unique vulnerabilities',hint:'prioritization →',detail:'unique'},
     right:{n:'312',cap:'Cases',hint:'breakdown →',detail:'cases30'}}
 };
 let MODE='h24';
@@ -842,22 +842,22 @@ function detailHTML(key){
   cases:`<h4><span class="d"></span>96 Cases</h4><div class="r"><span>From</span><b>2,412 issues</b></div><div class="r"><span>Automated</span><b class="ok">78</b></div><div class="r"><span>Manual</span><b class="warn">18</b></div><div class="r"><span>Resolved</span><b class="ok">85</b></div><div class="r"><span>Open</span><b class="warn">11</b></div><div class="foot">Each case carries the full attack story + root cause</div>`,
   automated:`<h4><span class="d"></span>78 Automated</h4><div class="r"><span>Handled by</span><b>AI + playbooks</b></div><div class="r"><span>Playbooks run</span><b>142</b></div><div class="r"><span>Manual work</span><b class="ok">−75%</b></div><div class="foot">1,300+ built-in playbooks resolve most issues</div>`,
   manual:`<h4><span class="d"></span>18 Manual</h4><div class="r"><span>Routed to</span><b>T Security · CDC Bonn</b></div><div class="r"><span>Resolved</span><b class="ok">7</b></div><div class="r"><span>In queue</span><b class="warn">11</b></div><div class="r"><span>Avg. handle</span><b>18m</b></div><div class="r"><span>Escalated</span><b class="warn">3</b></div><div class="foot">All 18 handled by the Cyber Defense Center Bonn · the 7 resolved fold into the 85 Resolved</div>`,
-  resolved:`<h4><span class="d"></span>85 Resolved Cases</h4><div class="r"><span>Auto-remediated</span><b class="ok">78</b></div><div class="r"><span>Analyst-closed</span><b>7</b></div><div class="r"><span>MTTR</span><b class="ok">−98%</b></div><div class="foot">Closed by automated playbooks / SOAR</div>`,
-  open:`<h4><span class="d"></span>11 Open Cases</h4><div class="r"><span><i class="sev" style="background:var(--red)">C</i>Critical</span><b style="color:var(--red)">3</b></div><div class="r"><span><i class="sev" style="background:#ff7a52">H</i>High</span><b style="color:#ff7a52">3</b></div><div class="r"><span><i class="sev" style="background:var(--amber)">M</i>Medium</span><b style="color:var(--amber)">5</b></div><div class="r"><span><i class="sev" style="background:var(--blue)">L</i>Low</span><b style="color:var(--blue)">0</b></div><div class="foot">Live queue — sorted by business risk</div>`,
-  events:`<h4><span class="d"></span>Events Ingestion</h4><div class="r"><span>Rate</span><b>2.4 B / 24H</b></div><div class="r"><span>Peak</span><b>142 K / sec</b></div><div class="r"><span>Sources</span><b>71 connectors</b></div><div class="r"><span>Residency</span><b class="ok">Germany DB</b></div>`,
-  data:`<h4><span class="d"></span>Data Ingestion</h4><div class="r"><span>Volume</span><b>9 TB / 24H</b></div><div class="r"><span>Trend (24H)</span><b>−4%</b></div><div class="r"><span>Hot store</span><b>310 TB</b></div><div class="r"><span>Hosting</span><b class="ok">T Cloud Public</b></div>`,
-  prevented:`<h4><span class="d"></span>Prevented Events</h4><div class="r"><span>Blocked (24H)</span><b>54 K</b></div><div class="r"><span>By NGFW</span><b>45 K</b></div><div class="r"><span>By endpoint agent</span><b>9 K</b></div><div class="foot">Inline prevention across the connected estate</div>`,
+  resolved:`<h4><span class="d"></span>85 Resolved cases</h4><div class="r"><span>Auto-remediated</span><b class="ok">78</b></div><div class="r"><span>Analyst-closed</span><b>7</b></div><div class="r"><span>MTTR</span><b class="ok">−98%</b></div><div class="foot">Closed by automated playbooks / SOAR</div>`,
+  open:`<h4><span class="d"></span>11 Open cases</h4><div class="r"><span><i class="sev" style="background:var(--red)">C</i>Critical</span><b style="color:var(--red)">3</b></div><div class="r"><span><i class="sev" style="background:#ff7a52">H</i>High</span><b style="color:#ff7a52">3</b></div><div class="r"><span><i class="sev" style="background:var(--amber)">M</i>Medium</span><b style="color:var(--amber)">5</b></div><div class="r"><span><i class="sev" style="background:var(--blue)">L</i>Low</span><b style="color:var(--blue)">0</b></div><div class="foot">Live queue — sorted by business risk</div>`,
+  events:`<h4><span class="d"></span>Events ingestion</h4><div class="r"><span>Rate</span><b>2.4 B / 24H</b></div><div class="r"><span>Peak</span><b>142 K / sec</b></div><div class="r"><span>Sources</span><b>71 connectors</b></div><div class="r"><span>Residency</span><b class="ok">Germany DB</b></div>`,
+  data:`<h4><span class="d"></span>Data ingestion</h4><div class="r"><span>Volume</span><b>9 TB / 24H</b></div><div class="r"><span>Trend (24H)</span><b>−4%</b></div><div class="r"><span>Hot store</span><b>310 TB</b></div><div class="r"><span>Hosting</span><b class="ok">T Cloud Public</b></div>`,
+  prevented:`<h4><span class="d"></span>Prevented events</h4><div class="r"><span>Blocked (24H)</span><b>54 K</b></div><div class="r"><span>By NGFW</span><b>45 K</b></div><div class="r"><span>By endpoint agent</span><b>9 K</b></div><div class="foot">Inline prevention across the connected estate</div>`,
   vulns:`<h4><span class="d"></span>148K Vulnerabilities</h4><div class="r"><span>Window</span><b>Last 30 days</b></div><div class="r"><span>Trend</span><b class="ok">↓3.8%</b></div><div class="r"><span>Scanners</span><b>9 sources</b></div><div class="foot">Raw findings across the estate before dedup</div>`,
-  unique:`<h4><span class="d"></span>34K Unique Vulnerabilities</h4><div class="r"><span>Deduplicated from</span><b>148K</b></div><div class="r"><span>Prioritized to</span><b class="ok">312 cases</b></div><div class="r"><span>Reduction</span><b class="ok">99.8%</b></div><div class="foot">Click the center to open the Prioritization view</div>`,
+  unique:`<h4><span class="d"></span>34K Unique vulnerabilities</h4><div class="r"><span>Deduplicated from</span><b>148K</b></div><div class="r"><span>Prioritized to</span><b class="ok">312 cases</b></div><div class="r"><span>Reduction</span><b class="ok">99.8%</b></div><div class="foot">Click the center to open the Prioritization view</div>`,
   cases30:`<h4><span class="d"></span>312 Cases</h4><div class="r"><span>Active</span><b class="warn">168</b></div><div class="r"><span>Resolved</span><b class="ok">144</b></div><div class="r"><span>From</span><b>34K unique vulns</b></div><div class="foot">Grouped by asset, exploit path & owner</div>`,
-  p_attn:`<h4><span class="d"></span>Require Attention · 9</h4><div class="r"><span>Trend</span><b class="bad">↑2.5%</b></div><div class="r"><span>Exploited in wild</span><b class="bad">yes (KEV)</b></div><div class="foot">Internet-exposed, high business impact</div>`,
-  p_prog:`<h4><span class="d"></span>In Progress · 121</h4><div class="r"><span>Trend</span><b>↑4%</b></div><div class="r"><span>Owner assigned</span><b class="ok">yes</b></div><div class="foot">Remediation underway with SLAs</div>`,
+  p_attn:`<h4><span class="d"></span>Require attention · 9</h4><div class="r"><span>Trend</span><b class="bad">↑2.5%</b></div><div class="r"><span>Exploited in wild</span><b class="bad">yes (KEV)</b></div><div class="foot">Internet-exposed, high business impact</div>`,
+  p_prog:`<h4><span class="d"></span>In progress · 121</h4><div class="r"><span>Trend</span><b>↑4%</b></div><div class="r"><span>Owner assigned</span><b class="ok">yes</b></div><div class="foot">Remediation underway with SLAs</div>`,
   p_mit:`<h4><span class="d"></span>Mitigated · 38</h4><div class="r"><span>Trend</span><b class="ok">↓13%</b></div><div class="r"><span>Via</span><b>compensating controls</b></div><div class="foot">Risk reduced without a full fix</div>`,
   p_res:`<h4><span class="d"></span>Resolved · 61</h4><div class="r"><span>Trend</span><b class="ok">↑12%</b></div><div class="r"><span>Verified fixed</span><b class="ok">rescan passed</b></div>`,
-  p_risk:`<h4><span class="d"></span>Accepted Risk · 83</h4><div class="r"><span>Trend</span><b>↑5.3%</b></div><div class="r"><span>Sign-off</span><b>risk owner</b></div><div class="foot">Documented exception with review date</div>`,
-  vassets:`<h4><span class="d"></span>Vulnerable Assets</h4><div class="r"><span>Count</span><b>5,840</b></div><div class="r"><span>Trend</span><b class="bad">↑15%</b></div><div class="r"><span>Internet-exposed</span><b class="warn">210</b></div>`,
-  activecases:`<h4><span class="d"></span>Active Cases · 168</h4><div class="r"><span><i class="sev" style="background:var(--red)">C</i>Critical</span><b style="color:var(--red)">44</b></div><div class="r"><span><i class="sev" style="background:#ff7a52">H</i>High</span><b style="color:#ff7a52">71</b></div><div class="r"><span><i class="sev" style="background:var(--amber)">M</i>Medium</span><b style="color:var(--amber)">48</b></div><div class="r"><span><i class="sev" style="background:var(--blue)">L</i>Low</span><b style="color:var(--blue)">5</b></div>`,
-  mttr:`<h4><span class="d"></span>Mean Time To Resolve</h4><div class="r"><span>Overall</span><b>26 days</b></div><div class="r"><span><i class="sev" style="background:var(--red)">C</i>Critical</span><b class="ok">21 d</b></div><div class="r"><span><i class="sev" style="background:#ff7a52">H</i>High</span><b>21 d</b></div><div class="r"><span><i class="sev" style="background:var(--amber)">M</i>Medium</span><b>34 d</b></div><div class="r"><span><i class="sev" style="background:var(--blue)">L</i>Low</span><b>35 d</b></div>`,
+  p_risk:`<h4><span class="d"></span>Accepted risk · 83</h4><div class="r"><span>Trend</span><b>↑5.3%</b></div><div class="r"><span>Sign-off</span><b>risk owner</b></div><div class="foot">Documented exception with review date</div>`,
+  vassets:`<h4><span class="d"></span>Vulnerable assets</h4><div class="r"><span>Count</span><b>5,840</b></div><div class="r"><span>Trend</span><b class="bad">↑15%</b></div><div class="r"><span>Internet-exposed</span><b class="warn">210</b></div>`,
+  activecases:`<h4><span class="d"></span>Active cases · 168</h4><div class="r"><span><i class="sev" style="background:var(--red)">C</i>Critical</span><b style="color:var(--red)">44</b></div><div class="r"><span><i class="sev" style="background:#ff7a52">H</i>High</span><b style="color:#ff7a52">71</b></div><div class="r"><span><i class="sev" style="background:var(--amber)">M</i>Medium</span><b style="color:var(--amber)">48</b></div><div class="r"><span><i class="sev" style="background:var(--blue)">L</i>Low</span><b style="color:var(--blue)">5</b></div>`,
+  mttr:`<h4><span class="d"></span>Mean time to resolve</h4><div class="r"><span>Overall</span><b>26 days</b></div><div class="r"><span><i class="sev" style="background:var(--red)">C</i>Critical</span><b class="ok">21 d</b></div><div class="r"><span><i class="sev" style="background:#ff7a52">H</i>High</span><b>21 d</b></div><div class="r"><span><i class="sev" style="background:var(--amber)">M</i>Medium</span><b>34 d</b></div><div class="r"><span><i class="sev" style="background:var(--blue)">L</i>Low</span><b>35 d</b></div>`,
   pv_git:`<h4><span class="d"></span>GitHub</h4><div class="r"><span>Assets</span><b>1,650</b></div><div class="r"><span>At risk</span><b class="warn">37</b></div><div class="r"><span>Repos scanned</span><b>2.1 K</b></div>`,
   pv_aws:`<h4><span class="d"></span>AWS</h4><div class="r"><span>Accounts</span><b>47</b></div><div class="r"><span>Assets</span><b>188</b></div><div class="r"><span>At risk</span><b class="bad">22</b></div><div class="r"><span>Region</span><b class="ok">eu-central-1</b></div>`,
   pv_az:`<h4><span class="d"></span>Azure</h4><div class="r"><span>Subscriptions</span><b>34</b></div><div class="r"><span>Assets</span><b>99</b></div><div class="r"><span>At risk</span><b class="warn">14</b></div>`,
@@ -947,10 +947,10 @@ const ACX0=800;
 const fmt=n=>n.toLocaleString('en-US');
 // buckets (nested subsets)
 const A_BUCKETS=[
-  {key:'all',   disp:'35.6<em>K</em>', n:35600, comma:1, cls:'all big', cap:'Total Assets',                        sub:'24.9K Medical / Clinical · 10.7K IT & Cloud', label:'All Assets',      glow:[245,170,80]},
-  {key:'risk',  disp:'5,840',          n:5840,  comma:1, cls:'risk',    cap:'Assets at Risk',                       sub:'412 Open Issues · 88 Open Cases', label:'At Risk',        glow:[245,166,35]},
-  {key:'threat',disp:'84',             n:84,             cls:'threat',  cap:'Assets with Active Threats',           sub:'96 Open Issues · 19 Open Cases', label:'Active Threats', glow:[255,77,94]},
-  {key:'both',  disp:'29',             n:29,             cls:'both',    cap:'Critical · At Risk + Active Threats',   sub:'41 Open Issues · 8 Open Cases', label:'At Risk + Threats', glow:[226,0,116]}
+  {key:'all',   disp:'35.6<em>K</em>', n:35600, comma:1, cls:'all big', cap:'Total assets',                        sub:'24.9K Medical / Clinical · 10.7K IT & Cloud', label:'All assets',      glow:[245,170,80]},
+  {key:'risk',  disp:'5,840',          n:5840,  comma:1, cls:'risk',    cap:'Assets at risk',                       sub:'412 Open issues · 88 Open cases', label:'At risk',        glow:[245,166,35]},
+  {key:'threat',disp:'84',             n:84,             cls:'threat',  cap:'Assets with active threats',           sub:'96 Open issues · 19 Open cases', label:'Active threats', glow:[255,77,94]},
+  {key:'both',  disp:'29',             n:29,             cls:'both',    cap:'Critical · at risk + active threats',   sub:'41 Open issues · 8 Open cases', label:'At risk + threats', glow:[226,0,116]}
 ];
 // locations (assets sum = 35,600; risk sum = 5,840; threat = 84; both = 29)
 const A_LOC=[
@@ -1041,15 +1041,15 @@ function selectLocation(key){const p=A_LOC.find(x=>x.key===key);if(!p)return;
   const unitRow=p.unitN?`<div class="h u"><b>${PMARK[p.mark]}${p.unitN}</b><span>${p.unit}</span></div>`:'';
   const imoRow=p.imedone?`<div class="imosys"><span class="il">iMedOne<sup>®</sup></span><span class="ilx"><b>Clinical core system · HIS</b><br>runs on-site · hosted on T Cloud Public</span></div>`:'';
   $('#provDetail').innerHTML=`
-   <div class="crumb" id="provCrumb"><span class="bk">‹ All Assets</span> / <b>${p.name}</b></div>
+   <div class="crumb" id="provCrumb"><span class="bk">‹ All assets</span> / <b>${p.name}</b></div>
    <div class="head"><div class="h"><b>${fmt(p.assets)}</b><span>Assets</span></div>${unitRow}</div>
    ${imoRow}
-   <div class="sec">All ${p.name} Assets by Category</div>
+   <div class="sec">All ${p.name} assets by category</div>
    <div class="cats">${donutSVG(p.cats,p.assets)}<div class="catlist">${catlist}</div></div>
    <div class="status">
-     <div class="st b1"><b>${p.status.both}</b><span>At Risk &amp; Active Threats</span></div>
-     <div class="st b2"><b>${p.status.threat}</b><span>Active Threats</span></div>
-     <div class="st b3"><b>${fmt(p.status.risk)}</b><span>At Risk</span></div>
+     <div class="st b1"><b>${p.status.both}</b><span>At risk &amp; active threats</span></div>
+     <div class="st b2"><b>${p.status.threat}</b><span>Active threats</span></div>
+     <div class="st b3"><b>${fmt(p.status.risk)}</b><span>At risk</span></div>
    </div>`;
   $('#provCrumb').onclick=backRadar;
   $('#provDetail').classList.add('on');
@@ -1095,7 +1095,7 @@ const INV=[
  {logo:'azure',n:'Azure',vol:'150 GB',w:4,spk:[14,15,14,16,15,17,16,15,16,17]},
  {logo:'gcp',n:'Google Cloud',vol:'90 GB',w:3,spk:[9,10,10,11,10,12,11,10,11,12]},
  {logo:'github',n:'GitHub · Research',vol:'12 GB',w:2,spk:[4,5,4,6,5,6,5,6,5,6]},
- {n:'+ 60 Data Sources',icon:'more',vol:'0.2 TB',w:2,more:1}
+ {n:'+ 60 Data sources',icon:'more',vol:'0.2 TB',w:2,more:1}
 ];
 const INV_THROAT={x:752,y:404}, INV_ISSUES={x:965,y:380}, INV_PREV={x:1090,y:560};
 function buildInventory(){
