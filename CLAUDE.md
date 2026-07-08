@@ -203,13 +203,23 @@ Risk). Tiles: Vulnerable Assets **5,840** (ties to assets At Risk) · Active Cas
   `Claude-Session: <the current claude.ai/code session URL>`.
 - Never put a model identifier in commits, PRs, code, or any pushed artifact.
 
+## Part 2 · Supplier agent governance scene (`#dvAgent`)
+A `.dv` overlay reached from the **`#agentEntry` pill** on the flow view ("Supplier agent
+case · governance ›"). One interface, **two levels: agent + AGVs** — a *Supplier logistics
+agent* node (Agent layer) linked down to the *Medication AGV layer* (Pharmacy → Wards →
+Patient rooms, with `dvFlow` AGV particles that never stop). A right-hand **permission
+profile** panel (approved scope vs out-of-profile requests) + human **Revoke supplier
+access** action. A **Cortex Agentic Assistant · voice** banner narrates a **5-beat** state
+machine (`AG_BEATS`, `agBuild`/`agRender`/`agSet`, `s0…s4` classes on `#dvAgent`):
+0 normal → 1 anomaly detected → 2 policy violation (identity valid, behavior deviates) →
+3 **isolated**: the agent node transforms into the dashed *Secure simulation environment*
+bubble, the control link cuts, AGVs keep running (fallback) → 4 sandboxed · no real data.
+Step via ‹ Back / Next › or ▶ Play scenario (auto-advances, cleared on close/Esc).
+Real Cortex naming (Agentic Assistant), reduced/glowing, `prefers-reduced-motion` safe.
+
 ## What's next / open ideas (not built)
 - If real vendor logo SVGs are provided, swap them into the source list + site marks.
-- Possible Part 2 (from the original concept, not required): SOC review → governance
-  (supplier permission profile) → human-confirmed response (revoke / audit record).
-  Keep any such view **reduced**, real names only.
+- Voice-over / TTS for the agent-scene beats; wiring the scene to a specific open case.
 
 ## Known limitations
-- Isolation/agent-architecture scenes from the original draft were **removed** — the
-  demo is now the two views above. Ignore older references to Scene AGENTS / ISOLATION.
-- Positions in both views are hand-placed for 1440×810; re-screenshot after edits.
+- Positions in all views are hand-placed for 1440×810; re-screenshot after edits.

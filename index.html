@@ -419,6 +419,65 @@ body.view-flow .backbtn{display:flex}
 .oc-row.arrive{animation:ocIn .55s cubic-bezier(.4,0,.2,1)}
 @keyframes ocIn{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:none}}
 .reduced .oc-row.arrive{animation:none}
+/* ===== Supplier agent governance scene ===== */
+.agententry{position:absolute;left:50%;top:150px;transform:translateX(-50%);z-index:8;cursor:pointer;display:flex;align-items:center;gap:8px;
+  font-size:12px;font-weight:700;letter-spacing:.03em;color:#bfe4ff;border:1px solid rgba(110,170,255,.4);
+  background:rgba(70,130,210,.10);border-radius:999px;padding:7px 16px;box-shadow:0 0 18px rgba(70,130,210,.18);transition:.2s}
+.agententry:hover{background:rgba(70,130,210,.2);color:#fff}
+.agententry .d{width:7px;height:7px;border-radius:50%;background:#ffb84d;box-shadow:0 0 9px #ffb84d;animation:blink 1.5s infinite}
+.reduced .agententry .d{animation:none}
+#dvAgent .dv-head{top:44px}
+.ag-lab{position:absolute;font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);z-index:5}
+.ag-node{position:absolute;transform:translate(-50%,-50%);z-index:6;text-align:center;transition:transform 1.1s cubic-bezier(.6,0,.3,1)}
+.ag-node .disc{width:58px;height:58px;border-radius:50%;margin:0 auto;display:grid;place-items:center;
+  border:1.6px solid var(--teal);background:radial-gradient(circle at 50% 40%,rgba(47,214,192,.2),rgba(4,10,12,.72));box-shadow:0 0 22px var(--glow);transition:border-color .5s,box-shadow .5s}
+.ag-node .disc svg{width:26px;height:26px;color:#d7efe9}
+.ag-node .nm{font-size:12.5px;font-weight:700;color:#e7edf1;margin-top:10px;white-space:nowrap}
+.ag-node .st{font-size:10.5px;color:var(--muted);margin-top:3px;white-space:nowrap;transition:color .4s}
+.ag-agent .disc{border-color:#63e6a0;box-shadow:0 0 24px rgba(99,230,160,.5)}
+.ag-agent .disc svg{color:#bff4d6}
+#dvAgent.s1 .ag-agent .disc,#dvAgent.s2 .ag-agent .disc{border-color:var(--amber);box-shadow:0 0 28px rgba(245,166,35,.6)}
+#dvAgent.s1 .ag-agent .st,#dvAgent.s2 .ag-agent .st{color:var(--amber)}
+#dvAgent.s3 .ag-agent .disc,#dvAgent.s4 .ag-agent .disc{border-color:var(--magenta);box-shadow:0 0 28px rgba(226,0,116,.55)}
+#dvAgent.s3 .ag-agent .st,#dvAgent.s4 .ag-agent .st{color:#ff7ec8}
+.ag-agvlab{position:absolute;font-size:11px;font-weight:700;letter-spacing:.03em;color:var(--teal-br);z-index:5}
+.ag-link{transition:stroke .6s,opacity .6s}
+#dvAgent.s3 .ag-link,#dvAgent.s4 .ag-link{stroke:rgba(226,0,116,.25)!important;stroke-dasharray:5 8;opacity:.55}
+.ag-sim{position:absolute;border:1.5px dashed rgba(226,0,116,.5);border-radius:16px;z-index:4;background:rgba(226,0,116,.05);opacity:0;pointer-events:none;transition:opacity .6s;box-shadow:inset 0 0 40px rgba(226,0,116,.06)}
+#dvAgent.s3 .ag-sim,#dvAgent.s4 .ag-sim{opacity:1}
+.ag-sim .sh{position:absolute;top:13px;left:18px;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#ff9ed6}
+.ag-sim .ss{position:absolute;bottom:14px;left:18px;right:18px;font-size:11px;color:#f0c2da;line-height:1.45}
+.ag-gov{position:absolute;right:56px;top:150px;width:352px;z-index:6}
+.ag-gov h4{font-size:13px;font-weight:800;color:#fff;margin-bottom:4px}
+.ag-gov .sub{font-size:11px;color:var(--muted);margin-bottom:8px}
+.ag-grp{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:16px 0 8px}
+.ag-scope{display:flex;align-items:center;gap:10px;font-size:12.5px;color:#cfd6db;padding:6px 0}
+.ag-scope .i{width:17px;height:17px;flex:0 0 auto;display:grid;place-items:center;border-radius:5px;font-size:10px;font-weight:800}
+.ag-scope.ok .i{background:rgba(47,214,192,.16);color:var(--teal-br)}
+.ag-scope.bad{color:#e7c2d6} .ag-scope.bad .i{background:rgba(226,0,116,.16);color:#ff7ec8}
+.ag-flag{opacity:.25;transition:.4s}
+#dvAgent.s1 .ag-flag,#dvAgent.s2 .ag-flag,#dvAgent.s3 .ag-flag,#dvAgent.s4 .ag-flag{opacity:1}
+.ag-status{margin-top:18px;border-top:1px solid var(--hair);padding-top:14px;font-size:12.5px;color:#cfd6db;line-height:1.55}
+.ag-status b{color:#fff}
+.ag-revoke{margin-top:15px;appearance:none;border:1px solid rgba(226,0,116,.5);background:rgba(226,0,116,.10);color:#ff9ed6;font-size:12px;font-weight:700;border-radius:8px;padding:9px 15px;cursor:pointer;opacity:0;pointer-events:none;transition:.4s}
+#dvAgent.s4 .ag-revoke{opacity:1;pointer-events:auto}
+.ag-revoke.done{border-color:rgba(47,214,192,.5);background:rgba(47,214,192,.10);color:var(--teal-br);cursor:default}
+.ag-voice{position:absolute;left:56px;bottom:132px;width:800px;z-index:6;display:flex;align-items:flex-start;gap:15px;border:1px solid var(--hair);border-left-width:3px;border-radius:12px;padding:16px 20px;background:rgba(9,13,17,.72);transition:.3s}
+.ag-voice.ok{border-left-color:var(--teal)} .ag-voice.warn{border-left-color:var(--amber)} .ag-voice.act{border-left-color:var(--magenta)}
+.ag-voice .spk{width:36px;height:36px;flex:0 0 auto;border-radius:50%;display:grid;place-items:center;border:1px solid var(--teal-dim);color:var(--teal-br)}
+.ag-voice .spk svg{width:18px;height:18px}
+.ag-voice.warn .spk{border-color:rgba(245,166,35,.5);color:var(--amber)} .ag-voice.act .spk{border-color:rgba(226,0,116,.5);color:#ff7ec8}
+.ag-voice .spk.on{animation:vpulse 1.3s infinite}
+@keyframes vpulse{0%,100%{box-shadow:0 0 0 rgba(120,180,180,.3)}50%{box-shadow:0 0 16px rgba(120,180,180,.5)}}
+.reduced .ag-voice .spk.on{animation:none}
+.ag-voice .vtag{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.ag-voice .vt{font-size:14px;color:#e7edf1;line-height:1.5}
+.ag-steps{position:absolute;left:56px;bottom:66px;z-index:6;display:flex;align-items:center;gap:14px}
+.ag-steps button{appearance:none;border:1px solid var(--hair);background:rgba(255,255,255,.03);color:#cfd6db;font-size:12px;font-weight:700;border-radius:8px;padding:8px 15px;cursor:pointer;transition:.15s}
+.ag-steps button:hover{border-color:var(--teal-dim);color:#fff}
+.ag-dots{display:flex;gap:8px;margin:0 4px}
+.ag-dots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.18);transition:.3s}
+.ag-dots i.on{background:var(--teal);box-shadow:0 0 8px var(--glow)}
 
 </style>
 </head>
@@ -447,6 +506,7 @@ body.view-flow .backbtn{display:flex}
   <div class="backbtn" id="backBtn">‹ Command Center</div>
 
   <section id="flowView">
+  <div class="agententry" id="agentEntry"><span class="d"></span>Supplier agent case · governance ›</div>
   <div class="srchead" id="srcHead" style="top:238px">Sources</div>
   <div id="srcWrap"></div>
 
@@ -639,6 +699,63 @@ body.view-flow .backbtn{display:flex}
       <div class="soctag oc-soc">Assisted by <svg class="soclogo" viewBox="0 0 1478.52 304.81" fill="currentColor" aria-label="T Security"><path d="M336.72 185.25h44.46c3.62 18.44 15.81 25.69 32.28 25.69 18.77 0 28.32-10.54 28.32-24.7s-9.22-21.41-26.35-26.02l-25.36-7.25c-34.91-9.55-49.07-34.91-49.07-61.92 0-41.83 31.29-68.83 72.13-68.83 44.46 0 68.5 26.02 72.79 66.53h-43.47c-2.63-16.47-12.19-24.7-29.31-24.7-15.15 0-26.68 9.22-26.68 24.04s10.21 20.42 22.4 23.71l25.36 6.92c32.93 8.56 53.03 32.93 53.03 64.88 0 44.13-32.61 69.16-73.77 69.16-45.45 0-72.79-24.04-76.74-67.52Z"/><path d="M650.51 178.34h-99.46c2.31 29.97 14.49 38.53 30.63 38.53 12.84 0 21.41-4.94 25.36-14.82h42.82c-6.26 31.29-33.26 50.72-68.17 50.72-42.49 0-71.14-30.63-71.14-84.64s27.67-84.64 72.13-84.64c41.5 0 68.5 31.62 68.5 80.03 0 5.6 0 11.2-.66 14.82ZM552.37 147.71h58.62c-2.96-21.41-14.16-28.32-28.32-28.32-15.48 0-26.35 6.92-30.3 28.32Z"/><path d="M674.39 168.13c0-51.38 26.35-84.64 71.47-84.64 39.85 0 63.23 25.03 67.52 59.94h-42.81c-2.96-13.5-10.54-21.08-24.7-21.08-19.1 0-28.32 16.14-28.32 45.78s9.22 45.78 28.32 45.78c14.16 0 21.74-7.58 24.37-21.08h43.14c-4.28 34.91-27.67 59.94-67.52 59.94-45.12 0-71.47-33.59-71.47-84.64Z"/><path d="M839.88 193.82v-105.06h42.49v99.79c0 15.48 5.6 25.36 20.75 25.36 16.14 0 27.01-12.84 27.01-32.28v-92.88h42.49v158.74h-39.85v-19.43h-1.98c-8.23 15.48-23.38 24.7-42.49 24.7-32.28 0-48.41-20.09-48.41-58.95Z"/><path d="M1099.26 87.77v38.86c-4.28-.66-8.23-.66-11.53-.66-25.69 0-36.23 9.55-36.23 30.96v90.57h-42.49V88.76h39.85v19.43h1.98c7.57-14.16 20.42-22.07 37.22-22.07 3.62 0 7.58.33 11.2 1.65Z"/><path d="M1126 65.37V27.5h42.49v37.87h-42.49ZM1126 247.5V88.76h42.49v158.74h-42.49Z"/><path d="M1221.34 200.73v-75.75h-27.01v-36.23h27.01v-25.69l34.58-31.95h7.9v57.64h40.51v36.23h-40.51v70.48c0 11.86 6.92 18.11 19.1 18.11 6.26 0 12.51-.99 18.11-2.31v33.26c-8.89 3.95-18.44 5.6-30.3 5.6-29.31 0-49.4-17.13-49.4-49.4Z"/><path d="M1433.07 88.76h45.45l-61.92 175.87c-8.56 24.04-25.03 40.18-52.04 40.18-8.23 0-17.46-.99-25.69-4.28v-33.92c4.94 1.32 11.2 1.98 17.46 1.98 10.54 0 16.8-3.95 21.74-17.46l3.62-9.55-57.31-152.82h45.45l30.96 96.17h1.98l30.3-96.17Z"/><path d="M55 181.5H0v-55h55v55ZM0 0v93.5h16.5v-2.75c0-44 24.75-71.5 71.5-71.5h2.75v198c0 27.5-11 38.5-38.5 38.5h-8.25v19.25h143v-19.25h-8.25c-27.5 0-38.5-11-38.5-38.5V19.25s2.75 0 2.75 0c46.75 0 71.5 27.5 71.5 71.5v2.75h16.5V0H0ZM176 181.5h55v-55h-55v55Z"/></svg> · Cyber Defense Center Bonn</div>
     </div>
     <div class="oc-queue"><div class="oc-qh"><span class="d"></span>Live queue · <span id="ocQn">11</span> open</div><div id="ocList"></div></div>
+  </div>
+
+  <!-- ===== Supplier agent governance scene (Part 2 · agent + AGV levels) ===== -->
+  <div class="dv" id="dvAgent">
+    <div class="dv-back" id="dvAgentBack">‹ Flow</div>
+    <div class="dv-head"><h2>Supplier agent governance</h2><p>Cortex Agentic Assistant · autonomous response · Last 24H</p></div>
+    <svg class="dv-wire" id="agWire" viewBox="0 0 1440 810"></svg>
+
+    <div class="ag-lab" style="left:60px;top:150px">Agent layer</div>
+    <div class="ag-lab" style="left:60px;top:432px">Medication AGV layer</div>
+
+    <div class="ag-node ag-agent" id="agAgent" style="left:300px;top:250px">
+      <div class="disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="5" y="8" width="14" height="10" rx="2"/><path d="M12 8V4.5"/><circle cx="12" cy="3.4" r="1.1" fill="currentColor" stroke="none"/><path d="M9 12.5h.01M15 12.5h.01" stroke-width="2"/><path d="M10 15.5h4"/></svg></div>
+      <div class="nm">Supplier logistics agent</div>
+      <div class="st" id="agAgentSt">connected · optimizing delivery</div>
+    </div>
+
+    <div class="ag-node ag-agv" style="left:250px;top:520px">
+      <div class="disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="5" y="4" width="14" height="16" rx="3"/><path d="M12 8.5v7M8.5 12h7" stroke-width="1.7"/></svg></div>
+      <div class="nm">Pharmacy</div></div>
+    <div class="ag-node ag-agv" style="left:520px;top:520px">
+      <div class="disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M4 20h16M6 20V9l6-3.5L18 9v11"/><path d="M10.2 20v-3.5h3.6V20"/><path d="M12 10v3M10.4 11.5h3.2" stroke-width="1.7"/></svg></div>
+      <div class="nm">Wards</div></div>
+    <div class="ag-node ag-agv" style="left:790px;top:520px">
+      <div class="disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M3 18v-4.5A2.5 2.5 0 0 1 5.5 11H15a4 4 0 0 1 4 4v3M3 18h18M3 14.5h9"/><circle cx="7.5" cy="8.2" r="2.1"/></svg></div>
+      <div class="nm">Patient rooms</div></div>
+    <div class="ag-agvlab" style="left:706px;top:566px">Medication AGVs · running</div>
+
+    <div class="ag-sim" id="agSim" style="left:560px;top:158px;width:372px;height:186px">
+      <div class="sh">Secure simulation environment</div>
+      <div class="ss">Simulated hospital logistics · no access to real patient, medication or location data.</div>
+    </div>
+
+    <div class="ag-gov">
+      <h4>Permission profile</h4><div class="sub">Supplier logistics agent · identity <span style="color:var(--teal-br)">valid</span></div>
+      <div class="ag-grp">Approved scope</div>
+      <div class="ag-scope ok"><span class="i">✓</span>Delivery schedules</div>
+      <div class="ag-scope ok"><span class="i">✓</span>Stock replenishment</div>
+      <div class="ag-scope ok"><span class="i">✓</span>Aggregate delivery ETA</div>
+      <div class="ag-grp">Out-of-profile requests</div>
+      <div class="ag-scope bad ag-flag"><span class="i">✗</span>Patient-linked medication routes</div>
+      <div class="ag-scope bad ag-flag"><span class="i">✗</span>Live AGV location data</div>
+      <div class="ag-scope bad ag-flag"><span class="i">✗</span>Restricted ward access</div>
+      <div class="ag-status" id="agStatus">Connected · behavior within approved profile.</div>
+      <button class="ag-revoke" id="agRevoke">Revoke supplier access</button>
+    </div>
+
+    <div class="ag-voice ok" id="agVoice">
+      <div class="spk" id="agSpk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor" stroke="none"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8 8 0 0 1 0 12"/></svg></div>
+      <div><div class="vtag">Cortex agentic assistant · voice</div><div class="vt" id="agVt">Medication AGVs are running normally.</div></div>
+    </div>
+    <div class="ag-steps">
+      <button id="agPrev">‹ Back</button>
+      <div class="ag-dots" id="agDots"></div>
+      <button id="agNext">Next ›</button>
+      <button id="agPlay">▶ Play scenario</button>
+    </div>
   </div>
 
 </div></div>
@@ -1317,6 +1434,53 @@ $('#dvOpenBack').onclick=closeOpenView;
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOpenView();});
 (function(){const t=$('.tile[data-detail="open"]'); if(t)t.onclick=e=>{e.stopPropagation();openOpenView();};
  const ib=$('#investBtn'); if(ib)ib.onclick=e=>{e.stopPropagation();openOpenView();};})();
+
+
+/* ===== Supplier agent governance scene (agent + AGV levels) ===== */
+const AG_BEATS=[
+ {c:'ok',  st:'connected · optimizing delivery', status:'Connected · behavior within the approved profile.', vt:'Medication AGVs are running normally between pharmacy, wards and patient rooms. The supplier agent is optimizing delivery schedules and stock replenishment.'},
+ {c:'warn',st:'anomaly detected',                status:'<b>Anomaly detected.</b> Agent requesting restricted location and medication data.', vt:'Unusual agent behavior detected. The supplier agent is requesting restricted location and medication data.'},
+ {c:'warn',st:'policy violation',                status:'Identity <b>valid</b> — behavior <b>deviates</b> from the approved permission profile.', vt:'The agent identity is valid — but its behavior does not match the approved permission profile.'},
+ {c:'act', st:'isolated → simulation',           status:'<b>Isolated</b> from live systems · redirected to a secure simulation. Fallback delivery continues.', vt:'Agent isolated from live hospital systems and redirected to a secure simulation environment. Fallback medication delivery continues without interruption.'},
+ {c:'ok',  st:'sandboxed · no real data',        status:'Simulation active · <b>no access to real patient, medication or location data.</b>', vt:'Simulated hospital logistics environment active. The agent has no access to real patient, medication, or location data.'}
+];
+let agStep=0, agTimer=null;
+function agBuild(){
+  const s=$('#agWire'); s.innerHTML=''; defs(s); dvClear();
+  const A={x:300,y:282}, W={x:520,y:490};
+  s.appendChild(svgEl('path',{d:band(A,W,.5),fill:'none',stroke:'rgba(110,170,255,.4)','stroke-width':2,'stroke-linecap':'round',filter:'url(#g)',class:'ag-link'}));
+  const p1=ribbon(s,{x:284,y:520},{x:490,y:520},5,'url(#teal)',.4), p2=ribbon(s,{x:550,y:520},{x:756,y:520},5,'url(#teal)',.4);
+  dvFlow(s,p1,3,'rgba(130,240,224,.95)',{spMin:0.0018,spMax:0.0034,r:2.3});
+  dvFlow(s,p2,3,'rgba(130,240,224,.95)',{spMin:0.0018,spMax:0.0034,r:2.3});
+  $('#agDots').innerHTML=AG_BEATS.map(()=>'<i></i>').join('');
+  agStep=0; agRender();
+}
+function agRender(){
+  const dv=$('#dvAgent'); dv.classList.remove('s0','s1','s2','s3','s4'); dv.classList.add('s'+agStep);
+  const b=AG_BEATS[agStep];
+  $('#agVoice').className='ag-voice '+b.c;
+  $('#agVt').textContent=b.vt; $('#agAgentSt').textContent=b.st; $('#agStatus').innerHTML=b.status;
+  $$('#agDots i').forEach((d,i)=>d.classList.toggle('on',i<=agStep));
+  $('#agAgent').style.transform = agStep>=3 ? 'translate(-50%,-50%) translate(446px,-20px)' : '';
+  $('#agSpk').classList.toggle('on', !REDUCED);
+  const rv=$('#agRevoke'); if(agStep<4 && rv){rv.textContent='Revoke supplier access';rv.classList.remove('done');}
+}
+function agSet(n){ agStep=Math.max(0,Math.min(AG_BEATS.length-1,n)); agRender(); }
+function agStop(){ if(agTimer){clearInterval(agTimer);agTimer=null;const pb=$('#agPlay');if(pb)pb.textContent='▶ Play scenario';} }
+function openAgent(){ closeDetail(); $('#dvAgent').classList.add('on'); agBuild(); }
+function closeAgent(){ agStop(); dvClear(); $('#dvAgent').classList.remove('on'); }
+if($('#agentEntry'))$('#agentEntry').onclick=e=>{e.stopPropagation();openAgent();};
+$('#dvAgentBack').onclick=closeAgent;
+$('#agNext').onclick=()=>{ agStop(); agSet(agStep+1); };
+$('#agPrev').onclick=()=>{ agStop(); agSet(agStep-1); };
+$('#agRevoke').onclick=function(){ this.textContent='✓ Access revoked · audit recorded'; this.classList.add('done'); };
+$('#agPlay').onclick=function(){
+  if(agTimer){agStop();return;}
+  if(agStep>=AG_BEATS.length-1)agSet(0);
+  this.textContent='❚❚ Pause';
+  agTimer=setInterval(()=>{ if(agStep>=AG_BEATS.length-1){agStop();return;} agSet(agStep+1); },3600);
+};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAgent();});
 
 
 /* init */
