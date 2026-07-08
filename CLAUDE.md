@@ -113,8 +113,11 @@ Risk). Tiles: Vulnerable Assets **5,840** (ties to assets At Risk) · Active Cas
 
 ## Tuning map (where the knobs are, in index.html)
 - Colours / theme: the `:root` CSS variables at the top.
-- Header brand: title "Cyber Security Command Center" + "AI-driven Security Operations ·
-  powered by [inline T Security logo]".
+- Header brand: an inline green **Cortex "C"** logo (`.cxlogo`, a single evenodd path
+  traced from `docs/Cortex_logo.png`, brand green `#74c86c`) + a **per-view title**
+  (`#brandTitle`, set in `showView`): **"Cortex Command Center"** on the radar/assets view,
+  **"Cortex XSIAM"** on the flow view — both over "AI-driven Security Operations · powered
+  by [inline T Security logo]".
 - **Flow sources**: `SRC24` / `SRC30` arrays (name, `s` asset count, `icon`, `w` ribbon
   weight, `ep` endpoint-highlight, `t` Telekom-magenta, `rate`, `res`). Icons via
   `ICONS` + `iconSVG()`; the magenta "tmark" uses `TSVG`.
