@@ -113,8 +113,9 @@ Risk). Tiles: Vulnerable Assets **5,840** (ties to assets At Risk) · Active Cas
 
 ## Tuning map (where the knobs are, in index.html)
 - Colours / theme: the `:root` CSS variables at the top.
-- Header brand: an inline green **Cortex "C"** logo (`.cxlogo`, a single evenodd path
-  traced from `docs/Cortex_logo.png`, brand green `#74c86c`) + a **per-view title**
+- Header brand: a small green **Cortex "C"** logo (`.cxlogo`, a single evenodd path
+  traced from `docs/Cortex_logo.png`, brand green `#74c86c`) sitting **inline inside the
+  title**, sized to the title's cap-height (~21px), immediately left of a **per-view title**
   (`#brandTitle`, set in `showView`): **"Cortex Command Center"** on the radar/assets view,
   **"Cortex XSIAM"** on the flow view — both over "AI-driven Security Operations · powered
   by [inline T Security logo]".
