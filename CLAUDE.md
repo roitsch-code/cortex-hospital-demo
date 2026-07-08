@@ -69,16 +69,21 @@ Generic on screen (no hospital name): the campus is just **"Main Campus"** — n
 > Before any public showing, re-verify product status (telekom.com / paloaltonetworks.com).
 
 ## Logos / marks
-- The **only** real logo asset in the repo is **`docs/tsec-logo-white.svg`** — the
-  official Telekom **"T"** glyph. Its path is inlined as `TSVG` and reused for the T
-  Cloud source + cloud site mark. **viewBox MUST be `0 0 231 275`** — a smaller height
-  (e.g. 237) crops the bottom bar. **Never hand-draw / hallucinate a Telekom "T".**
-- **iMedOne®** is a recreated CSS wordmark (white on magenta), not an image.
-- All other source/site icons are clean line-drawn category glyphs (`ICONS`, `PMARK`) —
-  **not** vendor logos. If real vendor SVGs are ever added to the repo, wire them in via
-  `iconSVG()` / `PMARK`. (The user has referred to logos being "in the folder" more than
-  once, but only `tsec-logo-white.svg` has ever actually been present — check before
-  assuming others exist.)
+- **`docs/tsec-logo-white.svg`** — the official Telekom **"T"** glyph, inlined as `TSVG`
+  and reused for the T Cloud source + cloud site mark. **viewBox MUST be `0 0 231 275`**
+  — a smaller height (e.g. 237) crops the bottom bar. **Never hand-draw / hallucinate a
+  Telekom "T".**
+- **iMedOne®** is a recreated CSS wordmark (white on magenta). The real raster wordmark
+  `docs/imedone.png` is also in the repo (unused) if you ever want to swap it in.
+- **Vendor logos** (`docs/*.webp`, provided by the user): **Microsoft 365, Azure, Google
+  Cloud, GitHub** are inlined as base64 in `LOGO` and rendered mono-grey
+  (`filter:brightness(0) invert(.72)`) — used ONLY in the Data Inventory + Dynamic View
+  as subordinate third-party sources, **never** in the main flow and **never** above /
+  replacing T Cloud Public. `docs/Aws_logo.svg.webp` is present but **unused** (AWS is a
+  weak fit for a sovereign German hospital). webp is raster; drop real `.svg` versions in
+  `docs/` and re-point `LOGO` if you want vector-perfect marks.
+- All flow-source + site icons are clean line-drawn category glyphs (`ICONS`, `PMARK`) —
+  **not** vendor logos. Keep it that way for the hospital sources.
 
 ## The number model (single source of truth — keep everything reconciled)
 **Assets** (nested subsets): All **35,600** ⊃ At Risk **5,840** ⊃ Active Threats **84** ⊃
