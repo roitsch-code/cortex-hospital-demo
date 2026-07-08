@@ -419,57 +419,81 @@ body.view-flow .backbtn{display:flex}
 .oc-row.arrive{animation:ocIn .55s cubic-bezier(.4,0,.2,1)}
 @keyframes ocIn{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:none}}
 .reduced .oc-row.arrive{animation:none}
-/* ===== Supplier agent case · Cortex Agentic Assistant ===== */
-#dvAgent{background:radial-gradient(130% 100% at 50% 26%,#0a1018,#04070b 82%)}
+/* ===== agent case CSS ===== */
+#dvAgent{background:radial-gradient(120% 100% at 50% 22%,#0a1119,#04070b 82%)}
 #dvAgent .dv-back{top:22px;left:34px}
-.ag-case{position:absolute;left:80px;top:46px;right:410px;z-index:6}
-.ag-crumb{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:9px}
-.ag-titlerow{display:flex;align-items:center;gap:13px}
-.ag-score{width:32px;height:32px;flex:0 0 auto;border-radius:8px;display:grid;place-items:center;font-size:13px;font-weight:800;background:rgba(226,0,116,.16);color:#ff7ec8;border:1px solid rgba(226,0,116,.45)}
-.ag-title{font-size:20px;font-weight:800;color:#fff;line-height:1.2}
+.ag-case{position:absolute;left:70px;top:46px;right:430px;z-index:6}
+.ag-crumb{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:8px}
+.ag-title{font-size:20px;font-weight:800;color:#fff;line-height:1.25;max-width:820px}
 .ag-chips{display:flex;gap:9px;margin-top:12px;font-size:11.5px;font-weight:700}
 .ag-chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--hair);border-radius:6px;padding:4px 11px;color:#cfd6db}
 .ag-chip .dt{width:6px;height:6px;border-radius:50%}
 .ag-chip.sev{color:#ff9a6a;border-color:rgba(255,122,82,.45)} .ag-chip.sev .dt{background:#ff7a52}
 .ag-chip.stat{color:var(--amber);border-color:rgba(245,166,35,.4)} .ag-chip.stat .dt{background:var(--amber)}
 #dvAgent.s3 .ag-chip.stat{color:var(--teal-br);border-color:rgba(47,214,192,.4)} #dvAgent.s3 .ag-chip.stat .dt{background:var(--teal)}
-.ag-alert{display:flex;align-items:flex-start;gap:12px;margin-top:17px;border:1px solid rgba(255,122,82,.4);border-left-width:3px;border-radius:10px;padding:12px 15px;background:rgba(255,122,82,.07);max-width:700px;transition:.4s}
+.ag-alert{display:flex;align-items:flex-start;gap:12px;margin-top:16px;border:1px solid rgba(255,122,82,.4);border-left-width:3px;border-radius:10px;padding:11px 15px;background:rgba(255,122,82,.07);max-width:660px;transition:.4s}
 #dvAgent.s2 .ag-alert,#dvAgent.s3 .ag-alert{border-color:rgba(47,214,192,.35);background:rgba(47,214,192,.05)}
-.ag-alert .ai{flex:0 0 auto;color:#ff9a6a;margin-top:1px} #dvAgent.s2 .ag-alert .ai,#dvAgent.s3 .ag-alert .ai{color:var(--teal-br)}
-.ag-alert .at{font-size:13.5px;color:#ffd9c9;line-height:1.45} #dvAgent.s2 .ag-alert .at,#dvAgent.s3 .ag-alert .at{color:#cfe9e3}
-.ag-ai{margin-top:17px;max-width:700px}
-.ag-ai-h{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;color:var(--teal-br);margin-bottom:9px}
-.ag-ai-h svg{width:13px;height:13px}
-.ag-ai ul{list-style:none;display:flex;flex-direction:column;gap:7px}
-.ag-ai li{position:relative;padding-left:16px;font-size:12.5px;color:#c7cfd6;line-height:1.45}
+.ag-alert .ai{flex:0 0 auto;color:#ff9a6a;margin-top:1px}#dvAgent.s2 .ag-alert .ai,#dvAgent.s3 .ag-alert .ai{color:var(--teal-br)}
+.ag-alert .at{font-size:13px;color:#ffd9c9;line-height:1.45}#dvAgent.s2 .ag-alert .at,#dvAgent.s3 .ag-alert .at{color:#cfe9e3}
+.ag-ai{margin-top:16px;max-width:660px}
+.ag-ai-h{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;color:var(--teal-br);margin-bottom:8px}.ag-ai-h svg{width:13px;height:13px}
+.ag-ai ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.ag-ai li{position:relative;padding-left:16px;font-size:12px;color:#c2cbd2;line-height:1.45}
 .ag-ai li::before{content:"";position:absolute;left:2px;top:7px;width:5px;height:5px;border-radius:50%;background:var(--muted)}
-.ag-layerlab{position:absolute;font-size:10px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);z-index:5}
-.ag-agent{position:absolute;transform:translate(-50%,-50%);z-index:5;text-align:center;transition:opacity .6s,filter .6s}
-.ag-agent .ring{width:52px;height:52px;border-radius:50%;margin:0 auto;position:relative;display:grid;place-items:center}
-.ag-agent .ring i{position:absolute;border-radius:50%;border:1.5px solid var(--ac);pointer-events:none}
-.ag-agent .ring i.o{inset:0;opacity:.3}
-.ag-agent .ring i.m{inset:24%;box-shadow:0 0 15px var(--ac)}
-.ag-agent .ring b{width:32%;height:32%;border-radius:50%;background:var(--ac);box-shadow:0 0 13px var(--ac)}
-.ag-agent .nm{font-size:11.5px;font-weight:700;color:#e0e7ec;margin-top:10px;white-space:nowrap}
-.ag-agent .pl{font-size:10px;color:var(--muted);margin-top:2px;white-space:nowrap}
-.ag-agent.sup{--ac:#ff7ea6}
-.ag-agent.sup .ring{width:64px;height:64px}
-.ag-agent.sup .ring i.m{animation:agpulse 1.4s infinite}
-.reduced .ag-agent.sup .ring i.m{animation:none}
+.ag-layerlab{position:absolute;font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);z-index:5;display:flex;align-items:center;gap:9px}
+.ag-layerlab .ln{width:24px;height:1px;background:rgba(150,170,190,.25)}
+/* digital AI agents (software) */
+.ag-dagent{position:absolute;transform:translate(-50%,-50%);z-index:6;text-align:center;transition:opacity .6s,filter .6s}
+.ag-dagent .orb{width:54px;height:54px;border-radius:50%;position:relative;margin:0 auto;box-shadow:0 0 30px -8px var(--ac)}
+.ag-dagent .orb i{position:absolute;border-radius:50%;pointer-events:none}
+.ag-dagent .orb i.r1{inset:0;border:1.5px solid var(--ac);opacity:.4}
+.ag-dagent .orb i.r2{inset:26%;border:2px solid var(--ac);box-shadow:0 0 13px var(--ac)}
+.ag-dagent .orb i.r3{inset:40%;background:var(--ac);box-shadow:0 0 11px var(--ac)}
+.ag-dagent .nm{font-size:12px;font-weight:700;color:#e0e7ec;margin-top:11px;white-space:nowrap}
+.ag-dagent .pl{font-size:10px;color:var(--muted);margin-top:2px;white-space:nowrap}
+.ag-sup{--ac:#ff7ea6;z-index:7}
+.ag-sup .orb{width:64px;height:64px}
+.ag-sup .orb i.r1{border-style:dashed;opacity:.75}
+.ag-sup .orb i.r2{animation:agpulse 1.5s infinite}
+.reduced .ag-sup .orb i.r2{animation:none}
 @keyframes agpulse{0%,100%{box-shadow:0 0 7px var(--ac)}50%{box-shadow:0 0 22px var(--ac)}}
-#dvAgent.s2 .ag-agent.sup,#dvAgent.s3 .ag-agent.sup{--ac:#e2007a}
-#dvAgent.s3 .ag-agent.sup{opacity:.4;filter:grayscale(.5)}
-.ag-agvnode{position:absolute;transform:translate(-50%,-50%);z-index:5;text-align:center}
-.ag-agvnode .d{width:44px;height:44px;border-radius:50%;margin:0 auto;display:grid;place-items:center;border:1.4px solid var(--teal);background:radial-gradient(circle at 50% 40%,rgba(47,214,192,.15),rgba(4,10,12,.72));box-shadow:0 0 15px var(--glow)}
-.ag-agvnode .d svg{width:19px;height:19px;color:#cfeee8}
-.ag-agvnode .nm{font-size:11px;font-weight:700;color:#cbd3d9;margin-top:7px;white-space:nowrap}
-.ag-simring{position:absolute;transform:translate(-50%,-50%);border:1.5px dashed rgba(226,0,116,.55);border-radius:18px;z-index:4;background:rgba(226,0,116,.05);opacity:0;transition:opacity .6s;pointer-events:none;box-shadow:inset 0 0 40px rgba(226,0,116,.07)}
-#dvAgent.s2 .ag-simring,#dvAgent.s3 .ag-simring{opacity:1}
-.ag-simring span{position:absolute;top:-8px;left:16px;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#ff9ed6;background:#070a0f;padding:0 7px}
+.ag-sup .bdg{position:absolute;top:-7px;left:50%;transform:translateX(-50%);font-size:8px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#ffd0e0;background:rgba(226,0,116,.22);border:1px solid rgba(226,0,116,.5);border-radius:4px;padding:1px 6px;white-space:nowrap}
+#dvAgent.s2 .ag-sup,#dvAgent.s3 .ag-sup{--ac:#e2007a}
+#dvAgent.s3 .ag-sup{opacity:.4;filter:grayscale(.5)}
+/* API gateway */
+.ag-gate{position:absolute;transform:translate(-50%,-50%);z-index:6;text-align:center}
+.ag-gate .g{width:42px;height:42px;border-radius:11px;margin:0 auto;display:grid;place-items:center;border:1px solid rgba(150,180,210,.45);background:rgba(80,115,155,.14);color:#b3d0ea}
+.ag-gate .g svg{width:21px;height:21px}
+.ag-gate .nm{font-size:10px;color:var(--muted);margin-top:6px;white-space:nowrap}
+/* physical layer */
+.ag-corridor{position:absolute;height:36px;border-radius:19px;border:1px solid rgba(140,160,180,.18);background:linear-gradient(180deg,rgba(120,150,180,.07),rgba(120,150,180,.02));z-index:3}
+.ag-corridor::after{content:"";position:absolute;left:16px;right:16px;top:50%;border-top:1px dashed rgba(150,170,190,.22)}
+.ag-loc{position:absolute;transform:translate(-50%,-50%);z-index:5;text-align:center}
+.ag-loc .b{width:46px;height:46px;border-radius:11px;margin:0 auto;display:grid;place-items:center;border:1.4px solid rgba(165,185,205,.5);background:rgba(28,38,50,.9);color:#ccd8e2;box-shadow:0 2px 11px rgba(0,0,0,.45)}
+.ag-loc .b svg{width:23px;height:23px}
+.ag-loc.lock .b{border-color:rgba(226,0,116,.45);color:#f0b8d2;background:rgba(40,20,32,.9)}
+.ag-loc .nm{font-size:11px;font-weight:700;color:#c2cbd2;margin-top:8px;white-space:nowrap}
+.ag-cart{position:absolute;transform:translate(-50%,-50%);z-index:6;color:#e2ebf3}
+.ag-cart .c{width:32px;height:26px;border-radius:6px;display:grid;place-items:center;position:relative;border:1.3px solid rgba(185,205,225,.75);background:linear-gradient(180deg,#2b3947,#18222e);box-shadow:0 3px 9px rgba(0,0,0,.55)}
+.ag-cart .c svg{width:17px;height:17px}
+.ag-cart .c::after{content:"";position:absolute;bottom:-4px;left:5px;right:5px;height:4px;border-radius:0 0 5px 5px;border-bottom:2px dotted rgba(185,205,225,.55)}
+.ag-cart .led{position:absolute;top:-2px;right:-2px;width:5px;height:5px;border-radius:50%;background:#63e6a0;box-shadow:0 0 6px #63e6a0}
+.ag-run{animation:agvrun linear infinite alternate}
+.reduced .ag-run{animation:none}
+@keyframes agvrun{from{left:var(--x0)}to{left:var(--x1)}}
 .ag-oplab{position:absolute;transform:translateX(-50%);font-size:10.5px;font-weight:700;color:var(--teal-br);z-index:5;display:flex;align-items:center;gap:7px}
 .ag-oplab .d{width:6px;height:6px;border-radius:50%;background:#63e6a0;box-shadow:0 0 8px #63e6a0;animation:blink 1.5s infinite}
 .reduced .ag-oplab .d{animation:none}
-.ag-res{position:absolute;right:34px;top:20px;width:330px;bottom:22px;border-left:1px solid var(--hair);padding-left:26px;z-index:6}
+/* blocked / attempted access chips */
+.ag-blk{position:absolute;transform:translate(-50%,-50%);z-index:6;display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;color:#ffb3cf;border:1px dashed rgba(226,0,116,.55);background:rgba(226,0,116,.09);border-radius:999px;padding:4px 10px;white-space:nowrap;transition:.5s}
+.ag-blk .x{color:#ff7ec8;font-weight:800}
+#dvAgent.s2 .ag-blk,#dvAgent.s3 .ag-blk{opacity:.28;filter:grayscale(.4)}
+/* sandbox */
+.ag-sandbox{position:absolute;border:1.5px dashed rgba(226,0,116,.55);border-radius:16px;z-index:4;background:rgba(226,0,116,.05);opacity:0;transition:opacity .6s;pointer-events:none;box-shadow:inset 0 0 44px rgba(226,0,116,.08)}
+#dvAgent.s2 .ag-sandbox,#dvAgent.s3 .ag-sandbox{opacity:1}
+.ag-sandbox span{position:absolute;top:-8px;left:16px;font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#ff9ed6;background:#070b10;padding:0 7px}
+/* resolution center */
+.ag-res{position:absolute;right:34px;top:20px;width:340px;bottom:22px;border-left:1px solid var(--hair);padding-left:26px;z-index:6}
 .ag-res h3{display:flex;align-items:center;gap:9px;font-size:15px;font-weight:800;color:#fff;margin-bottom:6px}
 .ag-res h3 svg{width:17px;height:17px;color:var(--teal-br);flex:0 0 auto}
 .ag-res .rsub{font-size:11px;color:var(--muted);margin-bottom:18px}
@@ -712,31 +736,73 @@ body.view-flow .backbtn{display:flex}
     <div class="oc-queue"><div class="oc-qh"><span class="d"></span>Live queue · <span id="ocQn">11</span> open</div><div id="ocList"></div></div>
   </div>
 
-  <!-- ===== Supplier agent case · Cortex Agentic Assistant ===== -->
+  <!-- agent case DOM -->
   <div class="dv" id="dvAgent">
     <div class="dv-back" id="dvAgentBack">‹ Open cases</div>
     <svg class="dv-wire" id="agWire" viewBox="0 0 1440 810"></svg>
 
+    <!-- case header -->
     <div class="ag-case">
       <div class="ag-crumb">Cases · C-4490 · assisted by CDC Bonn</div>
-      <div class="ag-titlerow"><span class="ag-score">94</span><div class="ag-title">Supplier logistics agent — out-of-profile medication &amp; location access</div></div>
+      <div class="ag-title">Supplier logistics agent &#183; out-of-profile data request</div>
       <div class="ag-chips"><span class="ag-chip sev"><span class="dt"></span>High</span><span class="ag-chip stat"><span class="dt"></span><span id="agStat">Active</span></span><span class="ag-chip">Agentic governance</span></div>
       <div class="ag-alert"><span class="ai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3z"/><path d="M12 10v4M12 17h.01"/></svg></span><span class="at" id="agAlertT">Unusual agent behavior detected. Supplier agent requesting restricted location and medication data.</span></div>
       <div class="ag-ai"><span class="ag-ai-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M8 12l2.5 2.5L16 9"/></svg>Summarized by AI</span>
         <ul>
-          <li>Identity is valid &#8212; but the agent&#8217;s behaviour deviates from its approved permission profile.</li>
-          <li>It is requesting patient-linked routes and live AGV location; the AGVs and the hospital&#8217;s own logistics agents keep operating.</li>
+          <li>A trusted supplier&#8217;s delivery agent authenticated normally, then began requesting data outside its agreed profile &#8212; patient-linked delivery routes, live AGV location and a restricted ward.</li>
+          <li>Its approved scope (delivery windows via the API gateway) is untouched; the hospital&#8217;s own orchestration agents and medication AGVs keep running.</li>
         </ul>
       </div>
     </div>
 
-    <div class="ag-layerlab" style="left:80px;top:642px">Medication AGV layer</div>
+    <!-- layer labels -->
+    <div class="ag-layerlab" style="left:70px;top:322px"><span class="ln"></span>AI orchestration agents</div>
+    <div class="ag-layerlab" style="left:70px;top:626px"><span class="ln"></span>Physical &#183; medication AGVs</div>
 
-    <div class="ag-simring" id="agSimRing" style="left:500px;top:400px;width:186px;height:186px"><span>Secure simulation</span></div>
-    <div id="agAgents"></div>
-    <div id="agAgvs"></div>
-    <div class="ag-oplab" id="agOpLab" style="left:520px;top:742px"><span class="d"></span>Medication AGVs &#183; operating normally</div>
+    <!-- digital agent mesh -->
+    <div class="ag-dagent ag-sup" id="agSup" style="left:275px;top:420px">
+      <div class="orb"><span class="bdg">external</span><i class="r1"></i><i class="r2"></i><i class="r3"></i></div>
+      <div class="nm">Supplier logistics agent</div><div class="pl" id="agSupPl">external &#183; out of profile</div>
+    </div>
+    <div class="ag-gate" style="left:455px;top:420px">
+      <div class="g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4-3 7-7 9-4-2-7-5-7-9V6l7-3z"/><path d="M9.3 12l1.8 1.8L15 10.2"/></svg></div>
+      <div class="nm">API gateway &#183; scoped</div>
+    </div>
+    <div class="ag-dagent" style="left:630px;top:360px;--ac:#2fd6c0">
+      <div class="orb"><i class="r1"></i><i class="r2"></i><i class="r3"></i></div>
+      <div class="nm">Delivery scheduling</div><div class="pl">142 tasks &#183; nominal</div>
+    </div>
+    <div class="ag-dagent" style="left:630px;top:482px;--ac:#4aa3ff">
+      <div class="orb"><i class="r1"></i><i class="r2"></i><i class="r3"></i></div>
+      <div class="nm">Stock replenishment</div><div class="pl">96 tasks &#183; nominal</div>
+    </div>
+    <div class="ag-dagent" style="left:832px;top:420px;--ac:#63e6a0">
+      <div class="orb"><i class="r1"></i><i class="r2"></i><i class="r3"></i></div>
+      <div class="nm">Route &amp; traffic control</div><div class="pl">fleet dispatch</div>
+    </div>
 
+    <!-- attempted (denied) access -->
+    <div class="ag-blk" style="left:452px;top:596px"><span class="x">&#10005;</span>Live AGV location</div>
+    <div class="ag-blk" style="left:706px;top:596px"><span class="x">&#10005;</span>Patient-linked routes</div>
+    <div class="ag-blk" style="left:936px;top:596px"><span class="x">&#10005;</span>Restricted ward</div>
+
+    <!-- secure-simulation sandbox (appears on isolate) -->
+    <div class="ag-sandbox" style="left:158px;top:346px;width:238px;height:150px"><span>Secure simulation</span></div>
+
+    <!-- physical AGV layer -->
+    <div class="ag-corridor" style="left:150px;top:672px;width:840px"></div>
+    <div class="ag-loc" style="left:250px;top:690px"><div class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="5" y="4" width="14" height="16" rx="3"/><path d="M12 8.5v7M8.5 12h7" stroke-width="1.7"/></svg></div><div class="nm">Pharmacy</div></div>
+    <div class="ag-loc" style="left:500px;top:690px"><div class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="5" y="3.5" width="14" height="17" rx="1.5"/><path d="M9 3.5v17M12 8v5M9.8 10.5h4.4" stroke-width="1.6"/></svg></div><div class="nm">Ward med room</div></div>
+    <div class="ag-loc" style="left:760px;top:690px"><div class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M2 19v-7M2 15h13a4 4 0 0 1 4 4M19 19v-7M2 19h18M2 12h6"/><circle cx="6" cy="9.4" r="1.7"/></svg></div><div class="nm">Patient room</div></div>
+    <div class="ag-loc lock" style="left:955px;top:690px"><div class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div><div class="nm">Restricted ward</div></div>
+
+    <!-- AGV robots (physical, corridor-animated) -->
+    <div class="ag-cart ag-run" style="top:690px;left:300px;--x0:300px;--x1:452px;animation-duration:4.8s;animation-delay:-1s"><div class="c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M4 9.5h16M12 5v4.5"/></svg><span class="led"></span></div></div>
+    <div class="ag-cart ag-run" style="top:690px;left:548px;--x0:548px;--x1:712px;animation-duration:5.6s;animation-delay:-3s"><div class="c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M4 9.5h16M12 5v4.5"/></svg><span class="led"></span></div></div>
+    <div class="ag-cart ag-run" style="top:690px;left:305px;--x0:305px;--x1:448px;animation-duration:7.1s;animation-delay:-5s"><div class="c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M4 9.5h16M12 5v4.5"/></svg><span class="led"></span></div></div>
+    <div class="ag-oplab" style="left:570px;top:744px"><span class="d"></span>Medication AGVs &#183; operating normally</div>
+
+    <!-- resolution center -->
     <div class="ag-res">
       <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M4 12h11M11 8l4 4-4 4M20 5v14"/></svg>Resolution Center</h3>
       <div class="rsub">Supplier logistics agent &#183; identity valid</div>
@@ -744,9 +810,9 @@ body.view-flow .backbtn{display:flex}
       <div class="ag-req"><span class="x">&#10005;</span>Patient-linked medication routes</div>
       <div class="ag-req"><span class="x">&#10005;</span>Live AGV location data</div>
       <div class="ag-req"><span class="x">&#10005;</span>Restricted ward access</div>
-      <div class="ag-action" id="agActIso"><div class="ah"><span class="an">Isolate to secure simulation</span><span class="as" id="agIsoStat">Pending</span></div><div class="ad">Move the agent into a sandboxed logistics twin &#183; no access to real patient, medication or location data. AGVs keep running on fallback.</div><button id="agIso">Isolate agent</button></div>
-      <div class="ag-action locked" id="agActRev"><div class="ah"><span class="an">Revoke supplier access</span><span class="as" id="agRevStat">Pending</span></div><div class="ad">Human decision &#183; permanently revoke the supplier agent&#8217;s hospital access and record an audit entry.</div><button id="agRev">Revoke supplier access</button></div>
-      <div class="ag-donenote" id="agDoneNote">Contained. Supplier access revoked &#183; audit recorded. The AGVs never stopped &#8212; fallback medication delivery ran throughout.</div>
+      <div class="ag-action" id="agActIso"><div class="ah"><span class="an">Isolate to secure simulation</span><span class="as" id="agIsoStat">Pending</span></div><div class="ad">Move the agent into a sandboxed logistics twin &#183; no access to real patient, medication or location data. AGVs keep running.</div><button id="agIso">Isolate agent</button></div>
+      <div class="ag-action locked" id="agActRev"><div class="ah"><span class="an">Revoke supplier access</span><span class="as" id="agRevStat">Pending</span></div><div class="ad">Human decision &#183; permanently revoke the supplier agent&#8217;s gateway access and record an audit entry.</div><button id="agRev">Revoke supplier access</button></div>
+      <div class="ag-donenote" id="agDoneNote">Contained. Supplier access revoked &#183; audit recorded. The AGVs never stopped &#8212; medication delivery ran throughout.</div>
     </div>
   </div>
 
@@ -1429,42 +1495,47 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOpenView();});
  const ib=$('#investBtn'); if(ib)ib.onclick=e=>{e.stopPropagation();openOpenView();};})();
 
 
-/* ===== Supplier agent case · Cortex Agentic Assistant ===== */
-const AG_IC={
- pharmacy:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="5" y="4" width="14" height="16" rx="3"/><path d="M12 8.5v7M8.5 12h7" stroke-width="1.7"/></svg>',
- wards:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M4 20h16M6 20V9l6-3.5L18 9v11"/><path d="M10.2 20v-3.5h3.6V20"/><path d="M12 10v3M10.4 11.5h3.2" stroke-width="1.7"/></svg>',
- patient:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M3 18v-4.5A2.5 2.5 0 0 1 5.5 11H15a4 4 0 0 1 4 4v3M3 18h18M3 14.5h9"/><circle cx="7.5" cy="8.2" r="2.1"/></svg>'
+/* ===== agent case JS ===== */
+const AG={
+  sup:{x:275,y:420}, gate:{x:455,y:420},
+  del:{x:630,y:360}, stock:{x:630,y:482}, route:{x:832,y:420},
+  phar:{x:250,y:672}, ward:{x:500,y:672}, pat:{x:760,y:672},
+  blk:[{x:452,y:596},{x:706,y:596},{x:936,y:596}]
 };
-const AG_AGENTS=[
- {sup:1, n:'Supplier logistics agent', pl:'external · optimizing delivery', x:500, y:400},
- {ac:'#2fd6c0', n:'Delivery scheduling', pl:'142 tasks', x:255, y:375},
- {ac:'#4aa3ff', n:'Stock replenishment', pl:'96 tasks', x:745, y:375},
- {ac:'#63e6a0', n:'Route optimization', pl:'113 tasks', x:330, y:545},
- {ac:'#f5a623', n:'Inventory sync', pl:'60 tasks', x:670, y:545}
-];
-const AG_AGV=[{k:'pharmacy',n:'Pharmacy',x:345,y:685},{k:'wards',n:'Wards',x:520,y:685},{k:'patient',n:'Patient rooms',x:695,y:685}];
 let agState=1;
 function agBuild(){
-  $('#agAgents').innerHTML=AG_AGENTS.map(a=>`<div class="ag-agent${a.sup?' sup':''}" style="left:${a.x}px;top:${a.y}px${a.ac?`;--ac:${a.ac}`:''}"><div class="ring"><i class="o"></i><i class="m"></i><b></b></div><div class="nm">${a.n}</div><div class="pl">${a.pl}</div></div>`).join('');
-  $('#agAgvs').innerHTML=AG_AGV.map(a=>`<div class="ag-agvnode" style="left:${a.x}px;top:${a.y}px"><div class="d">${AG_IC[a.k]}</div><div class="nm">${a.n}</div></div>`).join('');
   const s=$('#agWire'); s.innerHTML=''; defs(s); dvClear();
-  const sup=AG_AGENTS[0], W={x:520,y:685};
-  AG_AGENTS.slice(1).forEach(a=>{ s.appendChild(svgEl('path',{d:band({x:sup.x,y:sup.y},{x:a.x,y:a.y},.5),fill:'none',stroke:'rgba(255,126,166,.3)','stroke-width':1.4,class:'ag-suplink'})); });
-  s.appendChild(svgEl('path',{d:band({x:sup.x,y:sup.y+38},{x:W.x,y:W.y-28},.5),fill:'none',stroke:'rgba(255,126,166,.32)','stroke-width':1.8,'stroke-linecap':'round',filter:'url(#g)',class:'ag-suplink'}));
-  AG_AGENTS.slice(1).forEach(a=>{ const p=ribbon(s,{x:a.x,y:a.y+30},{x:W.x,y:W.y-28},3,'url(#teal)',.5); dvFlow(s,p,2,'rgba(130,240,224,.9)',{spMin:0.0016,spMax:0.003,r:1.9}); });
-  const l1=ribbon(s,{x:377,y:685},{x:485,y:685},5,'url(#teal)',.4), l2=ribbon(s,{x:555,y:685},{x:663,y:685},5,'url(#teal)',.4);
-  dvFlow(s,l1,3,'rgba(130,240,224,.95)',{spMin:0.0018,spMax:0.0034,r:2.3});
-  dvFlow(s,l2,3,'rgba(130,240,224,.95)',{spMin:0.0018,spMax:0.0034,r:2.3});
+  const teal='url(#teal)';
+  // approved scope: supplier → gateway (severed only on full revoke)
+  const g1=ribbon(s,AG.sup,AG.gate,3,teal,.5); g1.classList.add('ag-gatelink');
+  dvFlow(s,g1,2,'rgba(130,240,224,.9)',{spMin:0.0018,spMax:0.003,r:2});
+  // internal mesh: gateway → orchestration agents → dispatcher (never stops)
+  [[AG.gate,AG.del],[AG.gate,AG.stock],[AG.del,AG.route],[AG.stock,AG.route]].forEach(([a,b])=>{
+    const p=ribbon(s,a,b,2.4,teal,.5); dvFlow(s,p,2,'rgba(130,240,224,.85)',{spMin:0.0016,spMax:0.0028,r:1.8}); });
+  // dispatcher → physical fleet
+  const d1=ribbon(s,{x:AG.route.x,y:AG.route.y+34},{x:AG.ward.x,y:AG.ward.y-10},2.6,teal,.45);
+  dvFlow(s,d1,3,'rgba(130,240,224,.9)',{spMin:0.0016,spMax:0.0028,r:2});
+  // physical corridor: pharmacy → ward → patient
+  const c1=ribbon(s,{x:AG.phar.x+18,y:690},{x:AG.ward.x-18,y:690},5,teal,.4),
+        c2=ribbon(s,{x:AG.ward.x+18,y:690},{x:AG.pat.x-18,y:690},5,teal,.4);
+  dvFlow(s,c1,3,'rgba(130,240,224,.95)',{spMin:0.0018,spMax:0.0034,r:2.3});
+  dvFlow(s,c2,3,'rgba(130,240,224,.95)',{spMin:0.0018,spMax:0.0034,r:2.3});
+  // attempted (denied) access: supplier → restricted targets
+  AG.blk.forEach(b=>{ s.appendChild(svgEl('path',{d:band({x:AG.sup.x,y:AG.sup.y+34},{x:b.x,y:b.y-8},.4),fill:'none',stroke:'rgba(255,90,150,.55)','stroke-width':1.5,'stroke-dasharray':'5 6','stroke-linecap':'round',class:'ag-suplink'})); });
   agState=1; agRender();
 }
 function agRender(){
   const dv=$('#dvAgent'); dv.classList.remove('s1','s2','s3'); dv.classList.add('s'+agState);
   $('#agStat').textContent = agState===1?'Active':agState===2?'Contained':'Resolved';
+  $('#agSupPl').textContent = agState===1?'external · out of profile':agState===2?'external · isolated':'external · access revoked';
   $('#agAlertT').textContent = agState===1
     ? 'Unusual agent behavior detected. Supplier agent requesting restricted location and medication data.'
-    : agState===2 ? 'Agent isolated to a secure simulation environment. Fallback medication delivery continues without interruption.'
-    : 'Supplier access revoked. Simulated environment active · no access to real patient, medication or location data.';
-  $$('#agWire .ag-suplink').forEach(el=>{ el.style.transition='.6s'; if(agState>=2){el.style.opacity='.15';el.setAttribute('stroke-dasharray','4 7');} else {el.style.opacity='';el.removeAttribute('stroke-dasharray');} });
+    : agState===2 ? 'Agent isolated to a secure simulation. Its out-of-profile requests are blocked; the AGVs keep delivering.'
+    : 'Supplier access revoked · audit recorded. Approved delivery scheduling resumes through the gateway.';
+  // cut the attempted-access edges once isolated
+  $$('#agWire .ag-suplink').forEach(el=>{ el.style.transition='.6s'; el.style.opacity = agState>=2?'0':''; });
+  // sever the gateway link only on full revoke
+  const gl=$('#agWire .ag-gatelink'); if(gl){ gl.style.transition='.6s'; gl.style.opacity=agState>=3?'.12':''; if(agState>=3){gl.setAttribute('stroke-dasharray','4 7');}else{gl.removeAttribute('stroke-dasharray');} }
   const iso=$('#agActIso'), rev=$('#agActRev');
   iso.classList.toggle('done',agState>=2); $('#agIsoStat').textContent=agState>=2?'Done':'Pending';
   rev.classList.toggle('locked',agState<2); rev.classList.toggle('done',agState>=3);

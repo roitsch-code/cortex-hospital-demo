@@ -206,23 +206,38 @@ Risk). Tiles: Vulnerable Assets **5,840** (ties to assets At Risk) · Active Cas
 ## Part 2 · Supplier agent case (`#dvAgent`)
 A `.dv` scene styled like a **Cortex case interface**, reached by clicking the incoming
 new case in the Open-cases live queue (the 12th row `C-4490 "Supplier agent · out-of-profile
-data request"` → `openAgent`). Layout: **top** = case header (score, headline, severity/
-status chips) + the **alert** ("Unusual agent behavior detected…") + a **Summarized by AI**
-bullet list; **middle** = the **Cortex Agentic Assistant** mesh — a *Supplier logistics
-agent* (anomalous, pulsing) plus the hospital's own agents (*Delivery scheduling · Stock
-replenishment · Route optimization · Inventory sync*, sexy concentric-ring nodes), connected
-to each other and down to the **Medication AGV layer** (Pharmacy → Wards → Patient rooms)
-with `dvFlow` particles that never stop; **right** = a **Resolution Center** driving a
-**3-step** flow (`agState` 1→3, `s1…s3` classes, `agBuild`/`agRender`):
-1 **Alert** → click *Isolate agent* → 2 **Isolation** (supplier agent boxed in the dashed
-*Secure simulation* ring, its `.ag-suplink` edges cut; internal agents + AGVs keep
-operating) → click *Revoke supplier access* → 3 **Revoke** (agent greyed, status Resolved,
-audit note). No voice banner, no auto-play. Reduced/glowing, real Cortex naming,
-`prefers-reduced-motion` safe. `‹ Open cases` / Esc returns to the queue (instant, no re-anim).
+data request"` → `openAgent`). **No score badge, no voice banner, no auto-play.** Layout:
+- **top** = case header (crumb · title · High/status/Agentic-governance chips) + the
+  **alert** ("Unusual agent behavior detected…") + a two-bullet **Summarized by AI** list.
+- **middle = two distinct layers** (the whole point — digital ≠ physical):
+  1. **AI orchestration agents** (`.ag-dagent`, glowing concentric-ring orbs `.orb>i.r1/.r2/.r3`,
+     per-node `--ac` accent): the external **Supplier logistics agent** (`.ag-sup`, pink,
+     dashed pulsing ring, `external` badge) → **API gateway · scoped** (`.ag-gate`, shield) →
+     **Delivery scheduling** + **Stock replenishment** → **Route & traffic control** (fleet
+     dispatch). Its **approved scope** is drawn as **teal solid ribbons** (`.ag-gatelink`
+     supplier→gateway, plus the internal mesh) with `dvFlow` particles that never stop.
+  2. **Physical · medication AGVs** (`.ag-corridor` lane + `.ag-loc` location tiles
+     Pharmacy → Ward med room → Patient room → **Restricted ward** `.lock`; `.ag-cart`
+     robots CSS-animated along the corridor via `@keyframes agvrun` on `--x0/--x1`). The
+     dispatcher drives the fleet (Route → corridor) and carts run Pharmacy→Ward→Patient.
+  The **attempted (denied) access** is the contrast: **red dashed `.ag-suplink` edges** from
+  the supplier reach past its gateway scope to three **`.ag-blk` chips** (Live AGV location ·
+  Patient-linked routes · Restricted ward). Allowed = teal to gateway; denied = red dashed to
+  the blocked chips.
+- **right** = a **Resolution Center** driving a **3-step** flow (`agState` 1→3, `s1…s3`
+  classes, `agBuild`/`agRender`):
+  1 **Alert** → click *Isolate agent* → 2 **Isolation** (the `.ag-sandbox` dashed *Secure
+  simulation* container fades in around the supplier, which turns magenta; its red
+  attempted-access `.ag-suplink` edges are cut; blocked chips fade; **internal agents + AGVs
+  keep operating**) → click *Revoke supplier access* → 3 **Revoke** (supplier greyed, the
+  `.ag-gatelink` severed, status Resolved, audit `.ag-donenote` lit).
+Reduced/glowing, real Cortex/AGV naming, `prefers-reduced-motion` safe (carts + particles
+snap off). `‹ Open cases` / Esc returns to the queue (instant, no re-anim).
 
 ## What's next / open ideas (not built)
 - If real vendor logo SVGs are provided, swap them into the source list + site marks.
-- Voice-over / TTS for the agent-scene beats; wiring the scene to a specific open case.
+- Optional voice-over / TTS for the agent-scene beats (the scene itself is already wired to
+  the C-4490 open case).
 
 ## Known limitations
 - Positions in all views are hand-placed for 1440×810; re-screenshot after edits.
