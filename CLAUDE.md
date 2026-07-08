@@ -203,19 +203,22 @@ Risk). Tiles: Vulnerable Assets **5,840** (ties to assets At Risk) · Active Cas
   `Claude-Session: <the current claude.ai/code session URL>`.
 - Never put a model identifier in commits, PRs, code, or any pushed artifact.
 
-## Part 2 · Supplier agent governance scene (`#dvAgent`)
-A `.dv` overlay reached from the **`#agentEntry` pill** on the flow view ("Supplier agent
-case · governance ›"). One interface, **two levels: agent + AGVs** — a *Supplier logistics
-agent* node (Agent layer) linked down to the *Medication AGV layer* (Pharmacy → Wards →
-Patient rooms, with `dvFlow` AGV particles that never stop). A right-hand **permission
-profile** panel (approved scope vs out-of-profile requests) + human **Revoke supplier
-access** action. A **Cortex Agentic Assistant · voice** banner narrates a **5-beat** state
-machine (`AG_BEATS`, `agBuild`/`agRender`/`agSet`, `s0…s4` classes on `#dvAgent`):
-0 normal → 1 anomaly detected → 2 policy violation (identity valid, behavior deviates) →
-3 **isolated**: the agent node transforms into the dashed *Secure simulation environment*
-bubble, the control link cuts, AGVs keep running (fallback) → 4 sandboxed · no real data.
-Step via ‹ Back / Next › or ▶ Play scenario (auto-advances, cleared on close/Esc).
-Real Cortex naming (Agentic Assistant), reduced/glowing, `prefers-reduced-motion` safe.
+## Part 2 · Supplier agent case (`#dvAgent`)
+A `.dv` scene styled like a **Cortex case interface**, reached by clicking the incoming
+new case in the Open-cases live queue (the 12th row `C-4490 "Supplier agent · out-of-profile
+data request"` → `openAgent`). Layout: **top** = case header (score, headline, severity/
+status chips) + the **alert** ("Unusual agent behavior detected…") + a **Summarized by AI**
+bullet list; **middle** = the **Cortex Agentic Assistant** mesh — a *Supplier logistics
+agent* (anomalous, pulsing) plus the hospital's own agents (*Delivery scheduling · Stock
+replenishment · Route optimization · Inventory sync*, sexy concentric-ring nodes), connected
+to each other and down to the **Medication AGV layer** (Pharmacy → Wards → Patient rooms)
+with `dvFlow` particles that never stop; **right** = a **Resolution Center** driving a
+**3-step** flow (`agState` 1→3, `s1…s3` classes, `agBuild`/`agRender`):
+1 **Alert** → click *Isolate agent* → 2 **Isolation** (supplier agent boxed in the dashed
+*Secure simulation* ring, its `.ag-suplink` edges cut; internal agents + AGVs keep
+operating) → click *Revoke supplier access* → 3 **Revoke** (agent greyed, status Resolved,
+audit note). No voice banner, no auto-play. Reduced/glowing, real Cortex naming,
+`prefers-reduced-motion` safe. `‹ Open cases` / Esc returns to the queue (instant, no re-anim).
 
 ## What's next / open ideas (not built)
 - If real vendor logo SVGs are provided, swap them into the source list + site marks.
