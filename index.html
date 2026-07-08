@@ -625,12 +625,12 @@ function iconSVG(k){return k==='tmark'?TSVG:`<svg class="sicon" viewBox="0 0 16 
 
 /* ---------- data (both modes) ---------- */
 const SRC24=[
-  {n:'Medical Devices (IoMT)', s:'18.6K', icon:'iomt', w:9, ep:1, rate:'4.2 B events/24H', res:'IoMT network · segmented'},
-  {n:'Clinical Endpoints', icon:'endpoint', w:6, rate:'9,400 endpoints', res:'Germany Data Boundary'},
+  {n:'Medical devices (IoMT)', s:'18.6K', icon:'iomt', w:9, ep:1, rate:'4.2 B events/24H', res:'IoMT network · segmented'},
+  {n:'Clinical endpoints', icon:'endpoint', w:6, rate:'9,400 endpoints', res:'Germany Data Boundary'},
   {n:'iMedOne · HIS', icon:'his', w:5, t:1, rate:'clinical + admin events', res:'hosted · T Cloud Public'},
   {n:'Imaging / PACS', icon:'imaging', w:4, rate:'1.9 TB images/24H', res:'PACS · on-prem'},
   {n:'Laboratory (LIS)', icon:'flask', w:3, rate:'lab orders & results', res:'LIS'},
-  {n:'Identities & Access', icon:'identity', w:4, rate:'12.4 K identities', res:'IAM · Germany DB'},
+  {n:'Identities & access', icon:'identity', w:4, rate:'12.4 K identities', res:'IAM · Germany DB'},
   {n:'Pharmacy / AGV', icon:'pharmacy', w:3, rate:'meds & AGV telemetry', res:'pharmacy logistics'},
   {n:'T Cloud Public', icon:'tmark', w:5, t:1, rate:'3.4 B events/24H', res:'T Cloud Public · eu-de'},
   {n:'Network / NGFW', icon:'firewall', w:6, rate:'11.4 B events/24H', res:'EU / on-prem'},
@@ -638,13 +638,13 @@ const SRC24=[
   {more:'+ 60 Data sources', icon:'more', w:2}
 ];
 const SRC30=[
-  {n:'IoMT Security', icon:'iomt', w:8, rate:'device vulnerabilities', res:'medical device VM'},
+  {n:'IoMT security', icon:'iomt', w:8, rate:'device vulnerabilities', res:'medical device VM'},
   {n:'Endpoint (EDR)', icon:'endpoint', w:6, rate:'endpoint findings', res:'clinical endpoints'},
-  {n:'Vulnerability Scan', icon:'scan', w:6, rate:'network & servers', res:'authenticated scan'},
+  {n:'Vulnerability scan', icon:'scan', w:6, rate:'network & servers', res:'authenticated scan'},
   {n:'iMedOne · HIS', icon:'his', w:4, t:1, rate:'app & config', res:'HIS'},
-  {n:'T Cloud Posture', icon:'tmark', w:5, t:1, rate:'CSPM findings', res:'T Cloud Public'},
+  {n:'T Cloud posture', icon:'tmark', w:5, t:1, rate:'CSPM findings', res:'T Cloud Public'},
   {n:'Imaging / PACS', icon:'imaging', w:3, rate:'modality vulns', res:'PACS'},
-  {n:'Identities & Access', icon:'identity', w:3, rate:'access exposure', res:'IAM'},
+  {n:'Identities & access', icon:'identity', w:3, rate:'access exposure', res:'IAM'},
   {more:'+ more Scanners', icon:'more', w:3}
 ];
 const MODES={
@@ -954,12 +954,12 @@ const A_BUCKETS=[
 ];
 // locations (assets sum = 35,600; risk sum = 5,840; threat = 84; both = 29)
 const A_LOC=[
-  {key:'campus',  name:'Main Campus',           tag:'Hospital', mark:'campus',  imedone:1, assets:30200, unit:'Buildings',  unitN:17,      ang:-1.5708, cats:[['Medical Devices (IoMT)',17800],['Clinical Endpoints',8600],['Imaging / PACS',1180],['Laboratory (LIS)',940],['Servers & VMs',1010],['Network & OT',670]], status:{both:25,threat:71,risk:5275}},
-  {key:'mvz',     name:'Outpatient Centers',    tag:'Clinics',  mark:'mvz',     imedone:1, assets:2100,  unit:'Locations',  unitN:12,      ang:-0.62,   cats:[['Clinical Endpoints',980],['Medical Devices (IoMT)',720],['Network & OT',240],['Servers & VMs',160]], status:{both:1,threat:4,risk:310}},
-  {key:'cloud',   name:'T Cloud Public',        tag:'Cloud',    mark:'cloud',   assets:1760,  unit:'Region',     unitN:'eu-de', ang:0.6,     cats:[['Virtual Machines',620],['Object Storage',430],['Databases',320],['Patient Portal',190],['Backup Vaults',200]], status:{both:0,threat:1,risk:22}},
-  {key:'telemed', name:'Telemedicine & Home',   tag:'Remote',   mark:'telemed', assets:640,   unit:'Programs',   unitN:9,       ang:1.5708,  cats:[['Home Monitors',320],['Video Endpoints',140],['Wearables',120],['Gateways',60]], status:{both:2,threat:5,risk:180}},
-  {key:'labs',    name:'Reference Labs',        tag:'External', mark:'labs',    assets:520,   unit:'Partners',   unitN:5,       ang:2.5,     cats:[['Analyzer Interfaces',210],['Data Feeds',160],['Gateways',90],['Identities',60]], status:{both:1,threat:2,risk:44}},
-  {key:'research',name:'Research Institute',    tag:'Research', mark:'research',assets:380,   unit:'Partners',   unitN:14,      ang:-2.85,   cats:[['Partner Gateways',90],['Shared Datasets',140],['Federated Nodes',60],['External Researchers',90]], status:{both:0,threat:1,risk:9}}
+  {key:'campus',  name:'Main Campus',           tag:'Hospital', mark:'campus',  imedone:1, assets:30200, unit:'Buildings',  unitN:17,      ang:-1.5708, cats:[['Medical devices (IoMT)',17800],['Clinical endpoints',8600],['Imaging / PACS',1180],['Laboratory (LIS)',940],['Servers & VMs',1010],['Network & OT',670]], status:{both:25,threat:71,risk:5275}},
+  {key:'mvz',     name:'Outpatient Centers',    tag:'Clinics',  mark:'mvz',     imedone:1, assets:2100,  unit:'Locations',  unitN:12,      ang:-0.62,   cats:[['Clinical endpoints',980],['Medical devices (IoMT)',720],['Network & OT',240],['Servers & VMs',160]], status:{both:1,threat:4,risk:310}},
+  {key:'cloud',   name:'T Cloud Public',        tag:'Cloud',    mark:'cloud',   assets:1760,  unit:'Region',     unitN:'eu-de', ang:0.6,     cats:[['Virtual machines',620],['Object storage',430],['Databases',320],['Patient portal',190],['Backup vaults',200]], status:{both:0,threat:1,risk:22}},
+  {key:'telemed', name:'Telemedicine & Home',   tag:'Remote',   mark:'telemed', assets:640,   unit:'Programs',   unitN:9,       ang:1.5708,  cats:[['Home monitors',320],['Video endpoints',140],['Wearables',120],['Gateways',60]], status:{both:2,threat:5,risk:180}},
+  {key:'labs',    name:'Reference Labs',        tag:'External', mark:'labs',    assets:520,   unit:'Partners',   unitN:5,       ang:2.5,     cats:[['Analyzer interfaces',210],['Data feeds',160],['Gateways',90],['Identities',60]], status:{both:1,threat:2,risk:44}},
+  {key:'research',name:'Research Institute',    tag:'Research', mark:'research',assets:380,   unit:'Partners',   unitN:14,      ang:-2.85,   cats:[['Partner gateways',90],['Shared datasets',140],['Federated nodes',60],['External researchers',90]], status:{both:0,threat:1,risk:9}}
 ];
 const PMARK={
   campus:'<svg class="sicon" viewBox="1.75 1.85 12.5 12.6" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"><path d="M2.4 7.6 8 2.5l5.6 5.1"/><path d="M3.8 7.7v6.1h8.4V7.7"/><path d="M4.9 5.3V3.4h1.1V4.6"/><circle cx="8" cy="10.2" r="2.4"/><path d="M8 8.9v2.6M6.8 10.2h2.4" stroke-width="1.3"/></svg>',
@@ -1080,13 +1080,13 @@ function sparkInline(vals,col){const w=58,h=22,pad=3,mn=Math.min(...vals),mx=Mat
   return `<svg class="dvspark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none"><path d="${smoothD(pts)}" fill="none" stroke="${col}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;}
 const INV=[
  {g:'Clinical & Medical'},
- {n:'Medical Devices (IoMT)',icon:'iomt',vol:'2.6 TB',w:9,ep:1,spk:[20,24,22,28,26,30,27,31,29,33]},
+ {n:'Medical devices (IoMT)',icon:'iomt',vol:'2.6 TB',w:9,ep:1,spk:[20,24,22,28,26,30,27,31,29,33]},
  {n:'Imaging / PACS',icon:'imaging',vol:'1.9 TB',w:7,spk:[30,28,31,29,32,30,33,31,30,32]},
- {n:'Clinical Endpoints',icon:'endpoint',vol:'1.1 TB',w:6,spk:[18,20,19,22,21,20,23,22,24,23]},
+ {n:'Clinical endpoints',icon:'endpoint',vol:'1.1 TB',w:6,spk:[18,20,19,22,21,20,23,22,24,23]},
  {n:'Laboratory (LIS)',icon:'flask',vol:'42 GB',w:3,spk:[10,12,11,13,12,11,13,12,14,13]},
  {g:'Network & Identity'},
  {n:'Network / NGFW',icon:'firewall',vol:'3.1 TB',w:9,spk:[40,44,42,46,43,47,45,44,46,48]},
- {n:'Identities & Access',icon:'identity',vol:'30 GB',w:4,spk:[8,9,8,10,9,11,10,9,10,11]},
+ {n:'Identities & access',icon:'identity',vol:'30 GB',w:4,spk:[8,9,8,10,9,11,10,9,10,11]},
  {g:'Sovereign Cloud · T-Systems'},
  {n:'iMedOne · HIS',icon:'his',vol:'220 GB',w:5,t:1,spk:[22,24,23,25,24,26,25,24,26,27]},
  {n:'T Cloud Public',icon:'tmark',vol:'0.8 TB',w:6,t:1,sov:1,spk:[30,32,31,34,33,35,34,36,35,37]},
@@ -1094,7 +1094,7 @@ const INV=[
  {logo:'o365',n:'Microsoft 365',vol:'180 GB',w:4,spk:[16,18,17,19,18,20,19,18,20,21]},
  {logo:'azure',n:'Azure',vol:'150 GB',w:4,spk:[14,15,14,16,15,17,16,15,16,17]},
  {logo:'gcp',n:'Google Cloud',vol:'90 GB',w:3,spk:[9,10,10,11,10,12,11,10,11,12]},
- {logo:'github',n:'GitHub · Research',vol:'12 GB',w:2,spk:[4,5,4,6,5,6,5,6,5,6]},
+ {logo:'github',n:'GitHub · research',vol:'12 GB',w:2,spk:[4,5,4,6,5,6,5,6,5,6]},
  {n:'+ 60 Data sources',icon:'more',vol:'0.2 TB',w:2,more:1}
 ];
 const INV_THROAT={x:752,y:404}, INV_ISSUES={x:965,y:380}, INV_PREV={x:1090,y:560};
@@ -1139,16 +1139,16 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeInventory();});
 /* ===== Dynamic View (Core click, 24H) ===== */
 const DYN_C={x:720,y:440};
 const DYN_MARKS=[
- {icon:'iomt',n:'Medical Devices (IoMT)',ang:-90,r:282},
+ {icon:'iomt',n:'Medical devices (IoMT)',ang:-90,r:282},
  {icon:'imaging',n:'Imaging / PACS',ang:-57.3,r:282,sev:'m'},
  {icon:'his',n:'iMedOne · HIS',ang:-24.5,r:282,t:1},
  {icon:'tmark',n:'T Cloud Public',ang:8.2,r:282,t:1},
  {icon:'firewall',n:'Network / NGFW',ang:40.9,r:282,sev:'c'},
- {icon:'identity',n:'Identities & Access',ang:73.6,r:282},
+ {icon:'identity',n:'Identities & access',ang:73.6,r:282},
  {icon:'flask',n:'Laboratory (LIS)',ang:106.4,r:282},
  {logo:'azure',n:'Azure',ang:139.1,r:282},
  {icon:'pharmacy',n:'Pharmacy / AGV',ang:171.8,r:282,sev:'h'},
- {icon:'endpoint',n:'Clinical Endpoints',ang:204.5,r:282},
+ {icon:'endpoint',n:'Clinical endpoints',ang:204.5,r:282},
  {icon:'hpc',n:'Research / HPC',ang:237.3,r:282}
 ];
 const DYN_IC={

@@ -136,10 +136,13 @@ Risk). Tiles: Vulnerable Assets **5,840** (ties to assets At Risk) · Active Cas
   `selectLocation` / `drawAssets` (radar + magenta sweep). Radar center
   `AC={x:800,y:440,R:264}`, `ACX0=800`.
 - **Shared asset vocabulary (KEEP CONSISTENT)**: the same category/source strings —
-  **Medical Devices (IoMT)** · **Clinical Endpoints** · **Imaging / PACS** ·
-  **Laboratory (LIS)** · **Identities & Access** · **Servers & VMs** · **Network & OT** —
+  **Medical devices (IoMT)** · **Clinical endpoints** · **Imaging / PACS** ·
+  **Laboratory (LIS)** · **Identities & access** · **Servers & VMs** · **Network & OT** —
   are reused verbatim across `SRC24`, `A_LOC` cats (both clinical sites), `INV`, and
-  `DYN_MARKS`. Never re-spell one of them in only one list.
+  `DYN_MARKS`. Never re-spell one of them in only one list. **Casing**: category /
+  descriptor names are sentence case (only the first word capitalised; acronyms like
+  IoMT/PACS/LIS/OT/VMs stay upper); brand/product/site names (iMedOne · HIS, T Cloud
+  Public, Azure, GitHub, Main Campus …) and view titles keep Title Case.
 - **Two case-flows share one grammar (KEEP IN SYNC)**: the main-flow funnel (`buildWires`
   24H block) and the Cases-Overview lifecycle (`buildCases`) draw the *same* ribbon set —
   Cases→Automated (teal) / Cases→Manual (grey); Automated→Resolved (teal, 78);
