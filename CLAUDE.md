@@ -213,8 +213,7 @@ Risk). Tiles: Vulnerable Assets **5,840** (ties to assets At Risk) · Active Cas
 3. Check numbers reconcile (see the number model) and no invented product names crept in.
 
 ## Git
-- Active branch: `claude/issues-cases-flow-refine-hlxipr` (based on the earlier
-  `claude/cortex-xsiam-research-drgysn` line, now ahead of it). Push with
+- Active branch: `claude/cdc-case-numbers-flow-kacllq`. Push with
   `-u origin <branch>` and retry with backoff on network errors. Do **not** open a PR
   unless asked.
 - Commit-message footer:
@@ -226,30 +225,38 @@ Risk). Tiles: Vulnerable Assets **5,840** (ties to assets At Risk) · Active Cas
 A `.dv` scene styled like a **Cortex case interface**, reached by clicking the incoming
 new case in the Open-cases live queue (the 12th row `C-4490 "Supplier agent · out-of-profile
 data request"` → `openAgent`). **No score badge, no voice banner, no auto-play.** Layout:
-- **top** = case header (crumb · title · High/status/Agentic-governance chips) + the
-  **alert** ("Unusual agent behavior detected…") + a two-bullet **Summarized by AI** list.
+- **top** = compact case header (crumb · title · High/status/Agentic-governance chips) +
+  a single-line **Summarized by AI** paragraph (`.ag-aitext`, id `agAlertT` — it doubles as
+  the state alert, its text swapped per `agState`). No separate alert box, no bullet list.
 - **middle = two distinct layers** (the whole point — digital ≠ physical):
   1. **AI orchestration agents** (`.ag-dagent`, glowing concentric-ring orbs `.orb>i.r1/.r2/.r3`,
      per-node `--ac` accent): the external **Supplier logistics agent** (`.ag-sup`, pink,
-     dashed pulsing ring, `external` badge) → **API gateway · scoped** (`.ag-gate`, shield) →
-     **Delivery scheduling** + **Stock replenishment** → **Route & traffic control** (fleet
-     dispatch). Its **approved scope** is drawn as **teal solid ribbons** (`.ag-gatelink`
-     supplier→gateway, plus the internal mesh) with `dvFlow` particles that never stop.
+     dashed pulsing ring, `external` badge that clears the ring) → **API gateway · scoped**
+     (`.ag-gate`, shield) → **Delivery scheduling** + **Stock replenishment** → **Route &
+     traffic control** (fleet dispatch). The mesh is a **symmetric lens**: gateway (452) and
+     route (860) on the axis, delivery/stock centered at **x=656**. Approved scope = **teal
+     ribbons**: `.ag-gatelink` supplier↔gateway (a crisp visible line with **bidirectional**
+     `dvFlow` particles — request/response), plus the internal mesh; particles never stop.
   2. **Physical · medication AGVs** (`.ag-corridor` lane + `.ag-loc` location tiles
      Pharmacy → Ward med room → Patient room → **Restricted ward** `.lock`; `.ag-cart`
      robots CSS-animated along the corridor via `@keyframes agvrun` on `--x0/--x1`). The
-     dispatcher drives the fleet (Route → corridor) and carts run Pharmacy→Ward→Patient.
-  The **attempted (denied) access** is the contrast: **red dashed `.ag-suplink` edges** from
-  the supplier reach past its gateway scope to three **`.ag-blk` chips** (Live AGV location ·
-  Patient-linked routes · Restricted ward). Allowed = teal to gateway; denied = red dashed to
-  the blocked chips.
+     dispatcher drops from **Route → Ward** (`agLinkV`, bottom-edge→top-edge) and carts run
+     Pharmacy→Ward→Patient.
+  The **attempted (denied) access** is the contrast, kept **clean / no crossings**: the three
+  out-of-profile requests are blocked **at the gateway** and hang as one tidy left-aligned
+  stack (`.ag-blk.stk` chips, `AG.den` y-list, `.ag-denlab` header) off a **single dashed
+  `.ag-suplink` rail** dropped from the gateway — it never fans across the mesh or the
+  dispatch line. Allowed = teal through the gateway; denied = the red rail + ✕ chips (also
+  enumerated in the Resolution Center).
 - **right** = a **Resolution Center** driving a **3-step** flow (`agState` 1→3, `s1…s3`
-  classes, `agBuild`/`agRender`):
+  classes, `agBuild`/`agRender`); subtitle "identity valid · authenticated", both actions
+  tagged **MANUAL** (`.mtag`, human decision):
   1 **Alert** → click *Isolate agent* → 2 **Isolation** (the `.ag-sandbox` dashed *Secure
-  simulation* container fades in around the supplier, which turns magenta; its red
-  attempted-access `.ag-suplink` edges are cut; blocked chips fade; **internal agents + AGVs
-  keep operating**) → click *Revoke supplier access* → 3 **Revoke** (supplier greyed, the
-  `.ag-gatelink` severed, status Resolved, audit `.ag-donenote` lit).
+  simulation* container fades in around the supplier, which turns magenta; the denied
+  `.ag-suplink` rail + chips fade; **internal agents + AGVs keep operating**) → click *Revoke
+  supplier access* → 3 **Revoke** (supplier greyed, the `.ag-gatelink` severed **and its data
+  flow stopped** — `agGateParts` filtered out of `dvParts`, status Resolved, audit
+  `.ag-donenote` shown **only** at s3).
 Reduced/glowing, real Cortex/AGV naming, `prefers-reduced-motion` safe (carts + particles
 snap off). `‹ Open cases` / Esc returns to the queue (instant, no re-anim).
 
