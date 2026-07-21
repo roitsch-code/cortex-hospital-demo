@@ -122,10 +122,10 @@ svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;ov
 
 /* bottom stat tiles */
 .tiles{position:absolute;left:34px;right:34px;bottom:24px;z-index:6;display:flex;border-top:1px solid var(--hair);padding-top:16px}
-.tile{flex:1;padding:0 26px;display:flex;flex-direction:column;justify-content:center;position:relative;cursor:pointer;transition:.18s}
+.tile{flex:1;padding:0 26px;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;cursor:pointer;transition:.18s}
 .tile+.tile{border-left:1px solid var(--hair)}
-.tile .k{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:9px}
-.tile .vrow{display:flex;align-items:center;justify-content:flex-start;gap:22px;max-width:300px}
+.tile .k{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:9px;text-align:center}
+.tile .vrow{display:flex;align-items:center;justify-content:center;gap:20px}
 .tile .v{font-size:30px;font-weight:800;color:#fff;line-height:1;white-space:nowrap;display:flex;align-items:baseline;gap:5px}
 .tile .v u{font-size:12px;color:var(--muted);font-weight:600;text-decoration:none}
 .tile .v em{font-size:12px;font-weight:700;font-style:normal;color:var(--teal-br)}
@@ -378,20 +378,18 @@ body.view-flow .backbtn{display:flex}
 
 /* ===== 21:9 drift scenario (supplier agent out of profile) ===== */
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
-.driftw{position:absolute;z-index:9;width:220px;border:1px solid rgba(226,0,116,.55);border-radius:11px;
-  padding:12px 13px;background:linear-gradient(180deg,rgba(42,6,25,.94),rgba(9,13,17,.95));
-  box-shadow:0 0 26px rgba(226,0,116,.28),0 14px 42px rgba(0,0,0,.55);
-  opacity:0;transform:translateX(8px);transition:opacity .3s,transform .3s;pointer-events:auto}
+.driftw{position:absolute;z-index:20;width:258px;background:rgba(9,13,17,.97);
+  border:1px solid var(--teal-dim);border-radius:12px;padding:13px 15px;
+  box-shadow:0 14px 44px rgba(0,0,0,.6),0 0 30px rgba(47,214,192,.1);
+  opacity:0;transform:translateX(6px);transition:opacity .3s,transform .3s;pointer-events:auto}
 .driftw:not(.hidden){opacity:1;transform:translateX(0)}
-.driftw::before{content:"";position:absolute;left:-8px;top:32px;width:0;height:0;
-  border:7px solid transparent;border-right-color:rgba(226,0,116,.55);border-left:0}
-.driftw .dh{font-size:10px;font-weight:800;letter-spacing:.1em;color:#ff7ec8;display:flex;align-items:center;gap:7px;margin-bottom:9px}
-.driftw .dh .dd{width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 10px var(--red);flex:0 0 auto;animation:blink 1.4s ease-in-out infinite}
-.reduced .driftw .dh .dd{animation:none}
-.driftw p{font-size:11.5px;line-height:1.5;color:#e7edf1;margin-bottom:9px}
-.driftw p b{color:#ff9ad4;font-weight:800}
-.driftw .df{font-size:10px;color:var(--muted);line-height:1.45;letter-spacing:.02em;border-top:1px solid var(--hair);padding-top:8px}
-.driftw .df b{color:#f4b9d8;font-weight:700}
+.driftw::before{content:"";position:absolute;left:-7px;top:24px;width:0;height:0;
+  border:6px solid transparent;border-right-color:var(--teal-dim);border-left:0}
+.driftw h4{font-size:12.5px;font-weight:800;color:#fff;display:flex;align-items:center;gap:8px;margin-bottom:9px;white-space:nowrap}
+.driftw h4 .dd{width:8px;height:8px;border-radius:50%;background:var(--magenta);box-shadow:0 0 8px var(--magenta);flex:0 0 auto}
+.driftw p{font-size:11.5px;line-height:1.5;color:#cfd6db;margin-bottom:9px}
+.driftw p b{color:#ff9ad4;font-weight:700}
+.driftw .df{font-size:10.5px;color:var(--teal-br);opacity:.85;line-height:1.45;letter-spacing:.02em}
 .newtag{color:#ff7ec8;font-size:11px;font-weight:800;text-shadow:0 0 12px rgba(226,0,116,.6);opacity:0;transition:opacity .3s}
 .newtag:not(.hidden){opacity:1}
 #chevOpen .cv.crit.bump i,#chevOpen .cv.crit.bump .cn{color:#ff9aa4;text-shadow:0 0 16px rgba(255,77,94,.7)}
@@ -503,10 +501,10 @@ body:not(.view-flow) #flowHint{display:none}
   </div>
 
   <!-- 21:9 drift scenario callout (supplier agent out of profile) -->
-  <div class="driftw hidden" id="driftW" style="left:1668px;top:420px">
-    <div class="dh"><span class="dd"></span>SUPPLIER AGENT · OUT OF PROFILE</div>
-    <p>A supplier's agent's behavior <b>drifted</b> — an out-of-profile data request hit iMedOne.</p>
-    <div class="df">Auto-contained by policy · <b>1 new critical case</b> · queued for T Security · CDC Bonn</div>
+  <div class="driftw hidden" id="driftW" style="left:1588px;top:412px">
+    <h4><span class="dd"></span>Supplier agent · out of profile</h4>
+    <p>A supplier's agent's behavior <b>drifted</b> — an out-of-profile data request hit iMedOne. Auto-contained by policy.</p>
+    <div class="df">1 new critical case · queued for T Security · CDC Bonn</div>
   </div>
   <div id="flowHint">click the flow to advance the live scenario ›</div>
 
@@ -714,13 +712,14 @@ const LAYOUT={
     dom:{nLeft:524, nCenter:720, coreHit:720, nRight:916, fnAuto:1080, fnManual:1080,
       socTag:1004, nResolved:1232, chevOpen:1196, nOpen:1276,
       fnActive:1120, fnResolvedN:1120, driftW:1090} },
-  // WIDE: 96 sits mirror-symmetric to 2,412 about the core centre (945±223); funnel side
-  // gets the longer, more generous diverging run.
+  // WIDE: 96 sits mirror-symmetric to 2,412 about the core centre (945±223). Funnel kept
+  // compact so the ribbon ends land just before each outcome number (not over its label)
+  // and the drift callout fits fully inside the frame.
   wide:{ w:1890,
-    WAIST:648, CENTER:945, CASES:1168, AUTO:1400, MAN:1400, ACT:1448, RES:1448, CASESPT:1168,
-    RESTIP:1564, OPENTIP:1496, SOC:1300, PCTIP:1568, srcX:456, pcard:1556,
-    dom:{nLeft:722, nCenter:945, coreHit:945, nRight:1168, fnAuto:1400, fnManual:1400,
-      socTag:1280, nResolved:1548, chevOpen:1496, nOpen:1542, fnActive:1448, fnResolvedN:1448, driftW:1676} }
+    WAIST:648, CENTER:945, CASES:1168, AUTO:1334, MAN:1334, ACT:1384, RES:1384, CASESPT:1168,
+    RESTIP:1434, OPENTIP:1398, SOC:1210, PCTIP:1448, srcX:456, pcard:1474,
+    dom:{nLeft:722, nCenter:945, coreHit:945, nRight:1168, fnAuto:1334, fnManual:1334,
+      socTag:1210, nResolved:1456, chevOpen:1404, nOpen:1450, fnActive:1384, fnResolvedN:1384, driftW:1588} }
 };
 let CURLAY=LAYOUT.narrow;
 function applyGeo(){
@@ -814,15 +813,17 @@ function buildWires(){const s=$('#wFlow');s.innerHTML='';defs(s);srcRibbons=[];
   s.appendChild(svgEl('circle',{cx:CENTER.x,cy:CENTER.y,r:CENTER.R,fill:'none',stroke:'rgba(47,214,192,.16)','stroke-width':1}));
   s.appendChild(svgEl('circle',{cx:CENTER.x,cy:CENTER.y,r:CENTER.R*0.62,fill:'none',stroke:'rgba(47,214,192,.10)','stroke-width':1}));
   // NB: no core→Cases bridge — mirror of the left, the particle swarm converges onto the
-  // 96 and re-diverges into the funnel, leaving the same gap the Issues number has.
+  // 96 and re-diverges into the funnel, starting clear to the right of the number.
+  const OUT=CASES.x+48;
   if(MODE==='h24'){
-    ribbon(s,{x:CASES.x+16,y:CASES.y},{x:AUTO.x-26,y:AUTO.y},12,'url(#teal)',.58);
-    ribbon(s,{x:CASES.x+16,y:CASES.y},{x:MAN.x-26,y:MAN.y},7,'rgba(150,168,178,.4)',.58);
-    ribbon(s,{x:AUTO.x+26,y:AUTO.y},{x:L.RESTIP,y:294},16,'url(#teal)',.5);
-    [458,484,510,536].forEach(cy=>s.appendChild(svgEl('path',{d:band({x:MAN.x+26,y:MAN.y},{x:L.OPENTIP,y:cy},.5),fill:'none',stroke:'rgba(150,168,178,.3)','stroke-width':1.4})));
+    ribbon(s,{x:OUT,y:CASES.y},{x:AUTO.x-26,y:AUTO.y},12,'url(#teal)',.58);       // 96 → automated
+    ribbon(s,{x:OUT,y:CASES.y},{x:MAN.x-26,y:MAN.y},7,'rgba(150,168,178,.4)',.58);// 96 → manual
+    ribbon(s,{x:AUTO.x+26,y:AUTO.y},{x:L.RESTIP,y:294},16,'url(#teal)',.5);        // 78 automated → resolved
+    ribbon(s,{x:MAN.x+22,y:MAN.y-10},{x:L.RESTIP-4,y:306},5,'url(#teal)',.4);      // 7 manual → resolved
+    [458,484,510,536].forEach(cy=>s.appendChild(svgEl('path',{d:band({x:MAN.x+26,y:MAN.y},{x:L.OPENTIP,y:cy},.5),fill:'none',stroke:'rgba(150,168,178,.3)','stroke-width':1.4})));// 11 manual → open
   }else{
-    ribbon(s,{x:CASES.x+16,y:CASES.y},{x:ACT.x-26,y:ACT.y},10,'url(#red)',.58);
-    ribbon(s,{x:CASES.x+16,y:CASES.y},{x:RES.x-26,y:RES.y},11,'url(#teal)',.58);
+    ribbon(s,{x:OUT,y:CASES.y},{x:ACT.x-26,y:ACT.y},10,'url(#red)',.58);
+    ribbon(s,{x:OUT,y:CASES.y},{x:RES.x-26,y:RES.y},11,'url(#teal)',.58);
     [206,296,386].forEach(cy=>s.appendChild(svgEl('path',{d:band({x:ACT.x+26,y:ACT.y},{x:L.PCTIP,y:cy},.5),fill:'none',stroke:'rgba(255,120,120,.32)','stroke-width':2})));
     [504,594].forEach(cy=>s.appendChild(svgEl('path',{d:band({x:RES.x+26,y:RES.y},{x:L.PCTIP,y:cy},.5),fill:'none',stroke:'rgba(47,214,192,.32)','stroke-width':2})));
   }

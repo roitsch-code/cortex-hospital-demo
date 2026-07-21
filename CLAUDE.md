@@ -147,10 +147,13 @@ Risk). Tiles: Vulnerable Assets **5,840** (ties to assets At Risk) · Active Cas
   (`CENTER`/`WAIST`/`CASES`/… are `let`, reassigned by `applyGeo()`) and the current source
   list `CURSRC` (set by `buildSources`), so both aspects work off one code path.
 - **21:9 layout knobs**: `LAYOUT.narrow`/`LAYOUT.wide` (X coords + `dom` element lefts),
-  `applyGeo()`, `WIDE`, `buildSourcesWide()`/`wireSourcesWide()`. Flow ribbons hug the
-  spine numbers: sources converge to `WAIST` just **before** the Issues number (no merged
-  bridge behind it — particles re-diverge to the core as individual dots); core→Cases ends
-  at `CASES-14` and the funnel starts at `CASES+16` so both ribbons hug the "96".
+  `applyGeo()`, `WIDE`, `buildSourcesWide()`/`wireSourcesWide()` (24H uses `INV`, 30D uses
+  `INV30`). The two spine numbers are mirror-symmetric about the core centre (2,412 and 96
+  sit at `CENTER±223`). **No bridge ribbon** touches either number — the particle swarm
+  converges onto it and re-diverges (left: sources→2,412→core; right: core→96→funnel). The
+  funnel diverges from `CASES+48` (clear of the "96") and each outcome ribbon ends just
+  **before** its number so it never crosses the label. 24H funnel: 78 automated → resolved,
+  18 manual splits **7 → resolved** + **11 → open**.
 - **Agent-drift scenario**: `fireDrift()`/`resetDrift()`, `#driftW` callout, `#flowHint`,
   `#critCount`/`#critNew`, `#openTileNum`; toggled by the `#stage` empty-backdrop click.
 - **Detail popovers**: the `D` object in `detailHTML(key)`; wired by `wire()` /
