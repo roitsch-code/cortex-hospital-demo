@@ -816,10 +816,7 @@ function buildWires(){const s=$('#wFlow');s.innerHTML='';defs(s);srcRibbons=[];
   ring(s,CENTER.x,CENTER.y,CENTER.R+44,96,.26);
   s.appendChild(svgEl('circle',{cx:CENTER.x,cy:CENTER.y,r:CENTER.R,fill:'none',stroke:'rgba(47,214,192,.16)','stroke-width':1}));
   s.appendChild(svgEl('circle',{cx:CENTER.x,cy:CENTER.y,r:CENTER.R*0.62,fill:'none',stroke:'rgba(47,214,192,.10)','stroke-width':1}));
-  // core → Cases: clean straight "output taps" (like the reference), ending before the 95
-  [-15,0,15].forEach(dy=>{const y=CENTER.y+dy, x0=CENTER.x+CENTER.R+10, x1=CASES.x-58;
-    s.appendChild(svgEl('line',{x1:x0,y1:y,x2:x1,y2:y,stroke:'rgba(63,224,204,.5)','stroke-width':dy===0?2.6:1.6,'stroke-linecap':'round'}));
-    s.appendChild(svgEl('circle',{cx:x1,cy:y,r:dy===0?3:2.1,fill:'#6ff3e0'}));});
+  // core → Cases: NO lines — only green pixels stream across (drawn on the canvas, see coreOut)
   const OUT=CASES.x+48;
   if(MODE==='h24'){
     ribbon(s,{x:OUT,y:CASES.y},{x:AUTO.x-26,y:AUTO.y},12,'url(#teal)',.58);       // 96 → automated
@@ -884,6 +881,9 @@ const flashes=[];
 function rimRight(){return {x:CASES.x+22,y:CASES.y+(Math.random()*2-1)*56};}
 function newOut(p){p.start=rimRight();p.t=0;p.sp=0.006+Math.random()*0.004;p.man=Math.random()<0.2;return p;}
 const outflow=[];for(let k=0;k<52;k++){const p=newOut({});p.t=Math.random();outflow.push(p);}
+// green pixels streaming core → Cases number (replaces the straight output-tap lines)
+function newCoreOut(p){p.sy=CENTER.y+(Math.random()*2-1)*CENTER.R*0.62;p.t=0;p.sp=0.005+Math.random()*0.004;return p;}
+const coreOut=[];for(let k=0;k<36;k++){const p=newCoreOut({});p.t=Math.random();coreOut.push(p);}
 function rebuildParticles(){wIdx=[];CURSRC.forEach((s,i)=>{if(s.more)return;for(let k=0;k<s.w;k++)wIdx.push(i);});
   inflow.forEach(p=>{newInflow(p);p.t=Math.random();});}
 
@@ -913,6 +913,13 @@ function frame(t){ctx.clearRect(0,0,STAGE.w,810);
     let pt; if(p.t<0.28){ pt=bezPt(p.start,J,.5,p.t/0.28);} else { pt=bezPt(J,dest,.58,(p.t-0.28)/0.72);}
     ctx.globalAlpha=(.85-Math.abs(p.t-0.5)*0.5)*dim;
     ctx.fillStyle='#8ff7e6';ctx.beginPath();ctx.arc(pt.x,pt.y,1.5,0,6.283);ctx.fill();}
+  // core → Cases number: green pixels only (no lines), converging to the centre line
+  for(const p of coreOut){ if(!REDUCED)p.t+=p.sp;
+    if(p.t>=1){ newCoreOut(p); continue; }
+    const x0=CENTER.x+CENTER.R*0.9, x1=CASES.x-26;
+    const x=x0+(x1-x0)*p.t, y=p.sy+(CENTER.y-p.sy)*p.t;
+    ctx.globalAlpha=Math.min(1,.35+.75*p.t)*dim*(p.t>0.88?(1-p.t)/0.12:1);
+    ctx.fillStyle='#6ff3e0';ctx.beginPath();ctx.arc(x,y,1.5,0,6.283);ctx.fill();}
   ctx.globalAlpha=1;requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);

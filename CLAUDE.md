@@ -77,8 +77,9 @@ centred at x=1440; 2,412 and 96 sit mirror-symmetric about it (1440±360).
   red/orange/blue accent dots), **not fogged** — keep the dome glow low, no magenta sonar
   wash. Source lines are clean single strokes (no blurred underlay). The correlation input
   is **straight radial coloured pixels** streaming from the Issues-number side into the
-  core (`newInflow`), and **clean straight "output taps"** run core→Cases; particles then
-  ride the funnel ribbon (`bezPt`/`band` share control points). Reference: Cortex XSIAM.
+  core (`newInflow`). Core→Cases carries **no lines — only green pixels** (`coreOut`); the
+  outflow pixels then ride the funnel ribbon (`bezPt`/`band` share control points).
+  Reference: Cortex XSIAM.
 - **DO NOT build a dense "boxes-in-bands" architecture chart.** A previous attempt did
   and was rejected as "a shitty PowerPoint." Detail views stay **reduced** (few glowing
   nodes, negative space).
