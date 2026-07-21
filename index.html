@@ -18,8 +18,8 @@ html,body{height:100%;background:var(--bg);overflow:hidden;font-family:var(--fon
 #stage{position:relative;width:1440px;height:810px;transform-origin:center;
   background:radial-gradient(120% 90% at 50% 46%,#04070b 0%,#010204 74%);overflow:hidden}
 canvas#cv{position:absolute;inset:0;width:1440px;height:810px;pointer-events:none;z-index:1}
-.dome{position:absolute;left:720px;top:392px;width:760px;height:560px;transform:translate(-50%,-50%);z-index:0;
-  background:radial-gradient(50% 50% at 50% 50%,rgba(47,214,192,.09),rgba(47,214,192,0) 70%);pointer-events:none}
+.dome{position:absolute;left:720px;top:392px;width:620px;height:500px;transform:translate(-50%,-50%);z-index:0;
+  background:radial-gradient(50% 50% at 50% 50%,rgba(47,214,192,.05),rgba(47,214,192,0) 66%);pointer-events:none}
 
 /* ---------- top chrome ---------- */
 .top{position:absolute;top:20px;left:34px;right:34px;z-index:12;display:flex;align-items:flex-start;justify-content:space-between}
@@ -804,11 +804,11 @@ function wireSourcesWide(){$$('#srcWrap .dvrow').forEach(row=>{const idx=+row.da
 function buildWires(){const s=$('#wFlow');s.innerHTML='';defs(s);srcRibbons=[];
   const L=CURLAY;
   CURSRC.forEach((src,i)=>{const a=srcPts[i]; if(!a)return;
-    const greyW=2+src.w*0.95, lineW=0.7+src.w*0.16;
-    const col=src.ep?'url(#ep)':(src.t?'url(#tmag)':'url(#teal)');
-    const base=svgEl('path',{d:band(a,WAIST,.6),fill:'none',stroke:src.ep?'rgba(47,214,192,.16)':'rgba(150,168,178,.13)','stroke-width':greyW,'stroke-linecap':'round',opacity:.7,filter:'url(#g)'});
-    const line=svgEl('path',{d:band(a,WAIST,.6),fill:'none',stroke:col,'stroke-width':lineW,'stroke-linecap':'round',opacity:src.ep?.7:.45});
-    s.appendChild(base);s.appendChild(line);srcRibbons.push({base,line,greyW,lineW,ep:src.ep,t:src.t});
+    // clean single line per source — no blurred underlay (that read as fog); they braid crisply
+    const lineW=1.2+src.w*0.2;
+    const col=src.ep?'rgba(111,243,224,.62)':(src.t?'rgba(232,140,190,.5)':'rgba(176,192,206,.32)');
+    const line=svgEl('path',{d:band(a,WAIST,.62),fill:'none',stroke:col,'stroke-width':lineW,'stroke-linecap':'round',opacity:1});
+    s.appendChild(line);srcRibbons.push({base:line,line,greyW:lineW,lineW,ep:src.ep,t:src.t});
   });
   // NB: no merged bridge WAIST→core — the flow ends at the Issues number and the
   // particles spring back apart into individual data points behind it.
@@ -816,9 +816,10 @@ function buildWires(){const s=$('#wFlow');s.innerHTML='';defs(s);srcRibbons=[];
   ring(s,CENTER.x,CENTER.y,CENTER.R+44,96,.26);
   s.appendChild(svgEl('circle',{cx:CENTER.x,cy:CENTER.y,r:CENTER.R,fill:'none',stroke:'rgba(47,214,192,.16)','stroke-width':1}));
   s.appendChild(svgEl('circle',{cx:CENTER.x,cy:CENTER.y,r:CENTER.R*0.62,fill:'none',stroke:'rgba(47,214,192,.10)','stroke-width':1}));
-  // core → Cases bundle: mirrors the source bundle on the left — it ends ~100px BEFORE the
-  // 96 (same gap the 2,412 has), and the particle swarm carries across the gap.
-  ribbon(s,{x:CENTER.x+CENTER.R,y:CENTER.y},{x:CASES.x-100,y:CASES.y},7,'url(#teal)',.62);
+  // core → Cases: clean straight "output taps" (like the reference), ending before the 95
+  [-15,0,15].forEach(dy=>{const y=CENTER.y+dy, x0=CENTER.x+CENTER.R+10, x1=CASES.x-58;
+    s.appendChild(svgEl('line',{x1:x0,y1:y,x2:x1,y2:y,stroke:'rgba(63,224,204,.5)','stroke-width':dy===0?2.6:1.6,'stroke-linecap':'round'}));
+    s.appendChild(svgEl('circle',{cx:x1,cy:y,r:dy===0?3:2.1,fill:'#6ff3e0'}));});
   const OUT=CASES.x+48;
   if(MODE==='h24'){
     ribbon(s,{x:OUT,y:CASES.y},{x:AUTO.x-26,y:AUTO.y},12,'url(#teal)',.58);       // 96 → automated
@@ -859,63 +860,59 @@ function drawSparks(){
 /* ---------- particle canvas ---------- */
 const DPR=Math.min(devicePixelRatio||1,2);const cv=$('#cv');const ctx=cv.getContext('2d');
 cv.width=1440*DPR;cv.height=810*DPR;ctx.scale(DPR,DPR);
-const MESS=['#2fd6c0','#6ff3e0','#f5a623','#ff4d5e','#4aa3ff','#e8c14a'];
 const RINGS=[24,42,60,78,96,112,126];
 const RDIR=RINGS.map((_,i)=>i%2?1:-1);
-const RSPD=RINGS.map((_,i)=>0.0009+0.0004*((i*7)%3));
+const RSPD=RINGS.map((_,i)=>0.0008+0.0004*((i*7)%3));
 const ringOff=RINGS.map(()=>0);
+const ACC=['#ff4d5e','#f5a623','#4aa3ff','#ff7a52','#6ff3e0'];   // crisp coloured accents
 const grid=[];
-RINGS.forEach((r,ri)=>{const n=Math.max(6,Math.round(r*0.72));
-  for(let i=0;i<n;i++){ if(Math.random()<0.06) continue;
-    grid.push({ri, r:r+(Math.random()*2.2-1.1), a:i/n*6.283, ph:Math.random()*6.283, accent:(r<74 && Math.random()<0.16)});}});
+RINGS.forEach((r,ri)=>{const n=Math.max(6,Math.round(r*0.74));
+  for(let i=0;i<n;i++){ if(Math.random()<0.05) continue;
+    const ac=Math.random()<0.20;
+    grid.push({ri, r:r+(Math.random()*2.2-1.1), a:i/n*6.283, ph:Math.random()*6.283,
+      accent:ac, col:ac?ACC[(Math.random()*ACC.length)|0]:(r<52?'#8ff7e6':'#3fe0cc')});}});
 let wIdx=[];
-function slotPoint(){const rr=88+Math.random()*38, aa=Math.PI*(0.55+Math.random()*0.9);return {x:CENTER.x+Math.cos(aa)*rr, y:CENTER.y+Math.sin(aa)*rr};}
-function newInflow(p){const si=wIdx[(Math.random()*wIdx.length)|0];const sl=slotPoint();
-  p.si=si;p.mouth=srcPts[si]||WAIST;p.tx=sl.x;p.ty=sl.y;p.t=0;p.sp=0.0022+Math.random()*0.0016;p.col=MESS[(Math.random()*MESS.length)|0];
-  p.mag=!!(CURSRC[si]&&CURSRC[si].t);return p;}
-const inflow=[];for(let k=0;k<104;k++){const p=newInflow({});p.t=Math.random();inflow.push(p);}
+// inflow = crisp coloured pixels streaming STRAIGHT (radially) from just past the Issues
+// number into the core rings — the "correlation" input, exactly like the Cortex reference
+const INCOL=['#ff4d5e','#f5a623','#4aa3ff','#3fe0cc','#8ff7e6'];
+function newInflow(p){p.a=Math.PI*0.72+Math.random()*Math.PI*0.56; // ~130°–230°: the number-side corridor
+  p.r0=CENTER.R+16+Math.random()*92; p.r1=14+Math.random()*(CENTER.R-20);
+  p.t=0; p.sp=0.005+Math.random()*0.005; p.col=INCOL[(Math.random()*INCOL.length)|0]; return p;}
+const inflow=[];for(let k=0;k<120;k++){const p=newInflow({});p.t=Math.random();inflow.push(p);}
 const flashes=[];
-// start on a vertical line at the core's right edge (mirrors the source mouths, which sit
-// on a vertical line at the far left) — converging a line onto a point gives smooth data
-// streams, not the concentric "sonar" shells a circular rim start produced
-function rimRight(){return {x:CENTER.x+CENTER.R*0.96,y:CENTER.y+(Math.random()*2-1)*CENTER.R*0.86};}
-function newOut(p){p.start=rimRight();p.t=0;p.sp=0.0016+Math.random()*0.0014;p.mag=Math.random()<0.3;p.man=Math.random()<0.2;p.k=0.28+Math.random()*0.34;return p;}
+// outflow = pixels leaving past the 95, riding the funnel ribbon to auto/manual
+function rimRight(){return {x:CASES.x+22,y:CASES.y+(Math.random()*2-1)*56};}
+function newOut(p){p.start=rimRight();p.t=0;p.sp=0.006+Math.random()*0.004;p.man=Math.random()<0.2;return p;}
 const outflow=[];for(let k=0;k<52;k++){const p=newOut({});p.t=Math.random();outflow.push(p);}
 function rebuildParticles(){wIdx=[];CURSRC.forEach((s,i)=>{if(s.more)return;for(let k=0;k<s.w;k++)wIdx.push(i);});
   inflow.forEach(p=>{newInflow(p);p.t=Math.random();});}
 
 function frame(t){ctx.clearRect(0,0,STAGE.w,810);
   if(VIEW==='assets'){drawAssets(t);requestAnimationFrame(frame);return;}
-  if(!REDUCED){const period=4200,ph=(t%period)/period,rr=ph*(CENTER.R+26),al=(1-ph)*0.18;
-    ctx.strokeStyle=`rgba(47,214,192,${al})`;ctx.lineWidth=1.4;ctx.beginPath();ctx.arc(CENTER.x,CENTER.y,rr,0,6.283);ctx.stroke();
-    const ph2=((t+2100)%period)/period,rr2=ph2*(CENTER.R+26),al2=(1-ph2)*0.15;
-    ctx.strokeStyle=`rgba(226,0,116,${al2})`;ctx.beginPath();ctx.arc(CENTER.x,CENTER.y,rr2,0,6.283);ctx.stroke();}
+  if(!REDUCED){const period=5200,ph=(t%period)/period,rr=ph*(CENTER.R+18),al=(1-ph)*0.09;
+    ctx.strokeStyle=`rgba(63,224,204,${al})`;ctx.lineWidth=1.2;ctx.beginPath();ctx.arc(CENTER.x,CENTER.y,rr,0,6.283);ctx.stroke();}
   for(let ri=0;ri<RINGS.length;ri++){ if(!REDUCED) ringOff[ri]+=RDIR[ri]*RSPD[ri]; }
-  const dim = (MODE==='d30')?0.55:1; // dim core a touch under the 30D center label
+  const dim = (MODE==='d30')?0.6:1; // dim core a touch under the 30D center label
   for(const d of grid){const a=d.a+ringOff[d.ri];
     const x=CENTER.x+Math.cos(a)*d.r,y=CENTER.y+Math.sin(a)*d.r;
-    const col=d.accent?['#ff4d5e','#E20074','#f5a623','#4aa3ff'][(d.ri)%4]:(d.r<50?'#6ff3e0':'#2fd6c0');
-    ctx.globalAlpha=(.30+.5*(0.5+0.5*Math.sin(t*.0019+d.ph)))*dim;ctx.fillStyle=col;
-    ctx.beginPath();ctx.arc(x,y,d.accent?1.9:1.2,0,6.283);ctx.fill();}
+    ctx.globalAlpha=(.58+.4*(0.5+0.5*Math.sin(t*.0018+d.ph)))*dim;ctx.fillStyle=d.col;
+    ctx.beginPath();ctx.arc(x,y,d.accent?2.1:1.35,0,6.283);ctx.fill();}
   ctx.globalAlpha=1;
+  // inflow: straight radial pixels streaming into the core from the number side
   for(const p of inflow){ if(!REDUCED)p.t+=p.sp;
-    if(p.t>=1){ flashes.push({x:p.tx,y:p.ty,life:0,mag:p.mag}); newInflow(p); continue; }
-    let pt,col,al,sz;
-    if(p.t<0.5){ pt=bezPt(p.mouth,WAIST,.6,p.t/0.5); col=p.mag?'#E20074':p.col; al=.85; sz=1.7; }
-    else { const u=(p.t-0.5)/0.5; pt=bezPt(WAIST,{x:p.tx,y:p.ty},.5,u); col=p.mag?'#f4b9d8':'#6ff3e0'; al=.9*(1-u*0.35)*dim; sz=1.7-u*0.4; }
-    ctx.globalAlpha=al;ctx.fillStyle=col;ctx.beginPath();ctx.arc(pt.x,pt.y,sz,0,6.283);ctx.fill();}
-  for(let i=flashes.length-1;i>=0;i--){const f=flashes[i];f.life+=(REDUCED?99:1);const u=f.life/26;if(u>=1){flashes.splice(i,1);continue;}
-    ctx.globalAlpha=(1-u)*0.5*dim;ctx.strokeStyle=f.mag?'#f4b9d8':'#a8fff0';ctx.lineWidth=1.2;ctx.beginPath();ctx.arc(f.x,f.y,2+u*7,0,6.283);ctx.stroke();}
+    if(p.t>=1){ newInflow(p); continue; }
+    const r=p.r0+(p.r1-p.r0)*p.t, x=CENTER.x+Math.cos(p.a)*r, y=CENTER.y+Math.sin(p.a)*r;
+    ctx.globalAlpha=Math.min(1,(.28+.85*p.t))*dim;ctx.fillStyle=p.col;
+    ctx.beginPath();ctx.arc(x,y,1.5,0,6.283);ctx.fill();}
+  // outflow: pixels leaving past the 95, riding the funnel ribbon (same anchors + k=.58)
   for(const p of outflow){ if(!REDUCED)p.t+=p.sp;
     if(p.t>=1){ newOut(p); continue; }
-    // particles ride the flow line: core rim → funnel junction → funnel node, using the
-    // SAME anchor points + curvature (k=.58) as the SVG funnel ribbon, so dots overlap it
     const J={x:CASES.x+48,y:CASES.y};
     const dest=(MODE==='h24')?(p.man?{x:MAN.x-26,y:MAN.y}:{x:AUTO.x-26,y:AUTO.y})
                              :(p.man?{x:ACT.x-26,y:ACT.y}:{x:RES.x-26,y:RES.y});
-    let pt; if(p.t<0.4){ pt=bezPt(p.start,J,.62,p.t/0.4);} else { pt=bezPt(J,dest,.58,(p.t-0.4)/0.6);}
-    ctx.globalAlpha=(.8-Math.abs(p.t-0.5)*0.55)*dim;
-    ctx.fillStyle=p.mag?'#f4b9d8':'#8fe9db';ctx.beginPath();ctx.arc(pt.x,pt.y,1.5,0,6.283);ctx.fill();}
+    let pt; if(p.t<0.28){ pt=bezPt(p.start,J,.5,p.t/0.28);} else { pt=bezPt(J,dest,.58,(p.t-0.28)/0.72);}
+    ctx.globalAlpha=(.85-Math.abs(p.t-0.5)*0.5)*dim;
+    ctx.fillStyle='#8ff7e6';ctx.beginPath();ctx.arc(pt.x,pt.y,1.5,0,6.283);ctx.fill();}
   ctx.globalAlpha=1;requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
