@@ -36,6 +36,24 @@ Navigation is a small state machine: `showView('assets' | 'flow')`.
    orbital source marks + live feed), **Cases → Cases Overview** (lifecycle funnel +
    handling bars + MITRE ATT&CK by tactic). All share the `.dv` overlay pattern.
 
+## 21:9 wide flow (aspect)
+The **assets entry view stays 16:9** (fixed 1440×810). The **flow view runs at 21:9**
+(**1890×810** — same height, wider only; "Höhe lassen, nur Breite"). Layout is driven by
+`WIDE`/`applyGeo()` + the `LAYOUT.narrow`/`LAYOUT.wide` tables (only X coords change; every
+Y stays put). `showView('flow')` sets `WIDE=true`; `showView('assets')` sets it false and
+resizes stage/canvas back to 1440. Scaling to arbitrary screens is deliberately **not**
+done yet (`fit()` just scales `STAGE.w`) — a later task.
+- In wide mode the **left step becomes the Data-Inventory breakdown** promoted into the
+  flow (`buildSourcesWide()` → grouped rows from `INV`, with volumes + sparklines), exactly
+  like the user's 3rd screenshot. Core + Cases stay the cinematic flow (kept **reduced** —
+  no dense boxes). Narrow (16:9) keeps the simple `SRC24`/`SRC30` list.
+- **Agent-drift scenario** (24H only): the flow just runs; a click on the **empty flow
+  backdrop** (`e.target===#stage`) toggles `fireDrift()`/`resetDrift()`. It bumps Open Cases
+  11→12, the critical chevron 3→4 with a "+1 new" tag, and shows the `#driftW` callout —
+  *"A supplier's agent's behavior drifted — an out-of-profile data request hit iMedOne.
+  Auto-contained by policy · 1 new critical case · queued for T Security · CDC Bonn."* Ties
+  into the Telekom Agentic-Hub governance story. Real names only.
+
 ## HARD design constraints (do not violate)
 - **Keep the Cortex aesthetic**: near-black background, teal (`#2fd6c0`) glow, flowing
   SVG ribbons, particle swarm, radial/orbital layouts, soft shadows and pulses.
@@ -78,8 +96,12 @@ Generic on screen (no hospital name): the campus is just **"Main Campus"** — n
 - **Vendor logos** (`docs/*.webp`, provided by the user): **Microsoft 365, Azure, Google
   Cloud, GitHub** are inlined as base64 in `LOGO` and rendered mono-grey
   (`filter:brightness(0) invert(.72)`) — used ONLY in the Data Inventory + Dynamic View
-  as subordinate third-party sources, **never** in the main flow and **never** above /
-  replacing T Cloud Public. `docs/Aws_logo.svg.webp` is present but **unused** (AWS is a
+  as subordinate third-party sources, **never** above / replacing T Cloud Public. In the
+  **16:9** flow they must **never** appear in the main flow. In the **21:9 wide flow**
+  (see below) the left column *is* the promoted Data-Inventory breakdown, so the
+  third-party rows (incl. logos) legitimately appear there — grouped under a distinct
+  "THIRD-PARTY SOURCES" header, still mono-grey and subordinate, never above the T-Systems
+  sources. (This matches the user's own 21:9 mock-up.) `docs/Aws_logo.svg.webp` is present but **unused** (AWS is a
   weak fit for a sovereign German hospital). webp is raster; drop real `.svg` versions in
   `docs/` and re-point `LOGO` if you want vector-perfect marks.
 - All flow-source + site icons are clean line-drawn category glyphs (`ICONS`, `PMARK`) —
@@ -94,6 +116,8 @@ buckets (risk 5,840 / threat 84 / both 29). Data Ingestion = **9 TB/24H**.
 **Flow 24H**: **2,412** Issues → **96** Cases (**78** Automated / **18** Manual →
 **85** Resolved / **11** Open). Tiles: 2.4 B/24H · 9 TB/24H · 11 Open · 54 K prevented.
 Open breakdown 3/3/5/0. SOC tag: "assisted by T Security · Cyber Defense Center Bonn".
+*Drift scenario (24H, on click):* Open Cases 11→**12**, critical 3→**4** (+1 new) — a
+transient demo state, `resetDrift()` restores the base numbers.
 **Flow 30D**: **148K** → **34K** unique → **312** Cases (Active **168** = 9 Require
 Attention + 121 In Progress + 38 Mitigated; Resolved **144** = 61 Resolved + 83 Accepted
 Risk). Tiles: Vulnerable Assets **5,840** (ties to assets At Risk) · Active Cases 168
@@ -119,7 +143,16 @@ Risk). Tiles: Vulnerable Assets **5,840** (ties to assets At Risk) · Active Cas
   `BREAK` array. Spine values come from `MODES` via `setSpine`, **overriding** the
   static `data-count` placeholders in the HTML.
 - **Flow canvas** (particles, streams, magenta strand, core): the `frame()` render loop
-  + `newInflow`/`newOut`/`rebuildParticles`.
+  + `newInflow`/`newOut`/`rebuildParticles`. Particles + wires now read the live geometry
+  (`CENTER`/`WAIST`/`CASES`/… are `let`, reassigned by `applyGeo()`) and the current source
+  list `CURSRC` (set by `buildSources`), so both aspects work off one code path.
+- **21:9 layout knobs**: `LAYOUT.narrow`/`LAYOUT.wide` (X coords + `dom` element lefts),
+  `applyGeo()`, `WIDE`, `buildSourcesWide()`/`wireSourcesWide()`. Flow ribbons hug the
+  spine numbers: sources converge to `WAIST` just **before** the Issues number (no merged
+  bridge behind it — particles re-diverge to the core as individual dots); core→Cases ends
+  at `CASES-14` and the funnel starts at `CASES+16` so both ribbons hug the "96".
+- **Agent-drift scenario**: `fireDrift()`/`resetDrift()`, `#driftW` callout, `#flowHint`,
+  `#critCount`/`#critNew`, `#openTileNum`; toggled by the `#stage` empty-backdrop click.
 - **Detail popovers**: the `D` object in `detailHTML(key)`; wired by `wire()` /
   `wireSources()`.
 - **Assets**: `A_BUCKETS` (buckets), `A_LOC` (sites: cats + status), `PMARK` (site
@@ -152,10 +185,9 @@ Risk). Tiles: Vulnerable Assets **5,840** (ties to assets At Risk) · Active Cas
 3. Check numbers reconcile (see the number model) and no invented product names crept in.
 
 ## Git
-- Active branch: `claude/issues-cases-flow-refine-hlxipr` (based on the earlier
-  `claude/cortex-xsiam-research-drgysn` line, now ahead of it). Push with
-  `-u origin <branch>` and retry with backoff on network errors. Do **not** open a PR
-  unless asked.
+- Active branch: `claude/flow-layout-21-9-ivhesc` (21:9 wide flow + drift scenario, based on
+  the earlier `claude/issues-cases-flow-refine-hlxipr` line). Push with `-u origin <branch>`
+  and retry with backoff on network errors. Do **not** open a PR unless asked.
 - Commit-message footer:
   `Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>` and
   `Claude-Session: <the current claude.ai/code session URL>`.
