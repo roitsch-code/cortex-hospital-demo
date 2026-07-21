@@ -378,29 +378,32 @@ body.view-flow .backbtn{display:flex}
 
 /* ===== live queue of open cases (right side, 24H) ===== */
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
-.lq{position:absolute;z-index:6;width:562px}
-.lq-head{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:800;letter-spacing:.16em;
-  color:var(--muted);text-transform:uppercase;margin-bottom:13px;padding-left:2px}
-.lq-head b{color:#fff;font-weight:800}
-.lq-head .lqd{width:9px;height:9px;border-radius:50%;background:#63e6a0;box-shadow:0 0 10px #63e6a0;flex:0 0 auto;animation:blink 1.6s ease-in-out infinite}
-.reduced .lq-head .lqd{animation:none}
-.lq-rows{display:flex;flex-direction:column;gap:7px}
-.lqr{display:flex;align-items:center;gap:13px;height:41px;padding:0 15px 0 13px;border-radius:10px;
-  background:rgba(255,255,255,.018);border:1px solid var(--hair);position:relative;overflow:hidden;
+.lq{position:absolute;z-index:6;width:540px}
+.lq-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;padding:0 2px}
+.lq-title{display:flex;align-items:center;gap:9px;font-size:10.5px;font-weight:800;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+.lq-title b{color:#fff;font-weight:800}
+.lq-title .lqd{width:8px;height:8px;border-radius:50%;background:#63e6a0;box-shadow:0 0 9px #63e6a0;flex:0 0 auto;animation:blink 1.6s ease-in-out infinite}
+.reduced .lq-title .lqd{animation:none}
+.lq-soc{font-size:9.5px;font-weight:700;color:#f4b9d8;letter-spacing:.03em;border:1px solid rgba(226,0,116,.45);
+  border-radius:6px;padding:3px 8px;background:rgba(226,0,116,.07);white-space:nowrap}
+.lq-soc b{color:#ff7ec8}
+.lq-rows{display:flex;flex-direction:column;gap:6px}
+.lqr{display:flex;align-items:center;gap:11px;height:34px;padding:0 13px 0 11px;border-radius:9px;
+  background:rgba(255,255,255,.015);border:1px solid var(--hair);position:relative;overflow:hidden;
   transition:transform .3s,opacity .3s;cursor:default}
-.lqr::before{content:"";position:absolute;left:0;top:7px;bottom:7px;width:3px;border-radius:3px;background:var(--sc)}
-.lqr .bdg{width:24px;height:24px;flex:0 0 auto;border-radius:7px;display:grid;place-items:center;
-  font-size:11.5px;font-weight:800;color:#160a04;background:var(--sc)}
-.lqr .ti{flex:1;font-size:14px;font-weight:700;color:#eef3f5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.lqr .cid{font-size:12px;font-weight:800;color:#aeb6bd;letter-spacing:.02em;flex:0 0 auto;width:52px;text-align:left}
-.lqr .tg{font-size:12px;color:var(--dim);flex:0 0 auto;width:92px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lqr::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:2.5px;border-radius:3px;background:var(--sc)}
+.lqr .bdg{width:19px;height:19px;flex:0 0 auto;border-radius:6px;display:grid;place-items:center;
+  font-size:10px;font-weight:800;color:#160a04;background:var(--sc)}
+.lqr .ti{flex:1;font-size:12.5px;font-weight:600;color:#e7edf1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lqr .cid{font-size:11px;font-weight:700;color:#9aa3ab;letter-spacing:.02em;flex:0 0 auto;width:46px;text-align:left}
+.lqr .tg{font-size:11px;color:var(--dim);flex:0 0 auto;width:80px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .lqr.c{--sc:var(--red)} .lqr.h{--sc:#ff7a52} .lqr.m{--sc:var(--amber)} .lqr.l{--sc:var(--blue)}
-.lqr .nb{font-size:10px;font-weight:800;letter-spacing:.14em;color:#ff9a52;border:1px solid rgba(255,122,82,.7);
-  border-radius:5px;padding:2px 7px;flex:0 0 auto}
-.lqr.sub{height:auto;flex-wrap:wrap;padding-top:9px;padding-bottom:10px}
-.lqr .subl{flex-basis:100%;font-size:11.5px;color:var(--muted);padding-left:40px;margin-top:5px;line-height:1.4;white-space:normal}
+.lqr .nb{font-size:9px;font-weight:800;letter-spacing:.12em;color:#ff9a52;border:1px solid rgba(255,122,82,.65);
+  border-radius:4px;padding:2px 6px;flex:0 0 auto}
+.lqr.sub{height:auto;flex-wrap:wrap;padding-top:7px;padding-bottom:8px}
+.lqr .subl{flex-basis:100%;font-size:10.5px;color:var(--muted);padding-left:30px;margin-top:4px;line-height:1.4;white-space:normal}
 .lqr .subl b{color:#f4b9d8;font-weight:700}
-.lqr.new{border-color:rgba(255,122,82,.6);background:rgba(255,122,82,.06);box-shadow:0 0 24px rgba(255,122,82,.14)}
+.lqr.new{border-color:rgba(255,122,82,.55);background:rgba(255,122,82,.05);box-shadow:0 0 18px rgba(255,122,82,.1)}
 .lqr.enter{opacity:0;transform:translateY(-10px)}
 #flowHint{position:absolute;left:0;right:0;bottom:120px;text-align:center;z-index:6;
   font-size:12px;color:var(--muted);letter-spacing:.05em;opacity:.55;pointer-events:none;transition:opacity .35s}
@@ -475,13 +478,15 @@ body:not(.view-flow) #flowHint{display:none}
         <circle cx="12" cy="8" r="3.4"/><path d="M5.5 19a6.5 6.5 0 0 1 13 0"/></svg></div>
       <div class="fl below"><b><span data-count="18">0</span></b><span>Manual</span></div>
     </div>
-    <div class="soctag" id="socTag" style="left:1004px;top:588px">assisted by <b>T Security</b> · Cyber Defense Center Bonn</div>
     <div class="outcome click" id="nResolved" style="left:1232px;top:292px">
       <b><span data-count="85">0</span></b><span>Resolved Cases</span>
     </div>
     <!-- live queue of open cases (fills the right, mirrors the source list on the left) -->
-    <div class="lq" id="liveQueue" style="left:2300px;top:74px">
-      <div class="lq-head"><span class="lqd"></span>LIVE QUEUE · <b id="lqCount">11</b> OPEN</div>
+    <div class="lq" id="liveQueue" style="left:2300px;top:98px">
+      <div class="lq-head">
+        <span class="lq-title"><span class="lqd"></span>LIVE QUEUE · <b id="lqCount">11</b> OPEN</span>
+        <span class="lq-soc">assisted by <b>T Security</b> · CDC Bonn</span>
+      </div>
       <div class="lq-rows" id="lqRows"></div>
     </div>
   </div>
@@ -903,11 +908,13 @@ function frame(t){ctx.clearRect(0,0,STAGE.w,810);
     ctx.globalAlpha=(1-u)*0.5*dim;ctx.strokeStyle=f.mag?'#f4b9d8':'#a8fff0';ctx.lineWidth=1.2;ctx.beginPath();ctx.arc(f.x,f.y,2+u*7,0,6.283);ctx.stroke();}
   for(const p of outflow){ if(!REDUCED)p.t+=p.sp;
     if(p.t>=1){ newOut(p); continue; }
-    // rim line → converge just before the 96 → diverge to the funnel node (auto/manual),
-    // mirroring the inflow: source line → waist → core
-    const dest=(MODE==='h24')?(p.man?MAN:AUTO):(p.man?ACT:RES);
-    let pt; if(p.t<0.46){ pt=bezPt(p.start,CASESPT,.55,p.t/0.46);} else { pt=bezPt(CASESPT,dest,.5,(p.t-0.46)/0.54);}
-    ctx.globalAlpha=(.85-Math.abs(p.t-0.5)*0.6)*dim;
+    // particles ride the flow line: core rim → funnel junction → funnel node, using the
+    // SAME anchor points + curvature (k=.58) as the SVG funnel ribbon, so dots overlap it
+    const J={x:CASES.x+48,y:CASES.y};
+    const dest=(MODE==='h24')?(p.man?{x:MAN.x-26,y:MAN.y}:{x:AUTO.x-26,y:AUTO.y})
+                             :(p.man?{x:ACT.x-26,y:ACT.y}:{x:RES.x-26,y:RES.y});
+    let pt; if(p.t<0.4){ pt=bezPt(p.start,J,.62,p.t/0.4);} else { pt=bezPt(J,dest,.58,(p.t-0.4)/0.6);}
+    ctx.globalAlpha=(.8-Math.abs(p.t-0.5)*0.55)*dim;
     ctx.fillStyle=p.mag?'#f4b9d8':'#8fe9db';ctx.beginPath();ctx.arc(pt.x,pt.y,1.5,0,6.283);ctx.fill();}
   ctx.globalAlpha=1;requestAnimationFrame(frame);
 }
@@ -1349,7 +1356,7 @@ const QUEUE=[
   {sev:'m',t:'TLS downgrade · lab interface',     id:'C-4431', tag:'LIS'}
 ];
 const DRIFT_CASE={sev:'h', t:'Supplier agent · out-of-profile data request', id:'C-4490', tag:'just now',
-  sub:'Out-of-profile request to <b>iMedOne</b> · auto-contained by policy · queued for T Security · CDC Bonn'};
+  sub:'Out-of-profile request to <b>iMedOne</b> · auto-contained by policy · CDC Bonn'};
 function lqRowHTML(o,neu){
   return `<div class="lqr ${o.sev}${neu?' new sub':''}"${neu?' id="lqNew"':''}>`
     +`<span class="bdg">${o.sev.toUpperCase()}</span>`
