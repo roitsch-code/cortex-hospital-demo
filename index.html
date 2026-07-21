@@ -125,7 +125,7 @@ svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;ov
 .tile{flex:1;padding:0 26px;display:flex;flex-direction:column;justify-content:center;position:relative;cursor:pointer;transition:.18s}
 .tile+.tile{border-left:1px solid var(--hair)}
 .tile .k{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:9px}
-.tile .vrow{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.tile .vrow{display:flex;align-items:center;justify-content:flex-start;gap:22px;max-width:300px}
 .tile .v{font-size:30px;font-weight:800;color:#fff;line-height:1;white-space:nowrap;display:flex;align-items:baseline;gap:5px}
 .tile .v u{font-size:12px;color:var(--muted);font-weight:600;text-decoration:none}
 .tile .v em{font-size:12px;font-weight:700;font-style:normal;color:var(--teal-br)}
@@ -709,16 +709,18 @@ const STAGE={w:1440,h:810};
 // only X changes between layouts — every Y stays put (user: "Höhe lassen, nur Breite")
 const LAYOUT={
   narrow:{ w:1440,
-    WAIST:455, CENTER:720, CASES:930, AUTO:1080, MAN:1080, ACT:1120, RES:1120, CASESPT:970,
+    WAIST:455, CENTER:720, CASES:916, AUTO:1080, MAN:1080, ACT:1120, RES:1120, CASESPT:916,
     RESTIP:1220, OPENTIP:1190, SOC:1104, PCTIP:1252, srcX:262, pcard:1258,
-    dom:{nLeft:524, nCenter:720, coreHit:720, nRight:930, fnAuto:1080, fnManual:1080,
+    dom:{nLeft:524, nCenter:720, coreHit:720, nRight:916, fnAuto:1080, fnManual:1080,
       socTag:1004, nResolved:1232, chevOpen:1196, nOpen:1276,
       fnActive:1120, fnResolvedN:1120, driftW:1090} },
+  // WIDE: 96 sits mirror-symmetric to 2,412 about the core centre (945±223); funnel side
+  // gets the longer, more generous diverging run.
   wide:{ w:1890,
-    WAIST:648, CENTER:945, CASES:1236, AUTO:1392, MAN:1392, ACT:1440, RES:1440, CASESPT:1284,
-    RESTIP:1556, OPENTIP:1488, SOC:1288, PCTIP:1560, srcX:456, pcard:1548,
-    dom:{nLeft:722, nCenter:945, coreHit:945, nRight:1236, fnAuto:1392, fnManual:1392,
-      socTag:1268, nResolved:1540, chevOpen:1488, nOpen:1534, fnActive:1440, fnResolvedN:1440, driftW:1668} }
+    WAIST:648, CENTER:945, CASES:1168, AUTO:1400, MAN:1400, ACT:1448, RES:1448, CASESPT:1168,
+    RESTIP:1564, OPENTIP:1496, SOC:1300, PCTIP:1568, srcX:456, pcard:1556,
+    dom:{nLeft:722, nCenter:945, coreHit:945, nRight:1168, fnAuto:1400, fnManual:1400,
+      socTag:1280, nResolved:1548, chevOpen:1496, nOpen:1542, fnActive:1448, fnResolvedN:1448, driftW:1676} }
 };
 let CURLAY=LAYOUT.narrow;
 function applyGeo(){
@@ -766,8 +768,9 @@ function buildSources(list){const wrap=$('#srcWrap');wrap.innerHTML='';srcPts=[]
 }
 /* wide (21:9) sources = the Data-Inventory breakdown promoted into the flow */
 function buildSourcesWide(){const wrap=$('#srcWrap');$('#srcHead').style.display='none';
+  const list=(MODE==='d30')?INV30:INV;
   let y=150;
-  INV.forEach(o=>{
+  list.forEach(o=>{
     if(o.g){const g=document.createElement('div');g.className='dvgrp';g.style.cssText=`left:56px;top:${y+2}px`;g.textContent=o.g;wrap.appendChild(g);y+=26;return;}
     const i=srcPts.length;
     const row=document.createElement('div');
@@ -810,18 +813,16 @@ function buildWires(){const s=$('#wFlow');s.innerHTML='';defs(s);srcRibbons=[];
   ring(s,CENTER.x,CENTER.y,CENTER.R+44,96,.26);
   s.appendChild(svgEl('circle',{cx:CENTER.x,cy:CENTER.y,r:CENTER.R,fill:'none',stroke:'rgba(47,214,192,.16)','stroke-width':1}));
   s.appendChild(svgEl('circle',{cx:CENTER.x,cy:CENTER.y,r:CENTER.R*0.62,fill:'none',stroke:'rgba(47,214,192,.10)','stroke-width':1}));
-  // core → Cases: hug the 96 (ends just left of it)
-  ribbon(s,{x:CENTER.x+CENTER.R,y:CENTER.y},{x:CASES.x-14,y:CASES.y},3,'url(#teal)',.55);
+  // NB: no core→Cases bridge — mirror of the left, the particle swarm converges onto the
+  // 96 and re-diverges into the funnel, leaving the same gap the Issues number has.
   if(MODE==='h24'){
-    ribbon(s,{x:CASES.x+16,y:CASES.y},{x:AUTO.x-26,y:AUTO.y},9,'url(#teal)',.55);
-    ribbon(s,{x:CASES.x+16,y:CASES.y},{x:MAN.x-26,y:MAN.y},5,'rgba(150,168,178,.4)',.55);
-    ribbon(s,{x:AUTO.x+26,y:AUTO.y},{x:L.RESTIP,y:294},14,'url(#teal)',.5);
+    ribbon(s,{x:CASES.x+16,y:CASES.y},{x:AUTO.x-26,y:AUTO.y},12,'url(#teal)',.58);
+    ribbon(s,{x:CASES.x+16,y:CASES.y},{x:MAN.x-26,y:MAN.y},7,'rgba(150,168,178,.4)',.58);
+    ribbon(s,{x:AUTO.x+26,y:AUTO.y},{x:L.RESTIP,y:294},16,'url(#teal)',.5);
     [458,484,510,536].forEach(cy=>s.appendChild(svgEl('path',{d:band({x:MAN.x+26,y:MAN.y},{x:L.OPENTIP,y:cy},.5),fill:'none',stroke:'rgba(150,168,178,.3)','stroke-width':1.4})));
-    // magenta magic: manual cases assisted by T Security · Cyber Defense Center Bonn
-    s.appendChild(svgEl('path',{d:band({x:MAN.x,y:MAN.y+30},{x:L.SOC,y:582},.35),fill:'none',stroke:'rgba(226,0,116,.5)','stroke-width':2.4,'stroke-linecap':'round',filter:'url(#g)'}));
   }else{
-    ribbon(s,{x:CASES.x+16,y:CASES.y},{x:ACT.x-26,y:ACT.y},8,'url(#red)',.55);
-    ribbon(s,{x:CASES.x+16,y:CASES.y},{x:RES.x-26,y:RES.y},9,'url(#teal)',.55);
+    ribbon(s,{x:CASES.x+16,y:CASES.y},{x:ACT.x-26,y:ACT.y},10,'url(#red)',.58);
+    ribbon(s,{x:CASES.x+16,y:CASES.y},{x:RES.x-26,y:RES.y},11,'url(#teal)',.58);
     [206,296,386].forEach(cy=>s.appendChild(svgEl('path',{d:band({x:ACT.x+26,y:ACT.y},{x:L.PCTIP,y:cy},.5),fill:'none',stroke:'rgba(255,120,120,.32)','stroke-width':2})));
     [504,594].forEach(cy=>s.appendChild(svgEl('path',{d:band({x:RES.x+26,y:RES.y},{x:L.PCTIP,y:cy},.5),fill:'none',stroke:'rgba(47,214,192,.32)','stroke-width':2})));
   }
@@ -869,8 +870,8 @@ function newInflow(p){const si=wIdx[(Math.random()*wIdx.length)|0];const sl=slot
 const inflow=[];for(let k=0;k<64;k++){const p=newInflow({});p.t=Math.random();inflow.push(p);}
 const flashes=[];
 function rimRight(){const aa=(Math.random()*0.9-0.45);return {x:CENTER.x+Math.cos(aa)*CENTER.R,y:CENTER.y+Math.sin(aa)*CENTER.R};}
-function newOut(p){p.start=rimRight();p.t=0;p.sp=0.0018+Math.random()*0.0012;p.mag=Math.random()<0.35;return p;}
-const outflow=[];for(let k=0;k<5;k++){const p=newOut({});p.t=Math.random();outflow.push(p);}
+function newOut(p){p.start=rimRight();p.t=0;p.sp=0.0018+Math.random()*0.0012;p.mag=Math.random()<0.35;p.man=Math.random()<0.2;return p;}
+const outflow=[];for(let k=0;k<40;k++){const p=newOut({});p.t=Math.random();outflow.push(p);}
 function rebuildParticles(){wIdx=[];CURSRC.forEach((s,i)=>{if(s.more)return;for(let k=0;k<s.w;k++)wIdx.push(i);});
   inflow.forEach(p=>{newInflow(p);p.t=Math.random();});}
 
@@ -898,8 +899,9 @@ function frame(t){ctx.clearRect(0,0,1440,810);
     ctx.globalAlpha=(1-u)*0.5*dim;ctx.strokeStyle=f.mag?'#f4b9d8':'#a8fff0';ctx.lineWidth=1.2;ctx.beginPath();ctx.arc(f.x,f.y,2+u*7,0,6.283);ctx.stroke();}
   for(const p of outflow){ if(!REDUCED)p.t+=p.sp;
     if(p.t>=1){ newOut(p); continue; }
-    let pt; if(p.t<0.45){ pt=bezPt(p.start,CASESPT,.5,p.t/0.45);} else { pt=bezPt(CASESPT,(MODE==='h24'?AUTO:RES),.5,(p.t-0.45)/0.55);}
-    ctx.globalAlpha=.9;ctx.fillStyle=p.mag?'#f4b9d8':'#a8fff0';ctx.beginPath();ctx.arc(pt.x,pt.y,1.9,0,6.283);ctx.fill();}
+    const dest=(MODE==='h24')?(p.man?MAN:AUTO):(p.man?ACT:RES);
+    let pt,sz; if(p.t<0.45){ pt=bezPt(p.start,CASESPT,.5,p.t/0.45); sz=1.9-(p.t/0.45)*0.5;} else { pt=bezPt(CASESPT,dest,.5,(p.t-0.45)/0.55); sz=1.4;}
+    ctx.globalAlpha=.9*dim;ctx.fillStyle=p.mag?'#f4b9d8':'#a8fff0';ctx.beginPath();ctx.arc(pt.x,pt.y,sz,0,6.283);ctx.fill();}
   ctx.globalAlpha=1;requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
@@ -1186,6 +1188,26 @@ const INV=[
  {logo:'gcp',n:'Google Cloud',vol:'90 GB',w:3,wide:1,spk:[9,10,10,11,10,12,11,10,11,12]},
  {logo:'github',n:'GitHub · Research',vol:'12 GB',w:2,spk:[4,5,4,6,5,6,5,6,5,6]},
  {n:'+ 60 Data Sources',icon:'more',vol:'0.2 TB',w:2,more:1}
+];
+// 30D wide left column = vulnerability scanners / posture (findings sum ≈ 148K)
+const INV30=[
+ {g:'Clinical & Medical'},
+ {n:'IoMT Security · device VM',icon:'iomt',vol:'41K',w:9,ep:1,spk:[20,24,22,28,26,30,27,31,29,33]},
+ {n:'Endpoint · EDR',icon:'endpoint',vol:'28K',w:7,spk:[18,20,19,22,21,20,23,22,24,23]},
+ {n:'Imaging / PACS · modality',icon:'imaging',vol:'12K',w:4,spk:[30,28,31,29,32,30,33,31,30,32]},
+ {n:'Laboratory · LIS',icon:'flask',vol:'3K',w:2,spk:[10,12,11,13,12,11,13,12,14,13]},
+ {g:'Network & Infrastructure'},
+ {n:'Vulnerability Scan · network & servers',icon:'scan',vol:'31K',w:8,spk:[40,44,42,46,43,47,45,44,46,48]},
+ {n:'Identities & Access',icon:'identity',vol:'6K',w:3,spk:[8,9,8,10,9,11,10,9,10,11]},
+ {g:'Sovereign Cloud · T-Systems'},
+ {n:'iMedOne · HIS · app & config',icon:'his',vol:'9K',w:4,t:1,spk:[22,24,23,25,24,26,25,24,26,27]},
+ {n:'T Cloud Posture · CSPM',icon:'tmark',vol:'8K',w:4,t:1,sov:1,spk:[30,32,31,34,33,35,34,36,35,37]},
+ {g:'Third-party posture'},
+ {logo:'o365',n:'Microsoft 365 · Defender',vol:'5K',w:3,spk:[16,18,17,19,18,20,19,18,20,21]},
+ {logo:'azure',n:'Azure · Defender for Cloud',vol:'2.6K',w:2,spk:[14,15,14,16,15,17,16,15,16,17]},
+ {logo:'gcp',n:'Google Cloud · SCC',vol:'1.6K',w:2,spk:[9,10,10,11,10,12,11,10,11,12]},
+ {logo:'github',n:'GitHub · code scanning',vol:'0.8K',w:1,spk:[4,5,4,6,5,6,5,6,5,6]},
+ {n:'+ more Scanners',icon:'more',vol:'0.2K',w:2,more:1}
 ];
 const INV_THROAT={x:752,y:404}, INV_ISSUES={x:965,y:380}, INV_PREV={x:1090,y:560};
 function buildInventory(){
