@@ -937,10 +937,8 @@ function newInflow(p){p.sx=CENTER.x-CENTER.R-90; p.y=CENTER.y+(Math.random()*2-1
   p.t=0; p.sp=0.0015+Math.random()*0.001; p.col=INCOL[(Math.random()*INCOL.length)|0]; return p;}
 const inflow=[];for(let k=0;k<95;k++){const p=newInflow({});p.t=Math.random();inflow.push(p);}
 const flashes=[];
-// outflow = SLOW pixels leaving past the 95, riding the funnel ribbon to auto/manual
-function rimRight(){return {x:CASES.x+22,y:CASES.y+(Math.random()*2-1)*54};}
-function newOut(p){p.start=rimRight();p.t=0;p.sp=0.0018+Math.random()*0.0011;p.man=Math.random()<0.2;return p;}
-const outflow=[];for(let k=0;k<66;k++){const p=newOut({});p.t=Math.random();outflow.push(p);}
+// NO particles right of the Cases number — the flow ends at the 96 (mirror of the left,
+// where there are no particles left of the 2,412). Right of 96 = clean ribbon lines only.
 // green pixels streaming core → Cases number (no lines) — slow + sparse
 function newCoreOut(p){p.sy=CENTER.y+(Math.random()*2-1)*CENTER.R*0.5;p.t=0;p.sp=0.0016+Math.random()*0.001;return p;}
 const coreOut=[];for(let k=0;k<15;k++){const p=newCoreOut({});p.t=Math.random();coreOut.push(p);}
@@ -979,15 +977,7 @@ function frame(t){ctx.clearRect(0,0,STAGE.w,810);
     const x=p.sx+(p.ex-p.sx)*p.t;
     ctx.globalAlpha=Math.min(1,p.t/0.12)*Math.min(1,(1-p.t)/0.32)*0.95*dim;
     ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(x,p.y,1.6,0,6.283);ctx.fill();}
-  // outflow: slow pixels riding the funnel ribbon (canvas now sits above it, so visible)
-  for(const p of outflow){ if(!REDUCED)p.t+=p.sp;
-    if(p.t>=1){ newOut(p); continue; }
-    const J={x:CASES.x+48,y:CASES.y};
-    const dest=(MODE==='h24')?(p.man?{x:MAN.x-26,y:MAN.y}:{x:AUTO.x-26,y:AUTO.y})
-                             :(p.man?{x:ACT.x-26,y:ACT.y}:{x:RES.x-26,y:RES.y});
-    let pt; if(p.t<0.3){ pt=bezPt(p.start,J,.5,p.t/0.3);} else { pt=bezPt(J,dest,.58,(p.t-0.3)/0.7);}
-    ctx.globalAlpha=(.95-Math.abs(p.t-0.5)*0.35)*dim;
-    ctx.fillStyle='#c8fff4';ctx.beginPath();ctx.arc(pt.x,pt.y,1.9,0,6.283);ctx.fill();}
+  // (no outflow particles — the flow ends at the Cases number; right of it = lines only)
   // core → Cases number: green pixels only (no lines), slow + sparse
   for(const p of coreOut){ if(!REDUCED)p.t+=p.sp;
     if(p.t>=1){ newCoreOut(p); continue; }
