@@ -712,14 +712,14 @@ const LAYOUT={
     dom:{nLeft:524, nCenter:720, coreHit:720, nRight:916, fnAuto:1080, fnManual:1080,
       socTag:1004, nResolved:1232, chevOpen:1196, nOpen:1276,
       fnActive:1120, fnResolvedN:1120, driftW:1090} },
-  // WIDE: 96 sits mirror-symmetric to 2,412 about the core centre (945±223). Funnel kept
-  // compact so the ribbon ends land just before each outcome number (not over its label)
-  // and the drift callout fits fully inside the frame.
-  wide:{ w:1890,
-    WAIST:648, CENTER:945, CASES:1168, AUTO:1334, MAN:1334, ACT:1384, RES:1384, CASESPT:1168,
-    RESTIP:1434, OPENTIP:1398, SOC:1210, PCTIP:1448, srcX:456, pcard:1474,
-    dom:{nLeft:722, nCenter:945, coreHit:945, nRight:1168, fnAuto:1334, fnManual:1334,
-      socTag:1210, nResolved:1456, chevOpen:1404, nOpen:1450, fnActive:1384, fnResolvedN:1384, driftW:1588} }
+  // WIDE = 32:9 (2880×810 → scales 1:1 to the 5120×1440 ultrawide). Core centred at 1440;
+  // 2,412 and 96 sit mirror-symmetric about it (1440±360). Long, generous fans on both
+  // sides; each outcome ribbon ends just before its number, drift callout well inside.
+  wide:{ w:2880,
+    WAIST:980, CENTER:1440, CASES:1800, AUTO:2100, MAN:2100, ACT:2150, RES:2150, CASESPT:1740,
+    RESTIP:2228, OPENTIP:2194, SOC:2000, PCTIP:2250, srcX:456, pcard:2288,
+    dom:{nLeft:1080, nCenter:1440, coreHit:1440, nRight:1800, fnAuto:2100, fnManual:2100,
+      socTag:2000, nResolved:2252, chevOpen:2200, nOpen:2248, fnActive:2150, fnResolvedN:2150, driftW:2404} }
 };
 let CURLAY=LAYOUT.narrow;
 function applyGeo(){
@@ -812,8 +812,9 @@ function buildWires(){const s=$('#wFlow');s.innerHTML='';defs(s);srcRibbons=[];
   ring(s,CENTER.x,CENTER.y,CENTER.R+44,96,.26);
   s.appendChild(svgEl('circle',{cx:CENTER.x,cy:CENTER.y,r:CENTER.R,fill:'none',stroke:'rgba(47,214,192,.16)','stroke-width':1}));
   s.appendChild(svgEl('circle',{cx:CENTER.x,cy:CENTER.y,r:CENTER.R*0.62,fill:'none',stroke:'rgba(47,214,192,.10)','stroke-width':1}));
-  // NB: no core→Cases bridge — mirror of the left, the particle swarm converges onto the
-  // 96 and re-diverges into the funnel, starting clear to the right of the number.
+  // core → Cases bundle: mirrors the source bundle on the left — it ends ~100px BEFORE the
+  // 96 (same gap the 2,412 has), and the particle swarm carries across the gap.
+  ribbon(s,{x:CENTER.x+CENTER.R,y:CENTER.y},{x:CASES.x-100,y:CASES.y},7,'url(#teal)',.62);
   const OUT=CASES.x+48;
   if(MODE==='h24'){
     ribbon(s,{x:OUT,y:CASES.y},{x:AUTO.x-26,y:AUTO.y},12,'url(#teal)',.58);       // 96 → automated
@@ -868,15 +869,18 @@ function slotPoint(){const rr=88+Math.random()*38, aa=Math.PI*(0.55+Math.random(
 function newInflow(p){const si=wIdx[(Math.random()*wIdx.length)|0];const sl=slotPoint();
   p.si=si;p.mouth=srcPts[si]||WAIST;p.tx=sl.x;p.ty=sl.y;p.t=0;p.sp=0.0022+Math.random()*0.0016;p.col=MESS[(Math.random()*MESS.length)|0];
   p.mag=!!(CURSRC[si]&&CURSRC[si].t);return p;}
-const inflow=[];for(let k=0;k<64;k++){const p=newInflow({});p.t=Math.random();inflow.push(p);}
+const inflow=[];for(let k=0;k<104;k++){const p=newInflow({});p.t=Math.random();inflow.push(p);}
 const flashes=[];
-function rimRight(){const aa=(Math.random()*0.9-0.45);return {x:CENTER.x+Math.cos(aa)*CENTER.R,y:CENTER.y+Math.sin(aa)*CENTER.R};}
-function newOut(p){p.start=rimRight();p.t=0;p.sp=0.0018+Math.random()*0.0012;p.mag=Math.random()<0.35;p.man=Math.random()<0.2;return p;}
-const outflow=[];for(let k=0;k<40;k++){const p=newOut({});p.t=Math.random();outflow.push(p);}
+// start on a vertical line at the core's right edge (mirrors the source mouths, which sit
+// on a vertical line at the far left) — converging a line onto a point gives smooth data
+// streams, not the concentric "sonar" shells a circular rim start produced
+function rimRight(){return {x:CENTER.x+CENTER.R*0.96,y:CENTER.y+(Math.random()*2-1)*CENTER.R*0.86};}
+function newOut(p){p.start=rimRight();p.t=0;p.sp=0.0016+Math.random()*0.0014;p.mag=Math.random()<0.3;p.man=Math.random()<0.2;p.k=0.28+Math.random()*0.34;return p;}
+const outflow=[];for(let k=0;k<52;k++){const p=newOut({});p.t=Math.random();outflow.push(p);}
 function rebuildParticles(){wIdx=[];CURSRC.forEach((s,i)=>{if(s.more)return;for(let k=0;k<s.w;k++)wIdx.push(i);});
   inflow.forEach(p=>{newInflow(p);p.t=Math.random();});}
 
-function frame(t){ctx.clearRect(0,0,1440,810);
+function frame(t){ctx.clearRect(0,0,STAGE.w,810);
   if(VIEW==='assets'){drawAssets(t);requestAnimationFrame(frame);return;}
   if(!REDUCED){const period=4200,ph=(t%period)/period,rr=ph*(CENTER.R+26),al=(1-ph)*0.18;
     ctx.strokeStyle=`rgba(47,214,192,${al})`;ctx.lineWidth=1.4;ctx.beginPath();ctx.arc(CENTER.x,CENTER.y,rr,0,6.283);ctx.stroke();
@@ -900,9 +904,12 @@ function frame(t){ctx.clearRect(0,0,1440,810);
     ctx.globalAlpha=(1-u)*0.5*dim;ctx.strokeStyle=f.mag?'#f4b9d8':'#a8fff0';ctx.lineWidth=1.2;ctx.beginPath();ctx.arc(f.x,f.y,2+u*7,0,6.283);ctx.stroke();}
   for(const p of outflow){ if(!REDUCED)p.t+=p.sp;
     if(p.t>=1){ newOut(p); continue; }
+    // rim line → converge just before the 96 → diverge to the funnel node (auto/manual),
+    // mirroring the inflow: source line → waist → core
     const dest=(MODE==='h24')?(p.man?MAN:AUTO):(p.man?ACT:RES);
-    let pt,sz; if(p.t<0.45){ pt=bezPt(p.start,CASESPT,.5,p.t/0.45); sz=1.9-(p.t/0.45)*0.5;} else { pt=bezPt(CASESPT,dest,.5,(p.t-0.45)/0.55); sz=1.4;}
-    ctx.globalAlpha=.9*dim;ctx.fillStyle=p.mag?'#f4b9d8':'#a8fff0';ctx.beginPath();ctx.arc(pt.x,pt.y,sz,0,6.283);ctx.fill();}
+    let pt; if(p.t<0.46){ pt=bezPt(p.start,CASESPT,.55,p.t/0.46);} else { pt=bezPt(CASESPT,dest,.5,(p.t-0.46)/0.54);}
+    ctx.globalAlpha=(.85-Math.abs(p.t-0.5)*0.6)*dim;
+    ctx.fillStyle=p.mag?'#f4b9d8':'#8fe9db';ctx.beginPath();ctx.arc(pt.x,pt.y,1.5,0,6.283);ctx.fill();}
   ctx.globalAlpha=1;requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
@@ -1017,8 +1024,8 @@ function renderMode(m){MODE=m;const cfg=MODES[m];
   const d30=(m==='d30');
   $('#right24').classList.toggle('hidden',d30);
   $('#right30').classList.toggle('hidden',!d30);
-  $('#tiles24').classList.toggle('hidden',d30);
-  $('#tiles30').classList.toggle('hidden',!d30);
+  $('#tiles24').classList.add('hidden');   // bottom stat tiles removed — cleaner flow
+  $('#tiles30').classList.add('hidden');
   $('#nCenter').classList.toggle('hidden',!cfg.center);
   setSpine($('#nLeft'),cfg.left);
   setSpine($('#nRight'),cfg.right);

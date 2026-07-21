@@ -36,13 +36,19 @@ Navigation is a small state machine: `showView('assets' | 'flow')`.
    orbital source marks + live feed), **Cases → Cases Overview** (lifecycle funnel +
    handling bars + MITRE ATT&CK by tactic). All share the `.dv` overlay pattern.
 
-## 21:9 wide flow (aspect)
-The **assets entry view stays 16:9** (fixed 1440×810). The **flow view runs at 21:9**
-(**1890×810** — same height, wider only; "Höhe lassen, nur Breite"). Layout is driven by
-`WIDE`/`applyGeo()` + the `LAYOUT.narrow`/`LAYOUT.wide` tables (only X coords change; every
-Y stays put). `showView('flow')` sets `WIDE=true`; `showView('assets')` sets it false and
-resizes stage/canvas back to 1440. Scaling to arbitrary screens is deliberately **not**
-done yet (`fit()` just scales `STAGE.w`) — a later task.
+## Ultrawide flow (aspect)
+Target screen is a **32:9** ultrawide (iiyama ProLite XCB4594DQSU, **5120×1440**). The
+**assets entry view stays 16:9** (fixed 1440×810). The **flow view runs at 32:9**
+(**2880×810** — same height, wider only; "Höhe lassen, nur Breite"; 2880×810 scales 1:1 to
+5120×1440). Layout is driven by `WIDE`/`applyGeo()` + the `LAYOUT.narrow`/`LAYOUT.wide`
+tables (only X coords change; every Y stays put). `showView('flow')` sets `WIDE=true`;
+`showView('assets')` sets it false and resizes stage/canvas back to 1440. The core is
+centred at x=1440; 2,412 and 96 sit mirror-symmetric about it (1440±360).
+- **The bottom stat tiles (`#tiles24`/`#tiles30`) are removed** from the flow (hidden in
+  `renderMode`) — the ingestion/prevented cards looked cluttered on the wide screen.
+- ⚠ **Canvas clear must use `STAGE.w`**, not a hard-coded width. `frame()` does
+  `ctx.clearRect(0,0,STAGE.w,810)`; clearing only 1440 leaves the right half of the wide
+  canvas un-cleared, so particles + core dots accumulate into bright "sonar" shells/streaks.
 - In wide mode the **left step becomes the Data-Inventory breakdown** promoted into the
   flow (`buildSourcesWide()` → grouped rows from `INV`, with volumes + sparklines), exactly
   like the user's 3rd screenshot. Core + Cases stay the cinematic flow (kept **reduced** —
