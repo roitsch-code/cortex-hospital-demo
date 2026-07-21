@@ -376,26 +376,34 @@ body.view-flow .backbtn{display:flex}
 .co-mrow .bar{width:90px;flex:0 0 auto;height:6px;border-radius:4px;background:linear-gradient(90deg,rgba(47,214,192,.55),rgba(47,214,192,.1))}
 .co-mrow.hi .c{color:var(--teal-br)}
 
-/* ===== 21:9 drift scenario (supplier agent out of profile) ===== */
+/* ===== live queue of open cases (right side, 24H) ===== */
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
-.driftw{position:absolute;z-index:20;width:258px;background:rgba(9,13,17,.97);
-  border:1px solid var(--teal-dim);border-radius:12px;padding:13px 15px;
-  box-shadow:0 14px 44px rgba(0,0,0,.6),0 0 30px rgba(47,214,192,.1);
-  opacity:0;transform:translateX(6px);transition:opacity .3s,transform .3s;pointer-events:auto}
-.driftw:not(.hidden){opacity:1;transform:translateX(0)}
-.driftw::before{content:"";position:absolute;left:-7px;top:24px;width:0;height:0;
-  border:6px solid transparent;border-right-color:var(--teal-dim);border-left:0}
-.driftw h4{font-size:12.5px;font-weight:800;color:#fff;display:flex;align-items:center;gap:8px;margin-bottom:9px;white-space:nowrap}
-.driftw h4 .dd{width:8px;height:8px;border-radius:50%;background:var(--magenta);box-shadow:0 0 8px var(--magenta);flex:0 0 auto}
-.driftw p{font-size:11.5px;line-height:1.5;color:#cfd6db;margin-bottom:9px}
-.driftw p b{color:#ff9ad4;font-weight:700}
-.driftw .df{font-size:10.5px;color:var(--teal-br);opacity:.85;line-height:1.45;letter-spacing:.02em}
-.newtag{color:#ff7ec8;font-size:11px;font-weight:800;text-shadow:0 0 12px rgba(226,0,116,.6);opacity:0;transition:opacity .3s}
-.newtag:not(.hidden){opacity:1}
-#chevOpen .cv.crit.bump i,#chevOpen .cv.crit.bump .cn{color:#ff9aa4;text-shadow:0 0 16px rgba(255,77,94,.7)}
-#nOpen.drift b{color:#ff9aa4;text-shadow:0 0 26px rgba(255,77,94,.6)}
-#flowHint{position:absolute;left:0;right:0;bottom:150px;text-align:center;z-index:6;
-  font-size:12px;color:var(--muted);letter-spacing:.05em;opacity:.6;pointer-events:none;transition:opacity .35s}
+.lq{position:absolute;z-index:6;width:562px}
+.lq-head{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:800;letter-spacing:.16em;
+  color:var(--muted);text-transform:uppercase;margin-bottom:13px;padding-left:2px}
+.lq-head b{color:#fff;font-weight:800}
+.lq-head .lqd{width:9px;height:9px;border-radius:50%;background:#63e6a0;box-shadow:0 0 10px #63e6a0;flex:0 0 auto;animation:blink 1.6s ease-in-out infinite}
+.reduced .lq-head .lqd{animation:none}
+.lq-rows{display:flex;flex-direction:column;gap:7px}
+.lqr{display:flex;align-items:center;gap:13px;height:41px;padding:0 15px 0 13px;border-radius:10px;
+  background:rgba(255,255,255,.018);border:1px solid var(--hair);position:relative;overflow:hidden;
+  transition:transform .3s,opacity .3s;cursor:default}
+.lqr::before{content:"";position:absolute;left:0;top:7px;bottom:7px;width:3px;border-radius:3px;background:var(--sc)}
+.lqr .bdg{width:24px;height:24px;flex:0 0 auto;border-radius:7px;display:grid;place-items:center;
+  font-size:11.5px;font-weight:800;color:#160a04;background:var(--sc)}
+.lqr .ti{flex:1;font-size:14px;font-weight:700;color:#eef3f5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lqr .cid{font-size:12px;font-weight:800;color:#aeb6bd;letter-spacing:.02em;flex:0 0 auto;width:52px;text-align:left}
+.lqr .tg{font-size:12px;color:var(--dim);flex:0 0 auto;width:92px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lqr.c{--sc:var(--red)} .lqr.h{--sc:#ff7a52} .lqr.m{--sc:var(--amber)} .lqr.l{--sc:var(--blue)}
+.lqr .nb{font-size:10px;font-weight:800;letter-spacing:.14em;color:#ff9a52;border:1px solid rgba(255,122,82,.7);
+  border-radius:5px;padding:2px 7px;flex:0 0 auto}
+.lqr.sub{height:auto;flex-wrap:wrap;padding-top:9px;padding-bottom:10px}
+.lqr .subl{flex-basis:100%;font-size:11.5px;color:var(--muted);padding-left:40px;margin-top:5px;line-height:1.4;white-space:normal}
+.lqr .subl b{color:#f4b9d8;font-weight:700}
+.lqr.new{border-color:rgba(255,122,82,.6);background:rgba(255,122,82,.06);box-shadow:0 0 24px rgba(255,122,82,.14)}
+.lqr.enter{opacity:0;transform:translateY(-10px)}
+#flowHint{position:absolute;left:0;right:0;bottom:120px;text-align:center;z-index:6;
+  font-size:12px;color:var(--muted);letter-spacing:.05em;opacity:.55;pointer-events:none;transition:opacity .35s}
 #flowHint.hidden{opacity:0}
 body:not(.view-flow) #flowHint{display:none}
 
@@ -471,12 +479,10 @@ body:not(.view-flow) #flowHint{display:none}
     <div class="outcome click" id="nResolved" style="left:1232px;top:292px">
       <b><span data-count="85">0</span></b><span>Resolved Cases</span>
     </div>
-    <div class="chev" id="chevOpen" style="left:1196px;top:446px">
-      <div class="cv crit"><i>▲▲</i><span class="cn" id="critCount">3</span><em class="newtag hidden" id="critNew">+1 new</em></div><div class="cv high"><i>▲▲</i>3</div>
-      <div class="cv med"><i>▲</i>5</div><div class="cv low"><i>▲</i>0</div>
-    </div>
-    <div class="outcome click" id="nOpen" style="left:1276px;top:498px">
-      <b><span data-count="11">0</span></b><span>Open Cases</span>
+    <!-- live queue of open cases (fills the right, mirrors the source list on the left) -->
+    <div class="lq" id="liveQueue" style="left:2300px;top:74px">
+      <div class="lq-head"><span class="lqd"></span>LIVE QUEUE · <b id="lqCount">11</b> OPEN</div>
+      <div class="lq-rows" id="lqRows"></div>
     </div>
   </div>
 
@@ -500,12 +506,6 @@ body:not(.view-flow) #flowHint{display:none}
     <div class="pcard tl" style="left:1258px;top:560px" data-detail="p_risk"><b><span data-count="83">0</span> <em class="up">↑5.3%</em></b><span>Accepted Risk</span></div>
   </div>
 
-  <!-- 21:9 drift scenario callout (supplier agent out of profile) -->
-  <div class="driftw hidden" id="driftW" style="left:1588px;top:412px">
-    <h4><span class="dd"></span>Supplier agent · out of profile</h4>
-    <p>A supplier's agent's behavior <b>drifted</b> — an out-of-profile data request hit iMedOne. Auto-contained by policy.</p>
-    <div class="df">1 new critical case · queued for T Security · CDC Bonn</div>
-  </div>
   <div id="flowHint">click the flow to advance the live scenario ›</div>
 
   <!-- bottom stat tiles (24H) -->
@@ -708,18 +708,17 @@ const STAGE={w:1440,h:810};
 const LAYOUT={
   narrow:{ w:1440,
     WAIST:455, CENTER:720, CASES:916, AUTO:1080, MAN:1080, ACT:1120, RES:1120, CASESPT:916,
-    RESTIP:1220, OPENTIP:1190, SOC:1104, PCTIP:1252, srcX:262, pcard:1258,
+    RESTIP:1220, OPENTIP:1190, SOC:1104, PCTIP:1252, srcX:262, pcard:1258, LQX:1300, LQMID:420,
     dom:{nLeft:524, nCenter:720, coreHit:720, nRight:916, fnAuto:1080, fnManual:1080,
-      socTag:1004, nResolved:1232, chevOpen:1196, nOpen:1276,
-      fnActive:1120, fnResolvedN:1120, driftW:1090} },
+      socTag:1004, nResolved:1232, fnActive:1120, fnResolvedN:1120} },
   // WIDE = 32:9 (2880×810 → scales 1:1 to the 5120×1440 ultrawide). Core centred at 1440;
   // 2,412 and 96 sit mirror-symmetric about it (1440±360). Long, generous fans on both
   // sides; each outcome ribbon ends just before its number, drift callout well inside.
   wide:{ w:2880,
-    WAIST:980, CENTER:1440, CASES:1800, AUTO:2100, MAN:2100, ACT:2150, RES:2150, CASESPT:1740,
-    RESTIP:2228, OPENTIP:2194, SOC:2000, PCTIP:2250, srcX:456, pcard:2288,
-    dom:{nLeft:1080, nCenter:1440, coreHit:1440, nRight:1800, fnAuto:2100, fnManual:2100,
-      socTag:2000, nResolved:2252, chevOpen:2200, nOpen:2248, fnActive:2150, fnResolvedN:2150, driftW:2404} }
+    WAIST:980, CENTER:1440, CASES:1800, AUTO:1968, MAN:1968, ACT:2120, RES:2120, CASESPT:1740,
+    RESTIP:2084, SOC:1826, PCTIP:2300, srcX:456, pcard:2320, LQX:2300, LQMID:412,
+    dom:{nLeft:1080, nCenter:1440, coreHit:1440, nRight:1800, fnAuto:1968, fnManual:1968,
+      socTag:1826, nResolved:2108, fnActive:2120, fnResolvedN:2120} }
 };
 let CURLAY=LAYOUT.narrow;
 function applyGeo(){
@@ -821,7 +820,7 @@ function buildWires(){const s=$('#wFlow');s.innerHTML='';defs(s);srcRibbons=[];
     ribbon(s,{x:OUT,y:CASES.y},{x:MAN.x-26,y:MAN.y},7,'rgba(150,168,178,.4)',.58);// 96 → manual
     ribbon(s,{x:AUTO.x+26,y:AUTO.y},{x:L.RESTIP,y:294},16,'url(#teal)',.5);        // 78 automated → resolved
     ribbon(s,{x:MAN.x+22,y:MAN.y-10},{x:L.RESTIP-4,y:306},5,'url(#teal)',.4);      // 7 manual → resolved
-    [458,484,510,536].forEach(cy=>s.appendChild(svgEl('path',{d:band({x:MAN.x+26,y:MAN.y},{x:L.OPENTIP,y:cy},.5),fill:'none',stroke:'rgba(150,168,178,.3)','stroke-width':1.4})));// 11 manual → open
+    ribbon(s,{x:MAN.x+26,y:MAN.y},{x:L.LQX-14,y:L.LQMID},9,'rgba(150,168,178,.42)',.5); // 11 manual → live queue
   }else{
     ribbon(s,{x:OUT,y:CASES.y},{x:ACT.x-26,y:ACT.y},10,'url(#red)',.58);
     ribbon(s,{x:OUT,y:CASES.y},{x:RES.x-26,y:RES.y},11,'url(#teal)',.58);
@@ -977,7 +976,7 @@ function wire(el,key){if(!el)return;el.setAttribute('data-pop','');el.style.curs
 
 /* wire static + dynamic elements */
 wire($('#fnAuto'),'automated');wire($('#fnManual'),'manual');
-wire($('#nResolved'),'resolved');wire($('#nOpen'),'open');wire($('#chevOpen'),'open');
+wire($('#nResolved'),'resolved');
 wire($('#fnActive'),'activecases');wire($('#fnResolvedN'),'cases30');
 $$('.pcard').forEach(c=>wire(c,c.dataset.detail));
 $$('.tile[data-detail]').forEach(t=>wire(t,t.dataset.detail));
@@ -1038,6 +1037,7 @@ function renderMode(m){MODE=m;const cfg=MODES[m];
   countUp($('#nLeft'));countUp($('#nRight'));if(cfg.center)countUp($('#nCenter'));
   countUp(d30?$('#right30'):$('#right24'));
   countUp(d30?$('#tiles30'):$('#tiles24'));
+  if(m==='h24')buildQueue();
   $('#flowHint').classList.toggle('hidden', m!=='h24' || DRIFT);
 }
 $$('#tseg button').forEach(b=>b.onclick=()=>{if(b.dataset.mode!==MODE){closePrio();resetDrift();renderMode(b.dataset.mode);}});
@@ -1333,28 +1333,52 @@ $('#nRight').onclick=e=>{e.stopPropagation(); if(MODE==='h24')openCases(); else 
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeCases();});
 
 
-/* ===== 21:9 drift scenario: a supplier agent drifts out of profile ===== */
+/* ===== live queue of open cases + agent-drift scenario ===== */
+// 11 open cases = 3 Critical + 3 High + 5 Medium (ties to the open-cases model)
+const QUEUE=[
+  {sev:'c',t:'Ransomware staging · imaging VLAN', id:'C-4471', tag:'IoMT · 2 assets'},
+  {sev:'c',t:'Domain-admin credential abuse',     id:'C-4468', tag:'Identities'},
+  {sev:'c',t:'Data exfil to unknown ASN',         id:'C-4455', tag:'Research'},
+  {sev:'h',t:'NGFW policy-bypass attempt',        id:'C-4462', tag:'Network'},
+  {sev:'h',t:'Suspicious OAuth grant · M365',     id:'C-4458', tag:'Identities'},
+  {sev:'h',t:'Anomalous DB egress · T Cloud',     id:'C-4451', tag:'T Cloud'},
+  {sev:'m',t:'Unpatched CVE · infusion pumps',    id:'C-4449', tag:'IoMT'},
+  {sev:'m',t:'Phishing cluster · outpatient',     id:'C-4444', tag:'Endpoints'},
+  {sev:'m',t:'Config drift · backup vault',       id:'C-4440', tag:'T Cloud'},
+  {sev:'m',t:'Stale privileged account',          id:'C-4436', tag:'Identities'},
+  {sev:'m',t:'TLS downgrade · lab interface',     id:'C-4431', tag:'LIS'}
+];
+const DRIFT_CASE={sev:'h', t:'Supplier agent · out-of-profile data request', id:'C-4490', tag:'just now',
+  sub:'Out-of-profile request to <b>iMedOne</b> · auto-contained by policy · queued for T Security · CDC Bonn'};
+function lqRowHTML(o,neu){
+  return `<div class="lqr ${o.sev}${neu?' new sub':''}"${neu?' id="lqNew"':''}>`
+    +`<span class="bdg">${o.sev.toUpperCase()}</span>`
+    +`<span class="ti">${o.t}</span>`
+    +(neu?'<span class="nb">NEW</span>':'')
+    +`<span class="cid">${o.id}</span>`
+    +`<span class="tg">${o.tag}</span>`
+    +(neu&&o.sub?`<span class="subl">${o.sub}</span>`:'')
+    +`</div>`;
+}
+function buildQueue(){const rows=$('#lqRows'); if(!rows)return;
+  rows.innerHTML=QUEUE.map(o=>lqRowHTML(o,false)).join('');
+  $('#lqCount').textContent=QUEUE.length; DRIFT=false;
+}
 let DRIFT=false;
 function fireDrift(){ if(MODE!=='h24'||DRIFT)return; DRIFT=true;
   $('#flowHint').classList.add('hidden');
-  const crit=$('#chevOpen .cv.crit'); if(crit)crit.classList.add('bump');
-  const cc=$('#critCount'); if(cc)cc.textContent='4';
-  $('#critNew').classList.remove('hidden');
-  const o=$('#nOpen b span'); if(o)animNum(o,12,false);
-  const t=$('#openTileNum'); if(t)animNum(t,12,false);
-  $('#nOpen').classList.add('drift');
-  if(WIDE)$('#driftW').classList.remove('hidden');
+  const rows=$('#lqRows'); if(!rows)return;
+  const wrap=document.createElement('div'); wrap.innerHTML=lqRowHTML(DRIFT_CASE,true);
+  const el=wrap.firstChild; el.classList.add('enter');
+  rows.insertBefore(el,rows.firstChild);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>el.classList.remove('enter')));
+  $('#lqCount').textContent='12';
 }
 function resetDrift(){ DRIFT=false;
-  const crit=$('#chevOpen .cv.crit'); if(crit)crit.classList.remove('bump');
-  const cc=$('#critCount'); if(cc)cc.textContent='3';
-  const cn=$('#critNew'); if(cn)cn.classList.add('hidden');
-  const o=$('#nOpen b span'); if(o)o.textContent='11';
-  const t=$('#openTileNum'); if(t)t.textContent='11';
-  const no=$('#nOpen'); if(no)no.classList.remove('drift');
-  const dw=$('#driftW'); if(dw)dw.classList.add('hidden');
+  const n=$('#lqNew'); if(n)n.remove();
+  const c=$('#lqCount'); if(c)c.textContent='11';
+  const h=$('#flowHint'); if(h&&MODE==='h24')h.classList.remove('hidden');
 }
-$('#driftW').onclick=e=>e.stopPropagation();
 stage.addEventListener('click',e=>{
   if(VIEW!=='flow'||MODE!=='h24')return;
   if(e.target!==stage)return;   // only the empty flow backdrop toggles the scenario

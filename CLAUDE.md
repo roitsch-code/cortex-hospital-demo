@@ -53,12 +53,17 @@ centred at x=1440; 2,412 and 96 sit mirror-symmetric about it (1440±360).
   flow (`buildSourcesWide()` → grouped rows from `INV`, with volumes + sparklines), exactly
   like the user's 3rd screenshot. Core + Cases stay the cinematic flow (kept **reduced** —
   no dense boxes). Narrow (16:9) keeps the simple `SRC24`/`SRC30` list.
+- **Open cases = a `LIVE QUEUE` list** on the far right (`#liveQueue`, built from `QUEUE`
+  by `buildQueue()`), one row per open case (severity badge · title · case-id · tag). It
+  fills the right and balances the source list on the left. The 18-Manual node feeds it.
+  (Replaces the old chevron/`#nOpen` display; 30D still uses the 5 status `.pcard`s.)
 - **Agent-drift scenario** (24H only): the flow just runs; a click on the **empty flow
-  backdrop** (`e.target===#stage`) toggles `fireDrift()`/`resetDrift()`. It bumps Open Cases
-  11→12, the critical chevron 3→4 with a "+1 new" tag, and shows the `#driftW` callout —
-  *"A supplier's agent's behavior drifted — an out-of-profile data request hit iMedOne.
-  Auto-contained by policy · 1 new critical case · queued for T Security · CDC Bonn."* Ties
-  into the Telekom Agentic-Hub governance story. Real names only.
+  backdrop** (`e.target===#stage`) toggles `fireDrift()`/`resetDrift()`. `fireDrift()`
+  prepends the `DRIFT_CASE` row to the queue — *"Supplier agent · out-of-profile data
+  request"* (High, `C-4490`, **NEW** badge, highlighted) with a sub-line *"Out-of-profile
+  request to iMedOne · auto-contained by policy · queued for T Security · CDC Bonn"* — and
+  bumps the header `11 → 12 OPEN`. Ties into the Telekom Agentic-Hub governance story.
+  Real names only.
 
 ## HARD design constraints (do not violate)
 - **Keep the Cortex aesthetic**: near-black background, teal (`#2fd6c0`) glow, flowing
@@ -122,8 +127,8 @@ buckets (risk 5,840 / threat 84 / both 29). Data Ingestion = **9 TB/24H**.
 **Flow 24H**: **2,412** Issues → **96** Cases (**78** Automated / **18** Manual →
 **85** Resolved / **11** Open). Tiles: 2.4 B/24H · 9 TB/24H · 11 Open · 54 K prevented.
 Open breakdown 3/3/5/0. SOC tag: "assisted by T Security · Cyber Defense Center Bonn".
-*Drift scenario (24H, on click):* Open Cases 11→**12**, critical 3→**4** (+1 new) — a
-transient demo state, `resetDrift()` restores the base numbers.
+*Drift scenario (24H, on click):* the LIVE QUEUE gains a new High case at the top
+(11→**12** open) — a transient demo state, `resetDrift()` restores the base list.
 **Flow 30D**: **148K** → **34K** unique → **312** Cases (Active **168** = 9 Require
 Attention + 121 In Progress + 38 Mitigated; Resolved **144** = 61 Resolved + 83 Accepted
 Risk). Tiles: Vulnerable Assets **5,840** (ties to assets At Risk) · Active Cases 168
