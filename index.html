@@ -379,7 +379,7 @@ body.view-flow .backbtn{display:flex}
 /* ===== live queue of open cases (right side, 24H) ===== */
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
 .lq{position:absolute;z-index:6;width:540px}
-.lq-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;padding:0 2px}
+.lq-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px;padding:0 2px;height:20px}
 .lq-title{display:flex;align-items:center;gap:9px;font-size:10.5px;font-weight:800;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
 .lq-title b{color:#fff;font-weight:800}
 .lq-title .lqd{width:8px;height:8px;border-radius:50%;background:#63e6a0;box-shadow:0 0 9px #63e6a0;flex:0 0 auto;animation:blink 1.6s ease-in-out infinite}
@@ -388,22 +388,22 @@ body.view-flow .backbtn{display:flex}
   border-radius:6px;padding:3px 8px;background:rgba(226,0,116,.07);white-space:nowrap}
 .lq-soc b{color:#ff7ec8}
 .lq-rows{display:flex;flex-direction:column;gap:6px}
-.lqr{display:flex;align-items:center;gap:11px;height:34px;padding:0 13px 0 11px;border-radius:9px;
+.lqr{display:flex;align-items:center;gap:12px;height:40px;padding:0 14px 0 12px;border-radius:9px;
   background:rgba(255,255,255,.015);border:1px solid var(--hair);position:relative;overflow:hidden;
   transition:transform .3s,opacity .3s;cursor:default}
-.lqr::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:2.5px;border-radius:3px;background:var(--sc)}
-.lqr .bdg{width:19px;height:19px;flex:0 0 auto;border-radius:6px;display:grid;place-items:center;
-  font-size:10px;font-weight:800;color:#160a04;background:var(--sc)}
-.lqr .ti{flex:1;font-size:12.5px;font-weight:600;color:#e7edf1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.lqr .cid{font-size:11px;font-weight:700;color:#9aa3ab;letter-spacing:.02em;flex:0 0 auto;width:46px;text-align:left}
-.lqr .tg{font-size:11px;color:var(--dim);flex:0 0 auto;width:80px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lqr::before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:2.5px;border-radius:3px;background:var(--sc)}
+.lqr .bdg{width:21px;height:21px;flex:0 0 auto;border-radius:6px;display:grid;place-items:center;
+  font-size:10.5px;font-weight:800;color:#160a04;background:var(--sc)}
+.lqr .ti{flex:1;font-size:13px;font-weight:600;color:#e7edf1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lqr .cid{font-size:11.5px;font-weight:700;color:#9aa3ab;letter-spacing:.02em;flex:0 0 auto;width:48px;text-align:left}
+.lqr .tg{font-size:11.5px;color:var(--dim);flex:0 0 auto;width:84px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .lqr.c{--sc:var(--red)} .lqr.h{--sc:#ff7a52} .lqr.m{--sc:var(--amber)} .lqr.l{--sc:var(--blue)}
-.lqr .nb{font-size:9px;font-weight:800;letter-spacing:.12em;color:#ff9a52;border:1px solid rgba(255,122,82,.65);
+.lqr .nb{font-size:9px;font-weight:800;letter-spacing:.12em;color:#ff8a95;border:1px solid rgba(255,77,94,.6);
   border-radius:4px;padding:2px 6px;flex:0 0 auto}
 .lqr.sub{height:auto;flex-wrap:wrap;padding-top:7px;padding-bottom:8px}
 .lqr .subl{flex-basis:100%;font-size:10.5px;color:var(--muted);padding-left:30px;margin-top:4px;line-height:1.4;white-space:normal}
 .lqr .subl b{color:#f4b9d8;font-weight:700}
-.lqr.new{border-color:rgba(255,122,82,.55);background:rgba(255,122,82,.05);box-shadow:0 0 18px rgba(255,122,82,.1)}
+.lqr.new{border-color:rgba(255,77,94,.55);background:rgba(255,77,94,.06);box-shadow:0 0 18px rgba(255,77,94,.12)}
 .lqr.enter{opacity:0;transform:translateY(-10px)}
 #flowHint{position:absolute;left:0;right:0;bottom:120px;text-align:center;z-index:6;
   font-size:12px;color:var(--muted);letter-spacing:.05em;opacity:.55;pointer-events:none;transition:opacity .35s}
@@ -482,7 +482,7 @@ body:not(.view-flow) #flowHint{display:none}
       <b><span data-count="85">0</span></b><span>Resolved Cases</span>
     </div>
     <!-- live queue of open cases (fills the right, mirrors the source list on the left) -->
-    <div class="lq" id="liveQueue" style="left:2300px;top:98px">
+    <div class="lq" id="liveQueue" style="left:2300px;top:150px">
       <div class="lq-head">
         <span class="lq-title"><span class="lqd"></span>LIVE QUEUE · <b id="lqCount">11</b> OPEN</span>
         <span class="lq-soc">assisted by <b>T Security</b> · CDC Bonn</span>
@@ -1198,9 +1198,9 @@ const INV=[
  {n:'iMedOne · HIS',icon:'his',vol:'220 GB',w:5,t:1,spk:[22,24,23,25,24,26,25,24,26,27]},
  {n:'T Cloud Public',icon:'tmark',vol:'0.8 TB',w:6,t:1,sov:1,spk:[30,32,31,34,33,35,34,36,35,37]},
  {g:'Third-party sources'},
- {logo:'o365',n:'Microsoft 365',vol:'180 GB',w:4,wide:1,spk:[16,18,17,19,18,20,19,18,20,21]},
+ {logo:'o365',n:'Microsoft 365',vol:'180 GB',w:4,spk:[16,18,17,19,18,20,19,18,20,21]},
  {logo:'azure',n:'Azure',vol:'150 GB',w:4,spk:[14,15,14,16,15,17,16,15,16,17]},
- {logo:'gcp',n:'Google Cloud',vol:'90 GB',w:3,wide:1,spk:[9,10,10,11,10,12,11,10,11,12]},
+ {logo:'gcp',n:'Google Cloud',vol:'90 GB',w:3,spk:[9,10,10,11,10,12,11,10,11,12]},
  {logo:'github',n:'GitHub · Research',vol:'12 GB',w:2,spk:[4,5,4,6,5,6,5,6,5,6]},
  {n:'+ 60 Data Sources',icon:'more',vol:'0.2 TB',w:2,more:1}
 ];
@@ -1355,8 +1355,8 @@ const QUEUE=[
   {sev:'m',t:'Stale privileged account',          id:'C-4436', tag:'Identities'},
   {sev:'m',t:'TLS downgrade · lab interface',     id:'C-4431', tag:'LIS'}
 ];
-const DRIFT_CASE={sev:'h', t:'Supplier agent · out-of-profile data request', id:'C-4490', tag:'just now',
-  sub:'Out-of-profile request to <b>iMedOne</b> · auto-contained by policy · CDC Bonn'};
+const DRIFT_CASE={sev:'c', t:'Supplier agent · out-of-profile data request', id:'C-4490', tag:'just now',
+  sub:'Out-of-profile request to <b>iMedOne</b> · auto-contained by policy'};
 function lqRowHTML(o,neu){
   return `<div class="lqr ${o.sev}${neu?' new sub':''}"${neu?' id="lqNew"':''}>`
     +`<span class="bdg">${o.sev.toUpperCase()}</span>`

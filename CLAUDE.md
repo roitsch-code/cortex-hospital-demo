@@ -61,8 +61,10 @@ centred at x=1440; 2,412 and 96 sit mirror-symmetric about it (1440±360).
   backdrop** (`e.target===#stage`) toggles `fireDrift()`/`resetDrift()`. `fireDrift()`
   prepends the `DRIFT_CASE` row to the queue — *"Supplier agent · out-of-profile data
   request"* (High, `C-4490`, **NEW** badge, highlighted) with a sub-line *"Out-of-profile
-  request to iMedOne · auto-contained by policy · CDC Bonn"* — and bumps the header
+  request to iMedOne · auto-contained by policy · CDC Bonn"* and bumps the header
   `11 → 12 OPEN`. Ties into the Telekom Agentic-Hub governance story. Real names only.
+  (Current copy: the drift case is **Critical**, the sub-line ends at "auto-contained by
+  policy", and the queue header/`+60`-alignment mirror the left source list top & bottom.)
 - The SOC tag *"assisted by T Security · CDC Bonn"* lives in the queue header (top-right),
   next to `LIVE QUEUE · N OPEN`. The outflow **particles ride the funnel ribbon** — they
   use the same anchor points + curvature (`bezPt`/`band` share control points) so dots and
