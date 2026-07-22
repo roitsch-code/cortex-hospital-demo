@@ -84,6 +84,7 @@ svg.wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;ov
   border:1.5px solid var(--teal);background:radial-gradient(circle at 50% 38%,#0e3a33,#040b0e 72%);
   box-shadow:0 0 22px var(--glow)}
 .funnode.red .disc2{border-color:var(--red);box-shadow:0 0 22px rgba(255,77,94,.5)}
+.funnode.driftpulse .disc2{border-color:var(--red);box-shadow:0 0 34px rgba(255,77,94,.75);transition:box-shadow .3s,border-color .3s}
 .funnode .disc2 svg{width:24px;height:24px}
 .funnode:hover .disc2{box-shadow:0 0 34px var(--glow)}
 .funnode .fl{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap}
@@ -1119,13 +1120,25 @@ function frame(t){ctx.clearRect(0,0,STAGE.w,810);
       drawGlow(pt.x,pt.y,Math.sin(gsp.t*Math.PI));
     }
   }
-  // drift red glow: 96 → 18 manual → LIVE QUEUE, then the case pops
+  // drift red glow: 96 → 18 manual (pause) → LIVE QUEUE, then the case pops — slow, with feeling
   if(driftGlow && driftGlow.active && CURLAY){
-    if(!REDUCED)driftGlow.t+=driftGlow.sp;
+    const d=driftGlow;
     const OUTp={x:CASES.x+48,y:CASES.y}, M0={x:MAN.x-26,y:MAN.y}, M1={x:MAN.x+26,y:MAN.y}, Q={x:CURLAY.LQX-14,y:CURLAY.LQMID};
-    let pt; if(driftGlow.t<0.5){ pt=bezPt(OUTp,M0,.58,driftGlow.t/0.5); } else { pt=bezPt(M1,Q,.5,(driftGlow.t-0.5)/0.5); }
-    drawGlow(pt.x,pt.y,driftGlow.t<0.9?1:(1-driftGlow.t)/0.1,true);
-    if(driftGlow.t>=1){ driftGlow.active=false; const cb=driftGlow.onDone; driftGlow=null; cb&&cb(); }
+    if(d.phase==='seg1'){
+      if(!REDUCED)d.t+=d.sp;
+      const pt=bezPt(OUTp,M0,.58,Math.min(1,d.t));
+      drawGlow(pt.x,pt.y,Math.min(1,d.t/0.14),true);
+      if(d.t>=1){ d.phase='pause'; d.hold=36; const mn=$('#fnManual'); if(mn)mn.classList.add('driftpulse'); }
+    } else if(d.phase==='pause'){
+      if(!REDUCED)d.hold--;
+      drawGlow(M0.x,M0.y,0.6+0.4*Math.sin(t*0.010),true);   // dwell + pulse at the manual circle
+      if(d.hold<=0){ d.phase='seg2'; d.t=0; const mn=$('#fnManual'); if(mn)mn.classList.remove('driftpulse'); }
+    } else {
+      if(!REDUCED)d.t+=d.sp;
+      const pt=bezPt(M1,Q,.5,Math.min(1,d.t));
+      drawGlow(pt.x,pt.y,d.t<0.85?1:(1-d.t)/0.15,true);
+      if(d.t>=1){ d.active=false; const cb=d.onDone; driftGlow=null; cb&&cb(); }
+    }
   }
   ctx.globalAlpha=1;requestAnimationFrame(frame);
 }
@@ -1620,8 +1633,8 @@ const DRIFT_DETAIL='<h4><span class="d" style="background:var(--red);box-shadow:
   +'<div class="foot">Agent identity + permission profile enforced at the gateway. The out-of-profile call to iMedOne was blocked inline and raised for human confirmation — revoke access or record an audited exception.</div>';
 function fireDrift(){ if(MODE!=='h24'||DRIFT)return; DRIFT=true;
   $('#flowHint').classList.add('hidden');
-  // red light glow rides 96 → 18 manual → LIVE QUEUE; the case pops when it arrives
-  driftGlow={t:0,sp:0.011,active:true,onDone:popDriftCase};
+  // red light glow rides 96 → 18 manual (pause) → LIVE QUEUE; the case pops when it arrives
+  driftGlow={phase:'seg1',t:0,sp:0.0145,hold:0,active:true,onDone:popDriftCase};
   if(REDUCED){driftGlow=null;popDriftCase();}
 }
 function popDriftCase(){
@@ -1634,6 +1647,7 @@ function popDriftCase(){
   const ib=$('#lqInspect'); if(ib){ib.onclick=ev=>{ev.stopPropagation();openIso();};}
 }
 function resetDrift(){ DRIFT=false; driftGlow=null;
+  const mn=$('#fnManual'); if(mn)mn.classList.remove('driftpulse');
   const n=$('#lqNew'); if(n)n.remove();
   const c=$('#lqCount'); if(c)c.textContent='11';
   const h=$('#flowHint'); if(h&&MODE==='h24')h.classList.remove('hidden');
