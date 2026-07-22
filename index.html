@@ -1128,7 +1128,7 @@ function frame(t){ctx.clearRect(0,0,STAGE.w,810);
       if(!REDUCED)d.t+=d.sp;
       const pt=bezPt(OUTp,M0,.58,Math.min(1,d.t));
       drawGlow(pt.x,pt.y,Math.min(1,d.t/0.14),true);
-      if(d.t>=1){ d.phase='pause'; d.hold=36; const mn=$('#fnManual'); if(mn)mn.classList.add('driftpulse'); }
+      if(d.t>=1){ d.phase='pause'; d.hold=64; const mn=$('#fnManual'); if(mn)mn.classList.add('driftpulse'); }
     } else if(d.phase==='pause'){
       if(!REDUCED)d.hold--;
       drawGlow(M0.x,M0.y,0.6+0.4*Math.sin(t*0.010),true);   // dwell + pulse at the manual circle
@@ -1634,7 +1634,7 @@ const DRIFT_DETAIL='<h4><span class="d" style="background:var(--red);box-shadow:
 function fireDrift(){ if(MODE!=='h24'||DRIFT)return; DRIFT=true;
   $('#flowHint').classList.add('hidden');
   // red light glow rides 96 → 18 manual (pause) → LIVE QUEUE; the case pops when it arrives
-  driftGlow={phase:'seg1',t:0,sp:0.0145,hold:0,active:true,onDone:popDriftCase};
+  driftGlow={phase:'seg1',t:0,sp:0.0055,hold:0,active:true,onDone:popDriftCase};
   if(REDUCED){driftGlow=null;popDriftCase();}
 }
 function popDriftCase(){
