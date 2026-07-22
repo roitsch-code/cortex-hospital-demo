@@ -94,6 +94,16 @@ centred at x=1440; 2,412 and 96 sit mirror-symmetric about it (1440±360).
   ribbon overlap instead of drifting apart.
 
 ## HARD design constraints (do not violate)
+- **WORK WITH AN EYE FOR DETAIL. Alignment is non-negotiable.** Every label, icon, glyph,
+  badge and value must be **vertically centred** with the text/row it sits in, and columns
+  must line up. When an inline SVG glyph (e.g. the Telekom **T** in "T Security") sits next
+  to text, center it with `display:inline-flex;align-items:center;line-height:1` on the
+  container — never rely on a hand-tuned `vertical-align:-1px` hack. Mis-centred or
+  ragged elements are a hard defect: **do not ship them, and never surface them to the
+  user.** Screenshot and check alignment before every commit.
+- **The header brand is `[green Cortex mark] Cortex XSIAM` — "Cortex XSIAM" is TEXT**, not a
+  wordmark image (a small transparent green mark PNG + plain text, matching commit
+  `a61e564`). Do **not** swap in the full "CORTEX" wordmark image or hand-draw the mark.
 - **Keep the Cortex aesthetic**: near-black background, teal (`#2fd6c0`) glow, flowing
   SVG ribbons, particle swarm, radial/orbital layouts, soft shadows and pulses.
   Cinematic and reduced. The **core must read crisp and colourful** (bright teal rings +
