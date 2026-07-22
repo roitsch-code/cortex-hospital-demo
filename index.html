@@ -281,6 +281,8 @@ body.view-flow .backbtn{display:flex}
 .dv-head h2{font-size:22px;font-weight:800;letter-spacing:.04em}
 .dv-head p{font-size:12px;color:var(--muted);margin-top:6px}
 .dv-wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:2}
+/* centre each deep-dive overlay's 1440-designed content on the wide (2880) stage */
+.dv-mid{position:absolute;left:50%;top:0;transform:translateX(-50%);width:1440px;height:810px;z-index:2}
 /* inventory rows */
 .dvgrp{position:absolute;left:64px;z-index:4;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
 .dvrow{position:absolute;left:64px;width:392px;height:30px;z-index:4;display:flex;align-items:center;gap:11px;
@@ -637,8 +639,6 @@ body:not(.view-flow) #flowHint{display:none}
     <div class="pcard tl" style="left:1258px;top:560px" data-detail="p_risk"><b><span data-count="83">0</span> <em class="up">↑5.3%</em></b><span>Accepted Risk</span></div>
   </div>
 
-  <div id="flowHint">click the flow to advance the live scenario ›</div>
-
   <!-- bottom stat tiles (24H) -->
   <div class="tiles" id="tiles24">
     <div class="tile" data-detail="events"><div class="k">Events Ingestion</div>
@@ -718,41 +718,47 @@ body:not(.view-flow) #flowHint{display:none}
   <div class="dv" id="dvInventory">
     <div class="dv-back" id="dvInvBack">‹ Flow</div>
     <div class="dv-head"><h2>Data Inventory</h2><p>Connected estate · every source normalized to one data model · Last 24H</p></div>
-    <svg class="dv-wire" id="dvInvWire" viewBox="0 0 1440 810"></svg>
-    <div id="dvInvList"></div>
-    <div class="dvnode" id="dvInvIssues" style="left:1040px;top:380px"><div class="disc3"></div><b><span data-count="2412" data-comma>0</span></b><span>Issues</span></div>
-    <div class="dvnode sm" id="dvInvPrev" style="left:1150px;top:566px"><b><span data-count="54">0</span>K</b><span>Prevented Events</span></div>
+    <div class="dv-mid">
+      <svg class="dv-wire" id="dvInvWire" viewBox="0 0 1440 810"></svg>
+      <div id="dvInvList"></div>
+      <div class="dvnode" id="dvInvIssues" style="left:1040px;top:380px"><div class="disc3"></div><b><span data-count="2412" data-comma>0</span></b><span>Issues</span></div>
+      <div class="dvnode sm" id="dvInvPrev" style="left:1150px;top:566px"><b><span data-count="54">0</span>K</b><span>Prevented Events</span></div>
+    </div>
   </div>
 
   <!-- ===== Dynamic View overlay (Core, 24H) ===== -->
   <div class="dv" id="dvDynamic">
     <div class="dv-back" id="dvDynBack">‹ Flow</div>
     <div class="dv-head"><h2>Dynamic View</h2><p>Live correlation · automation in real time · Last 24H</p></div>
-    <svg class="dv-wire" id="dynWire" viewBox="0 0 1440 810"></svg>
-    <div id="dynMarks"></div>
-    <div class="dyn-donutwrap" style="left:590px;top:440px;width:236px;height:236px">
-      <div class="dyn-center"><div class="pct"><span data-count="81">0</span>%</div><div class="lab">Automatically Resolved</div><div class="sub">96 Cases</div></div>
+    <div class="dv-mid">
+      <svg class="dv-wire" id="dynWire" viewBox="0 0 1440 810"></svg>
+      <div id="dynMarks"></div>
+      <div class="dyn-donutwrap" style="left:590px;top:440px;width:236px;height:236px">
+        <div class="dyn-center"><div class="pct"><span data-count="81">0</span>%</div><div class="lab">Automatically Resolved</div><div class="sub">96 Cases</div></div>
+      </div>
+      <div class="dyn-feed" id="dynFeed"></div>
+      <div class="dyn-stat" style="top:264px"><div class="k">Data Ingestion</div><div class="v">9 <u>TB/24H</u></div></div>
+      <div class="dyn-stat" style="top:352px"><div class="k">Total Open Cases</div><div class="v">11</div></div>
     </div>
-    <div class="dyn-feed" id="dynFeed"></div>
-    <div class="dyn-stat" style="top:264px"><div class="k">Data Ingestion</div><div class="v">9 <u>TB/24H</u></div></div>
-    <div class="dyn-stat" style="top:352px"><div class="k">Total Open Cases</div><div class="v">11</div></div>
   </div>
 
   <!-- ===== Cases Overview overlay (Cases, 24H) ===== -->
   <div class="dv" id="dvCases">
     <div class="dv-back" id="dvCasesBack">‹ Flow</div>
     <div class="dv-head"><h2>Cases Overview</h2><p>Correlated case lifecycle · Last 24H</p></div>
-    <svg class="dv-wire" id="coWire" viewBox="0 0 1440 810"></svg>
-    <div class="co-node" style="left:150px;top:250px"><b><span data-count="2412" data-comma>0</span></b><span>Issues</span></div>
-    <div class="co-node cases" style="left:400px;top:250px"><div class="disc4"></div><b><span data-count="96">0</span></b><span>Cases</span></div>
-    <div class="co-node sm" style="left:640px;top:190px"><b><span data-count="78">0</span></b><span>Automated</span></div>
-    <div class="co-node sm" style="left:640px;top:312px"><b><span data-count="18">0</span></b><span>Manual</span></div>
-    <div class="co-node sm" style="left:880px;top:190px"><b><span data-count="85">0</span></b><span>Resolved</span></div>
-    <div class="co-node sm" style="left:880px;top:312px"><b><span data-count="11">0</span></b><span>Open</span></div>
-    <div class="co-hd" style="left:120px;top:408px">Case handling · 96 cases</div>
-    <div class="co-bars" id="coBars" style="top:440px"></div>
-    <div class="co-auto" style="top:640px"><h5>✦ AUTOMATION HEADROOM</h5><p><b>12</b> of 18 manual cases are automatable · <b>8</b> playbook recommendations from the correlation engine.</p></div>
-    <div class="co-mitre" id="coMitre"></div>
+    <div class="dv-mid">
+      <svg class="dv-wire" id="coWire" viewBox="0 0 1440 810"></svg>
+      <div class="co-node" style="left:150px;top:250px"><b><span data-count="2412" data-comma>0</span></b><span>Issues</span></div>
+      <div class="co-node cases" style="left:400px;top:250px"><div class="disc4"></div><b><span data-count="96">0</span></b><span>Cases</span></div>
+      <div class="co-node sm" style="left:640px;top:190px"><b><span data-count="78">0</span></b><span>Automated</span></div>
+      <div class="co-node sm" style="left:640px;top:312px"><b><span data-count="18">0</span></b><span>Manual</span></div>
+      <div class="co-node sm" style="left:880px;top:190px"><b><span data-count="85">0</span></b><span>Resolved</span></div>
+      <div class="co-node sm" style="left:880px;top:312px"><b><span data-count="11">0</span></b><span>Open</span></div>
+      <div class="co-hd" style="left:120px;top:408px">Case handling · 96 cases</div>
+      <div class="co-bars" id="coBars" style="top:440px"></div>
+      <div class="co-auto" style="top:640px"><h5>✦ AUTOMATION HEADROOM</h5><p><b>12</b> of 18 manual cases are automatable · <b>8</b> playbook recommendations from the correlation engine.</p></div>
+      <div class="co-mitre" id="coMitre"></div>
+    </div>
   </div>
 
   <!-- ===== Isolation & Response (restored, opened from the drift Inspect button) ===== -->
@@ -1269,7 +1275,7 @@ function renderMode(m){MODE=m;const cfg=MODES[m];
   countUp(d30?$('#right30'):$('#right24'));
   countUp(d30?$('#tiles30'):$('#tiles24'));
   if(m==='h24')buildQueue();
-  $('#flowHint').classList.toggle('hidden', m!=='h24' || DRIFT);
+  $('#flowHint')?.classList.toggle('hidden', m!=='h24' || DRIFT);
 }
 $$('#tseg button').forEach(b=>b.onclick=()=>{if(b.dataset.mode!==MODE){closePrio();resetDrift();renderMode(b.dataset.mode);}});
 
@@ -1632,7 +1638,6 @@ const DRIFT_DETAIL='<h4><span class="d" style="background:var(--red);box-shadow:
   +'<div class="r"><span>Review</span><b>T Security · CDC Bonn</b></div>'
   +'<div class="foot">Agent identity + permission profile enforced at the gateway. The out-of-profile call to iMedOne was blocked inline and raised for human confirmation — revoke access or record an audited exception.</div>';
 function fireDrift(){ if(MODE!=='h24'||DRIFT)return; DRIFT=true;
-  $('#flowHint').classList.add('hidden');
   // red light glow rides 96 → 18 manual (pause) → LIVE QUEUE; the case pops when it arrives
   driftGlow={phase:'seg1',t:0,sp:0.0055,hold:0,active:true,onDone:popDriftCase};
   if(REDUCED){driftGlow=null;popDriftCase();}
