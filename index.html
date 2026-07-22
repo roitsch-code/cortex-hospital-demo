@@ -309,10 +309,11 @@ body.view-flow .backbtn{display:flex}
   border:1.5px solid var(--teal);box-shadow:0 0 34px var(--glow),inset 0 0 26px rgba(47,214,192,.14);z-index:-1}
 
 /* ===== Agent Resolution Center ===== */
+.ag-wrap{position:absolute;left:50%;top:0;transform:translateX(-50%);width:1440px;height:810px}
 .ag-back{position:absolute;top:30px;left:56px;z-index:8;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer}
 .ag-back:hover{color:var(--text)}
-.ag-rc{position:absolute;top:30px;left:1912px;z-index:8;font-size:15px;font-weight:800;letter-spacing:.03em;color:#e7edf1}
-.ag-hd{position:absolute;top:58px;left:56px;right:1000px;z-index:6}
+.ag-rc{position:absolute;top:30px;left:1070px;z-index:8;font-size:15px;font-weight:800;letter-spacing:.03em;color:#e7edf1}
+.ag-hd{position:absolute;top:58px;left:56px;right:392px;z-index:6}
 .ag-meta{font-size:12px;color:var(--muted);font-weight:600}
 .ag-meta b{color:#c7ced4}
 .ag-hd h2{font-size:25px;font-weight:800;letter-spacing:.01em;margin-top:9px;color:#fff}
@@ -350,7 +351,7 @@ body.view-flow .backbtn{display:flex}
 .agd-h{font-size:9px;font-weight:800;letter-spacing:.1em;color:#ff7ec8;margin-bottom:8px}
 .agchip{font-size:11.5px;font-weight:700;color:#f0a8cf;border:1px dashed rgba(226,0,116,.5);border-radius:7px;
   padding:6px 11px;margin-bottom:7px;background:rgba(226,0,116,.06);width:max-content}
-.ag-rail{position:absolute;left:120px;right:1010px;top:690px;height:2px;z-index:4}
+.ag-rail{position:absolute;left:70px;right:400px;top:690px;height:2px;z-index:4}
 .agrail-line{position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,rgba(47,214,192,.15),rgba(47,214,192,.5),rgba(255,77,94,.5))}
 .agst{position:absolute;top:0;transform:translate(-50%,-50%);text-align:center}
 .agst-ic{width:46px;height:46px;border-radius:11px;display:grid;place-items:center;background:#0a1216;border:1px solid var(--hair);color:#9fb2bb;margin:0 auto}
@@ -363,7 +364,7 @@ body.view-flow .backbtn{display:flex}
 .reduced .agv-dot{animation:none;left:40%}
 .agrail-stat{position:absolute;top:64px;left:0;font-size:11.5px;font-weight:700;color:#63e6a0;letter-spacing:.02em}
 .agrail-stat::first-letter{font-size:14px}
-.ag-panel{position:absolute;top:62px;left:1912px;width:912px;bottom:40px;z-index:5;
+.ag-panel{position:absolute;top:62px;left:1070px;width:370px;bottom:40px;z-index:5;
   border-left:1px solid var(--hair);padding-left:34px}
 .agp-sub{font-size:12.5px;color:var(--muted);font-weight:600}
 .agp-sub b.ok{color:var(--teal-br)}
@@ -777,6 +778,7 @@ body:not(.view-flow) #flowHint{display:none}
 
   <!-- ===== Agent Resolution Center (opened from the drift Inspect button) ===== -->
   <div class="dv agv" id="dvAgent">
+   <div class="ag-wrap">
     <div class="ag-back" id="agBack">‹ Open cases</div>
     <div class="ag-rc">→| Resolution Center</div>
 
@@ -793,31 +795,31 @@ body:not(.view-flow) #flowHint{display:none}
     </div>
 
     <div class="ag-band" style="left:64px;top:266px">AI ORCHESTRATION AGENTS</div>
-    <svg class="dv-wire" id="agWire" viewBox="0 0 2880 810"></svg>
+    <svg class="dv-wire" id="agWire" viewBox="0 0 1440 810"></svg>
 
-    <div class="agn ext" id="agNodeAgent" style="left:300px;top:392px">
+    <div class="agn ext" id="agNodeAgent" style="left:250px;top:400px">
       <span class="agtag">EXTERNAL</span>
       <div class="agdisc mag"><i></i></div>
       <div class="agl"><b>Supplier logistics agent</b><span id="agAgentSub">external · out of profile</span></div>
     </div>
-    <div class="agn" style="left:566px;top:392px">
+    <div class="agn" style="left:465px;top:400px">
       <div class="agdisc gate"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l7 3v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6z"/><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       <div class="agl sm"><span>API gateway · scoped</span></div>
     </div>
-    <div class="agn" style="left:892px;top:322px">
+    <div class="agn" style="left:690px;top:322px">
       <div class="agdisc teal"><i></i></div>
       <div class="agl"><b>Delivery scheduling</b><span>142 tasks · nominal</span></div>
     </div>
-    <div class="agn" style="left:892px;top:462px">
+    <div class="agn" style="left:690px;top:478px">
       <div class="agdisc blue"><i></i></div>
       <div class="agl"><b>Stock replenishment</b><span>96 tasks · nominal</span></div>
     </div>
-    <div class="agn" style="left:1218px;top:392px">
+    <div class="agn" style="left:915px;top:400px">
       <div class="agdisc green"><i></i></div>
       <div class="agl"><b>Route &amp; traffic control</b><span>fleet dispatch</span></div>
     </div>
 
-    <div class="ag-denied" style="left:250px;top:474px">
+    <div class="ag-denied" style="left:200px;top:486px">
       <div class="agd-h">DENIED · OUT OF PROFILE</div>
       <div class="agchip">✕ Live AGV location</div>
       <div class="agchip">✕ Patient-linked routes</div>
@@ -830,10 +832,10 @@ body:not(.view-flow) #flowHint{display:none}
       <div class="agv-dot" style="animation-delay:0s"></div>
       <div class="agv-dot" style="animation-delay:-3s"></div>
       <div class="agv-dot" style="animation-delay:-6s"></div>
-      <div class="agst" style="left:300px"><div class="agst-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8.5v7M8.5 12h7" stroke-linecap="round"/></svg></div><span>Pharmacy</span></div>
-      <div class="agst" style="left:620px"><div class="agst-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9v9M3 18h18M21 13v5M3 13h18M7 13a3 3 0 0 1 3-3h5a4 4 0 0 1 4 3" stroke-linecap="round"/></svg></div><span>Ward med room</span></div>
-      <div class="agst" style="left:960px"><div class="agst-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="3"/><path d="M6 20a6 6 0 0 1 12 0" stroke-linecap="round"/></svg></div><span>Patient room</span></div>
-      <div class="agst lock" style="left:1300px"><div class="agst-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div><span>Restricted ward</span></div>
+      <div class="agst" style="left:150px"><div class="agst-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8.5v7M8.5 12h7" stroke-linecap="round"/></svg></div><span>Pharmacy</span></div>
+      <div class="agst" style="left:380px"><div class="agst-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9v9M3 18h18M21 13v5M3 13h18M7 13a3 3 0 0 1 3-3h5a4 4 0 0 1 4 3" stroke-linecap="round"/></svg></div><span>Ward med room</span></div>
+      <div class="agst" style="left:620px"><div class="agst-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="3"/><path d="M6 20a6 6 0 0 1 12 0" stroke-linecap="round"/></svg></div><span>Patient room</span></div>
+      <div class="agst lock" style="left:860px"><div class="agst-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div><span>Restricted ward</span></div>
       <div class="agrail-stat">● Medication AGVs · operating normally</div>
     </div>
 
@@ -854,6 +856,7 @@ body:not(.view-flow) #flowHint{display:none}
         <button class="agp-btn" id="agRevoke">Revoke supplier access</button>
       </div>
     </div>
+   </div>
   </div>
 
 </div></div>
@@ -1735,19 +1738,19 @@ function buildAgent(){
   const s=$('#agWire'); s.innerHTML=''; defs(s);
   const T='#2fd6c0', G='#39d98a', B='#4aa3ff', M='#e2007a';
   // agent → gateway (straight)
-  agEdge(s,{x:330,y:392},{x:538,y:392},T,.5);
+  agEdge(s,{x:278,y:400},{x:437,y:400},T,.5);
   // gateway → delivery / stock
-  agEdge(s,{x:594,y:384},{x:864,y:326},T,.55);
-  agEdge(s,{x:594,y:400},{x:864,y:458},T,.55);
+  agEdge(s,{x:493,y:393},{x:662,y:324},T,.55);
+  agEdge(s,{x:493,y:407},{x:662,y:476},T,.55);
   // delivery / stock → route
-  agEdge(s,{x:920,y:324},{x:1190,y:384},T,.55);
-  agEdge(s,{x:920,y:460},{x:1190,y:400},B,.55);
+  agEdge(s,{x:718,y:324},{x:887,y:392},T,.55);
+  agEdge(s,{x:718,y:476},{x:887,y:408},B,.55);
   // route → physical rail (ward med room)
-  agEdge(s,{x:1218,y:420},{x:620,y:686},G,.4);
+  agEdge(s,{x:915,y:428},{x:450,y:686},G,.4);
   // agent → denied (dashed magenta)
-  agEdge(s,{x:300,y:420},{x:322,y:486},M,.4,true);
+  agEdge(s,{x:250,y:428},{x:268,y:486},M,.4,true);
   // flow dots on the healthy paths
-  [[500,392,T],[730,352,T],[730,430,T],[1060,352,T],[1060,432,B],[900,600,G]].forEach(d=>agDot(s,d[0],d[1],d[2]));
+  [[360,400,T],[575,360,T],[575,440,T],[800,360,T],[800,440,B],[680,560,G]].forEach(d=>agDot(s,d[0],d[1],d[2]));
 }
 function agReset(){
   $('#agNodeAgent').classList.remove('contained');

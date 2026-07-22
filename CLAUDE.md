@@ -36,7 +36,8 @@ Navigation is a small state machine: `showView('assets' | 'flow')`.
    orbital source marks + live feed), **Cases → Cases Overview** (lifecycle funnel +
    handling bars + MITRE ATT&CK by tactic). All share the `.dv` overlay pattern.
    The drift alert's **`Inspect ›` → Agent Resolution Center** (`#dvAgent`, `openAgent()`) is
-   a fourth `.dv` overlay (designed full-width for the 2880 stage): case header (C-4490,
+   a fourth `.dv` overlay, laid out in a **centred 1440×810 (16:9) box** (`.ag-wrap`) so it
+   reads balanced, not stretched/squished across the 32:9 stage: case header (C-4490,
    badges, AI summary) · an **AI ORCHESTRATION AGENTS** graph (external supplier agent →
    scoped API gateway → delivery / stock → route & traffic control, with denied
    out-of-profile chips) · a **PHYSICAL · MEDICATION AGVS** rail (pharmacy/ward/patient/locked
