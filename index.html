@@ -775,7 +775,7 @@ const LAYOUT={
   // 2,412 and 96 sit mirror-symmetric about it (1440±360). Long, generous fans on both
   // sides; each outcome ribbon ends just before its number, drift callout well inside.
   wide:{ w:2880,
-    WAIST:980, CENTER:1440, CASES:1800, AUTO:1968, MAN:1968, ACT:2120, RES:2120, CASESPT:1740,
+    WAIST:1004, CENTER:1440, CASES:1800, AUTO:1968, MAN:1968, ACT:2120, RES:2120, CASESPT:1740,
     RESTIP:2084, SOC:1826, PCTIP:2300, srcX:456, pcard:2320, LQX:2300, LQMID:412,
     dom:{nLeft:1080, nCenter:1440, coreHit:1440, nRight:1800, fnAuto:1968, fnManual:1968,
       socTag:1826, nResolved:2108, fnActive:2120, fnResolvedN:2120} }
@@ -973,13 +973,13 @@ function frame(t){ctx.clearRect(0,0,STAGE.w,810);
     ctx.fillStyle=`rgba(240,255,252,${g})`;ctx.beginPath();ctx.arc(pt.x,pt.y,1.7,0,6.283);ctx.fill();}
   ctx.globalAlpha=1;
   // inflow: cone from the Issues number → core-left edge, then horizontal through the core
-  const NX=CURLAY.dom.nLeft+64, CL=CENTER.x-CENTER.R, SH=33, FH=CENTER.R*0.92;
+  const NX=CURLAY.dom.nLeft+56, CL=CENTER.x-CENTER.R, SH=33, FH=CENTER.R*0.92;
   for(const p of inflow){ if(!REDUCED)p.t+=p.sp;
     if(p.t>=1){ newInflow(p); continue; }
     const x=NX+(p.absx-NX)*p.t;
     const gx=x<CL?SH+(FH-SH)*((x-NX)/(CL-NX)):FH;   // narrow at the number, full at the core
     const y=CENTER.y+p.f*gx;
-    ctx.globalAlpha=Math.min(1,p.t/0.1)*Math.min(1,(1-p.t)/0.3)*0.95*dim;
+    ctx.globalAlpha=Math.min(1,p.t/0.03)*Math.min(1,(1-p.t)/0.3)*0.95*dim;   // visible right at the number
     ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(x,y,1.6,0,6.283);ctx.fill();}
   // (no outflow particles — the flow ends at the Cases number; right of it = lines only)
   // core → Cases number: green pixels only (no lines), slow + sparse
