@@ -1,5 +1,14 @@
 # CLAUDE.md — Cyber Security Command Center (T Gallery hospital demo)
 
+> ⚠️ **CANONICAL / LIVE BRANCH: `claude/flow-layout-21-9-ivhesc`.** This is the newest,
+> most complete build (32:9 flow · light glows · drift red-glow scenario · four 24H
+> drill-down overlays · **Agent Resolution Center**). If you opened `main` or any other
+> `claude/*` branch and the code looks like an older 1440-only demo with an `investBtn`
+> and **no** Resolution Center / Inspect flow — you are on the WRONG branch. Run
+> `git checkout claude/flow-layout-21-9-ivhesc` (or `git fetch && git checkout` it) before
+> doing anything. The other branches (`cdc-case-numbers`, `cdc-cases-command-center`,
+> `issues-cases-flow-refine`, `cortex-xsiam-research`, `main`) are an **older parallel line**.
+
 > Read this fully before changing anything. This is a **design-led interactive demo**
 > for the **T Gallery** (a Deutsche Telekom exhibit), not a production app and not a
 > slide. The look matters as much as the content. **Fake data, but internally
@@ -196,7 +205,10 @@ Risk). Tiles: Vulnerable Assets **5,840** (ties to assets At Risk) · Active Cas
 ## Tech
 - One file: `index.html`. Vanilla JS + Canvas (particles/radar) + inline SVG
   (ribbons/rings/marks) + CSS. No frameworks, no bundler, no network calls, no storage.
-- Fixed **1440×810** design stage, scaled to the viewport via CSS `transform`.
+- Design stage scaled to the viewport via CSS `transform` (`fit()` uses `STAGE.w`/`STAGE.h`,
+  **not** a hard-coded 1440). Assets view = **1440×810** (16:9); flow view = **2880×810**
+  (32:9). The `.dv` drill-down overlays + Agent Resolution Center centre their 1440 design on
+  the wide stage (`.dv-mid` / `.ag-wrap`).
 
 ## Tuning map (where the knobs are, in index.html)
 - Colours / theme: the `:root` CSS variables at the top.
