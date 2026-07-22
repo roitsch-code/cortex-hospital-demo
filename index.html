@@ -308,67 +308,81 @@ body.view-flow .backbtn{display:flex}
 .dvnode .disc3{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:154px;height:154px;border-radius:50%;
   border:1.5px solid var(--teal);box-shadow:0 0 34px var(--glow),inset 0 0 26px rgba(47,214,192,.14);z-index:-1}
 
-/* ===== Isolation & Response (restored from 00b0915, centred 1440 box for now) ===== */
-#dvIso .iso-wrap{position:absolute;left:50%;top:0;transform:translateX(-50%);width:1440px;height:810px}
-#dvIso #isoCv{position:absolute;inset:0;width:1440px;height:810px;z-index:1;pointer-events:none}
-#dvIso #wIso{position:absolute;inset:0;width:1440px;height:810px;z-index:2;pointer-events:none;overflow:visible}
-#dvIso .iso-title{position:absolute;top:70px;left:0;right:0;text-align:center;z-index:4}
-#dvIso .iso-title h2{font-size:22px;font-weight:800;letter-spacing:.04em}
-#dvIso .livezone{position:absolute;left:150px;top:300px;z-index:4;text-align:center}
-#dvIso .livezone .ring{width:150px;height:150px;border-radius:50%;border:1.5px solid var(--teal-dim);margin:0 auto;
-  display:grid;place-items:center;box-shadow:0 0 26px rgba(47,214,192,.25)}
-#dvIso .livezone .ring b{font-size:34px}
-#dvIso .livezone .t{margin-top:12px;font-size:13px;font-weight:700;color:var(--teal-br)}
-#dvIso .livezone .s{font-size:11px;color:var(--muted);max-width:200px;margin:4px auto 0}
-#dvIso .bubble{position:absolute;right:170px;top:250px;width:360px;height:300px;z-index:3;border-radius:48% 52% 55% 45%/50% 45% 55% 50%;
-  border:2px dashed var(--teal);background:radial-gradient(circle at 50% 45%,rgba(20,40,42,.55),rgba(4,10,12,.3));
-  box-shadow:inset 0 0 40px rgba(47,214,192,.15);display:grid;place-items:center;animation:breathe 5s ease-in-out infinite}
-@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.02)}}
-.reduced #dvIso .bubble{animation:none}
-#dvIso .bubble .lbl{position:absolute;top:-26px;left:0;right:0;text-align:center;font-size:12px;font-weight:700;color:var(--teal-br)}
-#dvIso .bubble .sub{position:absolute;bottom:-30px;left:0;right:0;text-align:center;font-size:11px;color:var(--muted)}
-#dvIso .badagent{position:absolute;z-index:6;transform:translate(-50%,-50%);text-align:center;left:300px;top:375px;
-  transition:left 1.1s cubic-bezier(.7,0,.3,1),top 1.1s cubic-bezier(.7,0,.3,1)}
-#dvIso .badagent .c{width:70px;height:70px;border-radius:50%;margin:0 auto;display:grid;place-items:center;font-size:22px;
-  border:2px solid var(--amber);background:radial-gradient(circle at 50% 40%,rgba(245,166,35,.2),rgba(20,8,4,.7));
-  box-shadow:0 0 22px rgba(245,166,35,.5)}
-#dvIso .badagent.isolated .c{border-color:var(--red);box-shadow:0 0 26px rgba(255,77,94,.6)}
-#dvIso .badagent .n{font-size:12px;font-weight:700;margin-top:8px;color:#ffdf9e}
-#dvIso .toast{position:absolute;top:150px;left:50%;transform:translate(-50%,-16px);z-index:9;
-  background:rgba(30,8,10,.92);border:1px solid var(--red);border-radius:12px;padding:12px 18px;
-  display:flex;align-items:center;gap:12px;max-width:640px;opacity:0;transition:.45s;box-shadow:0 8px 30px rgba(0,0,0,.5)}
-#dvIso .toast.on{opacity:1;transform:translate(-50%,0)}
-#dvIso .toast .ic{width:24px;height:24px;border-radius:6px;background:var(--red);display:grid;place-items:center;color:#fff;font-weight:800;flex:0 0 auto}
-#dvIso .toast .tx{font-size:13px;color:#ffd7db;line-height:1.35}
-#dvIso .toast .tx b{color:#fff}
-#dvIso .status{position:absolute;left:0;right:0;bottom:120px;text-align:center;z-index:6;font-size:13px;color:var(--teal-br);opacity:0;transition:.4s}
-#dvIso .status.on{opacity:1}
-#dvIso .soc{position:absolute;right:60px;bottom:96px;z-index:10;width:300px;background:rgba(9,12,16,.96);
-  border:1px solid var(--hair);border-radius:16px;padding:16px;box-shadow:0 12px 40px rgba(0,0,0,.6);
-  transform:translateY(20px);opacity:0;transition:.45s}
-#dvIso .soc.on{transform:translateY(0);opacity:1}
-#dvIso .soc .row{display:flex;align-items:center;gap:12px}
-#dvIso .soc .av{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--magenta),#7a1450);
-  display:grid;place-items:center;font-weight:800;color:#fff;flex:0 0 auto}
-#dvIso .soc.ring .av{animation:socring 1s ease-in-out infinite}
-@keyframes socring{0%,100%{box-shadow:0 0 0 0 rgba(226,0,116,.5)}50%{box-shadow:0 0 0 10px rgba(226,0,116,0)}}
-#dvIso .soc .who b{font-size:14px}
-#dvIso .soc .who span{display:block;font-size:11px;color:var(--muted)}
-#dvIso .soc .msg{font-size:12px;color:#cfd6db;line-height:1.4;margin-top:12px;border-top:1px solid var(--hair);padding-top:10px;display:none}
-#dvIso .soc.answered .msg{display:block}
-#dvIso .soc .btns{display:flex;gap:8px;margin-top:12px}
-#dvIso .soc button{flex:1;appearance:none;border:0;border-radius:8px;padding:9px;font-family:var(--font);font-weight:700;font-size:12px;cursor:pointer}
-#dvIso .soc .accept{background:var(--teal);color:#02130f}
-#dvIso .soc .end{background:#2a1013;color:#ff9aa4}
-#dvIso .riskchip{position:absolute;right:60px;top:150px;z-index:7;background:#1a0c0f;border:1px solid var(--red);
-  color:#ff9aa4;font-size:11px;font-weight:800;padding:5px 10px;border-radius:6px;opacity:0;transition:.3s}
-#dvIso .riskchip.on{opacity:1}
-#dvIso .endnote{position:absolute;left:0;right:0;bottom:60px;text-align:center;z-index:6;font-size:12px;color:var(--dim);opacity:0;transition:.4s}
-#dvIso .endnote.on{opacity:1}
-#dvIso .iso-ctrls{position:absolute;right:24px;bottom:22px;z-index:11;display:flex;gap:8px}
-#dvIso .iso-ctrls button{appearance:none;border:1px solid var(--teal);background:var(--teal);color:#02130f;
-  font-family:var(--font);font-weight:700;font-size:12px;padding:9px 15px;border-radius:9px;cursor:pointer}
-#dvIso .iso-ctrls button.ghost{background:transparent;color:var(--teal-br)}
+/* ===== Agent Resolution Center ===== */
+.ag-back{position:absolute;top:30px;left:56px;z-index:8;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer}
+.ag-back:hover{color:var(--text)}
+.ag-rc{position:absolute;top:30px;left:1912px;z-index:8;font-size:15px;font-weight:800;letter-spacing:.03em;color:#e7edf1}
+.ag-hd{position:absolute;top:58px;left:56px;right:1000px;z-index:6}
+.ag-meta{font-size:12px;color:var(--muted);font-weight:600}
+.ag-meta b{color:#c7ced4}
+.ag-hd h2{font-size:25px;font-weight:800;letter-spacing:.01em;margin-top:9px;color:#fff}
+.ag-badges{display:flex;gap:10px;margin-top:14px}
+.agb{font-size:11px;font-weight:700;letter-spacing:.04em;padding:5px 11px;border-radius:7px;border:1px solid var(--hair);color:#c7ced4}
+.agb.hi{color:#ff8a95;border-color:rgba(255,77,94,.5)}
+.agb.act{color:var(--amber);border-color:rgba(245,166,35,.5)}
+.ag-sum{margin-top:18px;max-width:640px}
+.ag-sum .ai{font-size:12px;font-weight:700;color:var(--teal-br);letter-spacing:.03em}
+.ag-sum p{font-size:13.5px;color:#c3cbd2;line-height:1.5;margin-top:8px}
+.ag-band{position:absolute;z-index:6;font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);padding-left:26px}
+.ag-band::before{content:"";position:absolute;left:0;top:50%;width:16px;height:1px;background:var(--dim)}
+#dvAgent .dv-wire{z-index:2}
+.agn{position:absolute;transform:translate(-50%,-50%);z-index:4;text-align:center}
+.agdisc{width:56px;height:56px;border-radius:50%;margin:0 auto;display:grid;place-items:center;position:relative;
+  border:1.6px solid var(--teal);background:radial-gradient(circle at 50% 38%,#0e2a33,#040b0e 72%)}
+.agdisc i{width:15px;height:15px;border-radius:50%;background:currentColor;box-shadow:0 0 15px currentColor,0 0 6px currentColor}
+.agdisc svg{width:24px;height:24px}
+.agdisc.mag{border-color:var(--magenta);color:#ff4db0;box-shadow:0 0 26px rgba(226,0,116,.5)}
+.agdisc.teal{border-color:var(--teal);color:var(--teal-br);box-shadow:0 0 22px var(--glow)}
+.agdisc.blue{border-color:#4aa3ff;color:#8ec5ff;box-shadow:0 0 22px rgba(74,163,255,.5)}
+.agdisc.green{border-color:#39d98a;color:#88f3bd;box-shadow:0 0 22px rgba(57,217,138,.5)}
+.agdisc.gate{border-color:var(--teal-dim);color:#a7b7bf;box-shadow:0 0 16px rgba(47,214,192,.22)}
+.agn.ext .agdisc{border-style:dashed;animation:agpulse 2.4s ease-in-out infinite}
+.agn.ext.contained .agdisc{border-style:solid;border-color:var(--teal);color:var(--teal-br);box-shadow:0 0 24px var(--glow);animation:none}
+@keyframes agpulse{0%,100%{box-shadow:0 0 18px rgba(226,0,116,.4)}50%{box-shadow:0 0 34px rgba(226,0,116,.75)}}
+.reduced .agn.ext .agdisc{animation:none}
+.agtag{position:absolute;left:50%;bottom:46px;transform:translateX(-50%);font-size:9px;font-weight:800;letter-spacing:.12em;
+  color:#ff7ec8;border:1px solid rgba(226,0,116,.55);border-radius:5px;padding:2px 7px;background:rgba(226,0,116,.08);white-space:nowrap}
+.agl{position:absolute;left:50%;top:44px;transform:translateX(-50%);white-space:nowrap}
+.agl b{display:block;font-size:13px;font-weight:700;color:#e7edf1}
+.agl span{display:block;font-size:11px;color:var(--muted);margin-top:3px}
+.agl.sm{top:42px}.agl.sm span{font-size:11px;color:#aeb6bd}
+.ag-denied{position:absolute;z-index:5}
+.agd-h{font-size:9px;font-weight:800;letter-spacing:.1em;color:#ff7ec8;margin-bottom:8px}
+.agchip{font-size:11.5px;font-weight:700;color:#f0a8cf;border:1px dashed rgba(226,0,116,.5);border-radius:7px;
+  padding:6px 11px;margin-bottom:7px;background:rgba(226,0,116,.06);width:max-content}
+.ag-rail{position:absolute;left:120px;right:1010px;top:690px;height:2px;z-index:4}
+.agrail-line{position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,rgba(47,214,192,.15),rgba(47,214,192,.5),rgba(255,77,94,.5))}
+.agst{position:absolute;top:0;transform:translate(-50%,-50%);text-align:center}
+.agst-ic{width:46px;height:46px;border-radius:11px;display:grid;place-items:center;background:#0a1216;border:1px solid var(--hair);color:#9fb2bb;margin:0 auto}
+.agst-ic svg{width:22px;height:22px}
+.agst span{display:block;font-size:11px;color:var(--muted);margin-top:9px;white-space:nowrap;font-weight:600}
+.agst.lock .agst-ic{border-color:rgba(255,77,94,.5);color:#ff8a95;background:rgba(255,77,94,.07)}
+.agv-dot{position:absolute;top:-3px;width:7px;height:7px;border-radius:50%;background:#63e6a0;box-shadow:0 0 10px #63e6a0;z-index:3;
+  animation:agvmove 9s linear infinite}
+@keyframes agvmove{0%{left:2%;opacity:0}6%{opacity:1}94%{opacity:1}100%{left:82%;opacity:0}}
+.reduced .agv-dot{animation:none;left:40%}
+.agrail-stat{position:absolute;top:64px;left:0;font-size:11.5px;font-weight:700;color:#63e6a0;letter-spacing:.02em}
+.agrail-stat::first-letter{font-size:14px}
+.ag-panel{position:absolute;top:62px;left:1912px;width:912px;bottom:40px;z-index:5;
+  border-left:1px solid var(--hair);padding-left:34px}
+.agp-sub{font-size:12.5px;color:var(--muted);font-weight:600}
+.agp-sub b.ok{color:var(--teal-br)}
+.agp-lbl{font-size:10px;font-weight:800;letter-spacing:.14em;color:var(--dim);margin-top:26px;margin-bottom:12px}
+.agp-req{font-size:13px;font-weight:600;color:#f0a8cf;margin-bottom:9px;letter-spacing:.01em}
+.agp-req::first-letter{color:var(--magenta);font-weight:800}
+.agp-card{border:1px solid var(--hair);border-radius:12px;padding:16px 18px;margin-top:16px;background:rgba(255,255,255,.015)}
+.agp-ct{display:flex;align-items:center;gap:10px}
+.agp-ct b{font-size:14.5px;font-weight:800;color:#fff}
+.agp-manual{font-size:9px;font-weight:800;letter-spacing:.1em;color:#9fb2bb;border:1px solid var(--hair);border-radius:5px;padding:3px 6px}
+.agp-pend{margin-left:auto;font-size:9px;font-weight:800;letter-spacing:.1em;color:var(--amber);border:1px solid rgba(245,166,35,.5);border-radius:5px;padding:3px 7px}
+.agp-card.done .agp-pend{color:#63e6a0;border-color:rgba(99,230,160,.5)}
+.agp-card p{font-size:12.5px;color:#aab2b9;line-height:1.5;margin-top:11px}
+.agp-btn{margin-top:15px;width:100%;padding:11px;border-radius:9px;font-size:13px;font-weight:800;letter-spacing:.02em;cursor:pointer;
+  border:1px solid var(--hair);background:transparent;color:#d7dde2;transition:.16s}
+.agp-btn:hover{border-color:var(--teal-dim);color:#fff;background:rgba(47,214,192,.06)}
+.agp-btn.primary{border-color:rgba(226,0,116,.55);color:#ff9dcf;background:rgba(226,0,116,.1)}
+.agp-btn.primary:hover{background:rgba(226,0,116,.2);color:#fff;box-shadow:0 0 18px rgba(226,0,116,.3)}
+.agp-btn.applied{border-color:rgba(99,230,160,.5);color:#63e6a0;background:rgba(99,230,160,.08);cursor:default;box-shadow:none}
 
 /* ===== Dynamic View ===== */
 .dyn-stat{position:absolute;left:44px;z-index:6}
@@ -761,36 +775,84 @@ body:not(.view-flow) #flowHint{display:none}
     </div>
   </div>
 
-  <!-- ===== Isolation & Response (restored, opened from the drift Inspect button) ===== -->
-  <div class="dv" id="dvIso">
-    <div class="dv-back" id="isoBack">‹ Open cases</div>
-    <div class="iso-wrap">
-      <canvas id="isoCv" width="1440" height="810"></canvas>
-      <svg id="wIso" viewBox="0 0 1440 810"></svg>
-      <div class="iso-title"><h2>Isolation &amp; Response</h2></div>
-      <div class="riskchip" id="riskChip">RISK: HIGH · medication supply</div>
-      <div class="livezone">
-        <div class="ring"><b>38</b></div>
-        <div class="t">Live hospital network</div>
-        <div class="s">medication AGVs keep running — fallback delivery continues</div>
+  <!-- ===== Agent Resolution Center (opened from the drift Inspect button) ===== -->
+  <div class="dv agv" id="dvAgent">
+    <div class="ag-back" id="agBack">‹ Open cases</div>
+    <div class="ag-rc">→| Resolution Center</div>
+
+    <div class="ag-hd">
+      <div class="ag-meta">Cases · <b>C-4490</b> · assisted by CDC Bonn</div>
+      <h2>Supplier logistics agent · out-of-profile data request</h2>
+      <div class="ag-badges">
+        <span class="agb hi">● High</span>
+        <span class="agb act">● Active</span>
+        <span class="agb gov">Agentic governance</span>
       </div>
-      <div class="bubble">
-        <div class="lbl" id="bubbleLbl">Secure Simulation</div>
-        <div class="sub">synthetic hospital · no real patient / medication / location data</div>
+      <div class="ag-sum"><span class="ai">✓ Summarized by AI</span>
+        <p>Unusual agent behaviour detected. The supplier logistics agent is requesting restricted location and medication data outside its permission profile.</p></div>
+    </div>
+
+    <div class="ag-band" style="left:64px;top:266px">AI ORCHESTRATION AGENTS</div>
+    <svg class="dv-wire" id="agWire" viewBox="0 0 2880 810"></svg>
+
+    <div class="agn ext" id="agNodeAgent" style="left:300px;top:392px">
+      <span class="agtag">EXTERNAL</span>
+      <div class="agdisc mag"><i></i></div>
+      <div class="agl"><b>Supplier logistics agent</b><span id="agAgentSub">external · out of profile</span></div>
+    </div>
+    <div class="agn" style="left:566px;top:392px">
+      <div class="agdisc gate"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l7 3v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6z"/><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="agl sm"><span>API gateway · scoped</span></div>
+    </div>
+    <div class="agn" style="left:892px;top:322px">
+      <div class="agdisc teal"><i></i></div>
+      <div class="agl"><b>Delivery scheduling</b><span>142 tasks · nominal</span></div>
+    </div>
+    <div class="agn" style="left:892px;top:462px">
+      <div class="agdisc blue"><i></i></div>
+      <div class="agl"><b>Stock replenishment</b><span>96 tasks · nominal</span></div>
+    </div>
+    <div class="agn" style="left:1218px;top:392px">
+      <div class="agdisc green"><i></i></div>
+      <div class="agl"><b>Route &amp; traffic control</b><span>fleet dispatch</span></div>
+    </div>
+
+    <div class="ag-denied" style="left:250px;top:474px">
+      <div class="agd-h">DENIED · OUT OF PROFILE</div>
+      <div class="agchip">✕ Live AGV location</div>
+      <div class="agchip">✕ Patient-linked routes</div>
+      <div class="agchip">✕ Restricted ward</div>
+    </div>
+
+    <div class="ag-band" style="left:64px;top:636px">PHYSICAL · MEDICATION AGVS</div>
+    <div class="ag-rail">
+      <div class="agrail-line"></div>
+      <div class="agv-dot" style="animation-delay:0s"></div>
+      <div class="agv-dot" style="animation-delay:-3s"></div>
+      <div class="agv-dot" style="animation-delay:-6s"></div>
+      <div class="agst" style="left:300px"><div class="agst-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8.5v7M8.5 12h7" stroke-linecap="round"/></svg></div><span>Pharmacy</span></div>
+      <div class="agst" style="left:620px"><div class="agst-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9v9M3 18h18M21 13v5M3 13h18M7 13a3 3 0 0 1 3-3h5a4 4 0 0 1 4 3" stroke-linecap="round"/></svg></div><span>Ward med room</span></div>
+      <div class="agst" style="left:960px"><div class="agst-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="3"/><path d="M6 20a6 6 0 0 1 12 0" stroke-linecap="round"/></svg></div><span>Patient room</span></div>
+      <div class="agst lock" style="left:1300px"><div class="agst-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div><span>Restricted ward</span></div>
+      <div class="agrail-stat">● Medication AGVs · operating normally</div>
+    </div>
+
+    <div class="ag-panel">
+      <div class="agp-sub">Supplier logistics agent · <b class="ok">identity valid</b> · authenticated</div>
+      <div class="agp-lbl">OUT-OF-PROFILE REQUESTS</div>
+      <div class="agp-req">✕ Patient-linked medication routes</div>
+      <div class="agp-req">✕ Live AGV location data</div>
+      <div class="agp-req">✕ Restricted ward access</div>
+      <div class="agp-card" id="agCardIso">
+        <div class="agp-ct"><span class="agp-manual">MANUAL</span><b>Isolate to secure simulation</b><span class="agp-pend">PENDING</span></div>
+        <p>Move the agent into a sandboxed logistics twin · no access to real patient, medication or location data. AGVs keep running.</p>
+        <button class="agp-btn primary" id="agIsolate">Isolate agent</button>
       </div>
-      <div class="badagent" id="badAgent"><div class="c">⚑</div><div class="n">Supplier Agent</div></div>
-      <div class="toast" id="toast">
-        <div class="ic">!</div>
-        <div class="tx"><b>Unusual agent behavior detected.</b> Supplier agent requesting restricted location and medication data.</div>
+      <div class="agp-card" id="agCardRev">
+        <div class="agp-ct"><span class="agp-manual">MANUAL</span><b>Revoke supplier access</b><span class="agp-pend">PENDING</span></div>
+        <p>Human decision · permanently revoke the supplier agent's gateway access and record an audit entry.</p>
+        <button class="agp-btn" id="agRevoke">Revoke supplier access</button>
       </div>
-      <div class="status" id="isoStatus">Agent isolated from live systems · redirected to secure simulation · fallback delivery continues.</div>
-      <div class="soc" id="soc">
-        <div class="row"><div class="av">SOC</div><div class="who"><b>Telekom SOC</b><span id="socState">Incoming call…</span></div></div>
-        <div class="msg" id="socMsg">“This agent may be misconfigured, compromised, or acting beyond its authorized scope. It keeps requesting patient medication schedules and room-level AGV positions. I recommend we revoke access.”</div>
-        <div class="btns"><button class="accept" id="socAccept">Accept call</button><button class="end" id="socEnd">Dismiss</button></div>
-      </div>
-      <div class="endnote" id="endNote">— end of part 1 —</div>
-      <div class="iso-ctrls"><button class="ghost" id="isoReset">Reset</button><button id="isoPlay">▶ Run isolation</button></div>
     </div>
   </div>
 
@@ -1649,7 +1711,7 @@ function popDriftCase(){
   rows.insertBefore(el,rows.firstChild);
   requestAnimationFrame(()=>requestAnimationFrame(()=>el.classList.remove('enter')));
   $('#lqCount').textContent='12';
-  const ib=$('#lqInspect'); if(ib){ib.onclick=ev=>{ev.stopPropagation();openIso();};}
+  const ib=$('#lqInspect'); if(ib){ib.onclick=ev=>{ev.stopPropagation();openAgent();};}
 }
 function resetDrift(){ DRIFT=false; driftGlow=null;
   const mn=$('#fnManual'); if(mn)mn.classList.remove('driftpulse');
@@ -1663,51 +1725,55 @@ stage.addEventListener('click',e=>{
   DRIFT?resetDrift():fireDrift();
 });
 
-/* ===== Isolation & Response (restored from 00b0915, opened from the drift Inspect button) ===== */
-const isoCv=$('#isoCv'), ictx=isoCv?isoCv.getContext('2d'):null;
-if(isoCv){isoCv.width=1440*DPR;isoCv.height=810*DPR;ictx.setTransform(DPR,0,0,DPR,0,0);}
-const isoLive=[];for(let i=0;i<26;i++)isoLive.push({x:120+Math.random()*160,y:355+Math.random()*40,sp:.6+Math.random()*1.2});
-const isoCaged=[];for(let i=0;i<24;i++)isoCaged.push({a:Math.random()*6.283,r:Math.random()*90,sp:(Math.random()*.01+.004),ph:Math.random()*6.283});
-let isoOpen=false, isoIsolated=false;
-function drawIso(cut){const s=$('#wIso');if(!s)return;s.innerHTML='';defs(s);
-  const lv={x:225,y:375};
-  if(!cut){ribbon(s,lv,{x:300,y:375},6);}
-  else{s.appendChild(svgEl('path',{d:band(lv,{x:300,y:375},.55),fill:'none',stroke:'rgba(255,77,94,.35)','stroke-width':3,'stroke-dasharray':'4 8'}));}
+/* ===== Agent Resolution Center ===== */
+function agEdge(s,a,b,col,k,dash){const d=band(a,b,k==null?.55:k);
+  if(!dash){s.appendChild(svgEl('path',{d,fill:'none',stroke:col,'stroke-width':6,'stroke-linecap':'round',opacity:.14,filter:'url(#g)'}));}
+  s.appendChild(svgEl('path',{d,fill:'none',stroke:col,'stroke-width':dash?1.6:2.4,'stroke-linecap':'round',opacity:dash?.7:.9,...(dash?{'stroke-dasharray':'2 7'}:{})}));}
+function agDot(s,x,y,col){s.appendChild(svgEl('circle',{cx:x,cy:y,r:3,fill:col}));}
+let agBuilt=false;
+function buildAgent(){
+  const s=$('#agWire'); s.innerHTML=''; defs(s);
+  const T='#2fd6c0', G='#39d98a', B='#4aa3ff', M='#e2007a';
+  // agent → gateway (straight)
+  agEdge(s,{x:330,y:392},{x:538,y:392},T,.5);
+  // gateway → delivery / stock
+  agEdge(s,{x:594,y:384},{x:864,y:326},T,.55);
+  agEdge(s,{x:594,y:400},{x:864,y:458},T,.55);
+  // delivery / stock → route
+  agEdge(s,{x:920,y:324},{x:1190,y:384},T,.55);
+  agEdge(s,{x:920,y:460},{x:1190,y:400},B,.55);
+  // route → physical rail (ward med room)
+  agEdge(s,{x:1218,y:420},{x:620,y:686},G,.4);
+  // agent → denied (dashed magenta)
+  agEdge(s,{x:300,y:420},{x:322,y:486},M,.4,true);
+  // flow dots on the healthy paths
+  [[500,392,T],[730,352,T],[730,430,T],[1060,352,T],[1060,432,B],[900,600,G]].forEach(d=>agDot(s,d[0],d[1],d[2]));
 }
-function isoFrame(t){if(!isoOpen||!ictx)return;ictx.clearRect(0,0,1440,810);
-  for(const p of isoLive){if(!REDUCED)p.x+=p.sp;if(p.x>300){p.x=120;p.y=355+Math.random()*40;}
-    ictx.globalAlpha=.5+.4*Math.sin(t*.003+p.x);ictx.fillStyle='#2fd6c0';ictx.beginPath();ictx.arc(p.x,p.y,1.4,0,6.283);ictx.fill();}
-  if(isoIsolated){for(const p of isoCaged){if(!REDUCED)p.a+=p.sp;const x=630+Math.cos(p.a)*p.r,y=400+Math.sin(p.a)*p.r*.85;
-    ictx.globalAlpha=.4+.3*Math.sin(t*.004+p.ph);ictx.fillStyle=Math.random()<.3?'#ff4d5e':'#f5a623';ictx.beginPath();ictx.arc(x,y,1.5,0,6.283);ictx.fill();}}
-  ictx.globalAlpha=1;requestAnimationFrame(isoFrame);
+function agReset(){
+  $('#agNodeAgent').classList.remove('contained');
+  $('#agAgentSub').textContent='external · out of profile';
+  const iso=$('#agIsolate'), rev=$('#agRevoke');
+  iso.textContent='Isolate agent'; iso.className='agp-btn primary'; iso.disabled=false;
+  rev.textContent='Revoke supplier access'; rev.className='agp-btn'; rev.disabled=false;
+  $('#agCardIso').classList.remove('done'); $('#agCardRev').classList.remove('done');
+  $('#agCardIso').querySelector('.agp-pend').textContent='PENDING';
+  $('#agCardRev').querySelector('.agp-pend').textContent='PENDING';
 }
-const badAgent=$('#badAgent'),isoToast=$('#toast'),isoStatus=$('#isoStatus'),soc=$('#soc'),riskChip=$('#riskChip'),endNote=$('#endNote');
-let isoTimers=[];
-function resetIso(){
-  isoTimers.forEach(clearTimeout);isoTimers=[];
-  isoIsolated=false;drawIso(false);
-  if(!badAgent)return;
-  badAgent.classList.remove('isolated');badAgent.style.left='300px';badAgent.style.top='375px';
-  isoToast.classList.remove('on');isoStatus.classList.remove('on');
-  soc.classList.remove('on','ring','answered');$('#socState').textContent='Incoming call…';
-  riskChip.classList.remove('on');endNote.classList.remove('on');
-}
-function runIso(){
-  resetIso();
-  const T=(f,ms)=>isoTimers.push(setTimeout(f,ms));
-  T(()=>{isoToast.classList.add('on');riskChip.classList.add('on');},400);
-  T(()=>{isoIsolated=true;drawIso(true);badAgent.classList.add('isolated');badAgent.style.left='630px';badAgent.style.top='400px';},1900);
-  T(()=>{isoStatus.classList.add('on');},3100);
-  T(()=>{soc.classList.add('on','ring');},4200);
-}
-function openIso(){closeDetail();$('#dvIso').classList.add('on');isoOpen=true;requestAnimationFrame(isoFrame);resetIso();setTimeout(runIso,700);}
-function closeIso(){$('#dvIso').classList.remove('on');isoOpen=false;isoTimers.forEach(clearTimeout);isoTimers=[];}
-if($('#isoBack'))$('#isoBack').onclick=closeIso;
-if($('#isoPlay'))$('#isoPlay').onclick=runIso;
-if($('#isoReset'))$('#isoReset').onclick=resetIso;
-if($('#socAccept'))$('#socAccept').onclick=()=>{soc.classList.remove('ring');soc.classList.add('answered');$('#socState').textContent='Connected · analyst';endNote.classList.add('on');};
-if($('#socEnd'))$('#socEnd').onclick=()=>{soc.classList.remove('on','ring');};
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeIso();});
+function openAgent(){closeDetail();buildAgent();agReset();$('#dvAgent').classList.add('on');countUp($('#dvAgent'));}
+function closeAgent(){$('#dvAgent').classList.remove('on');}
+$('#agBack').onclick=closeAgent;
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAgent();});
+$('#agIsolate').onclick=e=>{e.stopPropagation();
+  $('#agNodeAgent').classList.add('contained');
+  $('#agAgentSub').textContent='contained · sandbox twin';
+  const b=$('#agIsolate'); b.textContent='✓ Agent isolated'; b.className='agp-btn applied'; b.disabled=true;
+  $('#agCardIso').classList.add('done'); $('#agCardIso').querySelector('.agp-pend').textContent='APPLIED';
+};
+$('#agRevoke').onclick=e=>{e.stopPropagation();
+  const b=$('#agRevoke'); b.textContent='✓ Access revoked · audited'; b.className='agp-btn applied'; b.disabled=true;
+  $('#agCardRev').classList.add('done'); $('#agCardRev').querySelector('.agp-pend').textContent='APPLIED';
+  $('#agAgentSub').textContent='gateway access revoked';
+};
 
 /* init */
 renderMode('h24');

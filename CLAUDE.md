@@ -35,10 +35,15 @@ Navigation is a small state machine: `showView('assets' | 'flow')`.
    Issues/Prevented), **correlation core → Dynamic View** (radial automation donut +
    orbital source marks + live feed), **Cases → Cases Overview** (lifecycle funnel +
    handling bars + MITRE ATT&CK by tactic). All share the `.dv` overlay pattern.
-   The drift alert's **`Inspect ›`** opens the reduced `DRIFT_DETAIL` governance popover
-   (Telekom Agentic Hub · T Security · CDC Bonn, auto-contained by policy) — *not* a full
-   overlay. (An earlier full "Agent Resolution Center" `.dv` page was built and then removed
-   at the user's request; if a detail page is wanted again, agree the exact design first.)
+   The drift alert's **`Inspect ›` → Agent Resolution Center** (`#dvAgent`, `openAgent()`) is
+   a fourth `.dv` overlay (designed full-width for the 2880 stage): case header (C-4490,
+   badges, AI summary) · an **AI ORCHESTRATION AGENTS** graph (external supplier agent →
+   scoped API gateway → delivery / stock → route & traffic control, with denied
+   out-of-profile chips) · a **PHYSICAL · MEDICATION AGVS** rail (pharmacy/ward/patient/locked
+   restricted ward, moving AGV dots) · a right **Resolution Center** panel with two live
+   manual actions (Isolate to secure simulation, Revoke supplier access) that flip to an
+   applied/audited state on click. Connectors built in `buildAgent()`; Esc / ‹ back close.
+   (An older restored "Isolation & Response" scene was swapped back out for this one.)
 
 ## Ultrawide flow (aspect)
 Target screen is a **32:9** ultrawide (iiyama ProLite XCB4594DQSU, **5120×1440**). The
@@ -87,8 +92,8 @@ centred at x=1440; 2,412 and 96 sit mirror-symmetric about it (1440±360).
   the red glow; on arrival `popDriftCase()` prepends the `DRIFT_CASE` row to the queue —
   *"Supplier agent · out-of-profile data request"* (Critical, `C-4490`, **NEW** badge,
   highlighted) with a sub-line *"Out-of-profile request to iMedOne · auto-contained by
-  policy"* and bumps the header `11 → 12 OPEN`. Its `Inspect ›` opens the **Isolation &
-  Response** scene (`openIso`). Ties into the Telekom Agentic-Hub governance story. Real names.
+  policy"* and bumps the header `11 → 12 OPEN`. Its `Inspect ›` opens the **Agent Resolution
+  Center** (`openAgent`). Ties into the Telekom Agentic-Hub governance story. Real names.
   (Current copy: the drift case is **Critical**, the sub-line ends at "auto-contained by
   policy", and the queue header/`+60`-alignment mirror the left source list top & bottom.)
 - The SOC tag *"assisted by T Security · CDC Bonn"* lives in the queue header (top-right),
