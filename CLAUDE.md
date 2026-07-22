@@ -76,12 +76,19 @@ centred at x=1440; 2,412 and 96 sit mirror-symmetric about it (1440±360).
   by `buildQueue()`), one row per open case (severity badge · title · case-id · tag). It
   fills the right and balances the source list on the left. The 18-Manual node feeds it.
   (Replaces the old chevron/`#nOpen` display; 30D still uses the 5 status `.pcard`s.)
+- **Light glows (fibre-optic).** The source lines carry travelling light glows (`sparks`).
+  A **very few** also ride the right side **96 → automated → resolved** (`rGlows`, minimal —
+  this deliberately overrides the older "no particles right of 96" note, but only as soft
+  light glows, never a pixel swarm). On the drift click a **red** glow (`driftGlow`,
+  `drawGlow(...,true)`) rides **96 → 18 manual → LIVE QUEUE**; the new case only pops when the
+  glow arrives (`popDriftCase`), not immediately.
 - **Agent-drift scenario** (24H only): the flow just runs; a click on the **empty flow
-  backdrop** (`e.target===#stage`) toggles `fireDrift()`/`resetDrift()`. `fireDrift()`
-  prepends the `DRIFT_CASE` row to the queue — *"Supplier agent · out-of-profile data
-  request"* (High, `C-4490`, **NEW** badge, highlighted) with a sub-line *"Out-of-profile
-  request to iMedOne · auto-contained by policy · CDC Bonn"* and bumps the header
-  `11 → 12 OPEN`. Ties into the Telekom Agentic-Hub governance story. Real names only.
+  backdrop** (`e.target===#stage`) toggles `fireDrift()`/`resetDrift()`. `fireDrift()` spawns
+  the red glow; on arrival `popDriftCase()` prepends the `DRIFT_CASE` row to the queue —
+  *"Supplier agent · out-of-profile data request"* (Critical, `C-4490`, **NEW** badge,
+  highlighted) with a sub-line *"Out-of-profile request to iMedOne · auto-contained by
+  policy"* and bumps the header `11 → 12 OPEN`. Its `Inspect ›` opens the **Isolation &
+  Response** scene (`openIso`). Ties into the Telekom Agentic-Hub governance story. Real names.
   (Current copy: the drift case is **Critical**, the sub-line ends at "auto-contained by
   policy", and the queue header/`+60`-alignment mirror the left source list top & bottom.)
 - The SOC tag *"assisted by T Security · CDC Bonn"* lives in the queue header (top-right),

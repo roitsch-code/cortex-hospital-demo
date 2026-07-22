@@ -1052,6 +1052,17 @@ function newCoreOut(p){p.sy=CENTER.y+(Math.random()*2-1)*CENTER.R*0.5;p.t=0;p.sp
 const coreOut=[];for(let k=0;k<15;k++){const p=newCoreOut({});p.t=Math.random();coreOut.push(p);}
 // fibre-optic light pulses that flow through the source lines, one line at a time
 const sparks=[];for(let k=0;k<9;k++){sparks.push({i:0,t:Math.random(),sp:0.003+Math.random()*0.0022,delay:Math.random()*180});}
+// a VERY few light glows also travel the right side: 96 → automated → resolved (minimal)
+const rGlows=[];for(let k=0;k<3;k++){rGlows.push({t:Math.random(),sp:0.0021+Math.random()*0.0011,delay:Math.random()*300});}
+// red light glow spawned on the drift click: 96 → 18 manual → LIVE QUEUE, then the case pops
+let driftGlow=null;
+function drawGlow(x,y,g,red){
+  g=Math.max(0,Math.min(1,g));
+  const gr=ctx.createRadialGradient(x,y,0,x,y,12);
+  if(red){gr.addColorStop(0,`rgba(255,180,186,${g*0.95})`);gr.addColorStop(.45,`rgba(255,90,104,${g*0.34})`);gr.addColorStop(1,'rgba(255,77,94,0)');}
+  else{gr.addColorStop(0,`rgba(216,255,249,${g*0.9})`);gr.addColorStop(.45,`rgba(120,240,220,${g*0.32})`);gr.addColorStop(1,'rgba(120,240,220,0)');}
+  ctx.globalAlpha=1;ctx.fillStyle=gr;ctx.beginPath();ctx.arc(x,y,12,0,6.283);ctx.fill();
+  ctx.fillStyle=(red?`rgba(255,224,226,${g})`:`rgba(240,255,252,${g})`);ctx.beginPath();ctx.arc(x,y,1.7,0,6.283);ctx.fill();}
 function rebuildParticles(){wIdx=[];CURSRC.forEach((s,i)=>{if(s.more)return;for(let k=0;k<s.w;k++)wIdx.push(i);});
   inflow.forEach(p=>{newInflow(p);p.t=Math.random();});}
 
@@ -1096,6 +1107,26 @@ function frame(t){ctx.clearRect(0,0,STAGE.w,810);
     const x=x0+(x1-x0)*p.t, y=p.sy+(CENTER.y-p.sy)*p.t;
     ctx.globalAlpha=Math.min(1,.35+.7*p.t)*dim*(p.t>0.86?(1-p.t)/0.14:1);
     ctx.fillStyle='#6ff3e0';ctx.beginPath();ctx.arc(x,y,1.5,0,6.283);ctx.fill();}
+  ctx.globalAlpha=1;
+  // minimal light glows on the RIGHT: 96 → automated → resolved (mirror of the source-line glows)
+  if(MODE==='h24' && CURLAY){
+    const OUTp={x:CASES.x+48,y:CASES.y}, A0={x:AUTO.x-26,y:AUTO.y}, A1={x:AUTO.x+27,y:AUTO.y}, RX=CURLAY.RESTIP;
+    for(const gsp of rGlows){
+      if(gsp.delay>0){ if(!REDUCED)gsp.delay-=1; continue; }
+      if(!REDUCED)gsp.t+=gsp.sp;
+      if(gsp.t>=1){ gsp.t=0; gsp.delay=220+Math.random()*360; continue; }
+      let pt; if(gsp.t<0.5){ pt=bezPt(OUTp,A0,.58,gsp.t/0.5); } else { const u=(gsp.t-0.5)/0.5; pt={x:A1.x+(RX-A1.x)*u,y:AUTO.y}; }
+      drawGlow(pt.x,pt.y,Math.sin(gsp.t*Math.PI));
+    }
+  }
+  // drift red glow: 96 → 18 manual → LIVE QUEUE, then the case pops
+  if(driftGlow && driftGlow.active && CURLAY){
+    if(!REDUCED)driftGlow.t+=driftGlow.sp;
+    const OUTp={x:CASES.x+48,y:CASES.y}, M0={x:MAN.x-26,y:MAN.y}, M1={x:MAN.x+26,y:MAN.y}, Q={x:CURLAY.LQX-14,y:CURLAY.LQMID};
+    let pt; if(driftGlow.t<0.5){ pt=bezPt(OUTp,M0,.58,driftGlow.t/0.5); } else { pt=bezPt(M1,Q,.5,(driftGlow.t-0.5)/0.5); }
+    drawGlow(pt.x,pt.y,driftGlow.t<0.9?1:(1-driftGlow.t)/0.1,true);
+    if(driftGlow.t>=1){ driftGlow.active=false; const cb=driftGlow.onDone; driftGlow=null; cb&&cb(); }
+  }
   ctx.globalAlpha=1;requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
@@ -1589,7 +1620,12 @@ const DRIFT_DETAIL='<h4><span class="d" style="background:var(--red);box-shadow:
   +'<div class="foot">Agent identity + permission profile enforced at the gateway. The out-of-profile call to iMedOne was blocked inline and raised for human confirmation — revoke access or record an audited exception.</div>';
 function fireDrift(){ if(MODE!=='h24'||DRIFT)return; DRIFT=true;
   $('#flowHint').classList.add('hidden');
-  const rows=$('#lqRows'); if(!rows)return;
+  // red light glow rides 96 → 18 manual → LIVE QUEUE; the case pops when it arrives
+  driftGlow={t:0,sp:0.011,active:true,onDone:popDriftCase};
+  if(REDUCED){driftGlow=null;popDriftCase();}
+}
+function popDriftCase(){
+  const rows=$('#lqRows'); if(!rows||!DRIFT)return;
   const wrap=document.createElement('div'); wrap.innerHTML=lqRowHTML(DRIFT_CASE,true);
   const el=wrap.firstChild; el.classList.add('enter');
   rows.insertBefore(el,rows.firstChild);
@@ -1597,7 +1633,7 @@ function fireDrift(){ if(MODE!=='h24'||DRIFT)return; DRIFT=true;
   $('#lqCount').textContent='12';
   const ib=$('#lqInspect'); if(ib){ib.onclick=ev=>{ev.stopPropagation();openIso();};}
 }
-function resetDrift(){ DRIFT=false;
+function resetDrift(){ DRIFT=false; driftGlow=null;
   const n=$('#lqNew'); if(n)n.remove();
   const c=$('#lqCount'); if(c)c.textContent='11';
   const h=$('#flowHint'); if(h&&MODE==='h24')h.classList.remove('hidden');
