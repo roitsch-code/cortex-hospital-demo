@@ -35,14 +35,10 @@ Navigation is a small state machine: `showView('assets' | 'flow')`.
    Issues/Prevented), **correlation core → Dynamic View** (radial automation donut +
    orbital source marks + live feed), **Cases → Cases Overview** (lifecycle funnel +
    handling bars + MITRE ATT&CK by tactic). All share the `.dv` overlay pattern.
-   The drift alert's **`Inspect ›` → Agent Resolution Center** (`#dvAgent`, `openAgent()`)
-   is a fourth `.dv` overlay: case header (C-4490, badges, AI summary) · an **AI
-   ORCHESTRATION AGENTS** graph (external supplier agent → scoped API gateway → delivery /
-   stock → route & traffic control, with denied out-of-profile chips) · a **PHYSICAL ·
-   MEDICATION AGVS** rail (pharmacy/ward/patient/locked restricted ward, moving AGV dots) ·
-   a right **Resolution Center** panel with two live manual actions (Isolate to secure
-   simulation, Revoke supplier access) that flip to an applied/audited state on click.
-   Designed for the 2880-wide stage; connectors built in `buildAgent()`; Esc / ‹ back close.
+   The drift alert's **`Inspect ›`** opens the reduced `DRIFT_DETAIL` governance popover
+   (Telekom Agentic Hub · T Security · CDC Bonn, auto-contained by policy) — *not* a full
+   overlay. (An earlier full "Agent Resolution Center" `.dv` page was built and then removed
+   at the user's request; if a detail page is wanted again, agree the exact design first.)
 
 ## Ultrawide flow (aspect)
 Target screen is a **32:9** ultrawide (iiyama ProLite XCB4594DQSU, **5120×1440**). The
