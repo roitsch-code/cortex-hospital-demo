@@ -930,10 +930,11 @@ let wIdx=[];
 // inflow = SLOW coloured comets that start in a tight band just right of the Issues number,
 // fan RIGHT into the core rings and are absorbed there (not sucked to the centre)
 const INCOL=['#ff4d5e','#f5a623','#4aa3ff','#3fe0cc','#8ff7e6'];
-// coloured pixels flying HORIZONTALLY, evenly, from just right of the number into the core,
-// absorbed there — plain dots, no trails
-function newInflow(p){p.sx=CENTER.x-CENTER.R-90; p.y=CENTER.y+(Math.random()*2-1)*CENTER.R*0.92;
-  p.ex=CENTER.x+(Math.random()*0.5-0.05)*CENTER.R;
+// coloured pixels forming a CONE: narrow at the Issues number (as tall as the 2,412/Issues
+// block), widening to the core-left edge (full height), then flying horizontally through the
+// core and absorbed there — plain dots
+function newInflow(p){p.f=Math.random()*2-1;               // vertical fraction (-1..1)
+  p.absx=CENTER.x+(Math.random()*0.42)*CENTER.R;           // absorb inside the core
   p.t=0; p.sp=0.0015+Math.random()*0.001; p.col=INCOL[(Math.random()*INCOL.length)|0]; return p;}
 const inflow=[];for(let k=0;k<95;k++){const p=newInflow({});p.t=Math.random();inflow.push(p);}
 const flashes=[];
@@ -971,12 +972,15 @@ function frame(t){ctx.clearRect(0,0,STAGE.w,810);
     ctx.globalAlpha=1;ctx.fillStyle=gr;ctx.beginPath();ctx.arc(pt.x,pt.y,12,0,6.283);ctx.fill();
     ctx.fillStyle=`rgba(240,255,252,${g})`;ctx.beginPath();ctx.arc(pt.x,pt.y,1.7,0,6.283);ctx.fill();}
   ctx.globalAlpha=1;
-  // inflow: coloured pixels flying HORIZONTALLY, evenly, into the core and absorbed (dots)
+  // inflow: cone from the Issues number → core-left edge, then horizontal through the core
+  const NX=CURLAY.dom.nLeft+64, CL=CENTER.x-CENTER.R, SH=33, FH=CENTER.R*0.92;
   for(const p of inflow){ if(!REDUCED)p.t+=p.sp;
     if(p.t>=1){ newInflow(p); continue; }
-    const x=p.sx+(p.ex-p.sx)*p.t;
-    ctx.globalAlpha=Math.min(1,p.t/0.12)*Math.min(1,(1-p.t)/0.32)*0.95*dim;
-    ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(x,p.y,1.6,0,6.283);ctx.fill();}
+    const x=NX+(p.absx-NX)*p.t;
+    const gx=x<CL?SH+(FH-SH)*((x-NX)/(CL-NX)):FH;   // narrow at the number, full at the core
+    const y=CENTER.y+p.f*gx;
+    ctx.globalAlpha=Math.min(1,p.t/0.1)*Math.min(1,(1-p.t)/0.3)*0.95*dim;
+    ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(x,y,1.6,0,6.283);ctx.fill();}
   // (no outflow particles — the flow ends at the Cases number; right of it = lines only)
   // core → Cases number: green pixels only (no lines), slow + sparse
   for(const p of coreOut){ if(!REDUCED)p.t+=p.sp;
