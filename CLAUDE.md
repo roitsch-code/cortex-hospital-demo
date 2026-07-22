@@ -274,11 +274,16 @@ Risk). Tiles: Vulnerable Assets **5,840** (ties to assets At Risk) · Active Cas
 
 ## What's next / open ideas (not built)
 - If real vendor logo SVGs are provided, swap them into the source list + site marks.
-- Possible Part 2 (from the original concept, not required): SOC review → governance
-  (supplier permission profile) → human-confirmed response (revoke / audit record).
-  Keep any such view **reduced**, real names only.
+- The other branches (`claude/cdc-case-numbers-flow-kacllq`, `…cdc-cases-command-center…`,
+  `…issues-cases-flow-refine…`, `…cortex-xsiam-research…`) are a **parallel earlier line**;
+  only the Agent Resolution Center scene was ported from `cdc-case-numbers` (`66d114d`). If a
+  feature from one of those is wanted, diff and cherry-pick it — this branch is not a strict
+  superset of them.
 
 ## Known limitations
-- Isolation/agent-architecture scenes from the original draft were **removed** — the
-  demo is now the two views above. Ignore older references to Scene AGENTS / ISOLATION.
-- Positions in both views are hand-placed for 1440×810; re-screenshot after edits.
+- The demo is the **two views + four 24H drill-down overlays + the Agent Resolution Center**
+  (Part 2, now built). Older references to a separate "Scene AGENTS / ISOLATION" full-screen
+  sequence are obsolete — the governance story now lives in `#dvAgent`.
+- Positions are hand-placed for **1440×810** (assets + all overlays) and the **2880×810**
+  flow; re-screenshot after edits. The overlays centre their 1440 design on the wide stage
+  (`.dv-mid` / `.ag-wrap`).
