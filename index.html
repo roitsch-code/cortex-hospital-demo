@@ -311,18 +311,18 @@ body.view-flow .backbtn{display:flex}
 /* ===== agent case CSS ===== */
 #dvAgent{background:radial-gradient(120% 100% at 50% 22%,#0a1119,#04070b 82%)}
 #dvAgent .dv-back{top:22px;left:34px}
-.ag-case{position:absolute;left:70px;top:46px;right:430px;z-index:6}
+.ag-case{position:absolute;left:64px;top:44px;width:512px;z-index:6}
 .ag-crumb{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:8px}
-.ag-title{font-size:20px;font-weight:800;color:#fff;line-height:1.25;max-width:820px}
+.ag-title{font-size:20px;font-weight:800;color:#fff;line-height:1.25;max-width:512px}
 .ag-chips{display:flex;gap:9px;margin-top:12px;font-size:11.5px;font-weight:700}
 .ag-chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--hair);border-radius:6px;padding:4px 11px;color:#cfd6db}
 .ag-chip .dt{width:6px;height:6px;border-radius:50%}
 .ag-chip.sev{color:#ff9a6a;border-color:rgba(255,122,82,.45)} .ag-chip.sev .dt{background:#ff7a52}
 .ag-chip.stat{color:var(--amber);border-color:rgba(245,166,35,.4)} .ag-chip.stat .dt{background:var(--amber)}
 #dvAgent.s3 .ag-chip.stat{color:var(--teal-br);border-color:rgba(47,214,192,.4)} #dvAgent.s3 .ag-chip.stat .dt{background:var(--teal)}
-.ag-ai{margin-top:14px;max-width:640px}
+.ag-ai{margin-top:14px;max-width:512px}
 .ag-ai-h{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;color:var(--teal-br);margin-bottom:9px}.ag-ai-h svg{width:13px;height:13px}
-.ag-aitext{font-size:13px;color:#d6dee4;line-height:1.5;max-width:600px;transition:color .4s}
+.ag-aitext{font-size:13px;color:#d6dee4;line-height:1.5;max-width:500px;transition:color .4s}
 #dvAgent.s3 .ag-aitext{color:#cfe9e3}
 .ag-layerlab{position:absolute;font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);z-index:5;display:flex;align-items:center;gap:9px}
 .ag-layerlab .ln{width:24px;height:1px;background:rgba(150,170,190,.25)}
@@ -377,7 +377,7 @@ body.view-flow .backbtn{display:flex}
 #dvAgent.s2 .ag-sandbox,#dvAgent.s3 .ag-sandbox{opacity:1}
 .ag-sandbox span{position:absolute;top:-8px;left:16px;font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#ff9ed6;background:#070b10;padding:0 7px}
 /* resolution center */
-.ag-res{position:absolute;right:34px;top:20px;width:340px;bottom:22px;border-left:1px solid var(--hair);padding-left:26px;z-index:6}
+.ag-res{position:absolute;left:632px;top:40px;width:452px;bottom:26px;border-left:1px solid var(--hair);padding-left:30px;z-index:6}
 .ag-res h3{display:flex;align-items:center;gap:9px;font-size:15px;font-weight:800;color:#fff;margin-bottom:6px}
 .ag-res h3 svg{width:17px;height:17px;color:var(--teal-br);flex:0 0 auto}
 .ag-res .rsub{font-size:11px;color:var(--muted);margin-bottom:18px}
@@ -399,8 +399,22 @@ body.view-flow .backbtn{display:flex}
 .ag-action.locked button{border-color:var(--hair);background:transparent;color:var(--muted);cursor:not-allowed}
 .ag-donenote{margin-top:18px;border-top:1px solid rgba(47,214,192,.25);padding-top:14px;font-size:12px;color:var(--teal-br);line-height:1.5;opacity:0;transform:translateY(5px);pointer-events:none;transition:opacity .45s,transform .45s}
 #dvAgent.s3 .ag-donenote{opacity:1;transform:none;pointer-events:auto}
-/* centre the agent scene (1440 design) on the 2880 stage */
-.ag-wrap{position:absolute;left:50%;top:0;transform:translateX(-50%);width:1440px;height:810px}
+/* agent scene spans the full 2880 (32:9) stage: left column = facts + timeline + resolution, right zone = animation */
+.ag-wrap{position:absolute;left:0;top:0;width:2880px;height:810px}
+/* incident timeline (left column, tied to agState) */
+.ag-tl{position:absolute;left:64px;top:280px;width:512px;z-index:6}
+.ag-tl-h{font-size:10px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:15px;display:flex;align-items:center;gap:9px}
+.ag-tl-h .ln{width:22px;height:1px;background:rgba(150,170,190,.28)}
+.ag-tl-step{position:relative;padding:0 0 15px 30px;opacity:.32;filter:grayscale(.45);transition:opacity .5s,filter .5s}
+.ag-tl-step.on{opacity:1;filter:none}
+.ag-tl-step:last-child{padding-bottom:0}
+.ag-tl-step::before{content:"";position:absolute;left:8px;top:15px;bottom:-1px;width:1.5px;background:rgba(150,170,190,.16)}
+.ag-tl-step:last-child::before{display:none}
+.ag-tl-dot{position:absolute;left:2px;top:2px;width:13px;height:13px;border-radius:50%;border:2px solid #5b6b7a;background:#070b10;transition:border-color .5s,box-shadow .5s}
+.ag-tl-step.on .ag-tl-dot{border-color:var(--dc);box-shadow:0 0 9px var(--dc)}
+.ag-tl-t{font-size:12.5px;font-weight:700;color:#e4ebf0;line-height:1.3}
+.ag-tl-t time{font-size:10.5px;font-weight:800;color:var(--muted);margin-right:8px;font-variant-numeric:tabular-nums}
+.ag-tl-s{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.35}
 
 /* ===== Dynamic View ===== */
 .dyn-stat{position:absolute;left:44px;z-index:6}
@@ -797,7 +811,7 @@ body:not(.view-flow) #flowHint{display:none}
   <div class="dv agv" id="dvAgent">
    <div class="ag-wrap">
     <div class="dv-back" id="dvAgentBack">‹ Open cases</div>
-    <svg class="dv-wire" id="agWire" viewBox="0 0 1440 810"></svg>
+    <svg class="dv-wire" id="agWire" viewBox="0 0 2880 810"></svg>
 
     <!-- case header -->
     <div class="ag-case">
@@ -809,52 +823,66 @@ body:not(.view-flow) #flowHint{display:none}
       </div>
     </div>
 
+    <!-- incident timeline (chronological · advances with the manual actions) -->
+    <div class="ag-tl" id="agTL">
+      <div class="ag-tl-h"><span class="ln"></span>Incident timeline &#183; INC-2026-0915-001</div>
+      <div class="ag-tl-step" data-ph="1" style="--dc:#2fd6c0"><span class="ag-tl-dot"></span><div class="ag-tl-t"><time>09:15</time>Authenticated</div><div class="ag-tl-s">Valid credentials &#183; normal stock &amp; delivery-window queries</div></div>
+      <div class="ag-tl-step" data-ph="1" style="--dc:#e2007a"><span class="ag-tl-dot"></span><div class="ag-tl-t"><time>09:17</time>Restricted data requested</div><div class="ag-tl-s">Patient schedules &#183; live AGV positions &#8212; denied at gateway</div></div>
+      <div class="ag-tl-step" data-ph="1" style="--dc:#f5a623"><span class="ag-tl-dot"></span><div class="ag-tl-t"><time>09:18</time>Anomaly flagged &#183; 4.6&#963;</div><div class="ag-tl-s">Behavioral baseline deviation (auto-isolate threshold 3&#963;)</div></div>
+      <div class="ag-tl-step" data-ph="1" style="--dc:#e2007a"><span class="ag-tl-dot"></span><div class="ag-tl-t"><time>09:19</time>Export &amp; override blocked</div><div class="ag-tl-s">Susan&#8217;s route + 12B infusion override denied &#8594; case C-4490 opened</div></div>
+      <div class="ag-tl-step" data-ph="2" style="--dc:#4aa3ff"><span class="ag-tl-dot"></span><div class="ag-tl-t"><time>09:19</time>Isolated to secure simulation</div><div class="ag-tl-s">Agent quarantined from live hospital systems</div></div>
+      <div class="ag-tl-step" data-ph="2" style="--dc:#2fd6c0"><span class="ag-tl-dot"></span><div class="ag-tl-t"><time>09:19</time>Fallback active</div><div class="ag-tl-s">Internal orchestrator keeps every AGV delivering</div></div>
+      <div class="ag-tl-step" data-ph="3" style="--dc:#f5a623"><span class="ag-tl-dot"></span><div class="ag-tl-t"><time>09:20</time>SOC review &#183; CDC Bonn</div><div class="ag-tl-s">Profile vs. behavior reviewed &#8594; revoke recommended</div></div>
+      <div class="ag-tl-step" data-ph="3" style="--dc:#2fd6c0"><span class="ag-tl-dot"></span><div class="ag-tl-t"><time>09:20</time>Access revoked</div><div class="ag-tl-s">Credentials removed &#183; trust policy pending &#183; audit written</div></div>
+      <div class="ag-tl-step" data-ph="3" style="--dc:#63e6a0"><span class="ag-tl-dot"></span><div class="ag-tl-t"><time>09:21</time>Delivery continues &#183; Susan goes home</div><div class="ag-tl-s">Personalized medication collected at the Service Hub</div></div>
+    </div>
+
     <!-- layer labels -->
-    <div class="ag-layerlab" style="left:70px;top:300px"><span class="ln"></span>AI orchestration agents</div>
-    <div class="ag-layerlab" style="left:70px;top:624px"><span class="ln"></span>Physical &#183; medication AGVs</div>
+    <div class="ag-layerlab" style="left:1520px;top:300px"><span class="ln"></span>AI orchestration agents</div>
+    <div class="ag-layerlab" style="left:1520px;top:624px"><span class="ln"></span>Physical &#183; medication AGVs</div>
 
     <!-- digital agent mesh -->
-    <div class="ag-dagent ag-sup" id="agSup" style="left:272px;top:398px">
+    <div class="ag-dagent ag-sup" id="agSup" style="left:1722px;top:398px">
       <div class="orb"><span class="bdg">external</span><i class="r1"></i><i class="r2"></i><i class="r3"></i></div>
       <div class="nm">Supplier logistics agent</div><div class="pl" id="agSupPl">external &#183; out of profile</div>
     </div>
-    <div class="ag-gate" style="left:452px;top:398px">
+    <div class="ag-gate" style="left:1902px;top:398px">
       <div class="g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4-3 7-7 9-4-2-7-5-7-9V6l7-3z"/><path d="M9.3 12l1.8 1.8L15 10.2"/></svg></div>
       <div class="nm">API gateway &#183; scoped</div>
     </div>
-    <div class="ag-dagent" style="left:650px;top:332px;--ac:#2fd6c0">
+    <div class="ag-dagent" style="left:2100px;top:332px;--ac:#2fd6c0">
       <div class="orb"><i class="r1"></i><i class="r2"></i><i class="r3"></i></div>
       <div class="nm">Delivery scheduling</div><div class="pl">142 tasks &#183; nominal</div>
     </div>
-    <div class="ag-dagent" style="left:650px;top:466px;--ac:#4aa3ff">
+    <div class="ag-dagent" style="left:2100px;top:466px;--ac:#4aa3ff">
       <div class="orb"><i class="r1"></i><i class="r2"></i><i class="r3"></i></div>
       <div class="nm">Stock replenishment</div><div class="pl">96 tasks &#183; nominal</div>
     </div>
-    <div class="ag-dagent" style="left:860px;top:398px;--ac:#63e6a0">
+    <div class="ag-dagent" style="left:2310px;top:398px;--ac:#63e6a0">
       <div class="orb"><i class="r1"></i><i class="r2"></i><i class="r3"></i></div>
       <div class="nm">Route &amp; traffic control</div><div class="pl">fleet dispatch</div>
     </div>
 
     <!-- attempted (denied) access -->
-    <div class="ag-blk" style="left:452px;top:586px"><span class="x">&#10005;</span>Live AGV location</div>
-    <div class="ag-blk" style="left:706px;top:586px"><span class="x">&#10005;</span>Patient-linked routes</div>
-    <div class="ag-blk" style="left:936px;top:586px"><span class="x">&#10005;</span>Restricted ward</div>
+    <div class="ag-blk" style="left:1902px;top:586px"><span class="x">&#10005;</span>Live AGV location</div>
+    <div class="ag-blk" style="left:2156px;top:586px"><span class="x">&#10005;</span>Patient-linked routes</div>
+    <div class="ag-blk" style="left:2386px;top:586px"><span class="x">&#10005;</span>Restricted ward</div>
 
     <!-- secure-simulation sandbox (appears on isolate) -->
-    <div class="ag-sandbox" style="left:150px;top:322px;width:252px;height:152px"><span>Secure simulation</span></div>
+    <div class="ag-sandbox" style="left:1600px;top:322px;width:252px;height:152px"><span>Secure simulation</span></div>
 
     <!-- physical AGV layer -->
-    <div class="ag-corridor" style="left:150px;top:672px;width:840px"></div>
-    <div class="ag-loc" style="left:250px;top:690px"><div class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="5" y="4" width="14" height="16" rx="3"/><path d="M12 8.5v7M8.5 12h7" stroke-width="1.7"/></svg></div><div class="nm">Pharmacy</div></div>
-    <div class="ag-loc" style="left:500px;top:690px"><div class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="5" y="3.5" width="14" height="17" rx="1.5"/><path d="M9 3.5v17M12 8v5M9.8 10.5h4.4" stroke-width="1.6"/></svg></div><div class="nm">Ward med room</div></div>
-    <div class="ag-loc" style="left:760px;top:690px"><div class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M2 19v-7M2 15h13a4 4 0 0 1 4 4M19 19v-7M2 19h18M2 12h6"/><circle cx="6" cy="9.4" r="1.7"/></svg></div><div class="nm">Patient room</div></div>
-    <div class="ag-loc lock" style="left:955px;top:690px"><div class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div><div class="nm">Restricted ward</div></div>
+    <div class="ag-corridor" style="left:1600px;top:672px;width:840px"></div>
+    <div class="ag-loc" style="left:1700px;top:690px"><div class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="5" y="4" width="14" height="16" rx="3"/><path d="M12 8.5v7M8.5 12h7" stroke-width="1.7"/></svg></div><div class="nm">Pharmacy</div></div>
+    <div class="ag-loc" style="left:1950px;top:690px"><div class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="5" y="3.5" width="14" height="17" rx="1.5"/><path d="M9 3.5v17M12 8v5M9.8 10.5h4.4" stroke-width="1.6"/></svg></div><div class="nm">Ward med room</div></div>
+    <div class="ag-loc" style="left:2210px;top:690px"><div class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M2 19v-7M2 15h13a4 4 0 0 1 4 4M19 19v-7M2 19h18M2 12h6"/><circle cx="6" cy="9.4" r="1.7"/></svg></div><div class="nm">Patient room</div></div>
+    <div class="ag-loc lock" style="left:2405px;top:690px"><div class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div><div class="nm">Restricted ward</div></div>
 
     <!-- AGV robots (physical, corridor-animated) -->
-    <div class="ag-cart ag-run" style="top:690px;left:300px;--x0:300px;--x1:452px;animation-duration:4.8s;animation-delay:-1s"><div class="c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M4 9.5h16M12 5v4.5"/></svg><span class="led"></span></div></div>
-    <div class="ag-cart ag-run" style="top:690px;left:548px;--x0:548px;--x1:712px;animation-duration:5.6s;animation-delay:-3s"><div class="c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M4 9.5h16M12 5v4.5"/></svg><span class="led"></span></div></div>
-    <div class="ag-cart ag-run" style="top:690px;left:305px;--x0:305px;--x1:448px;animation-duration:7.1s;animation-delay:-5s"><div class="c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M4 9.5h16M12 5v4.5"/></svg><span class="led"></span></div></div>
-    <div class="ag-oplab" style="left:570px;top:744px"><span class="d"></span>Medication AGVs &#183; operating normally</div>
+    <div class="ag-cart ag-run" style="top:690px;left:1750px;--x0:1750px;--x1:1902px;animation-duration:4.8s;animation-delay:-1s"><div class="c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M4 9.5h16M12 5v4.5"/></svg><span class="led"></span></div></div>
+    <div class="ag-cart ag-run" style="top:690px;left:1998px;--x0:1998px;--x1:2162px;animation-duration:5.6s;animation-delay:-3s"><div class="c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M4 9.5h16M12 5v4.5"/></svg><span class="led"></span></div></div>
+    <div class="ag-cart ag-run" style="top:690px;left:1755px;--x0:1755px;--x1:1898px;animation-duration:7.1s;animation-delay:-5s"><div class="c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M4 9.5h16M12 5v4.5"/></svg><span class="led"></span></div></div>
+    <div class="ag-oplab" style="left:2020px;top:744px"><span class="d"></span>Medication AGVs &#183; operating normally</div>
 
     <!-- resolution center -->
     <div class="ag-res">
@@ -1754,10 +1782,10 @@ function dvTick(){if(REDUCED||!dvParts.length)return;
 
 /* ===== agent case JS ===== */
 const AG={
-  sup:{x:272,y:398,r:37}, gate:{x:452,y:398,r:25},
-  del:{x:650,y:332,r:31}, stock:{x:650,y:466,r:31}, route:{x:860,y:398,r:31},
-  phar:{x:250,y:690,r:25}, ward:{x:500,y:690,r:25}, pat:{x:760,y:690,r:25},
-  blk:[{x:452,y:586},{x:706,y:586},{x:936,y:586}]
+  sup:{x:1722,y:398,r:37}, gate:{x:1902,y:398,r:25},
+  del:{x:2100,y:332,r:31}, stock:{x:2100,y:466,r:31}, route:{x:2310,y:398,r:31},
+  phar:{x:1700,y:690,r:25}, ward:{x:1950,y:690,r:25}, pat:{x:2210,y:690,r:25},
+  blk:[{x:1902,y:586},{x:2156,y:586},{x:2386,y:586}]
 };
 let agState=1, agGateParts=[];
 // edge-to-edge segment between two nodes (centre-aligned, stops at each rim)
@@ -1804,6 +1832,8 @@ function agRender(){
   iso.classList.toggle('done',agState>=2); $('#agIsoStat').textContent=agState>=2?'Done':'Pending';
   rev.classList.toggle('locked',agState<2); rev.classList.toggle('done',agState>=3);
   $('#agRevStat').textContent=agState>=3?'Done':(agState>=2?'Ready':'Pending');
+  // advance the incident timeline in lock-step with the manual actions
+  $$('#agTL .ag-tl-step').forEach(function(el){ el.classList.toggle('on',(+el.dataset.ph)<=agState); });
 }
 function openAgent(){ closeDetail(); $('#dvAgent').classList.add('on'); agBuild(); }
 function closeAgent(){ dvClear(); $('#dvAgent').classList.remove('on'); }
