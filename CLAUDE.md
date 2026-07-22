@@ -49,6 +49,21 @@ centred at x=1440; 2,412 and 96 sit mirror-symmetric about it (1440±360).
 - ⚠ **Canvas clear must use `STAGE.w`**, not a hard-coded width. `frame()` does
   `ctx.clearRect(0,0,STAGE.w,810)`; clearing only 1440 leaves the right half of the wide
   canvas un-cleared, so particles + core dots accumulate into bright "sonar" shells/streaks.
+- ⚠ **A perfectly horizontal ribbon must use a SOLID stroke colour, not `url(#teal)`.** The
+  `#teal`/`#ep`/`#red` gradients are `objectBoundingBox`; a dead-straight horizontal path has a
+  zero-height bbox, so the gradient collapses and the stroke renders **invisible**. The 78
+  **automated → resolved** feed (the one the user requires *exactly* horizontal) is drawn with
+  `'#2fd6c0'` for this reason. Curved ribbons keep the gradients.
+- **Funnel discs (`.funnode .disc2`) are OPAQUE** (`radial-gradient(...,#040b0e 72%)`, not the old
+  70%-translucent fill) so incoming/outgoing ribbon ends tuck cleanly under the ring instead of
+  poking through it. Ribbon endpoints stop at ±26/27 (the disc edge). `nResolved` sits at y≈308 so
+  its "85" centre lines up with the horizontal automated feed.
+- **`anchor()` / `openDetail()` are wide-aware** — both use `STAGE.w` (not a hard-coded 1440) so
+  detail popovers land correctly in the 2880 flow.
+- **Drift alert has an `Inspect ›` button** (`#lqInspect`, bottom-right of the new supplier-agent
+  card, aligned with the row's right padding). It opens `DRIFT_DETAIL` — a reduced governance
+  popover (Telekom Agentic Hub · T Security · CDC Bonn, auto-contained by policy). Wired inside
+  `fireDrift()`; `stopPropagation` so it doesn't toggle the backdrop scenario.
 - In wide mode the **left step becomes the Data-Inventory breakdown** promoted into the
   flow (`buildSourcesWide()` → grouped rows from `INV`, with volumes + sparklines), exactly
   like the user's 3rd screenshot. Core + Cases stay the cinematic flow (kept **reduced** —
@@ -179,7 +194,12 @@ Risk). Tiles: Vulnerable Assets **5,840** (ties to assets At Risk) · Active Cas
 - **Agent-drift scenario**: `fireDrift()`/`resetDrift()`, `#driftW` callout, `#flowHint`,
   `#critCount`/`#critNew`, `#openTileNum`; toggled by the `#stage` empty-backdrop click.
 - **Detail popovers**: the `D` object in `detailHTML(key)`; wired by `wire()` /
-  `wireSources()`.
+  `wireSources()`. **Wide source rows** carry genuinely deeper research, not a repeat of the
+  row: each `INV`/`INV30` entry has `d:[[label,val,optClass]…]` + a `foot`, rendered by the
+  `wireSourcesWide()` onclick. 24H = ingest telemetry (Collection/Broker VM · protocols
+  HL7/DICOM/PAN-OS · EPS · XDM-normalized %); 30D = posture/findings (Scanner · Critical/High ·
+  Exploited·KEV · Top finding). Header label switches "Volume · 24H" ⇄ "Findings · 30D" by `MODE`.
+  Keep the per-source issue/finding counts reconciled if you touch the number model.
 - **Assets**: `A_BUCKETS` (buckets), `A_LOC` (sites: cats + status), `PMARK` (site
   marks), `buildAssetsUI` / `selectBucket` / `selectLocation` / `drawAssets` (radar +
   magenta sweep). Radar center `AC={x:800,y:440,R:264}`, `ACX0=800`.
