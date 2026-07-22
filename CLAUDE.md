@@ -36,15 +36,18 @@ Navigation is a small state machine: `showView('assets' | 'flow')`.
    orbital source marks + live feed), **Cases → Cases Overview** (lifecycle funnel +
    handling bars + MITRE ATT&CK by tactic). All share the `.dv` overlay pattern.
    The drift alert's **`Inspect ›` → Agent Resolution Center** (`#dvAgent`, `openAgent()`) is
-   a fourth `.dv` overlay, laid out in a **centred 1440×810 (16:9) box** (`.ag-wrap`) so it
-   reads balanced, not stretched/squished across the 32:9 stage: case header (C-4490,
-   badges, AI summary) · an **AI ORCHESTRATION AGENTS** graph (external supplier agent →
-   scoped API gateway → delivery / stock → route & traffic control, with denied
-   out-of-profile chips) · a **PHYSICAL · MEDICATION AGVS** rail (pharmacy/ward/patient/locked
-   restricted ward, moving AGV dots) · a right **Resolution Center** panel with two live
-   manual actions (Isolate to secure simulation, Revoke supplier access) that flip to an
-   applied/audited state on click. Connectors built in `buildAgent()`; Esc / ‹ back close.
-   (An older restored "Isolation & Response" scene was swapped back out for this one.)
+   the real polished scene **ported from branch `claude/cdc-case-numbers-flow-kacllq`
+   (commit `66d114d`)** — an earlier fresh rebuild on this branch was inferior and was
+   replaced. It's a `.dv` overlay in a **centred 1440×810 box** (`.ag-wrap`) so it reads
+   balanced on the 32:9 stage: case header (C-4490, badges, AI summary) · an **AI
+   ORCHESTRATION AGENTS** graph of glowing `.ag-dagent` nodes (external supplier agent →
+   scoped API gateway → delivery / stock → route & traffic control) with **animated particle
+   flow on the ribbons** (`dvFlow`/`dvTick`, ported) and dashed denied out-of-profile chips ·
+   a **PHYSICAL · MEDICATION AGVS** rail with corridor-animated **AGV carts** (`.ag-cart
+   .ag-run`, CSS `agvrun`) · a right **Resolution Center** panel. Two manual actions drive an
+   `agState` 1→2→3 machine (`agBuild`/`agRender`): Isolate → contained (attempted-access
+   edges fade), Revoke → gateway link severed + audited, AGVs never stop. Esc / ‹ back close.
+   (An older restored "Isolation & Response" scene was swapped out for this one.)
 
 ## Ultrawide flow (aspect)
 Target screen is a **32:9** ultrawide (iiyama ProLite XCB4594DQSU, **5120×1440**). The
