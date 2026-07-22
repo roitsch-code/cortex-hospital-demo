@@ -35,6 +35,14 @@ Navigation is a small state machine: `showView('assets' | 'flow')`.
    Issues/Prevented), **correlation core → Dynamic View** (radial automation donut +
    orbital source marks + live feed), **Cases → Cases Overview** (lifecycle funnel +
    handling bars + MITRE ATT&CK by tactic). All share the `.dv` overlay pattern.
+   The drift alert's **`Inspect ›` → Agent Resolution Center** (`#dvAgent`, `openAgent()`)
+   is a fourth `.dv` overlay: case header (C-4490, badges, AI summary) · an **AI
+   ORCHESTRATION AGENTS** graph (external supplier agent → scoped API gateway → delivery /
+   stock → route & traffic control, with denied out-of-profile chips) · a **PHYSICAL ·
+   MEDICATION AGVS** rail (pharmacy/ward/patient/locked restricted ward, moving AGV dots) ·
+   a right **Resolution Center** panel with two live manual actions (Isolate to secure
+   simulation, Revoke supplier access) that flip to an applied/audited state on click.
+   Designed for the 2880-wide stage; connectors built in `buildAgent()`; Esc / ‹ back close.
 
 ## Ultrawide flow (aspect)
 Target screen is a **32:9** ultrawide (iiyama ProLite XCB4594DQSU, **5120×1440**). The
@@ -170,8 +178,12 @@ Risk). Tiles: Vulnerable Assets **5,840** (ties to assets At Risk) · Active Cas
 
 ## Tuning map (where the knobs are, in index.html)
 - Colours / theme: the `:root` CSS variables at the top.
-- Header brand: title "Cyber Security Command Center" + "AI-driven Security Operations ·
-  powered by [inline T Security logo]".
+- Header brand: the official **Cortex wordmark** (green mark + white "CORTEX", alpha-keyed
+  from `docs/cortex-primary-628x353.avif` to transparent, inlined as base64 `img.cxwm`)
+  followed by **"XSIAM"** text, then "AI-driven Security Operations · powered by [inline
+  paloalto logo]". The `▾` caret stays. Do **not** revert to a hand-drawn Cortex mark.
+- The **"T Security"** queue tag renders the real magenta **Telekom "T"** glyph (`TSVG`
+  path, inline) as the trademark, with "Security" in Telekom magenta (`--magenta`).
 - **Flow sources**: `SRC24` / `SRC30` arrays (name, `s` asset count, `icon`, `w` ribbon
   weight, `ep` endpoint-highlight, `t` Telekom-magenta, `rate`, `res`). Icons via
   `ICONS` + `iconSVG()`; the magenta "tmark" uses `TSVG`.
