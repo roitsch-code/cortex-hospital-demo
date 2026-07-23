@@ -14,6 +14,31 @@
 > slide. The look matters as much as the content. **Fake data, but internally
 > consistent and correct.**
 
+## ⛔ AGENT SCREEN — recurring hard rules (these keep regressing on rebuilds; DO NOT lose them)
+The Agent scene (`#dvAgent`, `n-*` classes, `BEATS`/`agRenderV2`) was rebuilt to match the
+user's T-Gallery wireframes **plus** the PANW Cortex "Agentic Assistant" reference. Every
+time a block is rewritten, re-check this list so previously-correct details don't regress:
+1. **SOC tag** — "assisted by T Security · CDC Bonn" ALWAYS renders the real magenta Telekom
+   **T** glyph (`TSVG` path, inline `<svg class="tg">`) + "Security" in `--magenta`. **NEVER**
+   plain white text. Same wherever "T Security" appears.
+2. **Agent orbs** = PANW Cortex style: subtle dark rounded tile + **two concentric glowing
+   rings + faint core**, glowing in the agent colour (Supplier orange `#ff8a3d`, Guard green
+   `#2fd67a`, Sentinel magenta `#e2379a`, Orchestrator violet `#a06bff`, +8 grey). **Only the
+   colour differs from the reference — never the layout.** No solid centre dot, no flat single
+   ring, no removing the tile.
+3. **Rail icons** = neutral **white** line SVGs, **no background fill**. Location tiles
+   (Pharmacy / Ward / Locker) are **larger** than the AMR carts (visible size difference).
+   Shapes: medication box · two tablets · IV bag · vial · bed+cross · 3-door locker.
+4. **"1 granted" is GREEN**, "N denied" is RED (Detected-signals header).
+5. The AGV graphic (agent graph + rail) lives in the **RIGHT HALF only**; left half = case
+   panel + scope card. Measure the wireframe scales — don't approximate.
+6. Advance the scene by **clicking anywhere** — no Next/Back buttons, no hint text, no counter.
+7. The **timeline grows through the WHOLE storyflow**: reaches + agent interactions (Guard
+   flagged, Guard→Sentinel escalation) + isolation + Sentinel→Orchestrator + orchestrator took
+   over. Not just the data reaches.
+8. **"Live AGV positions" attaches to the AGVs** (the reach fans to the AMR carts).
+9. SmartScore climbs 12→96 (green→red); AMRs move, freeze on isolation, resume on handover.
+
 ## What this is
 A cinematic **security-operations demo** in the visual language of Palo Alto Networks
 **Cortex XSIAM 3.0** (dark, glowing, animated), adapted to a **generic large university

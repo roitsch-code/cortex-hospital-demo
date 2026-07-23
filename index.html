@@ -318,6 +318,8 @@ body.view-flow .backbtn{display:flex}
 .ag-topmid{position:absolute;left:50%;top:11px;transform:translateX(-50%);display:flex;align-items:center;gap:10px}
 .ag-tchip{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;border:1px solid var(--hair);border-radius:7px;padding:6px 13px;color:#cfd6db}
 .ag-tchip .dt{width:7px;height:7px;border-radius:50%}
+.ag-tchip .tsec{display:inline-flex;align-items:center;gap:4px;color:var(--magenta);font-weight:700}
+.ag-tchip .tsec .tg{height:12px;width:auto}
 .ag-tchip.sev{color:#ff8f5e;border-color:rgba(255,122,82,.45)} .ag-tchip.sev .dt{background:#ff7a52;box-shadow:0 0 7px #ff7a52}
 .ag-tchip.stat{color:var(--amber);border-color:rgba(245,166,35,.42)} .ag-tchip.stat .dt{background:var(--amber);box-shadow:0 0 7px var(--amber)}
 #dvAgent.contained .ag-tchip.stat{color:#8dc0ff;border-color:rgba(74,163,255,.5)} #dvAgent.contained .ag-tchip.stat .dt{background:#4aa3ff;box-shadow:0 0 8px #4aa3ff}
@@ -504,12 +506,12 @@ body.view-flow .backbtn{display:flex}
 /* ===== agent scene v2 (mockup: orb nodes, diamond gateway, orthogonal flows, AMR rail) ===== */
 .n-lab{position:absolute;transform:translateY(-50%);font-size:14px;font-weight:700;color:#e7edf2;z-index:7;white-space:nowrap;line-height:1.25}
 .n-lab small{display:block;font-size:10px;font-weight:600;color:var(--muted)}
-.n-orb{position:absolute;transform:translate(-50%,-50%);width:66px;height:66px;border-radius:15px;background:radial-gradient(circle at 50% 42%,rgba(255,255,255,.04),rgba(9,15,21,.92));border:1px solid rgba(120,140,160,.2);display:grid;place-items:center;z-index:6;box-shadow:0 5px 18px rgba(0,0,0,.55);transition:opacity .4s,filter .4s}
-.n-orb .r{width:42px;height:42px;border-radius:50%;position:relative}
+.n-orb{position:absolute;transform:translate(-50%,-50%);width:66px;height:66px;border-radius:15px;background:radial-gradient(circle at 50% 44%,rgba(255,255,255,.03),rgba(12,18,26,.82));border:1px solid rgba(120,140,160,.16);display:grid;place-items:center;z-index:6;box-shadow:0 4px 14px rgba(0,0,0,.45);transition:opacity .4s,filter .4s}
+.n-orb .r{width:46px;height:46px;border-radius:50%;position:relative}
 .n-orb .r i{position:absolute;border-radius:50%}
-.n-orb .r i.a{inset:0;border:2px solid var(--oc);opacity:.45}
-.n-orb .r i.b{inset:24%;border:2px solid var(--oc);opacity:.9;box-shadow:0 0 12px var(--oc)}
-.n-orb .r i.c{inset:46%;background:var(--oc);box-shadow:0 0 10px var(--oc)}
+.n-orb .r i.a{inset:2%;border:2.5px solid var(--oc);box-shadow:0 0 10px var(--oc),inset 0 0 4px -1px var(--oc)}
+.n-orb .r i.b{inset:30%;border:2.5px solid var(--oc);box-shadow:0 0 8px var(--oc)}
+.n-orb .r i.c{inset:45%;background:var(--oc);opacity:.4;box-shadow:0 0 6px var(--oc)}
 .n-orb.hidden{opacity:0;pointer-events:none}
 .n-orb.dim{opacity:.5;filter:grayscale(.45)}
 .n-his{position:absolute;transform:translate(-50%,-50%);width:58px;height:58px;border-radius:14px;background:rgba(9,15,21,.92);border:1px solid rgba(226,0,116,.35);display:grid;place-items:center;color:#e879b8;z-index:6;box-shadow:0 4px 16px rgba(0,0,0,.5)}
@@ -969,7 +971,7 @@ body:not(.view-flow) #flowHint{display:none}
         <span class="ag-tchip sev"><span class="dt"></span>High</span>
         <span class="ag-tchip stat"><span class="dt"></span><span id="agStat">Active</span></span>
         <span class="ag-tchip">Agentic governance</span>
-        <span class="ag-tchip">assisted by T Security &#183; CDC Bonn</span>
+        <span class="ag-tchip">assisted by <b class="tsec"><svg class="tg" viewBox="0 0 231 275" fill="currentColor" stroke="none"><path d="M55,181.5H0v-55h55v55ZM0,0v93.5h16.5v-2.75c0-44,24.75-71.5,71.5-71.5h2.75v198c0,27.5-11,38.5-38.5,38.5h-8.25v19.25h143v-19.25h-8.25c-27.5,0-38.5-11-38.5-38.5V19.25s2.75,0,2.75,0c46.75,0,71.5,27.5,71.5,71.5v2.75h16.5V0H0ZM176,181.5h55v-55h-55v55Z"/></svg>Security</b> &#183; CDC Bonn</span>
       </div>
       <div class="ag-clock"><span class="lv"><i></i>LIVE</span><span id="agClock">--:--:--</span></div>
     </div>
@@ -1006,8 +1008,8 @@ body:not(.view-flow) #flowHint{display:none}
     </div>
 
     <!-- ===== agent graph (right half) ===== -->
-    <div class="n-orb" style="left:2491px;top:90px;--oc:#9fb0bd"><div class="r"><i class="a"></i><i class="b"></i><i class="c"></i></div></div>
-    <div class="n-lab" style="left:2541px;top:90px">+8 Other Agents</div>
+    <div class="n-orb" style="left:2491px;top:170px;--oc:#9fb0bd"><div class="r"><i class="a"></i><i class="b"></i><i class="c"></i></div></div>
+    <div class="n-lab" style="left:2541px;top:170px">+8 Other Agents</div>
     <div class="n-orb" id="agSupOrb" style="left:1843px;top:267px;--oc:#ff8a3d"><div class="r"><i class="a"></i><i class="b"></i><i class="c"></i></div></div>
     <div class="n-lab" style="left:1889px;top:267px">Supplier Logistics<small>Agent</small></div>
     <div class="n-orb" style="left:2174px;top:267px;--oc:#2fd67a"><div class="r"><i class="a"></i><i class="b"></i><i class="c"></i></div></div>
@@ -1939,7 +1941,7 @@ const BEATS=[
   tl:[{k:'x',nm:'Patient med schedules',sb:'Neurology unit &#183; denied'}]},
  {score:71,lab:'Out-of-profile access',out:true,
   ai:'Second denied reach &#8212; live room-level robot positions. The <b>Gateway Guard</b> flags the pattern. 0 records exposed.',
-  reach:{pkt:'Live AGV positions',pc:'#ff5a78',target:'amr003',block:true},
+  reach:{pkt:'Live AGV positions',pc:'#ff5a78',target:'agvs',block:true},
   tl:[{k:'x',nm:'Live AGV positions',sb:'room-level &#183; denied'},{k:'flag',nm:'Gateway Guard &#183; anomaly flagged',sb:'behavioral baseline &#183; 4.6&#963;'}]},
  {score:88,lab:'High-risk agent behavior',out:true,
   ai:'Third denied reach &#8212; the patient-linked delivery route to the Service Box. Restricted and <b>denied</b>. 0 records exposed.',
@@ -1987,7 +1989,7 @@ function agRenderV2(){
       +'<div class="ag-sig-tx"><div class="ag-sig-nm">'+g.nm+'</div><div class="ag-sig-sb">'+g.sb+'</div></div>'
       +'<span class="ag-sig-tm">'+t+'</span></div>'; }); }
   $('#agSigList').innerHTML=rows;
-  $('#agSigCount').innerHTML = denied>0 ? ('1 granted &#183; '+denied+' denied') : '1 granted &#183; ~1 min';
+  $('#agSigCount').innerHTML = '<span style="color:#63e6a0">1 granted</span>' + (denied>0 ? (' &#183; <span style="color:#ff7a9c">'+denied+' denied</span>') : ' &#183; ~1 min');
   $('#agScope').classList.toggle('on', agState>=1);
   if(agState>=1)$('#agScopeReaches').innerHTML=denied+' &#183; all denied';
   $('#agOrchOrb').classList.toggle('hidden', !handed);
@@ -2004,9 +2006,14 @@ function agRenderV2(){
   agLine([{x:2174,y:300},{x:2174,y:382}],YEL,1.8,'6 7');          // guard -> gateway
   agLine([{x:2092,y:405},{x:2151,y:405}],TEAL,1.8,'6 7');         // HIS -> gateway
   if(agState>=2||isolated) agLine([{x:2207,y:267},{x:2473,y:267}],YEL,1.8,'6 7'); // guard -> sentinel
-  if(reach&&!isolated){ const col=reach.block?RED:TEAL, tx=AGT[reach.target];
+  if(reach&&!isolated){ const col=reach.block?RED:TEAL;
     agLine([{x:1843,y:300},{x:1843,y:350},{x:2174,y:350}],col,2,'6 7',true);            // supplier request
-    agLine([{x:2174,y:428},{x:2174,y:650},{x:tx,y:650},{x:tx,y:697}],col,2,'6 7',true); // gateway -> rail target
+    if(reach.target==='agvs'){ const xs=[1714,1872,2059,2347,2592];                    // reach for all AGV positions
+      agLine([{x:2174,y:428},{x:2174,y:650}],col,2,'6 7',true);
+      agLine([{x:xs[0],y:650},{x:xs[xs.length-1],y:650}],col,2,'6 7');
+      xs.forEach(function(x){ agLine([{x:x,y:650},{x:x,y:697}],col,2,'6 7',true); });
+    } else { const tx=AGT[reach.target];
+      agLine([{x:2174,y:428},{x:2174,y:650},{x:tx,y:650},{x:tx,y:697}],col,2,'6 7',true); }
   }
   if(agState===5) agLine([{x:1843,y:221},{x:1843,y:180},{x:2506,y:180},{x:2506,y:234}],RED,2,'6 7'); // sentinel isolates
   if(handed){
