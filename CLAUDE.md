@@ -39,11 +39,13 @@ time a block is rewritten, re-check this list so previously-correct details don'
    slats + handles. Locations are **larger** than the AMR carts. (AMR viewBox `0 0 96 100`,
    location `0 0 116 100`.) Each
    location keeps its **sub-room marker** (`.n-end .lo`, stacked **column**, centred under the
-   tile): a small lavender-bordered icon badge (`b.mk`) above its label — **Medical storage** =
-   open-box + teal cross, **Patientroom 12A** = door, **Medical locker 014** = single-locker
-   door. Each icon sits centred directly under Pharmacy / Ward / Locker — don't drop them.
-   AGV cargo glyphs are **plain white line-art** (no colour, no white card) — only locations
-   use colour. Orb sub-labels (`.n-lab small`, e.g. "Agent"/"Orchestrator") are the **same size**
+   tile, big enough to read with clear spacing): a small lavender-bordered icon badge (`b.mk`)
+   above its label — **Medical storage** = open-box + cross, **Patientroom 12A** = door,
+   **Medical locker 014** = single-locker door. Each icon sits centred directly under Pharmacy /
+   Ward / Locker — don't drop them. **Every glyph on the scene — AMR cargo, location tiles AND
+   the sub-room badges — is plain WHITE line-art (no colour anywhere, no white card).** Only the
+   agent orbs and the red BLOCKED sign carry colour. Orb sub-labels (`.n-lab small`, e.g.
+   "Agent"/"Orchestrator") are the **same size**
    as the main label, and the **isolation box** (`.n-iso`) is wide enough that its border never
    crosses the agent label — the label wraps instead.
 4. **"1 granted" is GREEN**, "N denied" is RED (Detected-signals header).
