@@ -36,7 +36,13 @@ time a block is rewritten, re-check this list so previously-correct details don'
    white card, bottle+cross + two capsules (black line-art); **Ward** = **flat-colour** bed
    (peach frame `#efb97e`, red blanket `#e2415a`, grey pillow) + red-cross badge, no white card;
    **Locker** = white card, three line-art doors with vent slats + handles. Locations are
-   **larger** than the AMR carts. (AMR viewBox `0 0 96 100`, location `0 0 116 100`.)
+   **larger** than the AMR carts. (AMR viewBox `0 0 96 100`, location `0 0 116 100`.) Each
+   location keeps its **sub-room marker** as a small lavender-bordered badge (`.n-end .lo b`):
+   **Medical storage** = open-box + teal cross icon (`b.mk`), **12A**, **014** — don't drop them.
+   AGV cargo glyphs are **plain white line-art** (no colour, no white card) — only locations
+   use colour. Orb sub-labels (`.n-lab small`, e.g. "Agent"/"Orchestrator") are the **same size**
+   as the main label, and the **isolation box** (`.n-iso`) is wide enough that its border never
+   crosses the agent label — the label wraps instead.
 4. **"1 granted" is GREEN**, "N denied" is RED (Detected-signals header).
 5. The AGV graphic (agent graph + rail) lives in the **RIGHT HALF only**; left half = case
    panel + scope card (scope card sits a little low, `top:104`). Measure the wireframe scales —
