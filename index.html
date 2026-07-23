@@ -504,17 +504,17 @@ body.view-flow .backbtn{display:flex}
 /* ===== agent scene v2 (mockup: orb nodes, diamond gateway, orthogonal flows, AMR rail) ===== */
 .n-lab{position:absolute;transform:translateY(-50%);font-size:14px;font-weight:700;color:#e7edf2;z-index:7;white-space:nowrap;line-height:1.25}
 .n-lab small{display:block;font-size:10px;font-weight:600;color:var(--muted)}
-.n-orb{position:absolute;transform:translate(-50%,-50%);width:76px;height:76px;border-radius:15px;background:radial-gradient(circle at 50% 42%,rgba(255,255,255,.04),rgba(9,15,21,.92));border:1px solid rgba(120,140,160,.2);display:grid;place-items:center;z-index:6;box-shadow:0 5px 18px rgba(0,0,0,.55);transition:opacity .4s,filter .4s}
-.n-orb .r{width:46px;height:46px;border-radius:50%;position:relative}
+.n-orb{position:absolute;transform:translate(-50%,-50%);width:66px;height:66px;border-radius:15px;background:radial-gradient(circle at 50% 42%,rgba(255,255,255,.04),rgba(9,15,21,.92));border:1px solid rgba(120,140,160,.2);display:grid;place-items:center;z-index:6;box-shadow:0 5px 18px rgba(0,0,0,.55);transition:opacity .4s,filter .4s}
+.n-orb .r{width:42px;height:42px;border-radius:50%;position:relative}
 .n-orb .r i{position:absolute;border-radius:50%}
 .n-orb .r i.a{inset:0;border:2px solid var(--oc);opacity:.45}
 .n-orb .r i.b{inset:24%;border:2px solid var(--oc);opacity:.9;box-shadow:0 0 12px var(--oc)}
 .n-orb .r i.c{inset:46%;background:var(--oc);box-shadow:0 0 10px var(--oc)}
 .n-orb.hidden{opacity:0;pointer-events:none}
 .n-orb.dim{opacity:.5;filter:grayscale(.45)}
-.n-his{position:absolute;transform:translate(-50%,-50%);width:66px;height:66px;border-radius:14px;background:rgba(9,15,21,.92);border:1px solid rgba(226,0,116,.35);display:grid;place-items:center;color:#e879b8;z-index:6;box-shadow:0 4px 16px rgba(0,0,0,.5)}
+.n-his{position:absolute;transform:translate(-50%,-50%);width:58px;height:58px;border-radius:14px;background:rgba(9,15,21,.92);border:1px solid rgba(226,0,116,.35);display:grid;place-items:center;color:#e879b8;z-index:6;box-shadow:0 4px 16px rgba(0,0,0,.5)}
 .n-his svg{width:26px;height:26px}
-.n-diamond{position:absolute;transform:translate(-50%,-50%) rotate(45deg);width:50px;height:50px;border:2px solid var(--teal-br);z-index:6;box-shadow:0 0 20px -4px var(--teal)}
+.n-diamond{position:absolute;transform:translate(-50%,-50%) rotate(45deg);width:46px;height:46px;border:2px solid var(--teal-br);z-index:6;box-shadow:0 0 20px -4px var(--teal)}
 .n-diamond::after{content:"";position:absolute;inset:7px;border:1.5px solid rgba(47,214,192,.55)}
 #dvAgent.handed .n-diamond{background:rgba(47,214,192,.18)}
 .n-blk{position:absolute;transform:translate(-50%,-50%);width:34px;height:34px;border-radius:50%;border:2.5px solid #ff5a78;z-index:8;background:rgba(10,6,9,.9);opacity:0;transition:opacity .3s}
@@ -526,7 +526,7 @@ body.view-flow .backbtn{display:flex}
 .n-iso.on{opacity:1}
 .n-iso span{position:absolute;bottom:-26px;left:50%;transform:translateX(-50%);font-size:12px;font-weight:700;color:#c2ccd4}
 /* scope card (appears once denials start) */
-.n-scope{position:absolute;left:640px;top:92px;width:600px;border:1px solid var(--hair);border-radius:14px;background:rgba(14,20,28,.74);padding:20px 26px;z-index:6;opacity:0;transform:translateY(6px);transition:opacity .4s,transform .4s;pointer-events:none}
+.n-scope{position:absolute;left:734px;top:66px;width:620px;border:1px solid var(--hair);border-radius:14px;background:rgba(14,20,28,.74);padding:20px 26px;z-index:6;opacity:0;transform:translateY(6px);transition:opacity .4s,transform .4s;pointer-events:none}
 .n-scope.on{opacity:1;transform:none}
 .n-scope .sh{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
 .n-krow{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-top:1px solid rgba(150,170,190,.09);font-size:13px}
@@ -537,7 +537,7 @@ body.view-flow .backbtn{display:flex}
 .n-mtag{font-size:11px;font-weight:700;color:#cdd6dd;border:1px solid var(--hair);border-radius:6px;padding:5px 11px;display:inline-flex;align-items:center;gap:7px}
 .n-mtag i{width:6px;height:6px;border-radius:50%;background:#ff7a52}.n-mtag em{font-style:normal;color:var(--dim);font-size:9px;font-weight:800}
 /* physical rail */
-.n-rail{position:absolute;left:80px;top:688px;width:2720px;height:50px;border:1.5px solid rgba(47,214,192,.4);border-radius:25px;z-index:4}
+.n-rail{position:absolute;left:1540px;top:697px;width:1260px;height:48px;border:1.5px solid rgba(47,214,192,.4);border-radius:25px;z-index:4}
 .n-rail::before{content:"";position:absolute;left:24px;right:24px;top:50%;border-top:2px dotted rgba(47,214,192,.45);transition:border-color .4s}
 #dvAgent.frozen .n-rail{border-color:rgba(150,170,190,.3)}
 #dvAgent.frozen .n-rail::before{border-color:rgba(150,170,190,.28)}
@@ -556,7 +556,7 @@ body.view-flow .backbtn{display:flex}
 .n-end .lo{position:absolute;top:44px;left:50%;transform:translateX(-50%);font-size:11px;color:var(--muted);white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
 .n-end .lo b{font-size:9px;font-weight:800;color:#c2ccd4;border:1px solid var(--hair);border-radius:3px;padding:0 4px}
 /* click-advance control */
-.n-step{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);display:flex;align-items:center;gap:16px;z-index:9}
+.n-step{position:absolute;left:2160px;bottom:14px;transform:translateX(-50%);display:flex;align-items:center;gap:16px;z-index:9}
 .n-step button{appearance:none;border:1px solid rgba(47,214,192,.5);background:rgba(47,214,192,.12);color:var(--teal-br);font-size:13px;font-weight:700;border-radius:9px;padding:9px 22px;cursor:pointer;transition:.15s}
 .n-step button:hover{background:rgba(47,214,192,.22)}
 .n-step button:disabled{opacity:.35;cursor:default}
@@ -1002,47 +1002,35 @@ body:not(.view-flow) #flowHint{display:none}
       </div>
     </div>
 
-    <!-- ===== agent graph ===== -->
-    <!-- +8 other agents -->
-    <div class="n-orb" style="left:2470px;top:120px;--oc:#9fb0bd"><div class="r"><i class="a"></i><i class="b"></i><i class="c"></i></div></div>
-    <div class="n-lab" style="left:2520px;top:120px">+8 Other Agents</div>
-    <!-- supplier -->
-    <div class="n-orb" id="agSupOrb" style="left:1720px;top:250px;--oc:#ff8a3d"><div class="r"><i class="a"></i><i class="b"></i><i class="c"></i></div></div>
-    <div class="n-lab" style="left:1772px;top:250px">Supplier Logistics<small>Agent</small></div>
-    <!-- gateway guard -->
-    <div class="n-orb" style="left:2150px;top:250px;--oc:#2fd67a"><div class="r"><i class="a"></i><i class="b"></i><i class="c"></i></div></div>
-    <div class="n-lab" style="left:2202px;top:250px">Gateway Guard</div>
-    <!-- security sentinel -->
-    <div class="n-orb" style="left:2560px;top:250px;--oc:#e2379a"><div class="r"><i class="a"></i><i class="b"></i><i class="c"></i></div></div>
-    <div class="n-lab" style="left:2612px;top:250px">Security Sentinel</div>
-    <!-- hospital logistics orchestrator (appears at handover) -->
-    <div class="n-orb hidden" id="agOrchOrb" style="left:2560px;top:486px;--oc:#a06bff"><div class="r"><i class="a"></i><i class="b"></i><i class="c"></i></div></div>
-    <div class="n-lab hidden" id="agOrchLab" style="left:2612px;top:486px">Hospital Logistics<small>Orchestrator</small></div>
-    <!-- HIS (iMedOne) -->
-    <div class="n-his" style="left:1880px;top:486px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="7" ry="2.6"/><path d="M5 6v6c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6V6M5 12v6c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6v-6"/></svg></div>
-    <div class="n-lab" style="left:1690px;top:486px;text-align:right">HIS (iMedOne)</div>
-    <!-- MCP gateway diamond -->
-    <div class="n-diamond" style="left:2150px;top:486px"></div>
-    <div class="n-lab" style="left:2200px;top:486px">MCP Gateway</div>
-    <!-- block symbol above gateway -->
-    <div class="n-blk" id="agBlk" style="left:2150px;top:420px"></div>
-    <!-- travelling data packet -->
-    <div class="n-pkt" id="agPkt" style="left:2150px;top:590px;--pc:#2fd6c0">Ward stock levels</div>
-    <!-- isolation box around supplier -->
-    <div class="n-iso" id="agIso" style="left:1560px;top:206px;width:320px;height:112px"><span>Isolated</span></div>
+    <!-- ===== agent graph (right half) ===== -->
+    <div class="n-orb" style="left:2491px;top:90px;--oc:#9fb0bd"><div class="r"><i class="a"></i><i class="b"></i><i class="c"></i></div></div>
+    <div class="n-lab" style="left:2541px;top:90px">+8 Other Agents</div>
+    <div class="n-orb" id="agSupOrb" style="left:1843px;top:267px;--oc:#ff8a3d"><div class="r"><i class="a"></i><i class="b"></i><i class="c"></i></div></div>
+    <div class="n-lab" style="left:1889px;top:267px">Supplier Logistics<small>Agent</small></div>
+    <div class="n-orb" style="left:2174px;top:267px;--oc:#2fd67a"><div class="r"><i class="a"></i><i class="b"></i><i class="c"></i></div></div>
+    <div class="n-lab" style="left:2220px;top:267px">Gateway Guard</div>
+    <div class="n-orb" style="left:2506px;top:267px;--oc:#e2379a"><div class="r"><i class="a"></i><i class="b"></i><i class="c"></i></div></div>
+    <div class="n-lab" style="left:2552px;top:267px">Security Sentinel</div>
+    <div class="n-orb hidden" id="agOrchOrb" style="left:2506px;top:405px;--oc:#a06bff"><div class="r"><i class="a"></i><i class="b"></i><i class="c"></i></div></div>
+    <div class="n-lab hidden" id="agOrchLab" style="left:2552px;top:405px">Hospital Logistics<small>Orchestrator</small></div>
+    <div class="n-his" style="left:2059px;top:405px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="7" ry="2.6"/><path d="M5 6v6c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6V6M5 12v6c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6v-6"/></svg></div>
+    <div class="n-lab" style="left:1870px;top:405px">HIS (iMedOne)</div>
+    <div class="n-diamond" style="left:2174px;top:405px"></div>
+    <div class="n-lab" style="left:2210px;top:378px">MCP Gateway</div>
+    <div class="n-blk" id="agBlk" style="left:2174px;top:350px"></div>
+    <div class="n-pkt" id="agPkt" style="left:2174px;top:494px;--pc:#2fd6c0">Ward stock levels</div>
+    <div class="n-iso" id="agIso" style="left:1683px;top:221px;width:320px;height:92px"><span>Isolated</span></div>
 
-    <!-- ===== physical rail ===== -->
+    <!-- ===== physical rail (right half) ===== -->
     <div class="n-rail"></div>
-    <!-- fixed locations -->
-    <div class="n-end" style="left:180px;top:713px"><div class="t">Hospital<br>Pharmacy</div><div class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="6" y="9" width="12" height="11" rx="2"/><path d="M8 9V6a4 4 0 0 1 8 0v3M12 13v4M10 15h4"/></svg></div><div class="lo">Medical storage</div></div>
-    <div class="n-end" style="left:1480px;top:713px"><div class="t">Neurological<br>Ward</div><div class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M3 8v10M3 12h13a4 4 0 0 1 4 4v2M21 18v-2"/><circle cx="7" cy="10" r="1.6"/></svg></div><div class="lo"><b>12A</b> Patientroom 12A</div></div>
-    <div class="n-end" style="left:2700px;top:713px"><div class="t">Medical<br>locker</div><div class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M12 3v18M4 9.5h8M12 14.5h8"/></svg></div><div class="lo">Medical locker <b>014</b></div></div>
-    <!-- moving AMRs -->
-    <div class="n-amr run" style="top:713px;left:520px;--x0:470px;--x1:640px;animation-duration:5.4s;animation-delay:-1s"><div class="id">AMR-002</div><div class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M4 9.5h16M12 5v4.5"/></svg></div></div>
-    <div class="n-amr run" style="top:713px;left:820px;--x0:760px;--x1:940px;animation-duration:6.6s;animation-delay:-3s"><div class="id">AMR-001</div><div class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M4 9.5h16M12 5v4.5"/></svg></div></div>
-    <div class="n-amr run" style="top:713px;left:1160px;--x0:1080px;--x1:1300px;animation-duration:7.8s;animation-delay:-2s"><div class="id">AMR-003</div><div class="b"><svg viewBox="0 0 24 24" fill="none" stroke="#7fc4ff" stroke-width="1.5" stroke-linejoin="round"><rect x="8" y="3" width="8" height="7" rx="2"/><path d="M12 10v5M10 20h4M12 15v5"/></svg></div></div>
-    <div class="n-amr run" style="top:713px;left:1880px;--x0:1800px;--x1:2000px;animation-duration:7.1s;animation-delay:-4s"><div class="id">AMR-006</div><div class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M4 9.5h16M12 5v4.5"/></svg></div></div>
-    <div class="n-amr run" style="top:713px;left:2200px;--x0:2120px;--x1:2320px;animation-duration:6.2s;animation-delay:-5s"><div class="id">AMR-007</div><div class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M4 9.5h16M12 5v4.5"/></svg></div></div>
+    <div class="n-end" style="left:1570px;top:721px"><div class="t">Hospital<br>Pharmacy</div><div class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="6" y="9" width="12" height="11" rx="2"/><path d="M8 9V6a4 4 0 0 1 8 0v3M12 13v4M10 15h4"/></svg></div><div class="lo">Medical storage</div></div>
+    <div class="n-end" style="left:2174px;top:721px"><div class="t">Neurological<br>Ward</div><div class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M3 8v10M3 12h13a4 4 0 0 1 4 4v2M21 18v-2"/><circle cx="7" cy="10" r="1.6"/></svg></div><div class="lo"><b>12A</b> Patientroom 12A</div></div>
+    <div class="n-end" style="left:2779px;top:721px"><div class="t">Medical<br>locker</div><div class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M12 3v18M4 9.5h8M12 14.5h8"/></svg></div><div class="lo">Medical locker <b>014</b></div></div>
+    <div class="n-amr run" style="top:721px;left:1714px;--x0:1680px;--x1:1760px;animation-duration:5.4s;animation-delay:-1s"><div class="id">AMR-002</div><div class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M4 9.5h16M12 5v4.5"/></svg></div></div>
+    <div class="n-amr run" style="top:721px;left:1872px;--x0:1838px;--x1:1918px;animation-duration:6.6s;animation-delay:-3s"><div class="id">AMR-001</div><div class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M4 9.5h16M12 5v4.5"/></svg></div></div>
+    <div class="n-amr run" style="top:721px;left:2059px;--x0:2025px;--x1:2100px;animation-duration:7.8s;animation-delay:-2s"><div class="id">AMR-003</div><div class="b"><svg viewBox="0 0 24 24" fill="none" stroke="#7fc4ff" stroke-width="1.5" stroke-linejoin="round"><rect x="7.5" y="3" width="9" height="8" rx="2.5"/><path d="M12 11v4M9.5 19h5l-.6-3.4a1.5 1.5 0 0 0-1.5-1.2h-.8a1.5 1.5 0 0 0-1.5 1.2z"/></svg></div></div>
+    <div class="n-amr run" style="top:721px;left:2347px;--x0:2313px;--x1:2400px;animation-duration:7.1s;animation-delay:-4s"><div class="id">AMR-006</div><div class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M4 9.5h16M12 5v4.5"/></svg></div></div>
+    <div class="n-amr run" style="top:721px;left:2592px;--x0:2552px;--x1:2635px;animation-duration:6.2s;animation-delay:-5s"><div class="id">AMR-007</div><div class="b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M4 9.5h16M12 5v4.5"/></svg></div></div>
 
     <!-- click-advance control -->
     <div class="n-step">
@@ -1050,6 +1038,7 @@ body:not(.view-flow) #flowHint{display:none}
       <span class="cnt" id="agStepCnt">1 / 7</span>
       <button id="agNext">Next ›</button>
     </div>
+
 
    </div>
   </div>
@@ -1944,7 +1933,7 @@ function dvTick(){if(REDUCED||!dvParts.length)return;
     p.el.setAttribute('cx',pt.x.toFixed(1));p.el.setAttribute('cy',pt.y.toFixed(1));p.el.setAttribute('opacity',(0.9*fade).toFixed(2));}}
 
 /* ===== agent case JS (v2 — mockup: click-advanced 7-beat animation) ===== */
-const AGT={phar:180, amr003:1160, ward:1480, locker:2700};
+const AGT={phar:1570, amr003:2059, ward:2174, locker:2779};
 const AGSEQ=[
   {k:'ok', nm:'Ward stock levels',        sb:'Neurology unit &#183; granted', pkt:'Ward stock levels',          pc:'#2fd6c0', target:'phar',   score:12, lab:'Normal agent behavior',
    title:'Supplier logistics agent', ai:'An external supplier agent is <b>reaching within its scope</b> at the MCP Gateway &#8212; stock-level requests are granted.'},
@@ -2008,21 +1997,21 @@ function agRenderV2(){
   if(!isolated){ pkt.textContent=cfg.pkt; pkt.style.setProperty('--pc',cfg.pc); }
   // ===== connectors =====
   const YEL='rgba(240,210,90,.7)', TEAL='#2fd6c0', RED='#ff5a78', GRN='#3ad07a';
-  agLine([{x:2150,y:288},{x:2150,y:461}],YEL,1.8,'6 7');          // guard -> gateway (oversight)
-  agLine([{x:1913,y:486},{x:2125,y:486}],TEAL,1.8,'6 7');         // HIS -> gateway
-  if(idx>=1||isolated) agLine([{x:2188,y:250},{x:2522,y:250}],YEL,1.8,'6 7'); // guard -> sentinel (escalation)
+  agLine([{x:2174,y:300},{x:2174,y:382}],YEL,1.8,'6 7');          // guard -> gateway (oversight)
+  agLine([{x:2092,y:405},{x:2151,y:405}],TEAL,1.8,'6 7');         // HIS -> gateway
+  if(idx>=1||isolated) agLine([{x:2207,y:267},{x:2473,y:267}],YEL,1.8,'6 7'); // guard -> sentinel (escalation)
   if(!isolated){
     const col = idx===0?TEAL:RED;
-    agLine([{x:1720,y:288},{x:1720,y:420},{x:2150,y:420}],col,2,'6 7',true);   // supplier request -> block/gateway
+    agLine([{x:1843,y:300},{x:1843,y:350},{x:2174,y:350}],col,2,'6 7',true);   // supplier request -> block/gateway
     const tx=AGT[cfg.target];
-    agLine([{x:2150,y:511},{x:2150,y:650},{x:tx,y:650},{x:tx,y:690}],col,2,'6 7',true); // gateway -> rail target
+    agLine([{x:2174,y:428},{x:2174,y:650},{x:tx,y:650},{x:tx,y:697}],col,2,'6 7',true); // gateway -> rail target
   } else if(agState===5){
-    agLine([{x:1720,y:206},{x:1720,y:150},{x:2560,y:150},{x:2560,y:212}],RED,2,'6 7'); // sentinel isolates supplier
+    agLine([{x:1843,y:221},{x:1843,y:180},{x:2506,y:180},{x:2506,y:234}],RED,2,'6 7'); // sentinel isolates supplier
   }
   if(handed){
-    agLine([{x:2560,y:288},{x:2560,y:448}],GRN,2,'6 7');           // sentinel -> orchestrator (init)
-    agLine([{x:2175,y:486},{x:2522,y:486}],TEAL,2,'6 7');          // gateway -> orchestrator
-    agLine([{x:2150,y:511},{x:2150,y:655},{x:180,y:655},{x:180,y:690}],TEAL,2,'6 7',true); // orchestrator control -> pharmacy
+    agLine([{x:2506,y:300},{x:2506,y:372}],GRN,2,'6 7');           // sentinel -> orchestrator (init)
+    agLine([{x:2197,y:405},{x:2473,y:405}],TEAL,2,'6 7');          // gateway -> orchestrator
+    agLine([{x:2174,y:428},{x:2174,y:655},{x:1570,y:655},{x:1570,y:697}],TEAL,2,'6 7',true); // orchestrator control -> pharmacy
   }
   // step control
   $('#agStepCnt').textContent=(agState+1)+' / 7';
