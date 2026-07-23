@@ -394,8 +394,21 @@ body.view-flow .backbtn{display:flex}
 .ag-oplab .d{width:6px;height:6px;border-radius:50%;background:#63e6a0;box-shadow:0 0 8px #63e6a0;animation:blink 1.5s infinite}
 .reduced .ag-oplab .d{animation:none}
 /* blocked / attempted access chips */
-.ag-blk{position:absolute;transform:translate(-50%,-50%);z-index:6;display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;color:#ffb3cf;border:1px dashed rgba(226,0,116,.55);background:rgba(226,0,116,.09);border-radius:999px;padding:4px 10px;white-space:nowrap;transition:.5s}
+.ag-blk{position:absolute;transform:translateY(-50%);z-index:6;display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;color:#ffb3cf;border:1px dashed rgba(226,0,116,.55);background:rgba(226,0,116,.09);border-radius:999px;padding:5px 13px;white-space:nowrap;transition:.5s}
 .ag-blk .x{color:#ff7ec8;font-weight:800}
+.ag-blk.hit{animation:agblkhit .6s ease-out}
+@keyframes agblkhit{0%{box-shadow:0 0 0 0 rgba(255,90,120,.55);border-color:#ff6f92;color:#ffd4df}100%{box-shadow:0 0 0 11px rgba(255,90,120,0)}}
+/* block flash ring at the gateway */
+.ag-blockmark{position:absolute;transform:translate(-50%,-50%);z-index:8;pointer-events:none;width:0;height:0}
+.ag-blockmark .ring{position:absolute;left:0;top:0;width:60px;height:60px;margin:-30px 0 0 -30px;border-radius:50%;border:2.5px solid #ff5a78;opacity:0}
+.ag-blockmark.flash .ring{animation:agblock .85s ease-out}
+.ag-blockmark.flash .ring.r2{animation-delay:.16s}
+@keyframes agblock{0%{transform:scale(.4);opacity:.95;box-shadow:0 0 18px rgba(255,90,120,.6)}100%{transform:scale(2.3);opacity:0}}
+.reduced .ag-blockmark{display:none}
+#dvAgent.s2 .ag-blockmark{display:none}
+/* gateway node flashes red the instant a restricted request is denied */
+.ag-gate .g{transition:border-color .2s,box-shadow .2s,color .2s}
+.ag-gate.blk .g{border-color:#ff5a78;color:#ffb0c2;background:rgba(226,0,116,.14);box-shadow:0 0 26px -3px rgba(255,80,110,.85)}
 #dvAgent.s2 .ag-blk,#dvAgent.s3 .ag-blk{opacity:.28;filter:grayscale(.4)}
 /* sandbox */
 .ag-sandbox{position:absolute;border:1.5px dashed rgba(226,0,116,.55);border-radius:16px;z-index:4;background:rgba(226,0,116,.05);opacity:0;transition:opacity .6s;pointer-events:none;box-shadow:inset 0 0 44px rgba(226,0,116,.08)}
@@ -457,6 +470,28 @@ body.view-flow .backbtn{display:flex}
 .ag-graphlab .ln{width:26px;height:1px;background:rgba(150,170,190,.25)}
 .ag-corrlab{position:absolute;transform:translate(-50%,-50%);font-size:10px;font-weight:700;color:var(--teal-br);z-index:6;white-space:nowrap;background:rgba(6,11,16,.7);padding:2px 8px;border-radius:5px}
 #dvAgent.s2 .ag-corrlab{color:#8dc0ff}
+/* gateway guard (small policy-sentry node) */
+.ag-guard{position:absolute;transform:translate(-50%,-50%);z-index:7;text-align:center}
+.ag-guard .gg{width:40px;height:40px;border-radius:11px;margin:0 auto;display:grid;place-items:center;border:1.4px solid rgba(47,214,192,.5);background:rgba(16,40,36,.7);color:var(--teal-br);box-shadow:0 0 18px -6px var(--teal)}
+.ag-guard .gg svg{width:20px;height:20px}
+.ag-guard .nm{font-size:11px;font-weight:700;color:#dbe7ec;margin-top:7px;white-space:nowrap}
+.ag-guard .pl{font-size:9.5px;color:var(--muted);margin-top:2px;white-space:nowrap}
+#dvAgent.s2 .ag-guard .gg{border-color:rgba(141,192,255,.6);color:#8dc0ff;box-shadow:0 0 18px -5px #4aa3ff}
+/* backend data store (iMedOne on T Cloud) */
+.ag-backend{position:absolute;transform:translate(-50%,-50%);z-index:6;text-align:center}
+.ag-backend .bx{width:52px;height:52px;border-radius:13px;margin:0 auto;display:grid;place-items:center;border:1.5px solid rgba(226,0,116,.4);background:radial-gradient(circle at 50% 32%,rgba(226,0,116,.16),rgba(226,0,116,.04));color:#f2b8d6;box-shadow:0 0 22px -8px rgba(226,0,116,.5)}
+.ag-backend .bx svg{width:25px;height:25px}
+.ag-backend .nm{font-size:12px;font-weight:800;color:#e6eef4;margin-top:9px;white-space:nowrap}
+.ag-backend .pl{font-size:10px;color:var(--muted);margin-top:2px;white-space:nowrap}
+/* granted-aggregate chip */
+.ag-granted{position:absolute;transform:translateY(-50%);z-index:6;display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;color:#a7e8d8;border:1px solid rgba(47,214,192,.4);background:rgba(47,214,192,.08);border-radius:999px;padding:5px 13px;white-space:nowrap}
+.ag-granted .ok{color:var(--teal-br);font-weight:800}
+/* hospital logistics orchestrator (internal fallback; standby now, activates on handover) */
+.ag-orch{position:absolute;transform:translate(-50%,-50%);z-index:6;text-align:center;transition:opacity .5s,filter .5s}
+.ag-orch .ob{width:44px;height:44px;border-radius:12px;margin:0 auto;display:grid;place-items:center;border:1.4px solid rgba(150,170,190,.4);background:rgba(28,38,50,.75);color:#aeb9c4;box-shadow:0 2px 10px rgba(0,0,0,.4)}
+.ag-orch .ob svg{width:22px;height:22px}
+.ag-orch .nm{font-size:11px;font-weight:700;color:#c2ccd4;margin-top:7px;white-space:nowrap}
+.ag-orch .pl{font-size:9.5px;font-weight:700;letter-spacing:.05em;color:var(--dim);margin-top:2px;white-space:nowrap;text-transform:uppercase}
 
 /* ===== Dynamic View ===== */
 .dyn-stat{position:absolute;left:44px;z-index:6}
@@ -884,42 +919,51 @@ body:not(.view-flow) #flowHint{display:none}
     </div>
 
     <!-- section labels -->
-    <div class="ag-graphlab" style="left:604px;top:110px"><span class="ln"></span>Detection &#183; grouping</div>
+    <div class="ag-graphlab" style="left:604px;top:110px"><span class="ln"></span>Agent access &#183; governed at the gateway</div>
     <div class="ag-graphlab" style="left:150px;top:636px"><span class="ln"></span>Physical &#183; medication logistics</div>
 
-    <!-- grouping graph (hero): individual signals correlated into one case -->
-    <!-- sentinel detector -->
-    <div class="ag-dagent ag-sentinel" style="left:1090px;top:160px">
+    <!-- digital twin: supplier -> MCP gateway(+guard) -> {granted aggregate | denied restricted}; guard escalates -> sentinel isolates -->
+    <!-- supplier agent (external actor) -->
+    <div class="ag-dagent ag-sup" id="agSup" style="left:700px;top:356px">
+      <div class="orb"><span class="bdg">external</span><i class="r1"></i><i class="r2"></i><i class="r3"></i></div>
+      <div class="nm">Supplier logistics agent</div><div class="pl" id="agSupPl">AGT-SUP-LG-042 &#183; out of profile</div>
+    </div>
+    <!-- MCP gateway: the one scoped doorway -->
+    <div class="ag-gate" id="agGate" style="left:972px;top:356px">
+      <div class="g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4-3 7-7 9-4-2-7-5-7-9V6l7-3z"/><path d="M9.3 12l1.8 1.8L15 10.2"/></svg></div>
+      <div class="nm">MCP Gateway &#183; scoped</div>
+    </div>
+    <!-- block flash at the gateway (fires when a restricted request is denied) -->
+    <div class="ag-blockmark" id="agBlockMark" style="left:972px;top:356px"><span class="ring"></span><span class="ring r2"></span></div>
+    <!-- gateway guard: policy sentry that escalates -->
+    <div class="ag-guard" id="agGuard" style="left:972px;top:232px">
+      <div class="gg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4-3 7-7 9-4-2-7-5-7-9V6l7-3z"/><path d="M12 8.3v4.2M12 15.4v.05"/></svg></div>
+      <div class="nm">Gateway Guard</div><div class="pl" id="agGuardPl">watching denials</div>
+    </div>
+    <!-- security sentinel: isolates on escalation -->
+    <div class="ag-dagent ag-sentinel" style="left:1256px;top:166px">
       <div class="orb"><span class="sig">Security Sentinel &#183; 4.6&#963;</span><i class="r1"></i><i class="r2"></i>
         <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4-3 7-7 9-4-2-7-5-7-9V6l7-3z"/><circle cx="12" cy="10.8" r="2.3"/><path d="M12 13.1V15.4"/></svg>
       </div>
       <div class="nm">Behavioral baseline</div><div class="pl" id="agSentPl">anomaly detected</div>
     </div>
-    <!-- supplier agent (the actor) -->
-    <div class="ag-dagent ag-sup" id="agSup" style="left:734px;top:352px">
-      <div class="orb"><span class="bdg">external</span><i class="r1"></i><i class="r2"></i><i class="r3"></i></div>
-      <div class="nm">Supplier logistics agent</div><div class="pl" id="agSupPl">external &#183; out of profile</div>
+    <!-- escalation label -->
+    <div class="ag-corrlab" id="agCorr" style="left:1092px;top:210px">out-of-profile &#183; escalate</div>
+    <!-- backend: iMedOne on T Cloud (restricted patient/med data behind the gateway) -->
+    <div class="ag-backend" id="agBackend" style="left:1424px;top:356px">
+      <div class="bx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="7" ry="2.6"/><path d="M5 6v6c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6V6M5 12v6c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6v-6"/></svg></div>
+      <div class="nm">iMedOne &#183; T Cloud</div><div class="pl">restricted &#183; patient &amp; med data</div>
     </div>
-    <!-- scoped gateway (the barrier that denies) -->
-    <div class="ag-gate" style="left:980px;top:352px">
-      <div class="g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4-3 7-7 9-4-2-7-5-7-9V6l7-3z"/><path d="M9.3 12l1.8 1.8L15 10.2"/></svg></div>
-      <div class="nm">Scoped API gateway</div>
-    </div>
-    <!-- denied reaches (the individual signals) -->
-    <div class="ag-blk" style="left:1330px;top:238px"><span class="x">&#10005;</span>Patient med schedules</div>
-    <div class="ag-blk" style="left:1330px;top:322px"><span class="x">&#10005;</span>Live AGV positions</div>
-    <div class="ag-blk" style="left:1372px;top:406px"><span class="x">&#10005;</span>Susan&#8217;s route &#8594; Service Box</div>
-    <div class="ag-blk" style="left:1330px;top:490px"><span class="x">&#10005;</span>Priority override &#183; infusion</div>
-    <!-- correlation label -->
-    <div class="ag-corrlab" id="agCorr" style="left:928px;top:474px">correlated &#8594; one case</div>
-    <!-- case node -->
-    <div class="ag-casenode" style="left:734px;top:558px">
-      <div class="h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4-3 7-7 9-4-2-7-5-7-9V6l7-3z"/><path d="M9.3 11.4l1.8 1.8 3.6-3.6"/></svg></div>
-      <div class="nm">Case C-4490</div><div class="pl">agentic governance</div>
-    </div>
+    <!-- denied restricted reaches (blocked at the gateway, left-aligned) -->
+    <div class="ag-blk" style="left:1120px;top:250px"><span class="x">&#10005;</span>Patient med schedules</div>
+    <div class="ag-blk" style="left:1120px;top:330px"><span class="x">&#10005;</span>Live AGV positions</div>
+    <div class="ag-blk" style="left:1120px;top:410px"><span class="x">&#10005;</span>Susan&#8217;s route &#8594; Service Box</div>
+    <div class="ag-blk" style="left:1120px;top:490px"><span class="x">&#10005;</span>Priority override &#183; infusion</div>
+    <!-- granted aggregate path -> physical fleet -->
+    <div class="ag-granted" id="agGranted" style="left:857px;top:602px"><span class="ok">&#10003;</span>granted &#183; ward-level aggregate</div>
 
     <!-- secure-simulation sandbox (appears on isolate) -->
-    <div class="ag-sandbox" style="left:632px;top:300px;width:238px;height:150px"><span>Secure simulation</span></div>
+    <div class="ag-sandbox" style="left:550px;top:262px;width:300px;height:188px"><span>Secure simulation</span></div>
 
     <!-- physical continuity rail: pharmacy -> ward -> campus Service Box -->
     <div class="ag-corridor" style="left:170px;top:706px;width:2050px"></div>
@@ -932,6 +976,11 @@ body:not(.view-flow) #flowHint{display:none}
     <div class="ag-cart ag-run" style="top:724px;left:1120px;--x0:1120px;--x1:1560px;animation-duration:7.4s;animation-delay:-3s"><div class="c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M4 9.5h16M12 5v4.5"/></svg><span class="led"></span></div></div>
     <div class="ag-cart ag-run" style="top:724px;left:1600px;--x0:1600px;--x1:1980px;animation-duration:8.1s;animation-delay:-5s"><div class="c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M4 9.5h16M12 5v4.5"/></svg><span class="led"></span></div></div>
     <div class="ag-oplab" id="agOpLab" style="left:670px;top:780px"><span class="d"></span>AGVs operating normally &#183; medication delivery continues</div>
+    <!-- hospital logistics orchestrator: internal fallback, standby now (activates on handover in a later state) -->
+    <div class="ag-orch" id="agOrch" style="left:440px;top:660px">
+      <div class="ob"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 5.2V3M12 21v-2.2M5.2 12H3M21 12h-2.2M7.1 7.1L5.5 5.5M18.5 18.5L17 17M17 7.1l1.5-1.6M5.5 18.5L7.1 17"/></svg></div>
+      <div class="nm">Hospital Logistics Orchestrator</div><div class="pl" id="agOrchPl">standby &#183; fallback</div>
+    </div>
 
     <!-- column C: scope + MITRE ATT&CK -->
     <div class="ag-scope">
@@ -1871,18 +1920,30 @@ function dvFlow(svg,geom,n,col,o){o=o||{};const spMin=o.spMin||0.0016,spMax=o.sp
     dvParts.push({geom,el,rev,len:0,t:i/n,sp:spMin+Math.random()*(spMax-spMin)});}}
 function dvTick(){if(REDUCED||!dvParts.length)return;
   for(const p of dvParts){ if(!p.len){try{p.len=p.geom.getTotalLength();}catch(e){} if(!p.len)continue;}
-    p.t+=p.sp; if(p.t>=1)p.t-=1;
+    p.t+=p.sp;
+    if(p.block){ // request pulse that gets BLOCKED at the gateway: fades out on arrival, then flashes
+      if(p.t>=1){ p.t=0; agBlockFlash(); }
+      const bpt=p.geom.getPointAtLength(p.t*p.len), bf=Math.min(1,p.t*4,(1-p.t)*9);
+      p.el.setAttribute('cx',bpt.x.toFixed(1));p.el.setAttribute('cy',bpt.y.toFixed(1));p.el.setAttribute('opacity',(0.95*bf).toFixed(2));
+      continue; }
+    if(p.t>=1)p.t-=1;
     const pt=p.geom.getPointAtLength((p.rev?1-p.t:p.t)*p.len), fade=Math.min(1,p.t*7,(1-p.t)*7);
     p.el.setAttribute('cx',pt.x.toFixed(1));p.el.setAttribute('cy',pt.y.toFixed(1));p.el.setAttribute('opacity',(0.9*fade).toFixed(2));}}
 
 /* ===== agent case JS ===== */
 const AG={
-  sent:{x:1090,y:160,r:34}, sup:{x:734,y:352,r:37}, gate:{x:980,y:352,r:25},
-  cas:{x:734,y:558,r:30},
-  t:[{x:1330,y:238},{x:1330,y:322},{x:1372,y:406},{x:1330,y:490}],
+  sup:{x:700,y:356,r:37}, gate:{x:972,y:356,r:26}, guard:{x:972,y:232,r:22},
+  sent:{x:1256,y:166,r:34}, imed:{x:1424,y:356,r:30},
+  t:[{x:1120,y:250},{x:1120,y:330},{x:1120,y:410},{x:1120,y:490}],
+  railIn:{x:972,y:688,r:0},
   phar:{x:320,y:724,r:26}, ward:{x:1010,y:724,r:26}, box:{x:2020,y:724,r:26}
 };
-let agState=1, agClockTimer=null, agT0=null;
+let agState=1, agClockTimer=null, agT0=null, agBlockIdx=0;
+function agBlockFlash(){ if(agState>=2)return;
+  const bm=$('#agBlockMark'); if(bm){ bm.classList.remove('flash'); void bm.offsetWidth; bm.classList.add('flash'); }
+  const g=$('#agGate'); if(g){ g.classList.remove('blk'); void g.offsetWidth; g.classList.add('blk'); setTimeout(function(){g.classList.remove('blk');},430); }
+  const chips=$$('#dvAgent .ag-blk'); if(chips.length){ const c=chips[agBlockIdx%chips.length]; agBlockIdx++;
+    c.classList.remove('hit'); void c.offsetWidth; c.classList.add('hit'); } }
 function agTick(){ const el=$('#agClock'); if(el)el.textContent=new Date().toTimeString().slice(0,8); }
 function agBuildSignals(){
   const now=new Date();
@@ -1906,21 +1967,25 @@ function agEdge(a,b){const dx=b.x-a.x,dy=b.y-a.y,L=Math.hypot(dx,dy)||1,ux=dx/L,
 function agRibbon(svg,a,b,w,col,k){const p=svgEl('path',{d:band(a,b,k),fill:'none',stroke:col,'stroke-width':w,'stroke-linecap':'round',opacity:.7,filter:'url(#g)'});svg.appendChild(p);return p;}
 function agRib(s,a,b,w,k){const e=agEdge(a,b);return agRibbon(s,e[0],e[1],w,'url(#teal)',k);}
 function agBuild(){
-  const s=$('#agWire'); s.innerHTML=''; defs(s); dvClear();
-  // supplier → gateway: the approved probe channel
-  const g1=agRib(s,AG.sup,AG.gate,3,.35); g1.classList.add('ag-gatelink');
-  dvFlow(s,g1,2,'rgba(150,236,255,.85)',{spMin:0.0018,spMax:0.003,r:2});
-  // gateway → each denied target (dashed, blocked at the scoped gateway)
+  const s=$('#agWire'); s.innerHTML=''; defs(s); dvClear(); agBlockIdx=0;
+  // supplier -> gateway: the request channel (curved so the teal gradient renders)
+  const g1=agRib(s,AG.sup,AG.gate,3,.3); g1.classList.add('ag-gatelink');
+  // continuous request pulses running supplier -> gateway (impulse through the agent)
+  dvFlow(s,g1,3,'rgba(150,236,255,.9)',{spMin:0.0022,spMax:0.0034,r:2.2});
+  // RED denied request pulses: travel to the gateway, fade out on arrival, trigger the block flash
+  for(let i=0;i<2;i++){ const el=svgEl('circle',{r:2.9,fill:'#ff5a78',opacity:0,filter:'url(#g)'}); s.appendChild(el);
+    dvParts.push({geom:g1,el,block:true,len:0,t:i*0.5,sp:0.0072}); }
+  // gateway -> denied restricted reaches (dashed, blocked; chips left-anchored at x=1120)
   AG.t.forEach(function(b){ const e=agEdge(AG.gate,{x:b.x,y:b.y,r:0});
-    s.appendChild(svgEl('path',{d:band(e[0],{x:b.x-95,y:b.y},.16),fill:'none',stroke:'rgba(255,90,150,.5)','stroke-width':1.6,'stroke-dasharray':'5 6','stroke-linecap':'round',class:'ag-suplink'}));
-    // faint collection line: each signal gathered by the sentinel
-    s.appendChild(svgEl('path',{d:band({x:b.x-40,y:b.y},agEdge({x:b.x,y:b.y,r:0},AG.sent)[1],.3),fill:'none',stroke:'rgba(47,214,192,.13)','stroke-width':1,class:'ag-collect'})); });
-  // sentinel oversight over the gateway (monitoring)
-  const w1=agRib(s,AG.sent,AG.gate,1.6,.3); w1.setAttribute('stroke','rgba(47,214,192,.38)'); w1.setAttribute('stroke-dasharray','2 7'); w1.setAttribute('opacity','.75'); w1.setAttribute('filter','');
-  // correlation: sentinel → case (the individual signals resolve to one case)
-  const cr=agRib(s,AG.sent,AG.cas,2.4,.5); cr.classList.add('ag-corrlink');
-  dvFlow(s,cr,2,'rgba(130,240,224,.9)',{spMin:0.0016,spMax:0.0026,r:2});
-  // physical corridor: pharmacy → ward → campus Service Box (never stops)
+    s.appendChild(svgEl('path',{d:band(e[0],{x:b.x-8,y:b.y},.14),fill:'none',stroke:'rgba(255,90,150,.42)','stroke-width':1.5,'stroke-dasharray':'5 6','stroke-linecap':'round',class:'ag-suplink'})); });
+  // guard sits on the gateway and escalates to the sentinel
+  agRibbon(s,{x:AG.gate.x,y:AG.gate.y-AG.gate.r},{x:AG.guard.x,y:AG.guard.y+AG.guard.r},1.8,'rgba(47,214,192,.5)',.1);
+  const esc=agRib(s,AG.guard,AG.sent,2,.3); esc.classList.add('ag-esclink'); esc.setAttribute('stroke','rgba(47,214,192,.6)'); esc.setAttribute('stroke-dasharray','6 6'); esc.setAttribute('filter','');
+  dvFlow(s,esc,2,'rgba(130,240,224,.9)',{spMin:0.0016,spMax:0.0026,r:1.9});
+  // granted aggregate -> physical fleet (solid teal; vertical -> solid colour, not the gradient)
+  const gr=agRibbon(s,{x:AG.gate.x,y:AG.gate.y+AG.gate.r},AG.railIn,3,'#2fd6c0',.14); gr.classList.add('ag-grantlink');
+  dvFlow(s,gr,3,'rgba(130,240,224,.85)',{spMin:0.0014,spMax:0.0026,r:2});
+  // physical corridor: pharmacy -> ward -> campus Service Box (never stops)
   const c1=agRib(s,AG.phar,AG.ward,4,.16), c2=agRib(s,AG.ward,AG.box,4,.16);
   dvFlow(s,c1,4,'rgba(130,240,224,.9)',{spMin:0.0015,spMax:0.0028,r:2.2});
   dvFlow(s,c2,4,'rgba(130,240,224,.9)',{spMin:0.0015,spMax:0.0028,r:2.2});
@@ -1931,15 +1996,17 @@ function agRender(){
   const dv=$('#dvAgent'); dv.classList.remove('s1','s2'); dv.classList.add('s'+agState);
   const contained=agState>=2;
   $('#agStat').textContent = contained?'Contained':'Active';
-  $('#agSupPl').textContent = contained?'external · isolated':'external · out of profile';
+  $('#agSupPl').textContent = contained?'AGT-SUP-LG-042 · isolated':'AGT-SUP-LG-042 · out of profile';
+  const gp=$('#agGuardPl'); if(gp)gp.textContent = contained?'escalated →':'watching denials';
   const sp=$('#agSentPl'); if(sp)sp.textContent = contained?'agent contained':'anomaly detected';
-  const cr=$('#agCorr'); if(cr)cr.textContent = contained?'contained · case governed':'correlated → one case';
+  const cr=$('#agCorr'); if(cr)cr.textContent = contained?'escalated · contained':'out-of-profile · escalate';
   $('#agAlertT').innerHTML = contained
-    ? 'Agent <b>isolated to a secure simulation</b> — its out-of-profile requests are blocked. Physical AGVs keep delivering; medication continuity is preserved.'
-    : 'An external supplier agent <b>drifted past its scope</b> — valid credentials, no breach. It reached for restricted patient &amp; routing data; every request was <b>denied</b> and <b>0 records were exposed</b>.';
-  // fade the denied reaches + probe channel once isolated
-  $$('#agWire .ag-suplink,#agWire .ag-collect').forEach(function(el){ el.style.transition='.6s'; el.style.opacity=contained?'.1':''; });
+    ? 'The Gateway Guard escalated and the Sentinel <b>isolated the supplier</b> into a secure simulation — its restricted reaches are blocked. Granted aggregate keeps flowing; the AMR fleet delivers.'
+    : 'An external supplier agent is <b>reaching past its scope</b> at the MCP Gateway — restricted patient &amp; routing calls are <b>denied</b>, 0 records exposed. The Gateway Guard is escalating to the Sentinel.';
+  // fade the denied reaches + probe channel once isolated; drop the block pulses
+  $$('#agWire .ag-suplink').forEach(function(el){ el.style.transition='.6s'; el.style.opacity=contained?'.1':''; });
   const gl=$('#agWire .ag-gatelink'); if(gl){ gl.style.transition='.6s'; gl.style.opacity=contained?'.12':''; }
+  if(contained){ dvParts=dvParts.filter(function(p){ if(p.block){p.el.setAttribute('opacity','0'); return false;} return true; }); }
   // resolution steps: isolate completes; the first governance step becomes the next live action
   const iso=$('#agStepIso'); iso.classList.toggle('done',contained); iso.classList.toggle('active',!contained);
   $('#agIsoStat').textContent=contained?'Done · contained':'Action · you';
