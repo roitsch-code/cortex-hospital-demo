@@ -30,13 +30,14 @@ time a block is rewritten, re-check this list so previously-correct details don'
    readable on an 11,512×2,160 screen — NOT simple line glyphs, "keine Tischtennisbälle und
    Sektgläser"). Every tile has a **thick light-lavender (`#cdc6ec`) rounded border on a dark
    navy fill — NOT transparent.** The **AMRs are monitor-robots**: a bordered screen on a
-   rounded pedestal base, showing cargo on a **white inset card with black line-art** — capsule
-   + tablet pills (AMR-002/001/007), bottle + cross (AMR-006) — **except AMR-003's blue IV bag**,
-   drawn directly on the screen (no white card) with a grey drip tube. Locations: **Pharmacy** =
-   white card, bottle+cross + two capsules (black line-art); **Ward** = **flat-colour** bed
-   (peach frame `#efb97e`, red blanket `#e2415a`, grey pillow) + red-cross badge, no white card;
-   **Locker** = white card, three line-art doors with vent slats + handles. Locations are
-   **larger** than the AMR carts. (AMR viewBox `0 0 96 100`, location `0 0 116 100`.) Each
+   rounded pedestal base, showing cargo as **plain white line-art directly on the dark screen**
+   (NO white card, NO colour) — capsule + tablet pills (AMR-002/001/007), bottle + cross
+   (AMR-006), IV bag + grey drip tube (AMR-003). **Every main icon — AMR cargo AND the three
+   location tiles — is white line-art on the dark lavender-bordered tile ("weiß auf Transparenz,
+   wie die AGVs"). NO white cards, NO flat-colour illustrations.** Locations: **Pharmacy** =
+   bottle+cross + two capsules; **Ward** = bed + cross badge; **Locker** = three doors with vent
+   slats + handles. Locations are **larger** than the AMR carts. (AMR viewBox `0 0 96 100`,
+   location `0 0 116 100`.) Each
    location keeps its **sub-room marker** (`.n-end .lo`, stacked **column**, centred under the
    tile): a small lavender-bordered icon badge (`b.mk`) above its label — **Medical storage** =
    open-box + teal cross, **Patientroom 12A** = door, **Medical locker 014** = single-locker
