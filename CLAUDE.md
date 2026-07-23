@@ -26,12 +26,26 @@ time a block is rewritten, re-check this list so previously-correct details don'
    `#2fd67a`, Sentinel magenta `#e2379a`, Orchestrator violet `#a06bff`, +8 grey). **Only the
    colour differs from the reference — never the layout.** No solid centre dot, no flat single
    ring, and never a box/tile behind the rings.
-3. **Rail icons** = neutral **white** line SVGs, **no background fill**. Location tiles
-   (Pharmacy / Ward / Locker) are **larger** than the AMR carts (visible size difference).
-   Shapes: medication box · two tablets · IV bag · vial · bed+cross · 3-door locker.
+3. **Rail icons = detailed traced illustrations** (the user demanded "richtig VIEL ARBEIT",
+   readable on an 11,512×2,160 screen — NOT simple line glyphs, "keine Tischtennisbälle und
+   Sektgläser"). Every tile has a **thick light-lavender (`#cdc6ec`) rounded border on a dark
+   navy fill — NOT transparent.** The **AMRs are monitor-robots**: a bordered screen on a
+   rounded pedestal base, showing cargo on a **white inset card with black line-art** — capsule
+   + tablet pills (AMR-002/001/007), bottle + cross (AMR-006) — **except AMR-003's blue IV bag**,
+   drawn directly on the screen (no white card) with a grey drip tube. Locations: **Pharmacy** =
+   white card, bottle+cross + two capsules (black line-art); **Ward** = **flat-colour** bed
+   (peach frame `#efb97e`, red blanket `#e2415a`, grey pillow) + red-cross badge, no white card;
+   **Locker** = white card, three line-art doors with vent slats + handles. Locations are
+   **larger** than the AMR carts. (AMR viewBox `0 0 96 100`, location `0 0 116 100`.)
 4. **"1 granted" is GREEN**, "N denied" is RED (Detected-signals header).
 5. The AGV graphic (agent graph + rail) lives in the **RIGHT HALF only**; left half = case
-   panel + scope card. Measure the wireframe scales — don't approximate.
+   panel + scope card (scope card sits a little low, `top:104`). Measure the wireframe scales —
+   don't approximate. The **top-bar status chips (High/Active/governance/T Security) AND the
+   LIVE+clock are RIGHT-half only** — never centred across the 32:9. LIVE+clock pin to the far
+   right (`right:40`), mirroring "‹ Open cases" on the far left; chips sit just left of them.
+   The **BLOCKED symbol** (`.n-blk`) is a real prohibition sign — red ring + diagonal bar SVG,
+   not a hand-tuned ::after slash. Every agent/orb **label sits an equal gap (46px) from its
+   orb**; "+8 Other Agents" is column-aligned (same x) above Security Sentinel / Orchestrator.
 6. Advance the scene by **clicking anywhere** — no Next/Back buttons, no hint text, no counter.
 7. The **timeline grows through the WHOLE storyflow**: reaches + agent interactions (Guard
    flagged, Guard→Sentinel escalation) + isolation + Sentinel→Orchestrator + orchestrator took
