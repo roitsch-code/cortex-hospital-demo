@@ -21,11 +21,11 @@ time a block is rewritten, re-check this list so previously-correct details don'
 1. **SOC tag** — "assisted by T Security · CDC Bonn" ALWAYS renders the real magenta Telekom
    **T** glyph (`TSVG` path, inline `<svg class="tg">`) + "Security" in `--magenta`. **NEVER**
    plain white text. Same wherever "T Security" appears.
-2. **Agent orbs** = PANW Cortex style: subtle dark rounded tile + **two concentric glowing
-   rings + faint core**, glowing in the agent colour (Supplier orange `#ff8a3d`, Guard green
+2. **Agent orbs** = PANW Cortex style: **two concentric glowing rings + faint core**, on the
+   plain dark background — **NO box / tile / border around them**, glowing in the agent colour (Supplier orange `#ff8a3d`, Guard green
    `#2fd67a`, Sentinel magenta `#e2379a`, Orchestrator violet `#a06bff`, +8 grey). **Only the
    colour differs from the reference — never the layout.** No solid centre dot, no flat single
-   ring, no removing the tile.
+   ring, and never a box/tile behind the rings.
 3. **Rail icons** = neutral **white** line SVGs, **no background fill**. Location tiles
    (Pharmacy / Ward / Locker) are **larger** than the AMR carts (visible size difference).
    Shapes: medication box · two tablets · IV bag · vial · bed+cross · 3-door locker.
