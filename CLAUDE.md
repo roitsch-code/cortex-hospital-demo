@@ -8,6 +8,10 @@
 > `git checkout claude/flow-layout-21-9-ivhesc` (or `git fetch && git checkout` it) before
 > doing anything. The other branches (`cdc-case-numbers`, `cdc-cases-command-center`,
 > `issues-cases-flow-refine`, `cortex-xsiam-research`, `main`) are an **older parallel line**.
+>
+> **Handover snapshot:** `claude/cortex-demo-handover-0tpnha` carries this SAME current build
+> plus a German agency handover (`HANDOVER.md`). It is a valid current-build branch — the
+> "wrong branch" warning above refers to the older parallel line, not to it.
 
 > Read this fully before changing anything. This is a **design-led interactive demo**
 > for the **T Gallery** (a Deutsche Telekom exhibit), not a production app and not a
