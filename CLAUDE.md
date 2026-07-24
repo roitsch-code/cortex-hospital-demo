@@ -56,7 +56,7 @@ time a block is rewritten, re-check this list so previously-correct details don'
    right (`right:40`), mirroring "‹ Open cases" on the far left; chips sit just left of them.
    The **BLOCKED symbol** (`.n-blk`) is a real prohibition sign — red ring + diagonal bar SVG,
    not a hand-tuned ::after slash. Every agent/orb **label sits an equal gap (46px) from its
-   orb**; "+8 Other Agents" is column-aligned (same x) above Security Sentinel / Orchestrator.
+   orb**. (There is **no "+8 Other Agents" orb** — the user had it removed; don't reintroduce it.)
 6. Advance the scene by **clicking anywhere** — no Next/Back buttons, no hint text, no counter.
 7. The **timeline grows through the WHOLE storyflow**: reaches + agent interactions (Guard
    flagged, Guard→Sentinel escalation) + isolation + Sentinel→Orchestrator + orchestrator took
