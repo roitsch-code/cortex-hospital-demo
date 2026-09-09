@@ -289,6 +289,41 @@ Passt:
 - **Hospital Logistics Orchestrator** als interner Fallback, **0 verpasste Dosen** — §4c.
 - SOC-Tag `assisted by T Security · Cyber Defense Center Bonn` — §8.
 
+### Produktname im Screensharing — recherchiert 2026-09-09
+
+**`Cortex AgentiX` ist real und passt exakt.** Palo Alto Networks hat es als Nachfolger
+von Cortex XSOAR angekündigt: *„Build, Deploy and Govern the Agentic Workforce of the
+Future."* Der dokumentierte Funktionsumfang deckt sich 1:1 mit unseren vier Shots:
+
+| Unser Shot | AgentiX-Feature (PANW-Quelle) |
+|---|---|
+| S1 Agent-Übersicht | Build / deploy / govern der Agenten-Belegschaft |
+| S2 Access & Tools | *„Agents are programmatically restricted to a defined list of tasks and cannot improvise outside of their approved bounds"* — genau unsere D2-Story |
+| S3 Audit Log | *„Every agent action comes with full auditability"* |
+| S4 Approvals | *„High-impact execution commands … automatically pause and require manual human approval"* |
+
+Quellen: [paloaltonetworks.com/cortex/agentix](https://www.paloaltonetworks.com/cortex/agentix) ·
+[Investor-Mitteilung](https://investors.paloaltonetworks.com/news-releases/news-release-details/palo-alto-networks-unveils-cortex-agentix-build-deploy-and)
+
+**`Telekom Agentic Hub` konnte ich öffentlich NICHT verifizieren.** Zwei Suchen brachten
+keine Produktseite und keine Pressemitteilung. Verifizierbare DT-Agentenplattformen sind
+**LMOS** (souveräne Plattform zum Bauen/Skalieren von AI-Agents), **MINDR** und der
+**RAN Guardian Agent**; dazu die **n8n**-Partnerschaft für Geschäftskunden-Agents.
+Das heißt nicht, dass es den Agentic Hub nicht gibt — er kann intern/B2B und nicht
+indexiert sein. Aber **`STORY_BIBLE.md` §8 führt ihn unter „real und verifizierbar",
+und das ist er aus öffentlichen Quellen heraus nicht.** Vor einer öffentlichen Vorführung
+intern gegenprüfen.
+
+Empfehlung: im Video **`Cortex AgentiX`** nennen — verifizierbar, funktional deckungs-
+gleich, und es bleibt in der Cortex-Familie, die der Header ohnehin führt. Die souveräne
+Klammer trägt bereits „T Security · Cyber Defense Center Bonn" im Intro.
+
+**Keine Digital-Twin-Metapher.** AgentiX ist eine Build-/Deploy-/Govern-Plattform, kein
+digitaler Zwilling — ein Digital Twin simuliert ein reales Objekt, hier geht es um
+Berechtigungen, Grenzen und Protokoll. Tragfähige Bilder stattdessen: *„where we build,
+deploy and govern every agent"* (die Herstellerformulierung) oder, für Laufpublikum,
+*„HR for your AI workforce — every agent has a job description, a scope, and a record."*
+
 Offen (bewusst **nicht** im gesprochenen Text, damit nichts kollidiert):
 - **Case-Nummer:** Cortex zeigt `C-4490`, die Story Bible führt `ID-917`. Wenn beide
   Demos nebeneinander laufen, eine Seite angleichen.
