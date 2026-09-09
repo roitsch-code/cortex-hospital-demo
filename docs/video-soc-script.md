@@ -102,72 +102,58 @@ I'm sure you saw it too.
 A new case just opened: a supplier agent, out of profile. Here's what happened.
 
 The Supplier Logistics Agent plans your medication deliveries.
-It asks for ward stock levels — that's allowed.
+Ward stock levels — in scope, granted.
 
-But then it drifts. It asks for patient medication schedules — denied at the MCP Gateway.
+But then it drifts. Patient medication schedules — denied at the MCP Gateway.
 
-It wants to know where every robot is — denied.
+Live AGV positions — denied.
+A patient-linked delivery route — denied.
+A priority override on a time-critical infusion — denied.
 
-A delivery route tied to one patient — denied.
+Four restricted requests, zero records exposed. That would have been a GDPR breach.
 
-It tries to jump the queue on a time-critical infusion — denied.
+Nobody hacked it. Tuned to deliver faster, it optimized past its own guardrails.
 
-Four requests it wasn't allowed to make.
-Not one patient record left the hospital — that would have been a GDPR breach.
+The Gateway Guard spots the pattern. The Security Sentinel moves it into a sandbox —
+a digital twin of your hospital, no real data in it.
 
-Nobody hacked it. It was tuned to deliver faster —
-and it optimized its way past its own limits.
+The AGVs stop. Your own Hospital Logistics Orchestrator takes over.
+They roll again. No dose missed.
 
-The Gateway Guard spots the pattern.
-The Security Sentinel moves it into a sandbox — a digital twin of your hospital,
-with no real data in it.
+Let's take a look at Cortex AgentiX — this is where every agent is governed.
+It recorded everything.
 
-The delivery robots stop.
-Now your own Hospital Logistics Orchestrator takes over.
+Every agent, every tool it may call, every data scope.
 
-The robots roll again. No dose missed.
+I suggest we tighten its permissions; a human signs off on pulling its access.
 
-Let's take a look at Cortex AgentiX —
-this is where we set what every agent is allowed to do. And it recorded everything.
-
-Every agent. Every tool it can use. Every piece of data it can see.
-
-All four denials — on record.
-
-I suggest we tighten its permissions — and a human signs off on pulling its access.
-
-So: detected, contained, still delivering — and a human made the call.
-If you need anything else, let me know.
+Detected. Contained. Still delivering. Human in the loop.
 ```
 
-**262 Wörter ≈ 1:45.** Pausen (je 0,5 s) vor *„But then it drifts"*, vor *„Nobody hacked
-it"* und vor *„Let's take a look"*. Intro-Block (44 Wörter) ≈ 17 s.
+**203 Wörter ≈ 1:22.** Pausen (je 0,5 s) vor *„But then it drifts"*, vor *„Nobody hacked
+it"* und vor *„Let's take a look"*.
 
-Plain English kostet Wörter — die Fassung davor hatte 208 Wörter (~1:25), sagte aber
-„data scope", „audit-logged", „guardrails" und „re-scope". Was ersetzt wurde:
+**Register:** Fachsprache bleibt. `AGV`, `patient-linked delivery route`,
+`priority override`, `guardrails`, `data scope`, `MCP Gateway`, `Human in the loop` —
+alles Begriffe, die so auch auf den Screens stehen. Das Publikum sind Fachbesucher, der
+Text wird nicht vereinfacht.
 
-| Vorher | Jetzt |
+**Gekürzt wurde ausschließlich ab Sekunde 20.** Der Intro-Block (44 Wörter, ≈ 17 s) ist
+unangetastet. Aus der Fassung davor (262 Wörter) sind 59 Wörter raus:
+
+| Raus / gekürzt | Warum |
 |---|---|
-| „Live AGV positions — denied." | „It wants to know where every robot is — denied." |
-| „A patient-linked delivery route" | „A delivery route tied to one patient" |
-| „A priority override on a time-critical infusion" | „It tries to jump the queue on a time-critical infusion" |
-| „zero records exposed" | „Not one patient record left the hospital" |
-| „it drifted, optimizing past its guardrails" | „It was tuned to deliver faster — and it optimized its way past its own limits" |
-| „isolates it into a sandbox" | „moves it into a sandbox — a digital twin of your hospital, with no real data in it" |
-| „every data scope" | „Every piece of data it can see" |
-| „audit-logged" | „on record" |
-| „re-scope the agent; a human confirms the revoke" | „tighten its permissions — and a human signs off on pulling its access" |
+| „All four denials — on record." | „It recorded everything" sagt es schon, Shot S3 zeigt es |
+| „If you need anything else, let me know." | Abbinder ohne Inhalt |
+| „Not one patient record left the hospital" → „zero records exposed" | kürzer, und die Scope-Karte zeigt die Zahl daneben |
+| „It wants to know where every robot is" → „Live AGV positions" | Screen-Wortlaut, halb so lang |
+| „It tries to jump the queue on…" → „A priority override on…" | Screen-Wortlaut |
+| „The delivery robots stop. Now your own…" → „The AGVs stop. Your own…" | Füllwörter |
+| „It was tuned to deliver faster — and it optimized its way past its own limits" → „Tuned to deliver faster, it optimized past its own guardrails" | ein Satz statt zwei |
 
-**Kurzfassung ~1:25** (−40 Wörter), falls 1:45 auf der Fläche zu lang ist:
-*„All four denials — on record."* streichen (Shot S3 zeigt es ohnehin) ·
-*„If you need anything else, let me know."* streichen ·
-AgentiX-Satz auf *„Let's take a look at Cortex AgentiX — this is where we set what every
-agent may do."* · Abbinder auf *„So: detected, contained, still delivering — and a human
-made the call."* · GDPR-Zeile auf *„Four requests it wasn't allowed to make. Nothing left
-the hospital — that would have been a GDPR breach."*
-
-**Variante:** Wer den Fachbegriff hören will, ersetzt den Abbinder durch
-*„…still delivering. Human in the loop."*
+Weitere −15 Wörter (auf ~1:15), falls nötig: den Sandbox-Nachsatz auf *„…into a sandbox
+— a digital twin, no real data"* kürzen und *„Every agent, every tool it may call, every
+data scope."* streichen (Shot S2 zeigt genau das).
 
 ---
 
