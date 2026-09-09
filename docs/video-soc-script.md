@@ -96,48 +96,78 @@ Fallback ohne Maus: `→` / `←` schalten dieselben Beats, `Esc` schließt die 
 ```
 Hi everyone — Thomas here, T Security, Cyber Defense Center Bonn.
 
-One case just opened — a supplier agent, out of profile. Here's what happened.
+We just got a notification on our dashboard — the one watching over your hospital.
+I'm sure you saw it too.
 
-It optimizes our medication deliveries.
-Ward stock levels — in scope, granted.
+A new case just opened: a supplier agent, out of profile. Here's what happened.
 
-Then it drifts. Patient medication schedules — denied at the MCP Gateway.
+The Supplier Logistics Agent plans your medication deliveries.
+It asks for ward stock levels — that's allowed.
 
-Live robot positions — denied.
+But then it drifts. It asks for patient medication schedules — denied at the MCP Gateway.
 
-A patient-linked delivery route — denied.
+It wants to know where every robot is — denied.
 
-A priority override on a time-critical infusion — denied.
+A delivery route tied to one patient — denied.
 
-Four restricted requests, zero records exposed. Patient data — GDPR.
+It tries to jump the queue on a time-critical infusion — denied.
 
-It wasn't hacked — it drifted, optimizing past its guardrails.
+Four requests it wasn't allowed to make.
+Not one patient record left the hospital — that would have been a GDPR breach.
 
-The Gateway Guard flags it; the Security Sentinel isolates it into a sandbox.
-The robots stop.
+Nobody hacked it. It was tuned to deliver faster —
+and it optimized its way past its own limits.
 
-Our internal Hospital Logistics Orchestrator takes over.
+The Gateway Guard spots the pattern.
+The Security Sentinel moves it into a sandbox — a digital twin of your hospital,
+with no real data in it.
+
+The delivery robots stop.
+Now your own Hospital Logistics Orchestrator takes over.
+
 The robots roll again. No dose missed.
 
-Governance for all of this runs in the Telekom Agentic Hub.
-Every agent, every tool it may call, every data scope.
-All four denials — audit-logged.
-We re-scope the agent; a human confirms the revoke.
+Let's take a look at Cortex AgentiX —
+this is where we set what every agent is allowed to do. And it recorded everything.
 
-Detected. Contained. Still delivering.
+Every agent. Every tool it can use. Every piece of data it can see.
+
+All four denials — on record.
+
+I suggest we tighten its permissions — and a human signs off on pulling its access.
+
+So: detected, contained, still delivering — and a human made the call.
+If you need anything else, let me know.
 ```
 
-**150 Wörter.** Gesetzte Pausen (je 0,5 s) vor *„Then it drifts"*, vor *„It wasn't
-hacked"* und vor *„Governance"*.
+**262 Wörter ≈ 1:45.** Pausen (je 0,5 s) vor *„But then it drifts"*, vor *„Nobody hacked
+it"* und vor *„Let's take a look"*. Intro-Block (44 Wörter) ≈ 17 s.
 
-Die Begrüßung kostet 4 Wörter; gegenfinanziert durch *„It optimizes our medication
-deliveries"* statt der Wiederholung von „A supplier logistics agent" (steht schon in der
-Zeile davor) und durch das gestrichene „own" in *„past its guardrails"*.
+Plain English kostet Wörter — die Fassung davor hatte 208 Wörter (~1:25), sagte aber
+„data scope", „audit-logged", „guardrails" und „re-scope". Was ersetzt wurde:
 
-**Trim-Option (−5 s), falls der Avatar langsamer spricht:**
-*„All four denials — audit-logged."* streichen und Zeile 2 auf
-**„One case just opened — a supplier agent, out of profile."** kürzen (der `Inspect ›`-Cue
-wandert dann auf **„out of profile"**).
+| Vorher | Jetzt |
+|---|---|
+| „Live AGV positions — denied." | „It wants to know where every robot is — denied." |
+| „A patient-linked delivery route" | „A delivery route tied to one patient" |
+| „A priority override on a time-critical infusion" | „It tries to jump the queue on a time-critical infusion" |
+| „zero records exposed" | „Not one patient record left the hospital" |
+| „it drifted, optimizing past its guardrails" | „It was tuned to deliver faster — and it optimized its way past its own limits" |
+| „isolates it into a sandbox" | „moves it into a sandbox — a digital twin of your hospital, with no real data in it" |
+| „every data scope" | „Every piece of data it can see" |
+| „audit-logged" | „on record" |
+| „re-scope the agent; a human confirms the revoke" | „tighten its permissions — and a human signs off on pulling its access" |
+
+**Kurzfassung ~1:25** (−40 Wörter), falls 1:45 auf der Fläche zu lang ist:
+*„All four denials — on record."* streichen (Shot S3 zeigt es ohnehin) ·
+*„If you need anything else, let me know."* streichen ·
+AgentiX-Satz auf *„Let's take a look at Cortex AgentiX — this is where we set what every
+agent may do."* · Abbinder auf *„So: detected, contained, still delivering — and a human
+made the call."* · GDPR-Zeile auf *„Four requests it wasn't allowed to make. Nothing left
+the hospital — that would have been a GDPR breach."*
+
+**Variante:** Wer den Fachbegriff hören will, ersetzt den Abbinder durch
+*„…still delivering. Human in the loop."*
 
 ---
 
