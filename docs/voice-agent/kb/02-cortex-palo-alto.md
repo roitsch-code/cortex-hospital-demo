@@ -1,5 +1,7 @@
 # KB 02 — Cortex, Palo Alto Networks, Sovereign Cortex
 
+Belege: `docs/research-panw-telekom.md`.
+
 ---
 
 ### F-CTX-001 · Was Cortex XSIAM ist
@@ -101,3 +103,75 @@
 - **status:** public-verified
 - **source:** SecurityToday 03/2026 · PANW-Pressemitteilung 09.06.2026
 - ⚠ Positiv formulieren, keine Wettbewerber abwerten. Siehe G-8.
+
+### F-CTX-009 · Wer hält die Schlüssel
+- **triggers:** Schlüssel, Verschlüsselung, wer kann mitlesen, kann Google mitlesen, key management
+- **say-en:** Telekom holds the key-encryption-keys in its own data centres, through
+  Google's external key manager. That puts them outside the reach of both Palo Alto and
+  Google.
+- **say-de:** Die Telekom hält die Schlüssel in eigenen Rechenzentren, über den externen
+  Key Manager von Google. Damit liegen sie außerhalb der Reichweite von Palo Alto und von
+  Google.
+- **more:** Die Telekom nennt das die alleinige Hoheit über den Datenzugriff. Das ist der
+  Unterschied zwischen einer vertraglichen Zusage und einer technischen Kontrolle.
+- **status:** public-verified
+- **source:** DT-Pressemitteilung 09.06.2026 · TelecomTV
+
+### F-CTX-010 · Was genau im souveränen Paket steckt
+- **triggers:** was ist enthalten, welche Produkte, Umfang, ist AgentiX dabei, gehört das dazu
+- **say-en:** The announcement names SIEM, threat intelligence, XDR and endpoint
+  protection. For anything beyond that, ask at the stand — I don't want to guess at scope.
+- **say-de:** Die Ankündigung nennt SIEM, Threat Intelligence, XDR und Endpoint
+  Protection. Alles darüber hinaus bitte am Stand erfragen — beim Umfang will ich nicht
+  raten.
+- **status:** public-verified
+- **source:** PANW-Pressemitteilung 09.06.2026
+- ⚠ **Cortex AgentiX wird in der Sovereign-Cortex-Ankündigung nicht genannt.** AgentiX
+  ist ein reales Cortex-Produkt (F-CTX-002), aber **nie** behaupten, es sei Teil des
+  souveränen Pakets. Die Demo zeigt bewusst eine nahe Zukunft.
+
+### F-CTX-011 · Die fünf Souveränitätskontrollen
+- **triggers:** was heißt souverän, was bedeutet Souveränität, wie prüft man das, ist das nur Marketing
+- **say-en:** Five things, all checkable: data stays in Europe, the keys sit outside the
+  provider, every access is logged and audited, the people running it are in Europe, and
+  the contract is under European law.
+- **say-de:** Fünf Dinge, alle nachprüfbar: Die Daten bleiben in Europa, die Schlüssel
+  liegen außerhalb des Anbieters, jeder Zugriff wird protokolliert und auditiert, das
+  Betriebspersonal sitzt in Europa, und der Vertrag läuft nach europäischem Recht.
+- **more:** Palo Alto formuliert das ausdrücklich als verifizierbare Kontrolle statt
+  weiterer vertraglicher Zusagen.
+- **status:** public-verified
+- **source:** PANW-Blog 09.06.2026
+
+### F-CTX-012 · Die Partnerschaft ist älter als 2026
+- **triggers:** seit wann, wie lange arbeitet ihr zusammen, ist das neu, Geschichte der Partnerschaft
+- **say-en:** Since 2020. First managed firewalls and SOC services on Cortex, then managed
+  secure service edge in 2022, and now the sovereign platform.
+- **say-de:** Seit 2020. Erst Managed Firewalls und SOC-Services auf Cortex, 2022 dann
+  Managed Secure Service Edge, und jetzt die souveräne Plattform.
+- **more:** Die souveräne Cloud dahinter gibt es auch nicht erst seit gestern — T-Systems
+  und Google Cloud bauen sie seit 2021, ausdrücklich auch für das Gesundheitswesen.
+- **status:** public-verified
+- **source:** PANW 04/2020 · PANW 09/2022 · DT 09/2021
+
+### F-CTX-013 · Warum Automatisierung kein Komfort ist
+- **triggers:** warum KI, warum automatisch, warum nicht Menschen, wie schnell muss das gehen
+- **say-en:** From first foothold to data leaving the building now takes seventy-two
+  minutes — four times faster than a year ago. A purely manual process cannot win that
+  race.
+- **say-de:** Vom ersten Fuß in der Tür bis zum Datenabfluss vergehen heute 72 Minuten —
+  viermal schneller als noch vor einem Jahr. Ein rein manueller Prozess kann dieses Rennen
+  nicht gewinnen.
+- **status:** public-verified
+- **source:** PANW/DT-Pressemitteilung 09.06.2026
+
+### F-CTX-014 · Die souveräne Cloud darunter
+- **triggers:** wo läuft das, welche Cloud, Google, Rechenzentrum, wo stehen die Server
+- **say-en:** On Telekom's sovereign Google Cloud — built with T-Systems since 2021,
+  operated by T-Systems, in German data centres.
+- **say-de:** Auf der souveränen Google Cloud der Telekom — seit 2021 gemeinsam mit
+  T-Systems aufgebaut, von T-Systems betrieben, in deutschen Rechenzentren.
+- **more:** T-Systems betreibt 16 Rechenzentren in Deutschland mit rund 130 Megawatt. Es
+  gibt zusätzlich eine vollständig vom Netz getrennte, air-gapped Variante.
+- **status:** public-verified
+- **source:** DT 09/2021 · t-systems.com · DCD
