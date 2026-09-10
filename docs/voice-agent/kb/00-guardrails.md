@@ -14,6 +14,10 @@ weil er plausibel klingt.
 Bekannt falsche Namen, die schon aufgetaucht sind und **nicht** existieren:
 - ❌ „Cortex Agentic Assistant" → richtig ist **Cortex AgentiX**
 - ❌ „Advantage Hub" → richtig ist **Agentic Hub**
+- ❌ „Telekom Agentic Hub" → das Produkt gehört zu **T-Systems**; belegt sind
+  **„Agentic Hub"** und **„T-AI Agentic Hub"**. Gesprochen:
+  **„the Agentic Hub from T-Systems"**.
+- ❌ „Skills" als Funktion des Agentic Hub → dafür gibt es keinen Beleg
 
 Bei Unsicherheit: *„Den genauen Produktnamen kann ich dir nicht sicher sagen — frag am
 besten am Stand nach."*

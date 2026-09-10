@@ -321,14 +321,16 @@ Future."* Der dokumentierte Funktionsumfang deckt sich 1:1 mit unseren vier Shot
 Quellen: [paloaltonetworks.com/cortex/agentix](https://www.paloaltonetworks.com/cortex/agentix) ·
 [Investor-Mitteilung](https://investors.paloaltonetworks.com/news-releases/news-release-details/palo-alto-networks-unveils-cortex-agentix-build-deploy-and)
 
-**`Telekom Agentic Hub` konnte ich öffentlich NICHT verifizieren.** Zwei Suchen brachten
-keine Produktseite und keine Pressemitteilung. Verifizierbare DT-Agentenplattformen sind
-**LMOS** (souveräne Plattform zum Bauen/Skalieren von AI-Agents), **MINDR** und der
-**RAN Guardian Agent**; dazu die **n8n**-Partnerschaft für Geschäftskunden-Agents.
-Das heißt nicht, dass es den Agentic Hub nicht gibt — er kann intern/B2B und nicht
-indexiert sein. Aber **`STORY_BIBLE.md` §8 führt ihn unter „real und verifizierbar",
-und das ist er aus öffentlichen Quellen heraus nicht.** Vor einer öffentlichen Vorführung
-intern gegenprüfen.
+> **KORRIGIERT 2026-09-10.** Hier stand, der Agentic Hub sei öffentlich nicht
+> verifizierbar. **Das war falsch** — ich hatte unter „Telekom Agentic Hub" gesucht.
+> Das Produkt gehört zu **T-Systems** und heißt **Agentic Hub** bzw. **T-AI Agentic
+> Hub**: Launch **15.07.2026**, GA angestrebt Q4 2026, drei Module **Agent Studio ·
+> Agent Admin · Agent Portal**, Unterstützung für **MCP** und **A2A**, FinOps mit
+> Ausgabenlimits pro Agent, Ausrichtung am **EU AI Act**. Vollständig in
+> `docs/research-agentic-hub.md`.
+>
+> Nicht belegt ist allein die Wortmarke „**Telekom** Agentic Hub" aus `STORY_BIBLE.md`
+> §8. Korrekt im Sprechertext: **„the Agentic Hub from T-Systems"**.
 
 Empfehlung: im Video **`Cortex AgentiX`** nennen — verifizierbar, funktional deckungs-
 gleich, und es bleibt in der Cortex-Familie, die der Header ohnehin führt. Die souveräne
