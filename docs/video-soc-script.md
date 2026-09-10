@@ -99,7 +99,11 @@ Hi everyone — Thomas here, T Security, Cyber Defense Center Bonn.
 We just got a notification on our dashboard — the one watching over your hospital.
 I'm sure you saw it too.
 
-A new case just opened: a supplier agent, out of profile. Here's what happened.
+A new case opened: a supplier agent, out of profile.
+
+I'll turn off my camera and share my screen — here's what happened.
+
+— ON-CAMERA ENDET HIER · 52 Wörter ≈ 20 s · ab hier nur noch Stimme —
 
 The Supplier Logistics Agent plans your medication deliveries.
 Ward stock levels — in scope, granted.
@@ -130,8 +134,28 @@ I suggest we tighten its permissions; a human signs off on pulling its access.
 Detected. Contained. Still delivering. Human in the loop.
 ```
 
-**203 Wörter ≈ 1:22.** Pausen (je 0,5 s) vor *„But then it drifts"*, vor *„Nobody hacked
+**211 Wörter ≈ 1:25.** Pausen (je 0,5 s) vor *„But then it drifts"*, vor *„Nobody hacked
 it"* und vor *„Let's take a look"*.
+
+### Zwei Teile, zwei Produktionen
+
+| | Länge | Wie produziert |
+|---|---|---|
+| **On-Camera** — Begrüßung bis „…share my screen" | **52 Wörter ≈ 20 s** | Gen-AI-Avatar mit Bild |
+| **Voice-over** — ab „The Supplier Logistics Agent…" | 159 Wörter ≈ 65 s | **nur Stimme**, kein Bild |
+
+Das spart Renderzeit und Geld: Bei jeder Textänderung im hinteren Teil muss nur die
+Tonspur neu erzeugt werden, nicht der Avatar. Und ein KI-Avatar, der 85 Sekunden am
+Stück in die Kamera spricht, hält der Betrachtung ohnehin nicht stand — 20 Sekunden
+schon.
+
+**Was passiert mit dem mittleren Panel bei „share my screen"?** Empfehlung: Das
+Call-Panel **fadet aus** (600 ms), links und rechts gehen auf volle Helligkeit. Denn
+sein geteilter Bildschirm **ist** die 48:9-Wand — der Satz stimmt dann wörtlich und
+nichts wird doppelt gezeigt. Erst beim Agentic-Hub-Teil kommt das Panel als
+Screenshare-Fenster zurück.
+(Alternative: Panel bleibt durchgehend stehen und zeigt ab 0:20 den Share. Dann
+doppelt sich der Inhalt mit links/rechts — würde ich nicht machen.)
 
 **Register:** Fachsprache bleibt. `AGV`, `patient-linked delivery route`,
 `priority override`, `guardrails`, `data scope`, `MCP Gateway`, `Human in the loop` —
