@@ -195,6 +195,34 @@ Fernüberwachungs-**Patienten** „Thomas Berger".)
 
 ---
 
+## 9a. Ergänzungen aus internen Telekom-Quellen (bewusst nicht hier abgelegt)
+
+Dem Team liegt zusätzlich eine interne Recherche vor (Intranet, internes Wiki, interne
+Produktseiten, Mailanhänge). **Dieses Repo ist öffentlich — die internen Quellen und
+Zahlen stehen deshalb absichtlich nicht darin.** Für die Demo gelten daraus nur diese
+Schlussfolgerungen, die entweder branchenüblich oder öffentlich gedeckt sind:
+
+1. **MITRE ATT&CK und die Cyber Kill Chain sind Teil des realen Betriebsmodells.** Unser
+   Cases-Overview-Overlay mit MITRE-Taktiken bildet also echte Praxis ab, nicht Deko.
+2. **Level 1 und teilweise Level 2 laufen weitgehend automatisiert; Menschen bewerten,
+   was die KI nicht eindeutig einordnet.** Das ist genau unsere Aufteilung
+   **78 automated / 18 manual** (81 % Automatisierung) — das Zahlenmodell bildet die
+   reale Betriebslogik ab.
+3. **Das heutige produktisierte SOC-Angebot ist nicht Cortex-basiert.** Unsere Demo zeigt
+   bewusst die angekündigte Zukunft (**Sovereign Cortex with T Security, GA Q3 2026**).
+   Auf Rückfrage eines Besuchers ist das die ehrliche Antwort. Bestehende SIEM-Produkte
+   gehören **nicht** auf den Screen.
+4. **Zwei Kennzahlen weichen intern von den öffentlichen ab** (Alarme/Minute,
+   Kundenanzahl). Auf dem Screen gilt ausschließlich die öffentlich zitierbare Zahl —
+   siehe Abschnitt 8.
+5. **Magenta Security ist breiter als gedacht:** Es gibt neben MDR Start/Pro auch ein
+   souverän in Deutschland betriebenes 24×7-SOC-Angebot mit KRITIS-/DORA-/NIS2-/
+   ISO-27001-Bezug. Die CLAUDE.md-Begründung „falsche Markenebene, nur Mittelstand"
+   trifft es damit nicht ganz. **Die Regel bleibt trotzdem:** im Sovereign-Cortex-Kontext
+   ist **T Security** die richtige Marke.
+
+---
+
 ## 10. Quellen
 
 **Deutsche Telekom (primär)**
