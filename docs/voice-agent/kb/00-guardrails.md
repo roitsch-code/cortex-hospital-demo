@@ -17,7 +17,10 @@ Bekannt falsche Namen, die schon aufgetaucht sind und **nicht** existieren:
 - ❌ „Telekom Agentic Hub" → das Produkt gehört zu **T-Systems**; belegt sind
   **„Agentic Hub"** und **„T-AI Agentic Hub"**. Gesprochen:
   **„the Agentic Hub from T-Systems"**.
-- ❌ „Skills" als Funktion des Agentic Hub → dafür gibt es keinen Beleg
+
+> **Zurückgenommen:** Hier stand, „Skills" sei keine Funktion des Agentic Hub. **Das war
+> falsch.** Skills sind eine eigene Registry neben Tools, Context, System Prompt und
+> Modellen. Details in `kb/internal/03b-agentic-hub-internal.md` (F-HUBX-020).
 
 Bei Unsicherheit: *„Den genauen Produktnamen kann ich dir nicht sicher sagen — frag am
 besten am Stand nach."*

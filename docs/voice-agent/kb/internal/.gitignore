@@ -1,0 +1,5 @@
+# Interne Quellen und Karten - NIE in dieses oeffentliche Repo committen.
+# Der Ordnerinhalt wird bewusst ignoriert; nur diese .gitignore ist versioniert.
+*
+!.gitignore
+!README.md

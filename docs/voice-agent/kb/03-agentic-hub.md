@@ -195,10 +195,22 @@ Belege: `docs/research-agentic-hub.md`.
 - **source:** T-Systems Fachbeitrag 17.03.2026
 
 ### F-HUB-017 · Wenn nach Details gefragt wird, die wir nicht haben
-- **triggers:** Preis, Lizenz, wie viele Agenten, Skills, Referenzkunden
+- **triggers:** Preis, Lizenz, wie viele Agenten, Referenzkunden
 - **say-en:** I don't have reliable details on that — please ask at the stand.
 - **say-de:** Dazu habe ich keine belastbaren Angaben — frag bitte am Stand nach.
 - **status:** public-verified (Verhaltensregel)
-- ⚠ **„Skills"** ist weiterhin **keine** belegte Funktion des Agentic Hub. Nie erfinden.
-  Ebenfalls unbelegt: Preise, Referenzkunden, und das Verhältnis zwischen Agentic Hub und
+- ⚠ Unbelegt bleiben: Preise, Referenzkunden und das Verhältnis zwischen Agentic Hub und
   der Magenta Health AI Box.
+
+---
+
+## Weitere Karten liegen intern
+
+Aus dem T-Systems-Portfolio-Deck stammen 16 weitere Karten — 4D-Governance mit
+Cedar-Policy-Engine, SPIFFE-Identität und gVisor-Sandboxing, OpenTelemetry-Tracing mit
+Behavioral Baselines, die Registries für Tools/**Skills**/Context/System-Prompt/Modelle,
+die drei Protokollschichten AG-UI · A2A · MCP, sowie AI Engineer und AI Operator.
+
+Sie stehen in **`kb/internal/03b-agentic-hub-internal.md`** und sind bewusst **nicht in
+diesem öffentlichen Repo**. Ein Teil ist mit `needs-clearance` markiert: sachlich für die
+Fläche geeignet, aber vor dem Aussprechen intern freizugeben — danach gehören sie hierher.
