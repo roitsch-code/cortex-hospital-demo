@@ -284,6 +284,26 @@ Risk). Tiles: Vulnerable Assets **5,840** (ties to assets At Risk) · Active Cas
   `Claude-Session: <the current claude.ai/code session URL>`.
 - Never put a model identifier in commits, PRs, code, or any pushed artifact.
 
+## Blaulicht / BOS adaptation (concept — not built in code yet)
+An adaptation of this whole demo for **Public, Authorities & the emergency-services
+(Blaulicht/BOS) sector** is specced in **`docs/blaulicht-bos-konzept.md`**. It is a
+strict **1:1 content-swap** of the existing three scenes (same structure, same element
+counts, same positions; only text + a few icons change, numbers only where needed):
+- **Radar** — sites become the BOS estate (dominant node = **Radio & Field Devices ·
+  BOS Digitalfunk**); total stays **35,600**, redistributed realistically for one large
+  cooperative dispatch region. Left anchor **iMedOne → T Mission** (real Telekom BOS brand).
+- **Flow** — sources become field/radio/dispatch/sensors; flow numbers unchanged.
+- **Agent Resolution Center** — the drift becomes an autonomous **recon-drone vision
+  agent** that detects casualties + responders (granted) then attempts **biometric ID of
+  civilians** → blocked inline under **EU AI Act Art. 5(1)(h) · GDPR Art. 9**. The AGV
+  rail becomes **one drone passing three person-group stops** (casualties · responders ·
+  civilians→ALARM). SmartScore/`agState`/Isolate/Revoke unchanged.
+
+Real names only (verified): **T Mission**, **BOS-Digitalfunk/BDBOS**, **BBK/MoWaS**,
+**T Security · CDC Bonn**, **EU AI Act Art. 5(1)(h)**. Re-verify T-Mission product scope
+and the AI-Act wording with Legal/DPO before any public showing. Same discipline as the
+hospital demo: fake data, internally consistent, **"dont invent shit."**
+
 ## What's next / open ideas (not built)
 - If real vendor logo SVGs are provided, swap them into the source list + site marks.
 - The other branches (`claude/cdc-case-numbers-flow-kacllq`, `…cdc-cases-command-center…`,
