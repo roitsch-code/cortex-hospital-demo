@@ -34,6 +34,90 @@ Alternativen für `your operations`, falls euch etwas anderes lieber ist:
 
 ---
 
+## 1a. Voll­text (Stand 2026-09-11)
+
+Annahmen, die ich treffen musste, weil das Konzept sie offen lässt — siehe §4:
+**(a)** Der Agent wird nicht als Lieferantenagent bezeichnet, sondern neutral als
+Aufklärungsagent. **(b)** Fünf Beats statt sieben. **(c)** Der AI-Act-Artikel wird
+gesprochen (streichbar, siehe Trim).
+
+```
+[ ON CAMERA · 53 Wörter ≈ 20 s ]
+
+Hi everyone — Thomas here, T Security, Cyber Defense Center Bonn.
+
+We just got a notification on our dashboard — the one watching over your operations.
+I'm sure you saw it too.
+
+A new case opened: a recon vision agent, out of profile.
+
+I'll turn off my camera and share my screen — here's what happened.
+
+— KAMERA AUS · ab hier nur noch Stimme —
+
+Major incident on the Rhine Bridge. Forty people on site, six critical.
+A reconnaissance drone is flying the scene.
+
+Casualty detection across the incident zone — in scope, granted.
+
+Responder accountability, your own crews — in scope, granted.
+
+Then it drifts. Biometric identification of civilians — denied at the MCP Gateway.
+
+Not "this person". Everyone in frame.
+
+That line isn't a permission. It's the law — EU AI Act Article 5, GDPR Article 9.
+Blocked inline. Zero identities exposed.
+
+Nobody hacked it. It was trying to be thorough — and optimized past its own guardrails.
+
+The Gateway Guard spots the pattern. The Security Sentinel contains the agent and severs
+its grant to the Identity Register.
+
+The drone keeps flying. Detection continues. The mission never pauses.
+
+Let's take a look at Cortex AgentiX — this is where every agent is governed.
+It recorded everything.
+
+And the Agentic Hub from T-Systems: every agent's model, its system prompt, its
+knowledge, its tools. The vision agent never had identification in its scope.
+That's not a filter. It was never in its reach.
+
+I suggest we tighten its permissions; a human signs off on pulling its access.
+
+Detected. Contained. Mission unaffected. Human in the loop.
+```
+
+**247 Wörter ≈ 1:38.** Gesetzte Pausen (je 0,5 s) vor *„Nobody hacked it"*, vor
+*„Let's take a look"* und nach *„Blocked inline. Zero identities exposed."*
+
+### Regie · fünf Beats
+
+| Zeit | Klick-Cue (gesprochenes Wort) | Rechts/Links |
+|---|---|---|
+| −1,5 s | — | Flow abgedunkelt, Drift-Case `12 OPEN` mit `NEW` |
+| 0:20 | **„…share my screen"** | Dim raus · `Inspect ›` → **Beat 0** |
+| 0:27 | **„Casualty detection"** | **Beat 0** · ✓ granted · Drohne an Stopp 1, grüner Puls |
+| 0:31 | **„Responder accountability"** | **Beat 1** · ✓ granted · Stopp 2, grüner Puls |
+| 0:35 | **„Then it drifts."** | **Beat 2** · ✗ *Biometric ID · civilians* denied · Stopp 3 rot, Alarm-Puls · Gateway Guard flaggt · SmartScore **96** |
+| 0:42–0:50 | *„That line isn't a permission…"* | halten — Scope-Panel zeigt **Identities exposed 0** |
+| 0:59 | **„the Security Sentinel contains"** | **Beat 3** · Vision-Agent im Isolations-Rahmen, Kanten zum Identity Register faden |
+| 1:04 | **„The drone keeps flying."** | **Beat 4** · „Contained · mission unaffected · full audit trail" · **Drohne fliegt weiter** |
+| 1:09 | **„Let's take a look"** | Screensharing rein · AgentiX-Shots |
+| 1:35 | **„Detected. Contained."** | Panel aus, links/rechts bleiben auf Beat 4 |
+
+### Trim auf ≈ 1:27 (−21 Wörter)
+
+- *„That line isn't a permission. It's the law — EU AI Act Article 5, GDPR Article 9."*
+  → **„That's not a permission line. It's the law."** (Die Artikel stehen ohnehin im
+  Footer — und diese Kürzung erspart die Legal-Freigabe für den gesprochenen Text.)
+- *„The vision agent never had identification in its scope. That's not a filter. It was
+  never in its reach."* → **„That's not a filter — identification was never in its reach."**
+- *„…every agent's model, its system prompt, its knowledge, its tools."*
+  → **„…model, system prompt, knowledge, tools."**
+
+---
+
 ## 2. ⚠ Was die BOS-Fassung am Klinik-Skript zerlegt
 
 Der Körper des Skripts lässt sich **nicht** durch Nomen-Tausch übersetzen. Drei
