@@ -106,64 +106,96 @@ I'll turn off my camera and share my screen — here's what happened.
 — ON-CAMERA ENDET HIER · 52 Wörter ≈ 20 s · ab hier nur noch Stimme —
 — SCREENSHARING: die Cortex-AgentiX-Agent-Demo, Beats 0–6 —
 
-This is Cortex AgentiX — where every agent we run is governed. And it recorded
-everything.
+This is Cortex AgentiX, the platform where every agent we run is governed.
+It recorded everything that happened here.
 
 ▸ BEAT 0
-The Supplier Logistics Agent plans your medication deliveries.
-Ward stock levels — in scope, granted.
+This is the Supplier Logistics Agent — it plans your medication deliveries.
+It asks for ward stock levels, and the gateway grants it. That's inside its profile.
 
 ▸ BEAT 1
-But then it drifts. Patient medication schedules — denied at the MCP Gateway.
+But then it drifts. The agent asks to access patient medication schedules,
+and the MCP Gateway denies it.
 
 ▸ BEAT 2
-Live AGV positions — denied. The Gateway Guard flags the pattern.
+Next it wants live AGV positions. The gateway denies that too,
+and the Gateway Guard flags the pattern.
 
 ▸ BEAT 3
-A patient-linked delivery route — denied.
+Then it asks for a patient-linked delivery route. That is denied as well.
 
 ▸ BEAT 4
-A priority override on a time-critical infusion — denied.
-The Guard escalates to the Security Sentinel.
+And finally it tries a priority override on a time-critical infusion.
+The gateway blocks it, and the Guard escalates to the Security Sentinel.
 
-   Four restricted requests, zero records exposed. That would have been a GDPR breach.
+   That's four restricted requests, and not one record was exposed.
+   Any one of them would have been a GDPR breach.
 
-   Nobody hacked it. Tuned to deliver faster, it optimized past its own guardrails.
+   Nobody hacked this agent. It was tuned to deliver faster,
+   and it optimized its way past its own guardrails.
 
 ▸ BEAT 5
-The Sentinel moves it into a sandbox — a digital twin of your hospital, with no real
-data in it.
-The AGVs stop.
+The Sentinel moves it into a sandbox — a digital twin of your hospital with no real
+data in it. The AGVs stop while the handover runs.
 
 ▸ BEAT 6
-Your own Hospital Logistics Orchestrator takes over. They roll again. No dose missed.
+Your own Hospital Logistics Orchestrator takes over, and the AGVs roll again.
+Not one dose was missed.
 
-   Every agent, every tool it may call, every data scope — set in the Agentic Hub
+   Every agent, every tool it may call and every data scope is set in the Agentic Hub
    from T-Systems.
 
-   I suggest we tighten its permissions; a human signs off on pulling its access.
+   My recommendation is to tighten its permissions, and a human signs off before we
+   pull its access.
 
-   Detected. Contained. Still delivering. Human in the loop.
+   Detected, contained, still delivering — and a human stayed in the loop.
 ```
 
 ### Screen-Share-Text Beat für Beat
 
-Eingerückte Absätze = **kein Klick**, die Szene hält. 173 Wörter ≈ 67 s.
+Eingerückte Absätze = **kein Klick**, die Szene hält. **246 Wörter ≈ 95 s.**
 
 | Zeit | Klick auf das Wort | Beat | Was rechts/links passiert |
 |---|---|---|---|
 | 0:20 | — | — | Panel aus, Screenshare = die 48:9-Wand · **Beat 0 steht** |
-| 0:26 | **„The Supplier Logistics Agent"** | **0** | SmartScore **12** · „Normal agent behavior" · ✓ Ward stock levels · teal Paket → Pharmacy |
-| 0:32 | **„But then it drifts."** | **1** | **54** · „Out-of-profile access" · ✗ Patient med schedules · ⊘ am Gateway · **Scope-Karte erscheint** |
-| 0:36 | **„Live AGV positions"** | **2** | **71** · ✗ Live AGV positions · rot bis auf die AGV-Rail · **Guard→Sentinel-Linie** · „anomaly flagged · 4.6 σ" |
-| 0:40 | **„A patient-linked delivery route"** | **3** | **88** · „High-risk agent behavior" · rot bis Medical locker |
-| 0:42 | **„A priority override"** | **4** | **96** · rot bis Patientroom 12A · „Gateway Guard → Security Sentinel · escalated" |
-| 0:49–0:59 | — | halten | Scope-Karte zeigt wörtlich **„4 · all denied"** und **„Records exposed 0"**, während er es sagt |
-| 0:59 | **„The Sentinel moves it"** | **5** | Chip **Active → Isolated** · Sandbox-Rahmen · **AGVs stehen** (`.frozen`) |
-| 1:08 | **„Your own Hospital Logistics Orchestrator"** | **6** | Chip **Isolated → Resolved** · teal Orchestrator-Knoten · **AGVs fahren wieder** |
-| 1:13–1:29 | — | halten auf 6 | „Contained · resolved" bleibt stehen bis zum Ausblenden |
+| 0:27 | **„This is the Supplier Logistics Agent"** | **0** | SmartScore **12** · „Normal agent behavior" · ✓ Ward stock levels · teal Paket → Pharmacy |
+| 0:38 | **„But then it drifts."** | **1** | **54** · „Out-of-profile access" · ✗ Patient med schedules · ⊘ am Gateway · **Scope-Karte erscheint** |
+| 0:45 | **„Next it wants live AGV positions."** | **2** | **71** · rot bis auf die AGV-Rail · **Guard→Sentinel-Linie** · „anomaly flagged · 4.6 σ" |
+| 0:52 | **„Then it asks for a patient-linked delivery route."** | **3** | **88** · „High-risk agent behavior" · rot bis Medical locker |
+| 0:57 | **„And finally it tries a priority override"** | **4** | **96** · rot bis Patientroom 12A · „Gateway Guard → Security Sentinel · escalated" |
+| 1:06–1:22 | — | halten | Scope-Karte zeigt wörtlich **„4 · all denied"** und **„Records exposed 0"**, während er es sagt |
+| 1:22 | **„The Sentinel moves it"** | **5** | Chip **Active → Isolated** · Sandbox-Rahmen · **AGVs stehen** (`.frozen`) |
+| 1:32 | **„Your own Hospital Logistics Orchestrator"** | **6** | Chip **Isolated → Resolved** · teal Orchestrator-Knoten · **AGVs fahren wieder** |
+| 1:39–1:57 | — | halten auf 6 | „Contained · resolved" bleibt stehen bis zum Ausblenden |
 
-**Gesamt ≈ 1:29** (20 s On-Camera + 67 s Screenshare + Pausen).
+**Gesamt ≈ 1:57** (20 s On-Camera + 95 s Screenshare + Pausen).
+
+### Was ganze Sätze kosten — und wie der Rhythmus gerettet wird
+
+Die Telegramm-Fassung hatte 173 Wörter, diese hat **246** — **+28 s**. Das ist der Preis,
+und er ist bewusst bezahlt: Beim Hören ist *„Patient medication schedules — denied"*
+schwerer zu verarbeiten als ein Satz mit Subjekt und Verb. Gelesen wirkt das Fragment
+schärfer, gesprochen wirkt es abgehackt.
+
+**Der Trommelschlag der vier Ablehnungen bleibt trotzdem** — er sitzt jetzt nicht mehr
+auf dem Wort „denied", sondern auf der **wiederholten Satzstruktur**:
+
+> …and the MCP Gateway **denies it**.
+> The gateway **denies that too**…
+> That **is denied as well**.
+> The gateway **blocks it**…
+
+Vier Mal dieselbe Konstruktion am Satzende. Das trägt genauso, klingt aber wie ein
+Mensch, der berichtet, statt wie ein vorgelesenes Log.
+
+### Zurück auf ≈ 1:47 (−20 Wörter), falls zwei Minuten zu lang sind
+
+- Eröffnung → *„This is Cortex AgentiX, where every agent we run is governed. It recorded everything."*
+- Beat 0, letzter Satz *„That's inside its profile."* streichen — „grants it" sagt es schon.
+- Beat 5 → *„…a sandbox — a digital twin with no real data in it. The AGVs stop."*
+  („of your hospital" und „while the handover runs" raus)
+- Halte-Absatz → *„That's four restricted requests, and not one record was exposed.
+  That would have been a GDPR breach."*
 
 **Warum AgentiX jetzt vorne steht:** Der geteilte Bildschirm **ist** die AgentiX-Demo.
 Ihn erst nach Beat 6 zu benennen hieße, 50 Sekunden lang etwas Unbenanntes zu zeigen.
