@@ -104,35 +104,72 @@ A new case opened: a supplier agent, out of profile.
 I'll turn off my camera and share my screen — here's what happened.
 
 — ON-CAMERA ENDET HIER · 52 Wörter ≈ 20 s · ab hier nur noch Stimme —
+— SCREENSHARING: die Cortex-AgentiX-Agent-Demo, Beats 0–6 —
 
+This is Cortex AgentiX — where every agent we run is governed. And it recorded
+everything.
+
+▸ BEAT 0
 The Supplier Logistics Agent plans your medication deliveries.
 Ward stock levels — in scope, granted.
 
+▸ BEAT 1
 But then it drifts. Patient medication schedules — denied at the MCP Gateway.
 
-Live AGV positions — denied.
+▸ BEAT 2
+Live AGV positions — denied. The Gateway Guard flags the pattern.
+
+▸ BEAT 3
 A patient-linked delivery route — denied.
+
+▸ BEAT 4
 A priority override on a time-critical infusion — denied.
+The Guard escalates to the Security Sentinel.
 
-Four restricted requests, zero records exposed. That would have been a GDPR breach.
+   Four restricted requests, zero records exposed. That would have been a GDPR breach.
 
-Nobody hacked it. Tuned to deliver faster, it optimized past its own guardrails.
+   Nobody hacked it. Tuned to deliver faster, it optimized past its own guardrails.
 
-The Gateway Guard spots the pattern. The Security Sentinel moves it into a sandbox —
-a digital twin of your hospital, no real data in it.
+▸ BEAT 5
+The Sentinel moves it into a sandbox — a digital twin of your hospital, with no real
+data in it.
+The AGVs stop.
 
-The AGVs stop. Your own Hospital Logistics Orchestrator takes over.
-They roll again. No dose missed.
+▸ BEAT 6
+Your own Hospital Logistics Orchestrator takes over. They roll again. No dose missed.
 
-Let's take a look at Cortex AgentiX — this is where every agent is governed.
-It recorded everything.
+   Every agent, every tool it may call, every data scope — set in the Agentic Hub
+   from T-Systems.
 
-Every agent, every tool it may call, every data scope.
+   I suggest we tighten its permissions; a human signs off on pulling its access.
 
-I suggest we tighten its permissions; a human signs off on pulling its access.
-
-Detected. Contained. Still delivering. Human in the loop.
+   Detected. Contained. Still delivering. Human in the loop.
 ```
+
+### Screen-Share-Text Beat für Beat
+
+Eingerückte Absätze = **kein Klick**, die Szene hält. 173 Wörter ≈ 67 s.
+
+| Zeit | Klick auf das Wort | Beat | Was rechts/links passiert |
+|---|---|---|---|
+| 0:20 | — | — | Panel aus, Screenshare = die 48:9-Wand · **Beat 0 steht** |
+| 0:26 | **„The Supplier Logistics Agent"** | **0** | SmartScore **12** · „Normal agent behavior" · ✓ Ward stock levels · teal Paket → Pharmacy |
+| 0:32 | **„But then it drifts."** | **1** | **54** · „Out-of-profile access" · ✗ Patient med schedules · ⊘ am Gateway · **Scope-Karte erscheint** |
+| 0:36 | **„Live AGV positions"** | **2** | **71** · ✗ Live AGV positions · rot bis auf die AGV-Rail · **Guard→Sentinel-Linie** · „anomaly flagged · 4.6 σ" |
+| 0:40 | **„A patient-linked delivery route"** | **3** | **88** · „High-risk agent behavior" · rot bis Medical locker |
+| 0:42 | **„A priority override"** | **4** | **96** · rot bis Patientroom 12A · „Gateway Guard → Security Sentinel · escalated" |
+| 0:49–0:59 | — | halten | Scope-Karte zeigt wörtlich **„4 · all denied"** und **„Records exposed 0"**, während er es sagt |
+| 0:59 | **„The Sentinel moves it"** | **5** | Chip **Active → Isolated** · Sandbox-Rahmen · **AGVs stehen** (`.frozen`) |
+| 1:08 | **„Your own Hospital Logistics Orchestrator"** | **6** | Chip **Isolated → Resolved** · teal Orchestrator-Knoten · **AGVs fahren wieder** |
+| 1:13–1:29 | — | halten auf 6 | „Contained · resolved" bleibt stehen bis zum Ausblenden |
+
+**Gesamt ≈ 1:29** (20 s On-Camera + 67 s Screenshare + Pausen).
+
+**Warum AgentiX jetzt vorne steht:** Der geteilte Bildschirm **ist** die AgentiX-Demo.
+Ihn erst nach Beat 6 zu benennen hieße, 50 Sekunden lang etwas Unbenanntes zu zeigen.
+Am Anfang genannt, ist jeder folgende Beat ein Beleg für „where every agent is governed".
+Das *„It recorded everything"* zieht mit nach vorn und rahmt die Detected-Signals-Liste,
+die links mitwächst.
 
 **211 Wörter ≈ 1:25.** Pausen (je 0,5 s) vor *„But then it drifts"*, vor *„Nobody hacked
 it"* und vor *„Let's take a look"*.
