@@ -1,7 +1,10 @@
 # Agentic Hub — Screen-Sequenz & Sprechertext
 
-Sieben Screens, ein Mini-Satz pro Screen. **90 Wörter ≈ 35 s.**
+Sieben Screens, ein erklärender Satz pro Screen. **170 Wörter ≈ 66 s.**
 Gesprochen von Thomas, im Anschluss an die Cortex-AgentiX-Demo.
+
+> Kein Telegrammstil. Jeder Satz sagt, **was man auf dem Screen tun kann** — Halbsätze
+> ohne Subjekt und Verb versteht beim Hören niemand.
 
 > **Namenshinweis:** Das UI schreibt **„TSI Agentic Hub"**, die Landingpage nur
 > **„Agentic Hub"**. **Nicht** „T-AI Agentic Hub" — das steht auf keinem der Screens.
@@ -15,13 +18,18 @@ verrutschen. Die empfohlene Vortragsreihenfolge steht in der ersten Spalte.
 
 | Vortrag | Screen (Inhalt) | Upload | Satz |
 |---|---|---|---|
-| **1** | Landingpage „AI Agents that Work" | Bild 4 | *„This is the Agentic Hub from T-Systems — our operating system for AI agents."* |
-| **2** | App-Launcher (Portal · Studio · Admin · Docs) | Bild 3 | *„Four apps: Portal to use agents, Studio to build them, Admin to govern them."* |
-| **3** | My Agents (141 Agenten) | Bild 2 | *„Every agent in one place — with its success rate and daily cost."* |
-| **4** | Access-Tab · User Access Control (Dimension 1) | Bild 7 | *„This is who may use it — default-deny, only granted users get in."* |
-| **5** | Tool Registry · Hospital MCP | Bild 1 | *„And this is what it may do. The greyed-out tools were never granted."* |
-| **6** | FinOps · Cost Trend | Bild 5 | *„Cost is tracked per agent, per model, per tenant — and it can be capped."* |
-| **7** | Compliance Reports | Bild 6 | *„And compliance runs continuously — EU AI Act, NIST, ISO 42001."* |
+| **1** | Landingpage „AI Agents that Work" | Bild 4 | *„This is the Agentic Hub from T-Systems. You build agents here — or bring in agents built with any other framework — and govern all of them in one place."* |
+| **2** | App-Launcher (Portal · Studio · Admin · Docs) | Bild 3 | *„It has four areas: Portal to work with agents, Studio to build them, Admin Console to govern them, and the documentation."* |
+| **3** | My Agents (141 Agenten) | Bild 2 | *„This is our agent inventory: the ones we built on the platform and the ones we brought in, side by side. For each we see if it's live, how reliably it runs, and what it costs."* |
+| **4** | Access-Tab · User Access Control (Dimension 1) | Bild 7 | *„This is access management: who may use this agent — by group, by role, or by person. Nothing is open by default."* |
+| **5** | Tool Registry · Hospital MCP | Bild 1 | *„This is the tool registry: every action an agent can call. Each has a risk level, critical ones need human approval, and what we don't switch on, the agent never gets."* |
+| **6** | FinOps · Cost Trend | Bild 5 | *„FinOps shows what the agents cost, by model and by tenant — and we can cap the budget per agent."* |
+| **7** | Compliance Reports | Bild 6 | *„And compliance is checked continuously against the EU AI Act, NIST and ISO 42001."* |
+
+**Die Kernaussage der Sequenz** steht auf Screen 1 und 3: Agenten lassen sich **bauen
+oder mitbringen** — LangGraph, CrewAI, AutoGen, n8n, egal womit sie gebaut wurden — und
+liegen danach unter **einer** Governance-Schicht. Die Filter *Platform* und *Pro-Code*
+auf Bild 2 zeigen genau diese beiden Sorten nebeneinander.
 
 **Warum diese Reihenfolge:** vom Ganzen ins Konkrete und wieder heraus. Erst was es ist,
 dann wie es aufgebaut ist, dann der Agent aus dem Video, dann die beiden Kontrollen, die
