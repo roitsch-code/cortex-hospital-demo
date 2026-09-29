@@ -141,19 +141,26 @@ data in it. The AGVs stop while the handover runs.
 ▸ BEAT 6
 Your own Hospital Logistics Orchestrator takes over, and the AGVs roll again.
 Not one dose was missed.
+The agent stays contained until a human decides otherwise.
 
-   Every agent, every tool it may call and every data scope is set in the Agentic Hub
-   from T-Systems.
-
-   My recommendation is to tighten its permissions, and a human signs off before we
-   pull its access.
-
-   Detected, contained, still delivering — and a human stayed in the loop.
+   If you have any questions, let me know.
 ```
+
+**Der Agentic-Hub-Block ist raus.** Das Video endet auf Beat 6 und übergibt an den
+Menschen vor Ort — kein zweites Produkt mehr in den letzten Sekunden.
+
+Der Satz *„The agent stays contained until a human decides otherwise."* ist mein einziger
+Zusatz zu deiner Fassung: Er hält **Human in the loop** im Text, das du ausdrücklich drin
+haben wolltest. Ohne ihn verschwindet die menschliche Entscheidung ganz aus dem Video —
+die stand vorher im gestrichenen *„a human signs off before we pull its access"*.
+Wenn du ihn nicht willst, ersatzlos streichen (−10 Wörter).
+
+Grammatik: **„any questions"**, Plural — „if you have any question" sagt im Englischen
+niemand.
 
 ### Screen-Share-Text Beat für Beat
 
-Eingerückte Absätze = **kein Klick**, die Szene hält. **246 Wörter ≈ 95 s.**
+Eingerückte Absätze = **kein Klick**, die Szene hält. **207 Wörter ≈ 80 s.**
 
 | Zeit | Klick auf das Wort | Beat | Was rechts/links passiert |
 |---|---|---|---|
@@ -166,9 +173,9 @@ Eingerückte Absätze = **kein Klick**, die Szene hält. **246 Wörter ≈ 95 s.
 | 1:06–1:22 | — | halten | Scope-Karte zeigt wörtlich **„4 · all denied"** und **„Records exposed 0"**, während er es sagt |
 | 1:22 | **„The Sentinel moves it"** | **5** | Chip **Active → Isolated** · Sandbox-Rahmen · **AGVs stehen** (`.frozen`) |
 | 1:32 | **„Your own Hospital Logistics Orchestrator"** | **6** | Chip **Isolated → Resolved** · teal Orchestrator-Knoten · **AGVs fahren wieder** |
-| 1:39–1:57 | — | halten auf 6 | „Contained · resolved" bleibt stehen bis zum Ausblenden |
+| 1:38–1:42 | — | halten auf 6 | „Contained · resolved" bleibt stehen bis zum Ausblenden |
 
-**Gesamt ≈ 1:57** (20 s On-Camera + 95 s Screenshare + Pausen).
+**Gesamt ≈ 1:42** (20 s On-Camera + 80 s Screenshare + Pausen).
 
 ### Was ganze Sätze kosten — und wie der Rhythmus gerettet wird
 
