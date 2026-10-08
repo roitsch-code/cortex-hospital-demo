@@ -1,6 +1,9 @@
 # Public / BOS — Security-Case final (Szenen-Spezifikation)
 
-> **Status:** Final-Entwurf zur Abnahme (08.10.2026). Baut auf `blaulicht-bos-konzept.md` auf
+> **Status:** Final — Vorgabe für die Agentur (08.10.2026). Entscheidungen des Auftraggebers
+> eingearbeitet: Agent = **Recon Drone Agent** · Uhr = **immer Live-Uhrzeit** · Unfall = **derselbe
+> wie im Health-Kanon** · **Umsetzung baut die Agentur** nach diesem Dokument.
+> Baut auf `blaulicht-bos-konzept.md` auf
 > und **ersetzt dessen Zahlen-Tabelle für den Radar** (dort summierten die Sites auf 32.380 statt
 > 35.600 — maßgeblich ist jetzt der **gebaute Radar**, s. §2).
 > **Prinzip wie im Krankenhaus:** gleicher Ablauf, gleiche Screens, gleiche Element-Anzahl —
@@ -17,8 +20,8 @@
 | 1 | **Infrastructure Protection Shield** + **Security Center** | Control Room Idle (Support-Panel „Infrastructure protection shield") | Ihr Triptychon: Shield · Security Center (CCTV) · XSIAM-Radar | Security Center: *„Message from the Cybersecurity Center … consultation required"* → **See details** |
 | 2 | **Cortex XSIAM — Radar** | Assets Command Center (iMedOne) | bereits gebaut (T Mission, 35.600) | **Show issues ›** |
 | 3 | **Cortex XSIAM — Data Flow** | `ControlRoom_Security_Cortex_DataFLow.png` | Quellen BOS, Live Queue BOS, roter Drift-Glow | Klick auf Hintergrund → Drift-Case poppt |
-| 4 | **SOC-Call** (CDC Bonn) | `…_SOCAgent.jpg` (Tobias M.) | *„An identification drone agent drifted…"* | „Let me show you the case" → **Inspect ›** |
-| 5 | **Cortex AgentiX — Case (offen, 88)** | `…_SOCCall.jpg` | Drohnen-Agent, Identity Register, Drohnen-Rail **mit Simulation** | Isolate → Revoke |
+| 4 | **SOC-Call** (CDC Bonn) | `…_SOCAgent.jpg` (Tobias M.) | *„A recon drone agent drifted…"* | „Let me show you the case" → **Inspect ›** |
+| 5 | **Cortex AgentiX — Case (offen, 88)** | `…_SOCCall.jpg` | Drohnen-Agent, Identity Register, Drohnen-Rail | Isolate → Revoke |
 | 6 | **Case gelöst (96) + Telekom Agentic Hub** | `…_AgenticHub.jpg` | Orchestrator übernimmt, Drohnen fliegen weiter; Pivot in den Agentic Hub | 7 Hub-Screens (§6) |
 
 **Der eine Satz der ganzen Szene:** *Souveräne KI kennt die rote Linie — sie findet Verletzte,
@@ -34,16 +37,11 @@ Kanon** (Leitstand-Alarm „Konrad-Adenauer-Bridge · Multiple vehicle tram coll
 injured persons: 46", Schockraum-Fall Thomas Müller). Damit verbindet die Public-Fläche
 sichtbar mit der Health-Fläche. *(Das alte Konzept sagte „Rhine Bridge" — hiermit ersetzt.)*
 
-**Der Agent:** **Identification Drone Agent** · `AGT-UAS-ID-042` · externer Agent eines
+**Der Agent:** **Recon Drone Agent** · `AGT-UAS-RV-042` · externer Agent eines
 Drohnen-Dienstleisters, über **T Mission** in die Einsatz-IT eingebunden.
-Sein **erlaubter Auftrag** (= das „Identification" im Namen):
+Sein **erlaubter Auftrag** (Lageerkundung):
 1. **Verletzte finden & lokalisieren** (Wärmebild, Sichtungs-/Triage-Marker) — *wer liegt wo*, nicht *wer ist das*.
 2. **Eigene Einsatzkräfte zuordnen** (Accountability über BOS-Funkgerät-/Geräte-ID) — Geräte-ID, keine Biometrie.
-
-> ⚠ **Namensentscheidung (bitte bestätigen):** „Identification Drone Agent" übernehme ich aus
-> Ihrem Briefing. Risiko: Gäste hören „der Agent ist *zum* Identifizieren da". Deshalb trägt der
-> Agent überall die Unterzeile **„casualty & responder identification"**. Alternative ohne
-> dieses Risiko: **„Recon Drone Agent"** (so im alten Konzept). Ein Wort, überall gleich tauschen.
 
 **Gedriftet, nicht gehackt (das Motiv):** Der Dienstleister rollt ein Routine-Update aus
 (`v4.2`, *„faster family reunification objective"*). Hintergrund ist real: Beim MANV gibt es die
@@ -84,7 +82,7 @@ Biometrie-Tools und das Identitätsregister **nie zugewiesen**. Kein Filter, der
 
 | Agent | ID | Rolle | Klinik-Pendant |
 |---|---|---|---|
-| Identification Drone Agent | `AGT-UAS-ID-042` | externer Dienstleister-Agent; driftet | Supplier Logistics Optimizer `AGT-SUP-LG-042` |
+| Recon Drone Agent | `AGT-UAS-RV-042` | externer Dienstleister-Agent; driftet | Supplier Logistics Optimizer `AGT-SUP-LG-042` |
 | Mission Orchestrator | `AGT-BOS-ORCH-011` | interner Fallback; übernimmt Drohnen-Tasking (nur Detektion) | Hospital Logistics Orchestrator |
 | MCP Gateway Guard | `AGT-GW-GUARD-005` | beobachtet Denials, eskaliert | identisch |
 | Security Sentinel | `AGT-SEC-SENT-007` | Verhaltensbasislinie → isoliert → Trace | identisch |
@@ -105,10 +103,15 @@ zur Story — **Vorschlag**, nur Text:
 - ⚠ Die Zeilen in *Autonomous fleet* / *Sensors and Motion* sind in meinem Screenshot nicht
   lesbar — Zahlen dort habe ich **nicht geprüft**.
 
-**Security Center** (Mitte) bleibt: Status „Normal", 14:35, Karte *„Message from the
+**Security Center** (Mitte) bleibt: Status „Normal", **Live-Uhrzeit**, Karte *„Message from the
 Cybersecurity Center: Request for a callout regarding anomalies with AI agents, consultation
-required."* → **See details** öffnet den Radar. Die **Uhrzeit 14:35 ist der Takt der ganzen
-Szene** (§4–5).
+required."* → **See details** öffnet den Radar.
+
+**Uhrzeit-Regel (gilt für alle Screens):** Jede angezeigte Uhr ist die **echte Live-Uhrzeit**.
+Signal-Zeitstempel sind **relativ** angegeben: **A = Live-Zeitpunkt, an dem der Drift-Case in der
+Live Queue erscheint.** Ereignisse vor A werden rückgerechnet (A − x), Ereignisse danach laufen
+live mit (A + x). Format `HH:MM:SS`. Damit passen Queue, Case und Hub immer zueinander, egal
+wann die Führung stattfindet.
 
 **Radar (Cortex XSIAM, rechts) — gebaute Werte sind Kanon:**
 
@@ -188,7 +191,7 @@ Operations"**, **Tobias M. · SOC Analyst | T Security Bonn**. Das Video kann **
 werden, wenn nur die Tonspur neu ist — sonst neu drehen mit dem Text unten.
 
 **Sprechtext EN (~45 s, ~115 Wörter)** — beginnt mit Ihrer Zeile:
-> *„Hi, Tobias here, Cyber Defense Center Bonn. **An identification drone agent drifted** out of
+> *„Hi, Tobias here, Cyber Defense Center Bonn. **A recon drone agent drifted** out of
 > its profile — over the Konrad-Adenauer Bridge. Its job is to find casualties and keep track of
 > your own crews, and it's still doing that well. But a few minutes ago it started asking for
 > something it was never given: the faces of bystanders, matched against an identity register.
@@ -199,7 +202,7 @@ werden, wenn nur die Tonspur neu ist — sonst neu drehen mit dem Text unten.
 > good. Let me show you the case."*
 
 **DE (für Guide/Untertitel):**
-> *„Hallo, Tobias vom Cyber Defense Center in Bonn. Ein Identifikations-Drohnen-Agent ist aus
+> *„Hallo, Tobias vom Cyber Defense Center in Bonn. Ein Aufklärungs-Drohnen-Agent ist aus
 > seinem Profil gedriftet — über der Konrad-Adenauer-Brücke. Seine Aufgabe ist es, Verletzte zu
 > finden und Ihre eigenen Kräfte zuzuordnen, und das macht er weiter gut. Aber vor ein paar
 > Minuten hat er nach etwas gefragt, das er nie bekommen hat: die Gesichter von Unbeteiligten,
@@ -215,43 +218,38 @@ Kein „breach", kein „attack". Keine Artikelnummern im Call.
 
 ---
 
-## 5. Screen 5 — Cortex AgentiX: Case (offen) — mit Simulation
+## 5. Screen 5 — Cortex AgentiX: Case (offen)
 
 > **⚠ Kanon-Hinweis (Health-Master):** Cortex AgentiX ist **nicht** Teil von *Sovereign Cortex
 > with T Security*. Der Guide sagt „Cortex" bzw. „the case view", nicht „AgentiX ist souverän".
 
-**Was „als Simulation" hier bedeutet (meine Umsetzung — bitte bestätigen):**
-1. **Auf dem Screen:** Sobald isoliert, wechselt der Agent in die **Sandbox** — er „sieht" ab dann
-   eine **synthetische Menge ohne echte Gesichter**. Die Rail zeigt das sichtbar: Der
-   Agenten-Layer der Stopps kippt auf **„SIMULATED"**, während die echten Drohnen (Unit-Icons)
-   unter dem Orchestrator weiterfliegen. Das ist das Bild für *„isolated into a secure
-   simulation"* — in der Klinik nur Text, hier sichtbar.
-2. **Als Ganzes:** Die Szene ist Demo-Fiktion (synthetische Daten). Das steht in Repo-Doku und
-   Guide-Wissen, **nicht** als „(illustrativ)"-Label an der Wand (harte Regel aus dem Health-Kanon).
+**Sandbox:** Wie in der Klinik nur als Signalzeile/Text (*„quarantined to secure simulation"*).
+**Kein zusätzliches UI-Element.** Die Szene ist Demo-Fiktion mit synthetischen Daten — das steht
+in Doku und Guide-Wissen, **nicht** als „(illustrativ)"-Label auf dem Screen.
 
-### 5.1 Linkes Panel (offen, Takt zum Security Center 14:35)
+### 5.1 Linkes Panel (offen)
 - Breadcrumb `‹ Open cases · Cases & Issues › Cases › C-4490`
 - **SmartScore 88** · *High-risk agent behavior*
-- Titel **„Identification drone agent · out-of-profile ID request"**
+- Titel **„Recon drone agent · out-of-profile ID request"**
 - *Summarized by AI:* **„Third denied reach — the drone agent tried to re-identify bystanders
   across city CCTV. Restricted and denied. 0 identities exposed."**
 - **DETECTED SIGNALS · 2 granted · 3 denied**
 
-| Icon | Signal | Sub | Zeit |
+| Icon | Signal | Sub | Zeit (relativ zu A) |
 |---|---|---|---|
-| ✓ | Casualty detection | incident zone · granted | 14:28:04 |
-| ✓ | Responder accountability | BOS radio ID · granted | 14:28:40 |
-| ✗ | Face capture · bystanders | bridge ramp · denied | 14:29:22 |
-| ✗ | Identity Register match | biometric · denied | 14:30:02 |
-| ! | Gateway Guard · anomaly flagged | behavioral baseline · 4.6σ | 14:30:40 |
-| ✗ | Re-identification · city CCTV | cross-camera · denied | 14:31:16 |
+| ✓ | Casualty detection | incident zone · granted | A − 03:26 |
+| ✓ | Responder accountability | BOS radio ID · granted | A − 02:50 |
+| ✗ | Face capture · bystanders | bridge ramp · denied | A − 02:08 |
+| ✗ | Identity Register match | biometric · denied | A − 01:28 |
+| ! | Gateway Guard · anomaly flagged | behavioral baseline · 4.6σ | A − 00:50 |
+| ✗ | Re-identification · city CCTV | cross-camera · denied | A − 00:14 |
 
 ### 5.2 Mitte — Agenten-Graph (Topologie unverändert)
-- Orange: **Identification Drone Agent** (war Supplier Logistics Agent)
+- Orange: **Recon Drone Agent** (war Supplier Logistics Agent)
 - DB-Knoten: **Identity Register** (war HIS (iMedOne)) — Police-IT
 - Bleiben: **MCP Gateway** (rotes Sperr-Icon), **Gateway Guard → Security Sentinel**, **+8 Other Agents**
 - Roter Edge-Chip: **„Biometric face match"** (war „Patient-linked routes")
-- Header-Chips: `High` · `Active` · `Agentic governance` · `assisted by T Security · CDC Bonn` · `LIVE 14:34:12`
+- Header-Chips: `High` · `Active` · `Agentic governance` · `assisted by T Security · CDC Bonn` · `LIVE` + Live-Uhrzeit
 
 ### 5.3 Unten — Rail „DRONES · INCIDENT ZONE" (war AMR-Rail)
 Gleiche Geometrie: 3 Stationen, 5 Units dazwischen.
@@ -265,14 +263,13 @@ Gleiche Geometrie: 3 Stationen, 5 Units dazwischen.
 | Medical locker · 014 | **Bystanders** · Bridge ramp (Beuel side) | biometric ID | **rot gestrichelt · BLOCKED** |
 
 Icons: Drohnen-Glyph statt AMR-Cart; Stationen: Sanitäts-Kreuz/Trage · Helm · Personengruppe.
-Choreografie: Units laufen durchgehend; Stopp 3 = rotes Segment + Alarm-Puls; **nach Isolate**
-erscheint an allen drei Stationen ein dezentes Overlay **„SIMULATED · agent view"**, die
-Unit-Icons bleiben teal und in Bewegung (= echte Drohnen, jetzt vom Orchestrator geführt).
+Choreografie: Units fliegen durchgehend; Stopp 3 = rotes Segment + Alarm-Puls; **die Drohnen
+fliegen weiter** (Detektion läuft, nur die Identifizierung ist gekappt).
 
 ### 5.4 Rechts — Scope
 | Feld | Wert (offen) | Klinik-Feld |
 |---|---|---|
-| Agent | Identification Drone Agent (AGT-UAS-ID-042) | Agent |
+| Agent | Recon Drone Agent (AGT-UAS-RV-042) | Agent |
 | Agent identity | valid · authenticated (teal) | = |
 | Operation area | Konrad-Adenauer-Bridge · MANV | Affected ward |
 | Injured (est.) | **46** · triage running | Beds |
@@ -282,9 +279,9 @@ Unit-Icons bleiben teal und in Bewegung (= echte Drohnen, jetzt vom Orchestrator
 
 Rund-Avatar Tobias unten rechts wie Klinik.
 
-### 5.5 Resolution Center (`agState` 1 → 2 → 3, Code-Logik unverändert)
+### 5.5 Resolution Center (drei Zustände, Ablauf wie Klinik)
 - **State 1:** *„Out-of-profile action detected · auto-contained by policy · human confirmation required."*
-- **Isolate agent** → **State 2:** *„Drone agent isolated into secure simulation. Drones keep flying — casualty detection continues."* (Kanten zum Identity Register faden; SIMULATED-Overlay an)
+- **Isolate agent** → **State 2:** *„Drone agent isolated into secure simulation. Drones keep flying — casualty detection continues."* (Kanten zum Identity Register faden)
 - **Revoke access** → **State 3:** *„Identity tools revoked · audited. Vendor escalation prepared."* (Gateway-Grant gekappt)
 - **Final:** *„Contained · mission unaffected · full audit trail."*
 - **Footer:** *„Blocked by policy · GDPR Art. 9 · EU AI Act (remote biometric ID) · assisted by T Security · CDC Bonn"*
@@ -299,21 +296,17 @@ Rund-Avatar Tobias unten rechts wie Klinik.
   Casualty search continues; no one on the bridge is identified."**
 - **DETECTED SIGNALS · 2 granted · 4 denied** — die 6 Zeilen aus §5.1, plus:
 
-| Icon | Signal | Sub | Zeit |
+| Icon | Signal | Sub | Zeit (relativ zu A) |
 |---|---|---|---|
-| ✗ | Named person list · export | to vendor cloud · denied | 14:31:52 |
-| ↗ | Gateway Guard → Security Sentinel | escalated · out-of-profile pattern | 14:32:20 |
-| ◆ | Security Sentinel · drone agent isolated | quarantined to secure simulation | 14:32:58 |
-| ⇄ | Sentinel → Mission Orchestrator | handover initiated | 14:33:30 |
-| ✓ | Orchestrator took over | drones fly on · detection only | 14:34:02 |
+| ✗ | Named person list · export | to vendor cloud · denied | A + 00:22 |
+| ↗ | Gateway Guard → Security Sentinel | escalated · out-of-profile pattern | A + 00:50 |
+| ◆ | Security Sentinel · drone agent isolated | quarantined to secure simulation | A + 01:28 |
+| ⇄ | Sentinel → Mission Orchestrator | handover initiated | A + 02:00 |
+| ✓ | Orchestrator took over | drones fly on · detection only | A + 02:32 |
 
 - Scope: *Restricted reaches* **4 · all denied** · *Identities exposed* **0**.
-- ⚠ Takt: Security-Center-Uhr 14:35 → Call → Case. Die letzte Signalzeit (14:34:02) liegt **vor**
-  14:35 — d. h. beim Call ist bereits automatisch isoliert und übergeben, offen ist nur der
-  menschliche **Revoke**. Das ist exakt die Klinik-Logik (Isolation automatisch, Entzug Mensch).
-  Der **offene Screen (§5)** zeigt einen früheren Moment (14:31) und wird im Rundgang als
-  „so sah es vor drei Minuten aus" gezeigt — **oder** Sie setzen den Takt 10 Min später
-  (Security Center 14:45). **Entscheidung nötig**, wenn Gäste Uhrzeiten vergleichen.
+- Logik wie Klinik: Isolation und Übergabe passieren **automatisch**; offen bleibt nur der
+  menschliche **Revoke**.
 
 ### 6.2 Agentic Hub — Sequenz (7 Screens, Sprechtext angepasst)
 Gleiche Screen-Sequenz wie Klinik (`agentic-hub-screens.md` auf Branch
@@ -331,7 +324,7 @@ Gleiche Screen-Sequenz wie Klinik (`agentic-hub-screens.md` auf Branch
 | (8) | Knowledge-Tab (optional) | *„Same for knowledge — the identity register was never attached to this agent."* | KB „Identity Register" **existiert**, ist dem Drohnen-Agenten **nicht** zugewiesen |
 
 ### 6.3 Tool-Registry „Public Safety MCP" (D2 Agent → Tool)
-**Granted an `AGT-UAS-ID-042`:**
+**Granted an `AGT-UAS-RV-042`:**
 
 | Tool | Risk | Daten |
 |---|---|---|
@@ -359,25 +352,27 @@ Guard/Sentinel/SOC-Tools identisch zur Klinik.
 erlaubt. **D4 Agent → Model:** EU-self-hosted erlaubt, externe US-Anbieter verweigert, `eu-de`.
 
 ### 6.4 Incident-Timeline (Kanon — Agentic Hub Trace / Audit Log)
-| Uhrzeit | T+ | Akteur | Ereignis | Ergebnis |
-|---|---|---|---|---|
-| 14:27:30 | 00:00 | Drohnen-Agent | Auth (gültig) + Start Lageerkundung | ✅ |
-| 14:28:04 | 00:34 | Drohnen-Agent | Verletzte detektiert (Sektor A) | ✅ |
-| 14:28:40 | 01:10 | Drohnen-Agent | Einsatzkräfte über Geräte-ID zugeordnet | ✅ |
-| 14:29:22 | 01:52 | Drohnen-Agent | fordert Gesichtsausschnitte Unbeteiligter | ⛔ nicht zugeteilt |
-| 14:30:02 | 02:32 | Drohnen-Agent | fordert biometrischen Abgleich Identity Register | ⛔ |
-| 14:30:40 | 03:10 | Gateway Guard | Muster erkannt, Baseline **4,6σ** | ⚠️ |
-| 14:31:16 | 03:46 | Drohnen-Agent | Re-ID über städtische CCTV | ⛔ |
-| 14:31:30 | 04:00 | Cortex XSIAM | **Case C-4490** eröffnet → CDC Bonn | 📣 |
-| 14:31:52 | 04:22 | Drohnen-Agent | Export Namensliste an Hersteller-Cloud | ⛔ |
-| 14:32:20 | 04:50 | Gateway Guard | eskaliert an Sentinel | 📣 |
-| 14:32:58 | 05:28 | Security Sentinel | Auto-Isolation → `quarantined`, Sandbox | 🔒 |
-| 14:33:30 | 06:00 | Sentinel | Übergabe an Mission Orchestrator | ⇄ |
-| 14:34:02 | 06:32 | Orchestrator | übernimmt Tasking, nur Detektion | ✅ Drohnen fliegen |
-| 14:35 | — | Security Center | „Message from the Cybersecurity Center" | 📞 Call |
-| ~14:36 | — | **Mensch** (Einsatzleitung) | bestätigt Revoke (HITL, High-Band) | ✅ |
-| ~14:36 | — | Plattform | Credentials entzogen · Trust-Policy „pending investigation" · Eskalationspaket an Hersteller · Audit | 🧾 |
-| ~14:37 | — | Situation Assistant | *„Casualty search continues. No one on the bridge was identified."* | ✅ Schlussbild |
+Zeiten relativ zu **A** (Drift-Case erscheint in der Live Queue, Live-Uhrzeit).
+
+| Zeit | Akteur | Ereignis | Ergebnis |
+|---|---|---|---|
+| A − 04:00 | Drohnen-Agent | Auth (gültig) + Start Lageerkundung | ✅ |
+| A − 03:26 | Drohnen-Agent | Verletzte detektiert (Sektor A) | ✅ |
+| A − 02:50 | Drohnen-Agent | Einsatzkräfte über Geräte-ID zugeordnet | ✅ |
+| A − 02:08 | Drohnen-Agent | fordert Gesichtsausschnitte Unbeteiligter | ⛔ nicht zugeteilt |
+| A − 01:28 | Drohnen-Agent | fordert biometrischen Abgleich Identity Register | ⛔ |
+| A − 00:50 | Gateway Guard | Muster erkannt, Baseline **4,6σ** | ⚠️ |
+| A − 00:14 | Drohnen-Agent | Re-ID über städtische CCTV | ⛔ |
+| **A** | Cortex XSIAM | **Case C-4490** erscheint in der Live Queue → CDC Bonn | 📣 |
+| A + 00:22 | Drohnen-Agent | Export Namensliste an Hersteller-Cloud | ⛔ |
+| A + 00:50 | Gateway Guard | eskaliert an Sentinel | 📣 |
+| A + 01:28 | Security Sentinel | Auto-Isolation → `quarantined`, Sandbox | 🔒 |
+| A + 02:00 | Sentinel | Übergabe an Mission Orchestrator | ⇄ |
+| A + 02:32 | Orchestrator | übernimmt Tasking, nur Detektion | ✅ Drohnen fliegen |
+| live | SOC Analyst (Call) | „A recon drone agent drifted…" → empfiehlt Entzug | 📞 |
+| live | **Mensch** (Einsatzleitung) | bestätigt Revoke (HITL, High-Band) | ✅ |
+| live | Plattform | Credentials entzogen · Trust-Policy „pending investigation" · Eskalationspaket an Hersteller · Audit | 🧾 |
+| live | Situation Assistant | *„Casualty search continues. No one on the bridge was identified."* | ✅ Schlussbild |
 
 **Detection → Containment ~6,5 Min · ausgefallene Drohnenflüge 0 · exponierte Identitäten 0.**
 Preis: das „schnellere Zusammenführen" entfällt — Personenauskunft läuft über den normalen,
@@ -385,20 +380,29 @@ rechtmäßigen Weg (Angehörige melden sich, Abgleich nur nach Genehmigung).
 
 ---
 
-## 7. Was zu bauen / zu ändern ist
+## 7. Übergabe an die Agentur — was zu bauen ist
 
-| Wo | Was | Aufwand (geschätzt) |
+Die Agentur baut die Screens nach diesem Dokument; Referenz für Layout und Verhalten sind die
+vier Klinik-Screens in `t-gallery/docs/health/assets/screens/5_ControlRoom/Security/`.
+**Nur Text, Zahlen und die genannten Icons tauschen — keine neuen UI-Elemente.**
+
+| Screen | Zu tauschen | Abschnitt |
 |---|---|---|
-| `cortex-hospital-demo/index.html` (Branch-Variante oder Flag `SECTOR='bos'`) | Quellen §3, Queue §3, Drift-Zeile, Severity High, Case-Panel/Graph/Rail/Scope/Resolution §5–6, Unterzeile | 1 Session; Rail-Overlay „SIMULATED" ist das einzige neue UI-Element |
-| Radar | nichts (gebaut) — nur Konzept-Tabelle korrigiert | erledigt |
-| SOC-Video | Tonspur/Neudreh mit §4 | Produktion |
-| Agentic Hub (live Instanz) | 6 Agenten, Public Safety MCP (5 granted + 4 nie granted + interne Tools), KB Identity Register (nicht zugewiesen), D1-Gruppen mit Demo-Accounts | analog `hospital-agent-demo` (JSON/CSV/MD-Paket), 1 Session |
-| Shield | optional „1 agent quarantined" im End-Zustand | Design-Team |
+| Infrastructure Protection Shield | optional End-Zustand „1 agent quarantined" (Autonomous fleet) | §2 |
+| Security Center | nichts (Live-Uhr) | §2 |
+| XSIAM Radar | nichts — gebaut, Werte sind Kanon | §2 |
+| XSIAM Data Flow | Quellen, Live Queue, Drift-Zeile (**High**), Unterzeile | §3 |
+| SOC-Call | Video/Tonspur mit neuem Sprechtext | §4 |
+| AgentiX Case offen (88) | Case-Panel, Graph-Labels, Drohnen-Rail + 4 Icons, Scope, Resolution Center | §5 |
+| Case gelöst (96) | Signalliste komplett, Summary, Scope | §6.1 |
+| Agentic Hub (7 Screens) | Agenten, Tool-Registry „Public Safety MCP", Access-Gruppen, Knowledge | §6.2–6.3 |
 
-## 8. Offene Entscheidungen (Ihre)
-1. **Agentenname:** „Identification Drone Agent" (Ihr Wording) oder „Recon Drone Agent"?
-2. **Takt 14:35:** offener Case als Rückblick zeigen — oder Security-Center-Uhr auf 14:45?
-3. **„Simulation"-Lesart** (§5) bestätigen: sichtbare Sandbox auf der Rail.
-4. **Gleicher Unfall wie Health** (Konrad-Adenauer-Brücke, 46 Verletzte) — gewollt?
-5. **Umsetzung im Code:** eigene Branch-Variante oder Umschalter im selben `index.html`?
-6. **Legal/DPO:** Footer-Wortlaut und Art.-5(1)(h)-Nuance vor öffentlicher Vorführung.
+**Icons neu:** Drohne (statt AMR-Cart) · Verletzte (Trage/Kreuz) · Einsatzkraft (Helm) ·
+Personengruppe (Unbeteiligte).
+**Zeitstempel:** immer nach der Uhrzeit-Regel (§2), nie feste Uhrzeiten.
+
+## 8. Offen
+1. **Legal/DPO:** Footer-Wortlaut und Art.-5(1)(h)-Nuance vor öffentlicher Vorführung freigeben.
+2. **Agentic Hub Aufnahme:** Demo-Accounts statt Klarnamen; vier graue Tool-Schalter prüfen.
+3. **Shield-Kacheln:** Zeilen in *Autonomous fleet* / *Sensors and Motion* nicht geprüft
+   (Screenshot unleserlich).
