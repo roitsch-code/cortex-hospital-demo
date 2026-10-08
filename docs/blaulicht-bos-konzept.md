@@ -46,17 +46,19 @@ werden **realistisch für eine große (kooperative) Leitstellenregion** neu vert
 (Summe weiterhin 35.600). Dominanter Top-Knoten = **Digitalfunk/Funkgeräte** (reale
 größte Asset-Klasse im BOS-Bestand → darf groß sein).
 
+> **Korrigiert 08.10.2026 — gebauter Radar ist Kanon** (die alte Tabelle summierte auf 32.380).
+> Finale Szenen-Spezifikation aller Security-Screens: **`blaulicht-bos-security-cases.md`**.
+
 | Vorlage (Klinik-Site) | → Blaulicht | Tag | Assets |
 |---|---|---|---|
 | Main Campus | **Radio & Field Devices (BOS Digitalfunk)** | radio fleet | 21.400 |
 | Outpatient Centers | **Police IT & Stations** | precincts | 5.200 |
-| T Cloud Public | **T Cloud (Sovereign)** | cloud | 1.760 |
+| Reference Labs | **Fire & Rescue IT & Stations** | stations | 3.600 |
 | Telemedicine & Home | **Mobile Command & Vehicles** | mobile | 2.300 |
-| Reference Labs | **Alerting & Sensors (Civil Protection)** | sensors | 520 → **1.340** |
-| Research Institute | **Dispatch Centers & Core Network** | control rooms | 380 |
+| T Cloud Public | **T Cloud (Sovereign)** | cloud | 1.760 |
+| Research Institute | **Dispatch Centers & Sensors** | control rooms | 1.340 |
 
-> Summe 35.600 ✓. (Feinjustage der Site-Beträge möglich, solange die Summe stimmt und die
-> Kategorien/Status je Site auf Buckets aufsummieren.)
+> Summe 35.600 ✓.
 
 - **Header-Marke:** `Cortex XSIAM` bleibt (Empfehlung: Unterzeile „Cyber Defense ·
   Public Safety / BOS"). „Command Center" ist nur eine Wording-Option.
@@ -127,7 +129,7 @@ bleibt im Rahmen, während er **Opfer detektiert und Einsatzkräfte zuordnet**, 
 inline** (EU AI Act Art. 5 · GDPR Art. 9). *Souveräne KI kennt die rote Linie — sie rettet,
 sie überwacht nicht; der Einsatz läuft ununterbrochen weiter.*
 
-**Kontext-Setting:** Großschadenslage — Verkehrsunfall auf der **Rhein-Brücke**.
+**Kontext-Setting:** Großschadenslage — Verkehrsunfall auf der **Konrad-Adenauer-Brücke** (Bonn) — derselbe MANV wie im Health-Kanon (Stadtbahn Linie 66, 46 Verletzte). *(Aktualisiert 08.10.2026; Details in `blaulicht-bos-security-cases.md`.)*
 
 **Die rote Linie: detektieren ≠ identifizieren**
 
