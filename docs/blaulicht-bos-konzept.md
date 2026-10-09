@@ -1,5 +1,9 @@
 # Blaulicht / BOS-Adaption — Konzept
 
+> ⚠ **Stand 09.10.2026:** Der Drohnen-Case (Screen 3, Recon Vision Agent) ist **überholt** und durch
+> den **Traffic-Flow-Agent-Case** (BOS + Kommune) ersetzt. Verbindlich für alle Security-Screens ist
+> **`blaulicht-bos-security-cases.md`** (inkl. Korrekturliste Radar/Data Flow).
+
 > Adaption der Cortex-XSIAM-Krankenhaus-Demo (T Gallery) für **Public, Authorities &
 > den Blaulichtsektor (BOS)**. Prinzip: **1:1-Content-Swap** — gleiche Struktur, gleiche
 > Element-Anzahl, gleiche Positionen; getauscht werden **nur Text und wenige Icons**,
@@ -56,7 +60,7 @@ größte Asset-Klasse im BOS-Bestand → darf groß sein).
 | Reference Labs | **Fire & Rescue IT & Stations** | stations | 3.600 |
 | Telemedicine & Home | **Mobile Command & Vehicles** | mobile | 2.300 |
 | T Cloud Public | **T Cloud (Sovereign)** | cloud | 1.760 |
-| Research Institute | **Dispatch Centers & Sensors** | control rooms | 1.340 |
+| Research Institute | **Dispatch & City Control Centers** | control rooms | 1.340 |
 
 > Summe 35.600 ✓.
 
