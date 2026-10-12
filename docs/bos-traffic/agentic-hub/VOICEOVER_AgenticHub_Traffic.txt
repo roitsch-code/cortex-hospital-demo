@@ -1,0 +1,14 @@
+This is the Agentic Hub from T-Systems. You build agents here — or bring in agents built with any other framework — and govern all of them in one place.
+
+It has four areas: Portal to work with agents, Studio to build them, Admin Console to govern them, and the documentation.
+
+This is our agent inventory. For each we see if it's live, how reliably it runs, and what it costs.
+
+This is access management. Here we set who may use the agent and who may edit it — by team, by role, or down to a single person.
+
+This is the knowledge configuration: for each knowledge base we decide whether the agent gets it.
+The traffic agent sees the city's traffic data — the dispatch records were never attached, so for this agent they don't exist.
+
+Compliance is checked continuously against the EU AI Act, NIST and ISO 42001.
+
+And FinOps shows what the agents cost, by model and by tenant — and we can cap the budget per agent.
