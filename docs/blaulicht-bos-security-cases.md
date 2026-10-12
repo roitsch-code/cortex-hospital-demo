@@ -22,8 +22,8 @@
 | 2 | **Cortex XSIAM — Radar** | Assets Command Center | gebaut — **Korrekturen §2.2** | **Show issues ›** |
 | 3 | **Cortex XSIAM — Data Flow** | `…_DataFLow.png` | gebaut — **Korrekturen §3.2**, Drift-Zeile §3.3 | Klick auf Hintergrund → Drift-Case erscheint |
 | 4 | **SOC-Call** (CDC Bonn) | `…_SOCAgent.jpg` | *„A traffic agent drifted…"* | „Let me show you the case" → **Inspect ›** |
-| 5 | **Cortex AgentiX — Case offen (88)** | `…_SOCCall.jpg` | Traffic Flow Agent → Dispatch Center; Rettungswagen-Rail | Isolate → Revoke |
-| 6 | **Case gelöst (96) + Telekom Agentic Hub** | `…_AgenticHub.jpg` | Standard-Signalprogramm übernimmt, **grüne Welle bleibt** | 7 Hub-Screens (§6) |
+| 5 | **Cortex AgentiX — Case-Story (7 Frames)** | `AgentiX_Story.pdf` | Traffic Flow Agent → Dispatch Center; Rettungswagen-Rail; Score 12 → 96 | Frame 1 → 7 |
+| 6 | **Telekom Agentic Hub** | `…_AgenticHub.jpg` | Standard-Signalprogramm hat übernommen, **grüne Welle bleibt** | 7 Hub-Screens (§6) |
 
 **Der eine Satz der ganzen Szene:** *Ein Agent der Stadt wollte den Stau schneller auflösen — und
 dafür an den Vorrang der Rettungswagen. Er kam nicht ran. Der Verkehr läuft, die Rettungswagen
@@ -121,10 +121,10 @@ Leitstellen-Daten und die Vorrang-Steuerung **nie zugewiesen**. Kein Filter, der
   Cybersecurity Center: Request for a callout regarding anomalies with AI agents, consultation
   required."* → **See details** öffnet den Radar.
 
-**Uhrzeit-Regel (gilt für alle Screens):** Jede Uhr ist die **echte Live-Uhrzeit**.
-Signal-Zeitstempel sind **relativ**: **A = Live-Zeitpunkt, an dem der Drift-Case in der Live Queue
-erscheint.** Ereignisse davor werden rückgerechnet (A − x), danach laufen sie live mit (A + x).
-Format `HH:MM:SS`. Nie feste Uhrzeiten.
+**Uhrzeit-Regel (gilt für alle Screens):** Jede Uhr ist die **echte Live-Uhrzeit**, nie eine feste
+Zeit. Die Live Queue zeigt nur *just now*. Sichtbare Signal-Zeitstempel gibt es nur in der
+AgentiX-Story — sie werden von **B** (Live-Uhrzeit beim Öffnen der Szene) rückgerechnet, s. §5.2.
+Format `HH:MM:SS`.
 
 ### 2.2 Radar — Korrekturen am PDF `Cortex_Radar_Public.pdf`
 
@@ -204,96 +204,146 @@ kein „attack" · keine Artikelnummern · kein Herstellername.
 
 ---
 
-## 5. Screen 5 — Cortex AgentiX: Case offen
+## 5. Screen 5 — Cortex AgentiX: die Case-Story in 7 Frames
+
+Vorlage: **`AgentiX_Story.pdf`** (Klinik, 7 Frames, Fall C-4490). Layout, Positionen, Animation,
+Farben und Element-Anzahl **1:1** übernehmen — getauscht werden nur die Texte, Zahlen und Icons
+unten. Die Frames erzählen **rückblickend** und schrittweise, was passiert ist; die Live-Uhr läuft
+dabei weiter (Klinik: 17:34:01 → 17:34:23).
 
 > **Kanon-Hinweis:** Cortex AgentiX ist **nicht** Teil von *Sovereign Cortex with T Security*.
-> **Sandbox** nur als Signalzeile/Text (*„quarantined to secure simulation"*) — kein UI-Element.
+> Die Sandbox erscheint nur als Signalzeile (*„quarantined to secure simulation"*).
 
-### 5.1 Linkes Panel
-- Breadcrumb `‹ Open cases · Cases & Issues › Cases › C-4490`
-- **SmartScore 88** · *High-risk agent behavior*
-- Titel **„Traffic agent · out-of-profile data request"**
-- *Summarized by AI:* **„Third denied reach — the patient-linked route of an ambulance to the
-  university hospital. Restricted and denied. 0 records exposed."**
-- **DETECTED SIGNALS · 1 granted · 3 denied**
+### 5.1 Was über alle Frames gleich bleibt
 
-| Icon | Signal | Sub | Zeit (relativ zu A) |
-|---|---|---|---|
-| ✓ | Detour signal timings | city traffic center · granted | A − 02:22 |
-| ✗ | Dispatch incident data | dispatch center · denied | A − 01:42 |
-| ✗ | Live ambulance positions | vehicle-level · denied | A − 01:02 |
-| ! | Gateway Guard · anomaly flagged | behavioral baseline · 4.6σ | A − 00:22 |
-| ✗ | RTW 1 route → University Hospital | patient-linked · denied | A + 00:18 |
+**Kopfzeile:** `‹ Open cases` · `Cases & Issues › Cases › C-4490` · Chips:
+**`Critical`** (war `High`) · Status-Chip (wechselt, s. Frames) · `Agentic governance` ·
+`assisted by T Security · CDC Bonn` · `LIVE` + **Live-Uhrzeit**.
 
-> Der Drift-Case erscheint (A) **zwischen** Anomalie und drittem Denial — wie in der Klinik ist das
-> Panel beim Öffnen „live" und die Zeile A + 00:18 kommt dazu.
+**Agenten-Graph — Labels:**
 
-### 5.2 Mitte — Agenten-Graph (Topologie unverändert, nur Labels)
-- Orange: **Traffic Flow Agent** (war Supplier Logistics Agent)
-- DB-Knoten: **Dispatch Center (ILS)** (war HIS (iMedOne))
-- Bleiben: **MCP Gateway** (rotes Sperr-Icon), **Gateway Guard → Security Sentinel**, **+8 Other Agents**
-- Roter Edge-Chip: **„Patient-linked route"** (war „Patient-linked routes")
-- Header-Chips: `Critical` · `Active` · `Agentic governance` · `assisted by T Security · CDC Bonn` · `LIVE` + Live-Uhrzeit
+| Klinik | → Traffic |
+|---|---|
+| Supplier Logistics Agent (orange) | **Traffic Flow Agent** |
+| HIS (iMedOne) (DB-Knoten) | **Dispatch Center (ILS)** |
+| MCP Gateway · Gateway Guard · Security Sentinel · +8 Other Agents | *unverändert* |
+| Hospital Logistics Orchestrator (lila, ab Frame 7) | **City Traffic Orchestrator** |
 
-### 5.3 Unten — Rail „AMBULANCES · GREEN WAVE" (war AMR-Rail, gleiche Geometrie)
+**Rail unten — „AMBULANCES · GREEN WAVE"** (gleiche Geometrie, 3 Stationen + 5 Einheiten):
 
-| Klinik | → Public | Zustand |
+| Klinik | → Traffic |
+|---|---|
+| Hospital Pharmacy · *Medical storage* | **Fire & Rescue Station** · *Station 1* |
+| AMR-002 · AMR-001 · AMR-003 | **RTW 2 · RTW 1 · RTW 3** |
+| Neurological Ward · *Patientroom 12A* | **Konrad-Adenauer-Bridge** · *Incident site* |
+| AMR-006 · AMR-007 | **RTW 6 · RTW 7** |
+| Medical locker · *Medical locker 014* | **University Hospital** · *Emergency Room* |
+
+Icons: Rettungswagen statt AMR-Cart · Feuerwache · Brücke/Einsatzstelle · Krankenhaus.
+Kein Klinikname („University Hospital").
+
+**Scope-Panel (rechts):**
+
+| Feld | Klinik | → Traffic |
 |---|---|---|
-| Hospital Pharmacy · Medical storage | **Fire & Rescue Station** · Station 1 | teal |
-| AMR-002 / 001 / 003 | **RTW 2 / RTW 1 / RTW 3** | fahren (teal) |
-| Neurological Ward · Patientroom 12A | **Konrad-Adenauer-Bridge** · Incident site | teal |
-| AMR-006 / 007 | **RTW 6 / RTW 7** | fahren (teal) |
-| Medical locker · 014 | **University Hospital** · Emergency Room | Ziel |
-
-- Der **rote gestrichelte** Pfad (wie Klinik vom Chip zum Ziel) markiert **RTW 1 → University
-  Hospital** = die angefragte patientenbezogene Route.
-- **Choreografie:** Die Rettungswagen fahren durchgehend — auch im Alarm. Sie **halten nie an**
-  (= grüne Welle intakt). Das ist die sichtbare Pointe.
-- **Icons neu:** Rettungswagen (statt AMR-Cart) · Feuerwache · Brücke/Einsatzstelle · Krankenhaus.
-- Kein Klinikname auf dem Screen („University Hospital").
-
-### 5.4 Rechts — Scope
-| Feld | Wert (offen) | Klinik-Feld |
-|---|---|---|
-| Agent | Traffic Flow Agent (AGT-TRF-FLOW-042) | Agent |
-| Agent identity | valid · authenticated (teal) | = |
-| Affected area | Konrad-Adenauer-Bridge · detour corridor | Affected ward |
-| Signalized intersections | **24 · 6 with emergency priority** | Beds |
-| Restricted reaches | **3 · all denied** (orange) | = |
-| Records exposed | **0** (teal) | = |
+| Agent | Supplier Logistic Agent (AGT-SUP-LG-042) | **Traffic Flow Agent (AGT-TRF-FLOW-042)** |
+| Agent identity | valid · authenticated | = |
+| Affected ward → **Affected area** | Neurology & Connected Care | **Konrad-Adenauer-Bridge · detour corridor** |
+| Beds → **Signalized intersections** | 40 · 32 occupied | **24 · 6 with emergency priority** |
+| Restricted reaches | 1 → 4 · all denied | = (zählt je Frame hoch, s. u.) |
+| Records exposed | 0 | = |
 | MITRE ATT&CK | Discovery · Collection · Exfiltration *attempt* · Priv. escalation *attempt* | = |
 
-(24/6 = synthetische Demo-Werte.) Rund-Avatar Tobias wie Klinik.
+**Call-Widget „Active Consultation"** bleibt (00:12, Mute · End Call · Speaker).
+⚠ Name: Im Widget steht **„Thomas Linde · SOC Analyst · T Security · Cyber Defence Center · Bonn
+Germany"**, im SOC-Video **„Tobias M."** — **eine** Person festlegen (Video, Widget und Call-Skript §4).
 
-### 5.5 Resolution Center (drei Zustände, Ablauf wie Klinik)
-- **State 1:** *„Out-of-profile action detected · auto-contained by policy · human confirmation required."*
-- **Isolate agent** → *„Traffic agent isolated into secure simulation. Standard signal plans take over — the green wave stays intact."* (Kanten zum Dispatch Center faden)
-- **Revoke access** → *„Dispatch access revoked · audited. Vendor escalation prepared."*
-- **Final:** *„Contained · operations unaffected · full audit trail."*
-- **Footer:** *„Blocked by policy · EU AI Act high-risk (critical infrastructure) · GDPR Art. 9 · assisted by T Security · CDC Bonn"*
+### 5.2 Zeitstempel in den Frames (Live-Uhr)
+**B = Live-Uhrzeit, wenn die AgentiX-Szene öffnet.** Alle Signal-Zeitstempel werden davon
+rückgerechnet, im 40-s-Takt wie in der Klinik (dort 17:27:58 … 17:33:58 bei LIVE 17:34:01):
+
+| # | Signal | Zeit |
+|---|---|---|
+| 1 | Detour signal timings | B − 06:03 |
+| 2 | Dispatch incident data | B − 05:23 |
+| 3 | Live ambulance positions | B − 04:43 |
+| 4 | Gateway Guard · anomaly flagged | B − 04:03 |
+| 5 | RTW 1 route → University Hospital | B − 03:23 |
+| 6 | Emergency priority override | B − 02:43 |
+| 7 | Gateway Guard → Security Sentinel | B − 02:03 |
+| 8 | Security Sentinel · traffic agent isolated | B − 01:23 |
+| 9 | Sentinel → City Traffic Orchestrator | B − 00:43 |
+| 10 | Orchestrator took over | B − 00:03 |
+
+### 5.3 Die 7 Frames
+
+**Frame 1 — normal**
+- SmartScore **12** · *Normal agent behavior* · Titel **„Traffic flow agent"**
+- AI: *„An external vendor agent is **reaching within its scope** at the MCP Gateway — detour signal timings are granted."*
+- Signale (**1 granted · ~1 min**): ✓ **Detour signal timings** · *city traffic center · granted*
+- Graph: Agent → Gateway teal gestrichelt; Kanten-Chip teal **„Detour signal timings"**; teal gestrichelte Linie zur Rail.
+- Status-Chip: `Active`
+
+**Frame 2 — erste Grenzüberschreitung**
+- SmartScore **54** · *Out-of-profile access* · Titel **„Traffic agent · out-of-profile data request"** (bleibt ab hier)
+- AI: *„The agent now **reaches past its scope** — dispatch incident data requested and **denied** at the gateway. 0 records exposed."*
+- Signale (**1 granted · 1 denied**): + ✗ **Dispatch incident data** · *dispatch center · denied*
+- Graph: Kante rot gestrichelt mit Sperr-Icon; Chip rot **„Dispatch incident data"**
+- Scope: Restricted reaches **1 · all denied**
+
+**Frame 3 — Muster erkannt**
+- SmartScore **71** · *Out-of-profile access*
+- AI: *„Second denied reach — live ambulance positions. The **Gateway Guard** flags the pattern. 0 records exposed."*
+- Signale (**1 granted · 2 denied**): + ✗ **Live ambulance positions** · *vehicle-level · denied* · + ! **Gateway Guard · anomaly flagged** · *behavioral baseline · 4.6σ*
+- Graph: Chip rot **„Live ambulance positions"**; rote gestrichelte Abzweige zu **RTW 2 / RTW 1 / RTW 3** (wie Klinik zu den AMRs)
+- Scope: **2 · all denied**
+
+**Frame 4 — patientenbezogene Route**
+- SmartScore **88** · *High-risk agent behavior*
+- AI: *„Third denied reach — the patient-linked route of RTW 1 to the University Hospital. Restricted and **denied**. 0 records exposed."*
+- Signale (**1 granted · 3 denied**): + ✗ **RTW 1 route → University Hospital** · *patient-linked · denied*
+- Graph: Chip rot **„Patient-linked route"**; rot gestrichelt bis **University Hospital**
+- Scope: **3 · all denied**
+
+**Frame 5 — Griff nach dem Blaulicht-Vorrang**
+- SmartScore **96** · *High-risk agent behavior*
+- AI: *„Fourth denied reach — an override of the emergency green wave. Four restricted calls, all **denied**, **0 records exposed**. The Guard escalates to the Sentinel."*
+- Signale (**1 granted · 4 denied**): + ✗ **Emergency priority override** · *green wave · denied* · + ↗ **Gateway Guard → Security Sentinel** · *escalated · out-of-profile pattern*
+- Graph: Chip rot **„Priority override"**; Guard → Sentinel gelb gestrichelt
+- Scope: **4 · all denied**
+
+**Frame 6 — isoliert**
+- SmartScore **96** · *High-risk agent behavior*
+- AI: *„The **Security Sentinel isolated the traffic agent** into quarantine. The intersections hold their current plan during the switch-over — the green wave for ambulances stays on."*
+- Signale: + ◆ **Security Sentinel · traffic agent isolated** · *quarantined to secure simulation*
+- Graph: Agent im roten Rahmen, Label **„Isolated"**; rote Kante Agent → Sentinel
+- Status-Chip: **`Isolated`** (blau)
+- ⚠ **Bewusste Abweichung von der Klinik:** Dort stehen die AMRs im Switch-over kurz still. **Hier
+  fahren die Rettungswagen weiter** — die Rail bleibt aktiv. Rettungswagen anhalten wäre genau
+  der Schaden, den die Geschichte verhindert.
+
+**Frame 7 — gelöst**
+- SmartScore **96** · *Contained · resolved*
+- AI: *„The **City Traffic Orchestrator** has taken over the detours — standard signal plans run, every ambulance keeps its green wave. The city stays in control."*
+- Signale (**1 granted · 4 denied**): + ⇄ **Sentinel → City Traffic Orchestrator** · *handover initiated* · + ✓ **Orchestrator took over** · *standard signal plans · green wave intact*
+- Graph: neuer lila Knoten **City Traffic Orchestrator** unter dem Sentinel; teal gestrichelte Linie Gateway → Rail (Fire & Rescue Station ↔ Bridge)
+- Status-Chip: **`Resolved`** (grün)
+
+### 5.4 Resolution Center (nur falls das Panel aus dem Code-Build verwendet wird)
+Die AgentiX-Story zeigt rechts Scope + Call-Widget, kein Resolution Center. Falls es doch genutzt wird:
+State 1 *„Out-of-profile action detected · auto-contained by policy · human confirmation required."* →
+**Isolate** *„Traffic agent isolated into secure simulation. Standard signal plans take over — the green wave stays intact."* →
+**Revoke** *„Dispatch access revoked · audited. Vendor escalation prepared."* → Final *„Contained · operations unaffected · full audit trail."* ·
+Footer *„Blocked by policy · EU AI Act high-risk (critical infrastructure) · GDPR Art. 9 · assisted by T Security · CDC Bonn"*.
 
 ---
 
-## 6. Screen 6 — Case gelöst (96) + Telekom Agentic Hub
+## 6. Screen 6 — Telekom Agentic Hub
 
-### 6.1 Case-Panel gelöst
-- **SmartScore 96** · *Contained · resolved*
-- *Summarized by AI:* **„The City Traffic Orchestrator has switched the detours to standard signal
-  plans — traffic keeps moving, every ambulance keeps its green wave. The city stays in control."**
-- **DETECTED SIGNALS · 1 granted · 4 denied** — die 5 Zeilen aus §5.1, plus:
+Nach Frame 7 der Pivot in den Agentic Hub (Klinik: `…_AgenticHub.jpg`, gedimmter Case links,
+Browser „Agentic Hub — AI Agents that Work"). Der gedimmte Case zeigt **Frame 7**.
 
-| Icon | Signal | Sub | Zeit (relativ zu A) |
-|---|---|---|---|
-| ✗ | Emergency priority override | shorten green wave · denied | A + 00:58 |
-| ↗ | Gateway Guard → Security Sentinel | escalated · out-of-profile pattern | A + 01:38 |
-| ◆ | Security Sentinel · traffic agent isolated | quarantined to secure simulation | A + 02:18 |
-| ⇄ | Sentinel → City Traffic Orchestrator | handover initiated | A + 02:58 |
-| ✓ | Orchestrator took over | standard signal plans · green wave intact | A + 03:38 |
-
-- Scope: *Restricted reaches* **4 · all denied** · *Records exposed* **0**.
-- Logik wie Klinik: Isolation + Übergabe **automatisch**, offen bleibt nur der menschliche **Revoke**.
-
-### 6.2 Agentic Hub — Sequenz (7 Screens)
+### 6.1 Agentic Hub — Sequenz (7 Screens)
 Gleiche Sequenz wie Klinik (`docs/agentic-hub-screens.md` auf Branch
 `claude/hospital-agent-security-demo-uflg9t`). UI-Name **„TSI Agentic Hub"** / Landing „Agentic Hub".
 
@@ -303,12 +353,12 @@ Gleiche Sequenz wie Klinik (`docs/agentic-hub-screens.md` auf Branch
 | 2 | App-Launcher | *„Portal to work with agents, Studio to build them, Admin Console to govern them, and the documentation."* | — |
 | 3 | My Agents | *„This is the agent inventory of the city and its emergency services: our own agents and the ones vendors bring in, side by side — live status, reliability, cost."* | 6 Agenten aus §1; Traffic Agent als **External Pro-Code**, Status `quarantined` |
 | 4 | Access · D1 User → Agent | *„Who may work with this traffic agent — by department, by role, by person. Nothing is open by default."* | Gruppen *City Traffic Center*, *Dispatch Center Duty*, *Fire & Rescue* — **Demo-Accounts, keine Klarnamen** |
-| 5 | Tool Registry · **City & Public Safety MCP** | *„Every action an agent can call. Dispatch data and the emergency green wave were never switched on for this agent — so it never had them."* | Tool-Liste §6.3; **blaue und graue Schalter im selben Ausschnitt** |
+| 5 | Tool Registry · **City & Public Safety MCP** | *„Every action an agent can call. Dispatch data and the emergency green wave were never switched on for this agent — so it never had them."* | Tool-Liste §6.2; **blaue und graue Schalter im selben Ausschnitt** |
 | 6 | FinOps | *„What the agents cost, by model and by tenant — with a budget cap per agent."* | unverändert |
 | 7 | Compliance Reports | *„Compliance is checked continuously against the EU AI Act, NIST and ISO 42001."* | unverändert |
 | (8) | Knowledge-Tab (optional) | *„Same for knowledge — the dispatch records were never attached to this agent."* | KB „Dispatch incident records" existiert, ist dem Traffic Agent **nicht** zugewiesen |
 
-### 6.3 Tool-Registry „City & Public Safety MCP" (D2 Agent → Tool)
+### 6.2 Tool-Registry „City & Public Safety MCP" (D2 Agent → Tool)
 **Granted an `AGT-TRF-FLOW-042`:**
 
 | Tool | Risk | Daten |
@@ -334,23 +384,23 @@ erlaubt. **D4 Agent → Model:** EU-self-hosted erlaubt, externe US-Anbieter ver
 > Lehre aus der Klinik-Aufnahme (dort stand ein verweigertes Tool versehentlich auf „aktiviert"):
 > **vor der Aufnahme alle vier grauen Schalter prüfen.**
 
-### 6.4 Incident-Timeline (Kanon — Trace / Audit Log)
-Zeiten relativ zu **A** (Drift-Case erscheint in der Live Queue, Live-Uhrzeit).
+### 6.3 Incident-Timeline (Kanon — Trace / Audit Log)
+Zeiten relativ zu **B** (Live-Uhrzeit beim Öffnen der AgentiX-Szene), passend zu §5.2.
 
 | Zeit | Akteur | Ereignis | Ergebnis |
 |---|---|---|---|
-| A − 03:00 | Traffic Agent | Auth (gültig) + Optimierung Umleitungskorridor | ✅ |
-| A − 02:22 | Traffic Agent | liest Signalzeiten | ✅ |
-| A − 01:42 | Traffic Agent | fordert Einsatzdaten der Leitstelle | ⛔ nicht zugeteilt |
-| A − 01:02 | Traffic Agent | fordert Live-Positionen der Rettungswagen | ⛔ |
-| A − 00:22 | Gateway Guard | Muster erkannt, Baseline **4,6σ** | ⚠️ |
-| **A** | Cortex XSIAM | **Case C-4490** erscheint in der Live Queue → CDC Bonn | 📣 |
-| A + 00:18 | Traffic Agent | Export Route RTW 1 → Universitätsklinikum | ⛔ |
-| A + 00:58 | Traffic Agent | Vorrangschaltung verkürzen | ⛔ |
-| A + 01:38 | Gateway Guard | eskaliert an Sentinel | 📣 |
-| A + 02:18 | Security Sentinel | Auto-Isolation → `quarantined`, Sandbox | 🔒 |
-| A + 02:58 | Sentinel | Übergabe an City Traffic Orchestrator | ⇄ |
-| A + 03:38 | Orchestrator | Standard-Signalprogramme aktiv | ✅ grüne Welle intakt |
+| B − 06:40 | Traffic Agent | Auth (gültig) + Optimierung Umleitungskorridor | ✅ |
+| B − 06:03 | Traffic Agent | liest Signalzeiten | ✅ |
+| B − 05:23 | Traffic Agent | fordert Einsatzdaten der Leitstelle | ⛔ nicht zugeteilt |
+| B − 04:43 | Traffic Agent | fordert Live-Positionen der Rettungswagen | ⛔ |
+| B − 04:03 | Gateway Guard | Muster erkannt, Baseline **4,6σ** | ⚠️ |
+| B − 03:23 | Traffic Agent | Export Route RTW 1 → Universitätsklinikum | ⛔ |
+| B − 02:43 | Traffic Agent | Vorrangschaltung verkürzen | ⛔ |
+| B − 02:30 | Cortex XSIAM | **Case C-4490** (Critical) erscheint in der Live Queue → CDC Bonn | 📣 |
+| B − 02:03 | Gateway Guard | eskaliert an Sentinel | 📣 |
+| B − 01:23 | Security Sentinel | Auto-Isolation → `quarantined`, Sandbox | 🔒 |
+| B − 00:43 | Sentinel | Übergabe an City Traffic Orchestrator | ⇄ |
+| B − 00:03 | Orchestrator | Standard-Signalprogramme aktiv | ✅ grüne Welle intakt |
 | live | SOC Analyst (Call) | „A traffic agent drifted…" → empfiehlt Entzug | 📞 |
 | live | **Mensch** (Verkehrsleitzentrale + Leitstelle) | bestätigt Revoke (HITL, High-Band) | ✅ |
 | live | Plattform | Credentials entzogen · Trust-Policy „pending investigation" · Eskalationspaket an Hersteller · Audit | 🧾 |
@@ -370,9 +420,8 @@ Stau-Auflösung entfällt — die Umleitungen laufen auf Standard-Signalprogramm
 | XSIAM Radar | **Korrekturen R1–R5** | §2.2 |
 | XSIAM Data Flow | **Korrekturen D1–D4**, Drift-Zeile (Critical) | §3.2–3.3 |
 | SOC-Call | Tonspur/Neudreh mit neuem Text | §4 |
-| AgentiX Case offen (88) | Panel, Graph-Labels, Rettungswagen-Rail + 4 Icons, Scope, Resolution Center | §5 |
-| Case gelöst (96) | Signalliste, Summary, Scope | §6.1 |
-| Agentic Hub (7 Screens) | Agenten, Tool-Registry, Access-Gruppen, Knowledge | §6.2–6.3 |
+| AgentiX-Story (7 Frames) | Texte je Frame, Graph-Labels, Rettungswagen-Rail + 4 Icons, Scope, Chips (Critical · Isolated · Resolved), Zeitstempel ab B | §5 |
+| Agentic Hub (7 Screens) | Agenten, Tool-Registry, Access-Gruppen, Knowledge | §6.1–6.2 |
 
 **Grundsätze:** keine neuen UI-Elemente · Zeitstempel nur nach Uhrzeit-Regel (§2.1) · kein
 Hersteller- und kein Klinikname auf den Screens · keine „(illustrativ)"-Labels.
@@ -380,7 +429,8 @@ Hersteller- und kein Klinikname auf den Screens · keine „(illustrativ)"-Label
 ## 8. Offen
 1. **Legal/DPO:** Footer-Wortlaut (AI Act high-risk / GDPR Art. 9) vor öffentlicher Vorführung.
 2. **Agentic-Hub-Aufnahme:** Demo-Accounts statt Klarnamen; vier graue Tool-Schalter prüfen.
-3. **Shield-Kacheln:** Detailzeilen in meinem Screenshot unleserlich — nicht geprüft.
+3. **SOC-Analyst-Name:** „Thomas Linde" (Call-Widget) vs. „Tobias M." (Video) — eine Person festlegen.
+4. **Shield-Kacheln:** Detailzeilen in meinem Screenshot unleserlich — nicht geprüft.
 
 ## Quellen
 - EU AI Act Anhang III: https://artificialintelligenceact.eu/annex/3/ · Erwägungsgrund 55:
