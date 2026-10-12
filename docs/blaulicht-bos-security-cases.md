@@ -162,7 +162,8 @@ Dispatch Endpoints, Sensors & Alerting · MoWaS, T Mission · MCx, T Cloud Publi
 Records/LEA, Digitalfunk/OT, Sensors …).
 
 ### 3.3 Drift-Zeile (erscheint, wenn der rote Glow 96 → 18 Manual → Queue ankommt; 11 → **12 OPEN**)
-- Badge **H** · Titel **„Traffic agent · out-of-profile data request"** · `NEW` · `C-4490` · *just now*
+- Badge **H** · Titel **„Traffic agent · out-of-profile request"** · `NEW` · `C-4490` · *just now*
+  (ohne „data" — die Klinik-Zeile wird nach ~41 Zeichen abgeschnitten; so passt sie ungekürzt. Im Case-Screen §5 bleibt der volle Titel.)
 - Sub: **„Out-of-profile request to Dispatch · auto-contained by policy"**
 - Button **Inspect ›**
 - **Severity High**, nicht Critical (Health-Kanon: „high-risk incident", nie „breach").
