@@ -162,11 +162,11 @@ Dispatch Endpoints, Sensors & Alerting · MoWaS, T Mission · MCx, T Cloud Publi
 Records/LEA, Digitalfunk/OT, Sensors …).
 
 ### 3.3 Drift-Zeile (erscheint, wenn der rote Glow 96 → 18 Manual → Queue ankommt; 11 → **12 OPEN**)
-- Badge **H** · Titel **„Traffic agent · out-of-profile request"** · `NEW` · `C-4490` · *just now*
+- Badge **C** · Titel **„Traffic agent · out-of-profile requests"** · `NEW` · `C-4490` · *just now*
   (ohne „data" — die Klinik-Zeile wird nach ~41 Zeichen abgeschnitten; so passt sie ungekürzt. Im Case-Screen §5 bleibt der volle Titel.)
 - Sub: **„Out-of-profile request to Dispatch · auto-contained by policy"**
 - Button **Inspect ›**
-- **Severity High**, nicht Critical (Health-Kanon: „high-risk incident", nie „breach").
+- **Severity Critical** (Entscheidung Auftraggeber 12.10.2026). Sprachregel bleibt: „high-risk incident", nie „breach". **Kein „ID" im Titel** — das war der verworfene Drohnen-Case.
 
 ---
 
@@ -233,7 +233,7 @@ kein „attack" · keine Artikelnummern · kein Herstellername.
 - DB-Knoten: **Dispatch Center (ILS)** (war HIS (iMedOne))
 - Bleiben: **MCP Gateway** (rotes Sperr-Icon), **Gateway Guard → Security Sentinel**, **+8 Other Agents**
 - Roter Edge-Chip: **„Patient-linked route"** (war „Patient-linked routes")
-- Header-Chips: `High` · `Active` · `Agentic governance` · `assisted by T Security · CDC Bonn` · `LIVE` + Live-Uhrzeit
+- Header-Chips: `Critical` · `Active` · `Agentic governance` · `assisted by T Security · CDC Bonn` · `LIVE` + Live-Uhrzeit
 
 ### 5.3 Unten — Rail „AMBULANCES · GREEN WAVE" (war AMR-Rail, gleiche Geometrie)
 
@@ -368,7 +368,7 @@ Stau-Auflösung entfällt — die Umleitungen laufen auf Standard-Signalprogramm
 | Infrastructure Protection Shield | nichts | §2.1 |
 | Security Center | nichts (Live-Uhr) | §2.1 |
 | XSIAM Radar | **Korrekturen R1–R5** | §2.2 |
-| XSIAM Data Flow | **Korrekturen D1–D4**, Drift-Zeile (High) | §3.2–3.3 |
+| XSIAM Data Flow | **Korrekturen D1–D4**, Drift-Zeile (Critical) | §3.2–3.3 |
 | SOC-Call | Tonspur/Neudreh mit neuem Text | §4 |
 | AgentiX Case offen (88) | Panel, Graph-Labels, Rettungswagen-Rail + 4 Icons, Scope, Resolution Center | §5 |
 | Case gelöst (96) | Signalliste, Summary, Scope | §6.1 |
